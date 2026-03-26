@@ -1,0 +1,374 @@
+{
+    "units": [
+        {
+            "unit_num": 1,
+            "unit_name": "Thermal Energy and Changes of Matter",
+            "lessons": [
+                {
+                    "lesson_num": 3,
+                    "lesson_name": "Combustion, Oxidation and Reduction",
+                    "pages": [
+                        {
+                            "page": 67,
+                            "questions": [
+                                {
+                                    "ex_title": "Write the scientific term of each of the following statements:",
+                                    "type": "text",
+                                    "q_txt": "A simple model that illustrates the three main elements of the combustion process.",
+                                    "a_txt": "Fire triangle (combustion triangle).",
+                                    "mcq_choices": null
+                                },
+                                {
+                                    "ex_title": "Write the scientific term of each of the following statements:",
+                                    "type": "text",
+                                    "q_txt": "Flammable materials used in the production of thermal energy as a result of the occurrence of an exothermic reaction.",
+                                    "a_txt": "Fuel.",
+                                    "mcq_choices": null
+                                },
+                                {
+                                    "ex_title": "Write the scientific term of each of the following statements:",
+                                    "type": "text",
+                                    "q_txt": "The non-renewable fuel which is the most used worldwide till now.",
+                                    "a_txt": "Fossil fuel.",
+                                    "mcq_choices": null
+                                },
+                                {
+                                    "ex_title": "Write the scientific term of each of the following statements:",
+                                    "type": "text",
+                                    "q_txt": "The amount of energy produced from the combustion of 1 g of fuel in excess oxygen gas.",
+                                    "a_txt": "Calorific value of fuel.",
+                                    "mcq_choices": null
+                                },
+                                {
+                                    "ex_title": "Write the scientific term of each of the following statements:",
+                                    "type": "text",
+                                    "q_txt": "The combination of fuel with oxygen, accompanied usually by the emission of light, heat, or both.",
+                                    "a_txt": "Combustion.",
+                                    "mcq_choices": null
+                                },
+                                {
+                                    "ex_title": "Write the scientific term of each of the following statements:",
+                                    "type": "text",
+                                    "q_txt": "A flame produced from the ignition of a mixture of a gaseous fuel and oxygen.",
+                                    "a_txt": "Bunsen flame.",
+                                    "mcq_choices": null
+                                },
+                                {
+                                    "ex_title": "Write the scientific term of each of the following statements:",
+                                    "type": "text",
+                                    "q_txt": "The combustion of fuel in a limited amount of oxygen gas.",
+                                    "a_txt": "Incomplete combustion.",
+                                    "mcq_choices": null
+                                },
+                                {
+                                    "ex_title": "Write the scientific term of each of the following statements:",
+                                    "type": "text",
+                                    "q_txt": "The temperature at which fuel begins to ignite.",
+                                    "a_txt": "Ignition point.",
+                                    "mcq_choices": null
+                                },
+                                {
+                                    "ex_title": "Complete the following sentences:",
+                                    "type": "complete",
+                                    "q_txt": "The main elements of the combustion process are _____, _____ and _____.",
+                                    "a_txt": [
+                                        "fuel",
+                                        "oxygen",
+                                        "heat"
+                                    ],
+                                    "mcq_choices": null
+                                },
+                                {
+                                    "ex_title": "Complete the following sentences:",
+                                    "type": "complete",
+                                    "q_txt": "Coal and petroleum oil are examples of _____ fuel, while ethyl alcohol is an example of _____.",
+                                    "a_txt": [
+                                        "fossil",
+                                        "biofuel"
+                                    ],
+                                    "mcq_choices": null
+                                },
+                                {
+                                    "ex_title": "Complete the following sentences:",
+                                    "type": "complete",
+                                    "q_txt": "Fossil fuel is an example of _____ energy resources, while biofuel is an example of _____ energy resources.",
+                                    "a_txt": [
+                                        "non-renewable",
+                                        "renewable"
+                                    ],
+                                    "mcq_choices": null
+                                },
+                                {
+                                    "ex_title": "Complete the following sentences:",
+                                    "type": "complete",
+                                    "q_txt": "Ethyl alcohol is prepared from plants rich in _____ such as the _____ plant.",
+                                    "a_txt": [
+                                        "starch",
+                                        "corn"
+                                    ],
+                                    "mcq_choices": null
+                                },
+                                {
+                                    "ex_title": "Complete the following sentences:",
+                                    "type": "complete",
+                                    "q_txt": "Hydrogen gas is described as _____ fuel, and is an example of _____ fuels.",
+                                    "a_txt": [
+                                        "future",
+                                        "synthetic"
+                                    ],
+                                    "mcq_choices": null
+                                },
+                                {
+                                    "ex_title": "Complete the following sentences:",
+                                    "type": "complete",
+                                    "q_txt": "The atmosphere consists of about _____ % nitrogen gas, and _____ % oxygen gas.",
+                                    "a_txt": [
+                                        "78",
+                                        "21"
+                                    ],
+                                    "mcq_choices": null
+                                },
+                                {
+                                    "ex_title": "Complete the following sentences:",
+                                    "type": "complete",
+                                    "q_txt": "Combustion is accompanied by the emission of _____, _____, or both.",
+                                    "a_txt": [
+                                        "light",
+                                        "heat"
+                                    ],
+                                    "mcq_choices": null
+                                },
+                                {
+                                    "ex_title": "Complete the following sentences:",
+                                    "type": "complete",
+                                    "q_txt": "The colour of Bunsen flame turns yellow when _____ combustion occurs, while it turns blue when _____ combustion occurs.",
+                                    "a_txt": [
+                                        "incomplete",
+                                        "complete"
+                                    ],
+                                    "mcq_choices": null
+                                }
+                            ]
+                        },
+                        {
+                            "page": 68,
+                            "questions": [
+                                {
+                                    "ex_title": "Complete the following sentences:",
+                                    "type": "complete",
+                                    "q_txt": "The combustion of methane gas in the air produces _____ through an exothermic reaction.",
+                                    "a_txt": [
+                                        "water vapour",
+                                        "carbon dioxide gas"
+                                    ],
+                                    "mcq_choices": null
+                                },
+                                {
+                                    "ex_title": "Complete the following sentences:",
+                                    "type": "complete",
+                                    "q_txt": "The combustion of _____ gas in pure oxygen produces _____ flame used in welding metals.",
+                                    "a_txt": [
+                                        "acetylene",
+                                        "oxyacetylene"
+                                    ],
+                                    "mcq_choices": null
+                                },
+                                {
+                                    "ex_title": "Correct the underlined parts:",
+                                    "type": "text",
+                                    "q_txt": "Hydrogen is a main element in the combustion process.",
+                                    "a_txt": "Oxygen.",
+                                    "mcq_choices": null
+                                },
+                                {
+                                    "ex_title": "Correct the underlined parts:",
+                                    "type": "text",
+                                    "q_txt": "The mixture of propane and methane is known as butagas.",
+                                    "a_txt": "Butane.",
+                                    "mcq_choices": null
+                                },
+                                {
+                                    "ex_title": "Correct the underlined parts:",
+                                    "type": "text",
+                                    "q_txt": "The calorific value of natural gas fuel is the highest.",
+                                    "a_txt": "Hydrogen gas.",
+                                    "mcq_choices": null
+                                },
+                                {
+                                    "ex_title": "Correct the underlined parts:",
+                                    "type": "text",
+                                    "q_txt": "The bunsen flame is used in cutting and welding metals.",
+                                    "a_txt": "Oxyacetylene.",
+                                    "mcq_choices": null
+                                },
+                                {
+                                    "ex_title": "Correct the underlined parts:",
+                                    "type": "text",
+                                    "q_txt": "The colour of the bunsen flame varies according to the amount of nitrogen mixed with the fuel.",
+                                    "a_txt": "Oxygen.",
+                                    "mcq_choices": null
+                                },
+                                {
+                                    "ex_title": "Correct the underlined parts:",
+                                    "type": "text",
+                                    "q_txt": "Manganese dioxide gas is released when all types of fossil fuel are burned.",
+                                    "a_txt": "Carbon dioxide.",
+                                    "mcq_choices": null
+                                },
+                                {
+                                    "ex_title": "Mark (T) or (x) for each statement, with correction if needed:",
+                                    "type": "true_false_with_correction",
+                                    "q_txt": "Propane gas represents 93% of the components of natural gas.",
+                                    "a_txt": [
+                                        "False",
+                                        {
+                                            "mistake": "Propane",
+                                            "correction": "Methane"
+                                        }
+                                    ],
+                                    "mcq_choices": null
+                                },
+                                {
+                                    "ex_title": "Mark (T) or (x) for each statement, with correction if needed:",
+                                    "type": "true_false",
+                                    "q_txt": "The mixture of propane and butane gases is odourless.",
+                                    "a_txt": "True",
+                                    "mcq_choices": null
+                                },
+                                {
+                                    "ex_title": "Mark (T) or (x) for each statement, with correction if needed:",
+                                    "type": "true_false_with_correction",
+                                    "q_txt": "Nitrogen gas represents 21% of the components of atmospheric air.",
+                                    "a_txt": [
+                                        "False",
+                                        {
+                                            "mistake": "Nitrogen",
+                                            "correction": "Oxygen"
+                                        }
+                                    ],
+                                    "mcq_choices": null
+                                },
+                                {
+                                    "ex_title": "Mark (T) or (x) for each statement, with correction if needed:",
+                                    "type": "true_false_with_correction",
+                                    "q_txt": "The combustion reaction is an endothermic reaction.",
+                                    "a_txt": [
+                                        "False",
+                                        {
+                                            "mistake": "endothermic",
+                                            "correction": "exothermic"
+                                        }
+                                    ],
+                                    "mcq_choices": null
+                                },
+                                {
+                                    "ex_title": "Mark (T) or (x) for each statement, with correction if needed:",
+                                    "type": "true_false",
+                                    "q_txt": "Fuel does not begin to ignite except after reaching a certain temperature known as the ignition point.",
+                                    "a_txt": "True",
+                                    "mcq_choices": null
+                                },
+                                {
+                                    "ex_title": "Mark (T) or (x) for each statement, with correction if needed:",
+                                    "type": "true_false",
+                                    "q_txt": "As the ignition point of the fuel decreases, its flammability increases.",
+                                    "a_txt": "True",
+                                    "mcq_choices": null
+                                },
+                                {
+                                    "ex_title": "Choose the correct answer:",
+                                    "type": "mcq",
+                                    "q_txt": "What does the element (X) represent in the opposite combustion triangle?",
+                                    "a_txt": 2,
+                                    "mcq_choices": [
+                                        "Carbon dioxide.",
+                                        "Flame.",
+                                        "Fuel.",
+                                        "Water."
+                                    ]
+                                },
+                                {
+                                    "ex_title": "Choose the correct answer:",
+                                    "type": "mcq",
+                                    "q_txt": "All the following are examples of fossil fuel, except .............",
+                                    "a_txt": 1,
+                                    "mcq_choices": [
+                                        "petroleum oil.",
+                                        "ethanol.",
+                                        "natural gas.",
+                                        "coal."
+                                    ]
+                                },
+                                {
+                                    "ex_title": "Choose the correct answer:",
+                                    "type": "mcq",
+                                    "q_txt": "The main component of natural gas is .............",
+                                    "a_txt": 0,
+                                    "mcq_choices": [
+                                        "methane.",
+                                        "ethane.",
+                                        "propane.",
+                                        "butane."
+                                    ]
+                                }
+                            ]
+                        },
+                        {
+                            "page": 69,
+                            "questions": [
+                                {
+                                    "ex_title": "Choose the correct answer:",
+                                    "type": "mcq",
+                                    "q_txt": "Which of the following figures expresses the percentage of oxygen relative to the other components of atmospheric air?",
+                                    "a_txt": 3,
+                                    "mcq_choices": [
+                                        "a",
+                                        "b",
+                                        "c",
+                                        "d"
+                                    ]
+                                },
+                                {
+                                    "ex_title": "Choose the correct answer:",
+                                    "type": "mcq",
+                                    "q_txt": "The candle remains lit for a longer time when a cylinder filled with ............. gas is inverted over it.",
+                                    "a_txt": 0,
+                                    "mcq_choices": [
+                                        "oxygen",
+                                        "hydrogen",
+                                        "carbon dioxide",
+                                        "nitrogen"
+                                    ]
+                                },
+                                {
+                                    "ex_title": "Choose the correct answer:",
+                                    "type": "mcq",
+                                    "q_txt": "The following equation shows the complete combustion of a hydrocarbon fuel: Hydrocarbon fuel + Oxygen -> X + Y. Which of the following represents each of (X) and (Y)?",
+                                    "a_txt": 3,
+                                    "mcq_choices": [
+                                        "(x): CO(g), (Y): H2(g)",
+                                        "(x): CO(g), (Y): H2O(v)",
+                                        "(x): CO2(g), (Y): H2(g)",
+                                        "(x): CO2(g), (Y): H2O(v)"
+                                    ]
+                                },
+                                {
+                                    "ex_title": "Choose the correct answer:",
+                                    "type": "mcq",
+                                    "q_txt": "The combustion temperature of acetylene gas in excess oxygen reaches .............",
+                                    "a_txt": 3,
+                                    "mcq_choices": [
+                                        "150\u00b0C",
+                                        "300\u00b0C",
+                                        "1500\u00b0C",
+                                        "3000\u00b0C"
+                                    ]
+                                }
+                            ]
+                        }
+                    ]
+                }
+            ]
+        }
+    ]
+}

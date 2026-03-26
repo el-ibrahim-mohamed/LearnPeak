@@ -1,0 +1,168 @@
+{
+    "units": [
+        {
+            "unit_num": 1,
+            "unit_name": "Thermal Energy and Changes of Matter",
+            "lessons": [
+                {
+                    "lesson_num": 3,
+                    "lesson_name": "Combustion, Oxidation and Reduction",
+                    "pages": [
+                        {
+                            "page": 52,
+                            "explanation": [
+                                "The three main elements that must be present for ignition to occur and for the combustion process to continue are fuel, oxygen, and heat. These three elements compose what is known as the fire triangle, as shown in the diagram illustrating a triangle with sides labeled fuel, oxygen, and heat.",
+                                "Fuel is a flammable material used to produce thermal energy as a result of an exothermic reaction. There are multiple forms of fuel, including fossil fuel, biofuel, and synthetic fuel.",
+                                "Fossil fuels include coal, petroleum oil, and natural gas, which are non-renewable. Biofuel, such as ethyl alcohol (ethanol), is prepared from plants rich in starch and is considered a renewable resource. Synthetic fuel, such as hydrogen gas, is described as the fuel of the future and is used for cars and trucks powered by fuel cells."
+                            ]
+                        },
+                        {
+                            "page": 53,
+                            "explanation": [
+                                "Natural gas consists mainly of methane gas (93%) in addition to some other hydrocarbons such as propane and butane. Butagas consists of a mixture of propane and butane after separating them from natural gas. Hydrocarbons are organic compounds that contain only carbon and hydrogen elements. Natural gas and butagas are the main fuels used in households. Because they are odourless, a very small amount of ethanethiol gas is added to them to allow for the detection of gas leaks.",
+                                "The calorific value of fuel is the amount of energy produced from the combustion of 1g of fuel in excess of oxygen gas, measured in kJ/g. A table shows that the calorific value of wood is 20, ethanol is 30, natural gas is 50, and hydrogen is 143 kJ/g, indicating that hydrogen fuel has the highest calorific value."
+                            ]
+                        },
+                        {
+                            "page": 54,
+                            "explanation": [
+                                "The atmospheric air is composed of a mixture of several gases: nitrogen (78%), oxygen (21%), and other gases (1%). A diagram shows these components in a pie chart. When a paraffin candle is lit and placed under a glass bell jar, the candle flame goes out after a few minutes because the oxygen inside the jar is consumed completely. This demonstrates that oxygen is a main element in the combustion process.",
+                                "Combustion is the process of the combination of fuel with oxygen, which is usually accompanied by the emission of light, heat, or both."
+                            ]
+                        },
+                        {
+                            "page": 55,
+                            "questions": [
+                                {
+                                    "ex_title": "Question ? Answer",
+                                    "type": "text",
+                                    "q_txt": "Which burns faster (with explanation): A piece of steel wool (scouring pad) burnt in atmospheric air or in pure oxygen?",
+                                    "a_txt": "Steel wool burns in pure oxygen faster than in atmospheric air, due to the high concentration of pure oxygen compared to its concentration in atmospheric air, and the rate of combustion increases with increasing the concentration of oxygen gas.",
+                                    "mcq_choices": null
+                                },
+                                {
+                                    "ex_title": "Question ? Answer",
+                                    "type": "text",
+                                    "q_txt": "In the following figure, three identical burning candles were placed in three containers and one of these containers was left open: Which of these candles its remaining mass after an hour would be the greatest? Explain.",
+                                    "a_txt": "The remaining mass of the candle in container (3) would be the greatest, because its flame would go out quickly.",
+                                    "mcq_choices": null
+                                }
+                            ]
+                        },
+                        {
+                            "page": 56,
+                            "explanation": [
+                                "The flame of a Bunsen burner results from the combustion of a mixture of a gaseous fuel and oxygen. Its colour varies according to the amount of oxygen mixed with the fuel. When the air vent is closed, the amount of oxygen is limited, the flame turns yellow, and this is known as incomplete combustion. When the air vent is open, the amount of oxygen is abundant, the flame turns blue, and this is known as complete combustion.",
+                                "When a matchstick is struck against a rough surface, it ignites because friction generates the heat necessary to start an exothermic chemical reaction (combustion reaction). A diagram shows the friction direction and the match head."
+                            ]
+                        },
+                        {
+                            "page": 57,
+                            "explanation": [
+                                "Fuel does not begin to burn until it reaches a specific temperature known as the ignition point. The ignition point is the temperature at which the material begins to ignite. As the ignition point of the fuel is low, its flammability increases.",
+                                "The combustion of a hydrocarbon in air leads to the formation of carbon dioxide gas and water vapour through an exothermic reaction because hydrocarbons contain carbon and hydrogen elements. An example is the combustion of methane gas: CH4(g) + 2O2(g) -> CO2(g) + 2H2O(v) + heat."
+                            ],
+                            "questions": [
+                                {
+                                    "ex_title": "Question ? Answer",
+                                    "type": "text",
+                                    "q_txt": "A substance (X) its ignition point is 45\u00b0C, and a substance (Y) its ignition point is 300\u00b0C. Which substance ignites faster? Explain.",
+                                    "a_txt": "The substance (X) ignites faster because as the ignition point of the fuel is low, the flammability of the fuel increases, so it ignites faster.",
+                                    "mcq_choices": null
+                                },
+                                {
+                                    "ex_title": "Give reasons",
+                                    "type": "text",
+                                    "q_txt": "Spark plugs are used in cars.",
+                                    "a_txt": "Because spark plugs produce a spark used to ignite the mixture of gasoline and air in the combustion chamber of the car engine during starting.",
+                                    "mcq_choices": null
+                                }
+                            ]
+                        },
+                        {
+                            "page": 58,
+                            "explanation": [
+                                "Oxyacetylene flame is formed when acetylene gas burns completely in excess oxygen gas, reaching a temperature of 3000\u00b0C. It is used for cutting and welding metals such as steel and copper."
+                            ],
+                            "questions": [
+                                {
+                                    "ex_title": "Give reasons",
+                                    "type": "text",
+                                    "q_txt": "(1) Adding a very small percentage of ethanethiol gas to natural gas.",
+                                    "a_txt": "To take appropriate safety measures in the case of gas leaks, as natural gas is odourless and ethanethiol is characterized by a garlic smell.",
+                                    "mcq_choices": null
+                                },
+                                {
+                                    "ex_title": "Give reasons",
+                                    "type": "text",
+                                    "q_txt": "(2) The combustion of a piece of steel wool in pure oxygen is faster than in atmospheric air.",
+                                    "a_txt": "To increase the concentration of pure oxygen compared to its concentration in the air, and the rate of combustion increases with the increase in the percentage of oxygen gas."
+                                }
+                            ]
+                        },
+                        {
+                            "page": 59,
+                            "explanation": [
+                                "Spontaneous combustion is the ignition of materials without the presence of an external source of heat, such as a flame, electric spark, or friction. An application is the ignition of glycerin by potassium permanganate, where a spontaneous exothermic reaction occurs, leading to the emission of smoke with the formation of a purple-coloured flame."
+                            ],
+                            "questions": [
+                                {
+                                    "ex_title": "The opposite figure represents the fire triangle: (1) What is the missing element in this triangle? (2) Classify the types of the fuels, giving an example for each of them.",
+                                    "type": "text",
+                                    "q_txt": "(1) What is the missing element in this triangle? (2) Classify the types of the fuels, giving an example for each of them.",
+                                    "a_txt": "(1) Oxygen. (2) Fossil fuel such as coal, petroleum oil, or natural gas; Biofuel such as ethyl alcohol; Synthetic fuel such as hydrogen gas.",
+                                    "mcq_choices": null
+                                }
+                            ]
+                        },
+                        {
+                            "page": 60,
+                            "explanation": [
+                                "Extinguishing fires depends on the extinguishing fire triangle, which is based on three main principles: fuel removal, smothering (isolating oxygen), and cooling. Fuel removal involves removing the fuel, such as closing gas valves during fires. The car engine cannot operate without fuel because the fire triangle is incomplete. Smothering involves isolating the fire from the air using fire extinguishers (foam, dry powder, or carbon dioxide gas) or sand, which is used for some metal fires like sodium and magnesium."
+                            ]
+                        },
+                        {
+                            "page": 61,
+                            "explanation": [
+                                "Fires in frying pans are extinguished by covering them with a metal lid to isolate the oxygen. A bucket of sand is kept in school laboratories to extinguish fires of some metals like sodium and magnesium by isolating them from oxygen. It is forbidden to extinguish sodium or potassium fires with water because it increases the intensity of the fire due to an exothermic reaction that releases hydrogen gas. Carbon dioxide gas is used in extinguishing fires because it neither burns nor supports combustion."
+                            ]
+                        },
+                        {
+                            "page": 62,
+                            "explanation": [
+                                "Cooling is accomplished by lowering the temperature of burning materials to below their ignition point, usually by using water. Due to the high specific heat of water, it absorbs a large amount of thermal energy, decreasing the temperature. Water is not used in extinguishing petroleum oil fires because petroleum oil floats on the surface of water due to its lower density, which leads to the spread of fire. A table summarizes the principles of extinguishing fires: fuel removal (removes fuel), smothering (removes oxygen), and cooling (removes heat)."
+                            ]
+                        },
+                        {
+                            "page": 63,
+                            "explanation": [
+                                "Combustion reactions are known as oxidation-reduction (redox) reactions. When a stream of air passes over red-hot copper, copper combines with oxygen to form black copper oxide (2Cu + O2 -> 2CuO), and copper undergoes an oxidation process. When a stream of hydrogen gas passes over black copper oxide with heating, reddish-brown copper is formed (CuO + H2 -> Cu + H2O), and copper oxide undergoes a reduction process. Oxidation is a process in which the percentage of oxygen increases or hydrogen decreases. Reduction is a process in which the percentage of oxygen decreases or hydrogen increases. The substance that undergoes oxidation is the reducing agent, and the substance that undergoes reduction is the oxidizing agent."
+                            ]
+                        },
+                        {
+                            "page": 64,
+                            "explanation": [
+                                "Oxidation and reduction are two simultaneous processes that occur at the same time because when a substance gains oxygen (is oxidized), the other must lose this oxygen (is reduced). A summary diagram shows the reducing agent undergoes oxidation (combines with oxygen, gives hydrogen) and the oxidizing agent undergoes reduction (gives oxygen, combines with hydrogen)."
+                            ],
+                            "questions": [
+                                {
+                                    "ex_title": "Ammonia gas burns incompletely in air, according to the equation: 4NH3(g) + 3O2(g) -> 2N2(g) + 6H2O(v). Illustrate each of the following: (1) The process (X) that ammonia gas undergoes. (2) The process (Y) that oxygen gas undergoes. (3) The oxidizing agent. (4) The reducing agent.",
+                                    "type": "text",
+                                    "q_txt": "(1) The process (X) that ammonia gas undergoes. (2) The process (Y) that oxygen gas undergoes. (3) The oxidizing agent. (4) The reducing agent.",
+                                    "a_txt": "(1) Oxidation process. (2) Reduction process. (3) Oxygen gas. (4) Ammonia gas.",
+                                    "mcq_choices": null
+                                }
+                            ]
+                        },
+                        {
+                            "page": 65,
+                            "explanation": [
+                                "The food is preserved by air evacuation because this provides a poor-oxygen environment, which minimizes the redox reactions that lead to spoiling of food. A picture shows fish preserved inside a vacuum-sealed bag."
+                            ]
+                        }
+                    ]
+                }
+            ]
+        }
+    ]
+}

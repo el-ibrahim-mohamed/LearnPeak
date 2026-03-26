@@ -1,0 +1,724 @@
+{
+    "units": [
+        {
+            "unit_num": 2,
+            "unit_name": "Forces and Motion",
+            "lessons": [
+                {
+                    "lesson_num": 1,
+                    "lesson_name": "Newton's Laws of Motion",
+                    "pages": [
+                        {
+                            "page": 102,
+                            "questions": [
+                                {
+                                    "ex_title": "Write the scientific term (name) of each of the following statements",
+                                    "type": "text",
+                                    "q_txt": "A scientist who believed that objects do not continue moving unless a force acts continuously on them.",
+                                    "a_txt": "Aristotle.",
+                                    "mcq_choices": null
+                                },
+                                {
+                                    "ex_title": "Write the scientific term (name) of each of the following statements",
+                                    "type": "text",
+                                    "q_txt": "A scientist who explained that objects tend to maintain their state of rest or motion unless acted upon by an external force.",
+                                    "a_txt": "Galileo.",
+                                    "mcq_choices": null
+                                },
+                                {
+                                    "ex_title": "Write the scientific term (name) of each of the following statements",
+                                    "type": "text",
+                                    "q_txt": "The total force in magnitude and direction resulting from the effect of a number of forces acting on an object.",
+                                    "a_txt": "Net force.",
+                                    "mcq_choices": null
+                                },
+                                {
+                                    "ex_title": "Write the scientific term (name) of each of the following statements",
+                                    "type": "text",
+                                    "q_txt": "The scientist who formulated the laws of motion and the universal law of gravitation.",
+                                    "a_txt": "Isaac Newton.",
+                                    "mcq_choices": null
+                                },
+                                {
+                                    "ex_title": "Write the scientific term (name) of each of the following statements",
+                                    "type": "text",
+                                    "q_txt": "The object keeps its state of rest or motion at a constant velocity in a straight line, unless acted upon by external unbalanced forces that change its state.",
+                                    "a_txt": "Newton's first law (Law of Inertia).",
+                                    "mcq_choices": null
+                                },
+                                {
+                                    "ex_title": "Write the scientific term (name) of each of the following statements",
+                                    "type": "text",
+                                    "q_txt": "The time taken for the moving object to stop.",
+                                    "a_txt": "Stopping time.",
+                                    "mcq_choices": null
+                                },
+                                {
+                                    "ex_title": "Write the scientific term (name) of each of the following statements",
+                                    "type": "text",
+                                    "q_txt": "The distance travelled by the moving object during the stopping time.",
+                                    "a_txt": "Stopping distance.",
+                                    "mcq_choices": null
+                                },
+                                {
+                                    "ex_title": "Write the scientific term (name) of each of the following statements",
+                                    "type": "text",
+                                    "q_txt": "A device used to keep the velocity of cars constant on highways without direct driver intervention.",
+                                    "a_txt": "Cruise control.",
+                                    "mcq_choices": null
+                                },
+                                {
+                                    "ex_title": "Complete the following statements",
+                                    "type": "complete",
+                                    "q_txt": "Mass is a _____ physical quantity, while force is a _____ physical quantity.",
+                                    "a_txt": [
+                                        "scalar",
+                                        "vector"
+                                    ],
+                                    "mcq_choices": null
+                                },
+                                {
+                                    "ex_title": "Complete the following statements",
+                                    "type": "complete",
+                                    "q_txt": "Force is fully defined by _____ and _____.",
+                                    "a_txt": [
+                                        "magnitude",
+                                        "direction"
+                                    ],
+                                    "mcq_choices": null
+                                },
+                                {
+                                    "ex_title": "Complete the following statements",
+                                    "type": "complete",
+                                    "q_txt": "The forces acting on an object are described as _____ when their resultant of forces is zero, and as _____ when their resultant of forces is not zero.",
+                                    "a_txt": [
+                                        "balanced",
+                                        "unbalanced"
+                                    ],
+                                    "mcq_choices": null
+                                },
+                                {
+                                    "ex_title": "Complete the following statements",
+                                    "type": "complete",
+                                    "q_txt": "The passengers of the bus are rushed _____ when it stops suddenly according to Newton's _____ law.",
+                                    "a_txt": [
+                                        "front",
+                                        "first"
+                                    ],
+                                    "mcq_choices": null
+                                },
+                                {
+                                    "ex_title": "Complete the following statements",
+                                    "type": "complete",
+                                    "q_txt": "As the mass of the stationary object increases, its inertia _____, and thus it becomes _____ to move it.",
+                                    "a_txt": [
+                                        "increases",
+                                        "difficult"
+                                    ],
+                                    "mcq_choices": null
+                                },
+                                {
+                                    "ex_title": "Complete the following statements",
+                                    "type": "complete",
+                                    "q_txt": "The greater the inertia of a moving object, the longer the _____ and _____ while using the brakes.",
+                                    "a_txt": [
+                                        "stopping time",
+                                        "stopping distance"
+                                    ],
+                                    "mcq_choices": null
+                                },
+                                {
+                                    "ex_title": "Correct the underlined parts",
+                                    "type": "correct_underlined",
+                                    "q_txt": "Force is measured by the sensitive balance.",
+                                    "a_txt": {
+                                        "mistake": "the sensitive balance",
+                                        "correction": "newton meter (spring balance)"
+                                    },
+                                    "mcq_choices": null
+                                },
+                                {
+                                    "ex_title": "Correct the underlined parts",
+                                    "type": "correct_underlined",
+                                    "q_txt": "If two unequal forces act on an object in opposite directions along the same line of action, the net force acting on the object equals the product of the two forces.",
+                                    "a_txt": {
+                                        "mistake": "the product",
+                                        "correction": "the difference between"
+                                    },
+                                    "mcq_choices": null
+                                }
+                            ]
+                        },
+                        {
+                            "page": 103,
+                            "questions": [
+                                {
+                                    "ex_title": "Correct the underlined parts",
+                                    "type": "correct_underlined",
+                                    "q_txt": "The scientist Aristotle studied the velocity of sound in air.",
+                                    "a_txt": {
+                                        "mistake": "Aristotle",
+                                        "correction": "Isaac Newton"
+                                    },
+                                    "mcq_choices": null
+                                },
+                                {
+                                    "ex_title": "Correct the underlined parts",
+                                    "type": "correct_underlined",
+                                    "q_txt": "The tendency of an object to maintain its state of motion is called uniform speed.",
+                                    "a_txt": {
+                                        "mistake": "uniform speed",
+                                        "correction": "inertia"
+                                    },
+                                    "mcq_choices": null
+                                },
+                                {
+                                    "ex_title": "Correct the underlined parts",
+                                    "type": "correct_underlined",
+                                    "q_txt": "When a stationary bus moves forward suddenly, its passengers are rushed to the right.",
+                                    "a_txt": {
+                                        "mistake": "to the right",
+                                        "correction": "backward"
+                                    },
+                                    "mcq_choices": null
+                                },
+                                {
+                                    "ex_title": "Correct the underlined parts",
+                                    "type": "correct_underlined",
+                                    "q_txt": "If the net force acting on a stationary object equals zero, the object moves with acceleration.",
+                                    "a_txt": {
+                                        "mistake": "moves with acceleration",
+                                        "correction": "remains stationary"
+                                    },
+                                    "mcq_choices": null
+                                },
+                                {
+                                    "ex_title": "Mark (T) or (x) for each statement, with correction if needed",
+                                    "type": "true_false_with_correction",
+                                    "q_txt": "Force is a scalar physical quantity, measured in newtons.",
+                                    "a_txt": [
+                                        "False",
+                                        {
+                                            "mistake": "scalar",
+                                            "correction": "vector"
+                                        }
+                                    ],
+                                    "mcq_choices": null
+                                },
+                                {
+                                    "ex_title": "Mark (T) or (x) for each statement, with correction if needed",
+                                    "type": "true_false_with_correction",
+                                    "q_txt": "The scientist Aristotle demonstrated by experiment that objects tend to maintain their state of motion unless acted upon by an external force.",
+                                    "a_txt": [
+                                        "False",
+                                        {
+                                            "mistake": "Aristotle",
+                                            "correction": "Galileo"
+                                        }
+                                    ],
+                                    "mcq_choices": null
+                                },
+                                {
+                                    "ex_title": "Mark (T) or (x) for each statement, with correction if needed",
+                                    "type": "true_false_with_correction",
+                                    "q_txt": "If two equal forces act on an object in opposite directions along the same line of action, the net force acting on the object is zero.",
+                                    "a_txt": [
+                                        "True",
+                                        null
+                                    ],
+                                    "mcq_choices": null
+                                },
+                                {
+                                    "ex_title": "Mark (T) or (x) for each statement, with correction if needed",
+                                    "type": "true_false_with_correction",
+                                    "q_txt": "Objects tend to maintain their state of motion unless acted upon by unbalanced forces that change their state.",
+                                    "a_txt": [
+                                        "True",
+                                        null
+                                    ],
+                                    "mcq_choices": null
+                                },
+                                {
+                                    "ex_title": "Mark (T) or (x) for each statement, with correction if needed",
+                                    "type": "true_false_with_correction",
+                                    "q_txt": "When a bus moving in a straight line stops suddenly, the passengers are rushed to the left.",
+                                    "a_txt": [
+                                        "False",
+                                        {
+                                            "mistake": "to the left",
+                                            "correction": "to forward"
+                                        }
+                                    ],
+                                    "mcq_choices": null
+                                },
+                                {
+                                    "ex_title": "Mark (T) or (x) for each statement, with correction if needed",
+                                    "type": "true_false_with_correction",
+                                    "q_txt": "The greater the mass of the moving object, the greater its inertia, and the harder for it to be stopped.",
+                                    "a_txt": [
+                                        "True",
+                                        null
+                                    ],
+                                    "mcq_choices": null
+                                },
+                                {
+                                    "ex_title": "Choose the correct answer",
+                                    "type": "mcq",
+                                    "q_txt": "All the following include vector physical quantities, except ...............",
+                                    "a_txt": 3,
+                                    "mcq_choices": [
+                                        "acceleration and force.",
+                                        "acceleration and mass.",
+                                        "force and time.",
+                                        "mass and time."
+                                    ]
+                                },
+                                {
+                                    "ex_title": "Choose the correct answer",
+                                    "type": "mcq",
+                                    "q_txt": "The force is measured in ............... units.",
+                                    "a_txt": 0,
+                                    "mcq_choices": [
+                                        "newton.",
+                                        "kilogram.",
+                                        "meter.",
+                                        "meter / second^2"
+                                    ]
+                                },
+                                {
+                                    "ex_title": "Choose the correct answer",
+                                    "type": "mcq",
+                                    "q_txt": "The scientist who made important contributions in the field of optics is ...............",
+                                    "a_txt": 2,
+                                    "mcq_choices": [
+                                        "Galileo.",
+                                        "Aristotle.",
+                                        "Newton.",
+                                        "Hermann von."
+                                    ]
+                                },
+                                {
+                                    "ex_title": "Choose the correct answer",
+                                    "type": "mcq",
+                                    "q_txt": "If balanced forces act on a moving object, its velocity ...............",
+                                    "a_txt": 3,
+                                    "mcq_choices": [
+                                        "increases.",
+                                        "decreases.",
+                                        "becomes zero.",
+                                        "remains constant."
+                                    ]
+                                },
+                                {
+                                    "ex_title": "Choose the correct answer",
+                                    "type": "mcq",
+                                    "q_txt": "The box placed on the top of a car moving at 60 km/h is seen by an observer standing on the sidewalk ...............",
+                                    "a_txt": 2,
+                                    "mcq_choices": [
+                                        "in a stationary state.",
+                                        "resisting the movement of the car.",
+                                        "moving at a velocity equals 60 km/h",
+                                        "moving at a velocity equals 40 km/h"
+                                    ]
+                                }
+                            ]
+                        },
+                        {
+                            "page": 104,
+                            "questions": [
+                                {
+                                    "ex_title": "Choose the correct answer",
+                                    "type": "mcq",
+                                    "q_txt": "When a moving car stops suddenly, the passengers are rushed ...............",
+                                    "a_txt": 0,
+                                    "mcq_choices": [
+                                        "forward.",
+                                        "backward.",
+                                        "to the right.",
+                                        "to the left."
+                                    ]
+                                },
+                                {
+                                    "ex_title": "Choose the correct answer",
+                                    "type": "mcq",
+                                    "q_txt": "The continued rotation of the electric fan blades for a period of time after the electric current is switched off is explained by ...............",
+                                    "a_txt": 0,
+                                    "mcq_choices": [
+                                        "Newton's first law.",
+                                        "Newton's second law.",
+                                        "action and reaction force law.",
+                                        "universal law of gravitation."
+                                    ]
+                                },
+                                {
+                                    "ex_title": "Choose the correct answer",
+                                    "type": "mcq",
+                                    "q_txt": "All the following are applications of inertia, except ...............",
+                                    "a_txt": 3,
+                                    "mcq_choices": [
+                                        "rushing of the cyclist forward if he collides with a barrier.",
+                                        "difficulty in stopping large trucks suddenly.",
+                                        "a child falling on his face when his foot is tripped.",
+                                        "an object falling downward after being thrown upward."
+                                    ]
+                                },
+                                {
+                                    "ex_title": "Choose the correct answer",
+                                    "type": "mcq",
+                                    "q_txt": "Which of the following objects has the greatest inertia?",
+                                    "a_txt": 3,
+                                    "mcq_choices": [
+                                        "An object with a mass of 1 kg and a velocity of 15 m/s",
+                                        "An object with a mass of 5 kg in a stationary state.",
+                                        "An object with a mass of 10 kg and moving at a velocity of 2 m/s",
+                                        "An object with a mass of 15 kg in a stationary state."
+                                    ]
+                                },
+                                {
+                                    "ex_title": "Choose the correct answer",
+                                    "type": "mcq",
+                                    "q_txt": "What is the figure which illustrates the balanced forces?",
+                                    "a_txt": 2,
+                                    "mcq_choices": [
+                                        "a",
+                                        "b",
+                                        "c",
+                                        "d"
+                                    ]
+                                },
+                                {
+                                    "ex_title": "Choose the correct answer",
+                                    "type": "mcq",
+                                    "q_txt": "In the opposite figure: What is the value of the force (F) that achieves balancing?",
+                                    "a_txt": 1,
+                                    "mcq_choices": [
+                                        "10 N",
+                                        "15 N",
+                                        "35 N",
+                                        "50 N"
+                                    ]
+                                },
+                                {
+                                    "ex_title": "What is meant by each of the following",
+                                    "type": "text",
+                                    "q_txt": "Net force.",
+                                    "a_txt": "The total force in magnitude and direction resulting from the effect of a number of forces on an object.",
+                                    "mcq_choices": null
+                                },
+                                {
+                                    "ex_title": "What is meant by each of the following",
+                                    "type": "text",
+                                    "q_txt": "Newton's first law (law of inertia).",
+                                    "a_txt": "The object keeps its state of rest or motion at a constant velocity in a straight line, unless acted upon by external unbalanced forces that change its state.",
+                                    "mcq_choices": null
+                                },
+                                {
+                                    "ex_title": "What is meant by each of the following",
+                                    "type": "text",
+                                    "q_txt": "Stopping time.",
+                                    "a_txt": "The time taken for the moving object to stop.",
+                                    "mcq_choices": null
+                                },
+                                {
+                                    "ex_title": "What is meant by each of the following",
+                                    "type": "text",
+                                    "q_txt": "Stopping distance.",
+                                    "a_txt": "The distance travelled by the moving object during the stopping time.",
+                                    "mcq_choices": null
+                                },
+                                {
+                                    "ex_title": "Give reasons for the following",
+                                    "type": "text",
+                                    "q_txt": "Mass is a scalar physical quantity, while acceleration is a vector physical quantity.",
+                                    "a_txt": "Because to define mass, only its magnitude needs to be specified, while to define acceleration, both its magnitude and direction must be specified.",
+                                    "mcq_choices": null
+                                },
+                                {
+                                    "ex_title": "Give reasons for the following",
+                                    "type": "text",
+                                    "q_txt": "The bag placed on a table remains stationary unless someone moves it from its place.",
+                                    "a_txt": "Because a stationary object remains stationary unless acted upon by external unbalanced forces that change its state, according to Newton's first law (Law of Inertia).",
+                                    "mcq_choices": null
+                                },
+                                {
+                                    "ex_title": "Give reasons for the following",
+                                    "type": "text",
+                                    "q_txt": "Rushing the bus passenger forward when the bus stops suddenly.",
+                                    "a_txt": "Because the inertia of the passenger causes him to resist the sudden change in their state of motion when pressing the brake (the brake pedal) to keep the state of motion they were in.",
+                                    "mcq_choices": null
+                                },
+                                {
+                                    "ex_title": "Give reasons for the following",
+                                    "type": "text",
+                                    "q_txt": "The motorcycle rider is rushed forward when it collides with a barrier.",
+                                    "a_txt": "Because the inertia of the rider causes him to resist the sudden change in his state of motion when the motorcycle collides with a barrier, to maintain the state of motion he was in.",
+                                    "mcq_choices": null
+                                }
+                            ]
+                        },
+                        {
+                            "page": 105,
+                            "questions": [
+                                {
+                                    "ex_title": "Give reasons for the following",
+                                    "type": "text",
+                                    "q_txt": "Rushing the passenger of the stationary bus backward when it moves suddenly.",
+                                    "a_txt": "Because the inertia of the passenger causes him to resist the sudden movement of the bus to maintain his previous state of rest, so he rushed backward.",
+                                    "mcq_choices": null
+                                },
+                                {
+                                    "ex_title": "Give reasons for the following",
+                                    "type": "text",
+                                    "q_txt": "The electric fan blades continue to rotate for a few seconds after the electric current is switched off.",
+                                    "a_txt": "Because the inertia of the fan blades causes them to resist the sudden stop after the electric current is switched off, to maintain the state of motion they were in.",
+                                    "mcq_choices": null
+                                },
+                                {
+                                    "ex_title": "Give reasons for the following",
+                                    "type": "text",
+                                    "q_txt": "The greater the mass of the moving object, the longer the stopping time and distance when the brakes are applied.",
+                                    "a_txt": "Because as the mass of the object increases, its inertia increases, making it more difficult to stop, which is indicated by the increased time it maintains its state of motion and thus increases its stopping time and distance.",
+                                    "mcq_choices": null
+                                },
+                                {
+                                    "ex_title": "What happens in the following cases",
+                                    "type": "text",
+                                    "q_txt": "If two forces equal in magnitude and opposite in direction act on the same line of action on a stationary object.",
+                                    "a_txt": "The object remains stationary.",
+                                    "mcq_choices": null
+                                },
+                                {
+                                    "ex_title": "What happens in the following cases",
+                                    "type": "text",
+                                    "q_txt": "If the net force acting on a stationary object does not equal zero.",
+                                    "a_txt": "The object moves in the same direction as the net force affected.",
+                                    "mcq_choices": null
+                                },
+                                {
+                                    "ex_title": "What happens in the following cases",
+                                    "type": "text",
+                                    "q_txt": "If the net force acting on a moving object at constant velocity is zero.",
+                                    "a_txt": "The object continues moving at the same constant velocity.",
+                                    "mcq_choices": null
+                                },
+                                {
+                                    "ex_title": "What happens in the following cases",
+                                    "type": "text",
+                                    "q_txt": "If the driver of a moving bus uses the brakes suddenly (To the passengers).",
+                                    "a_txt": "The bus passengers are rushed forward.",
+                                    "mcq_choices": null
+                                },
+                                {
+                                    "ex_title": "What happens in the following cases",
+                                    "type": "text",
+                                    "q_txt": "If a car moves suddenly forward (To the driver).",
+                                    "a_txt": "The driver is rushed backward.",
+                                    "mcq_choices": null
+                                },
+                                {
+                                    "ex_title": "What happens in the following cases",
+                                    "type": "text",
+                                    "q_txt": "Pulling the tablecloth from under a fruit plate quickly (to the plate).",
+                                    "a_txt": "The plate remains in its place.",
+                                    "mcq_choices": null
+                                },
+                                {
+                                    "ex_title": "What happens in the following cases",
+                                    "type": "text",
+                                    "q_txt": "Increasing the mass of a stationary object (In terms of : Its inertia).",
+                                    "a_txt": "Its inertia increases, making it harder to move.",
+                                    "mcq_choices": null
+                                },
+                                {
+                                    "ex_title": "Variant problems figure",
+                                    "type": "text",
+                                    "q_txt": "Figure (1) shows a box with a 3 N force to the left and a 5 N force to the right.",
+                                    "a_txt": "The net force = 5 - 3 = 2 N, to the right.",
+                                    "mcq_choices": null
+                                },
+                                {
+                                    "ex_title": "Variant problems figure",
+                                    "type": "text",
+                                    "q_txt": "Figure (2) shows a box with a 3 N force to the left and a 5 N force to the right.",
+                                    "a_txt": "The net force = 5 - 3 = 2 N, to the right.",
+                                    "mcq_choices": null
+                                },
+                                {
+                                    "ex_title": "Variant problems figure",
+                                    "type": "text",
+                                    "q_txt": "Figure (3) shows a box with a 3 N force to the left and a 3 N force to the right.",
+                                    "a_txt": "The net force = 3 - 3 = zero.",
+                                    "mcq_choices": null
+                                },
+                                {
+                                    "ex_title": "Variant problems figure",
+                                    "type": "text",
+                                    "q_txt": "Figure (4) shows a box with 6 N up, 12 N down, 3 N left, and 3 N right.",
+                                    "a_txt": "The net force = 12 - 6 = 6 N and its direction is downward.",
+                                    "mcq_choices": null
+                                },
+                                {
+                                    "ex_title": "Variant problems figure",
+                                    "type": "text",
+                                    "q_txt": "Figure (5) shows a box with 5 N up, 5 N down, 6 N left, and 4 N right.",
+                                    "a_txt": "The net force = 6 - 4 = 2 N, to the left.",
+                                    "mcq_choices": null
+                                },
+                                {
+                                    "ex_title": "Variant problems figure",
+                                    "type": "text",
+                                    "q_txt": "Figure (1) shows person (y) pulling to the right and person (x) pulling to the left.",
+                                    "a_txt": "Net force = 300 - 200 = 100 N, to the right.",
+                                    "mcq_choices": null
+                                },
+                                {
+                                    "ex_title": "Variant problems figure",
+                                    "type": "text",
+                                    "q_txt": "Figure (2) shows both person (x) and person (y) pulling to the right.",
+                                    "a_txt": "Net force = 300 + 200 = 500 N, to the right.",
+                                    "mcq_choices": null
+                                }
+                            ]
+                        },
+                        {
+                            "page": 106,
+                            "questions": [
+                                {
+                                    "ex_title": "Study the following figures, then answer",
+                                    "type": "text",
+                                    "q_txt": "From the following two figures showing tug of war: (1) 400N vs 300N, (2) 300N vs 300N. Which of the two cases represents balanced forces?",
+                                    "a_txt": "Case (2).",
+                                    "mcq_choices": null
+                                },
+                                {
+                                    "ex_title": "Study the following figures, then answer",
+                                    "type": "text",
+                                    "q_txt": "From the following two figures showing tug of war: (1) 400N vs 300N, (2) 300N vs 300N. Which of the two cases represents unbalanced forces? Determine the direction of the net force.",
+                                    "a_txt": "Case (1) : To the left (direction of the greater force).",
+                                    "mcq_choices": null
+                                },
+                                {
+                                    "ex_title": "Study the following figures, then answer",
+                                    "type": "text",
+                                    "q_txt": "From the following two figures showing a cart pulled by a device: (1) cart with two cubes, (2) cart with one cube. What is the name of the device used to pull the cart? and what is its importance?",
+                                    "a_txt": "Newton meter (spring balance) / Used to measure the force.",
+                                    "mcq_choices": null
+                                },
+                                {
+                                    "ex_title": "Study the following figures, then answer",
+                                    "type": "text",
+                                    "q_txt": "From the following two figures showing a cart pulled by a device: (1) cart with two cubes, (2) cart with one cube. If the mass of each cube is 0.2 kg, in which of the two cases (1) or (2) the inertia of the cart is greater?",
+                                    "a_txt": "In case (1).",
+                                    "mcq_choices": null
+                                },
+                                {
+                                    "ex_title": "Study the following figures, then answer",
+                                    "type": "text",
+                                    "q_txt": "From the opposite figure showing tableware on a tablecloth: What is the physical property that explains why the tableware does not fall to the ground when the tablecloth is pulled suddenly? What is the law which explains this phenomenon?",
+                                    "a_txt": "Property of inertia / Newton's first law (law of inertia).",
+                                    "mcq_choices": null
+                                },
+                                {
+                                    "ex_title": "Study the following figures, then answer",
+                                    "type": "text",
+                                    "q_txt": "The following figure shows the sudden stop of a bowl containing water placed on a moving table at a velocity of 5 m/s: What is the velocity of the plate relative to an observer sitting in front of the table during its movement?",
+                                    "a_txt": "The velocity of the plate relative to the observer = 5 m/s.",
+                                    "mcq_choices": null
+                                },
+                                {
+                                    "ex_title": "Study the following figures, then answer",
+                                    "type": "text",
+                                    "q_txt": "The following figure shows the sudden stop of a bowl containing water placed on a moving table at a velocity of 5 m/s: What is your explanation for the rushing of water when the table stops suddenly?",
+                                    "a_txt": "Because the inertia of the water makes it resist the sudden stop that occurs while it is moving in order to maintain the state of motion it was in.",
+                                    "mcq_choices": null
+                                },
+                                {
+                                    "ex_title": "Study the following figures, then answer",
+                                    "type": "text",
+                                    "q_txt": "From the two opposite figures, which of the two cases represents: (1) Sudden movement of the bus. (2) The bus stops when the brakes are applied. With explanation in each case.",
+                                    "a_txt": "(1) Case (1) / Because the inertia of the passengers and the driver makes them resist the sudden movement of the bus to maintain the state of rest they were in, so they are rushed backward. (2) Case (2) / Because the inertia of the passengers and the driver makes them resist the sudden change in their motion when pressing the brake (the brake pedal) to maintain the state of motion they were in.",
+                                    "mcq_choices": null
+                                }
+                            ]
+                        },
+                        {
+                            "page": 107,
+                            "questions": [
+                                {
+                                    "ex_title": "Study the following figures, then answer",
+                                    "type": "text",
+                                    "q_txt": "The opposite graph shows the stopping distance of three vehicles (x), (y), (z) having different masses and moving at the same velocity: What is meant by stopping distance?",
+                                    "a_txt": "The distance travelled by the moving object during the stopping time.",
+                                    "mcq_choices": null
+                                },
+                                {
+                                    "ex_title": "Study the following figures, then answer",
+                                    "type": "text",
+                                    "q_txt": "The opposite graph shows the stopping distance of three vehicles (x), (y), (z) having different masses and moving at the same velocity: How do you explain the difference in stopping distance of the three vehicles?",
+                                    "a_txt": "Because the masses of the three vehicles are different and therefore the inertia of each is different.",
+                                    "mcq_choices": null
+                                },
+                                {
+                                    "ex_title": "Study the following figures, then answer",
+                                    "type": "text",
+                                    "q_txt": "The opposite graph shows the stopping distance of three vehicles (x), (y), (z) having different masses and moving at the same velocity: Which of them has the greatest inertia?",
+                                    "a_txt": "Vehicle (Z).",
+                                    "mcq_choices": null
+                                },
+                                {
+                                    "ex_title": "Variant questions",
+                                    "type": "text",
+                                    "q_txt": "Write a brief about the scientist Aristotle.",
+                                    "a_txt": "He believed that any object does not continue in motion unless there is a force continuously acting on them.",
+                                    "mcq_choices": null
+                                },
+                                {
+                                    "ex_title": "Variant questions",
+                                    "type": "text",
+                                    "q_txt": "Write a brief about the scientist Galileo.",
+                                    "a_txt": "He demonstrated the inaccuracy of Aristotle's belief with an experiment from which he concluded that objects tend to maintain their state of rest or motion unless acted upon by an external force.",
+                                    "mcq_choices": null
+                                },
+                                {
+                                    "ex_title": "Variant questions",
+                                    "type": "text",
+                                    "q_txt": "Write a brief about the scientist Newton.",
+                                    "a_txt": "An English scientist considered one of the most influential scientists in physics and mathematics over ages and one of the icons of the scientific revolution. He formulated the Newton's laws of motion and the universal law of gravitation.",
+                                    "mcq_choices": null
+                                },
+                                {
+                                    "ex_title": "Variant questions",
+                                    "type": "text",
+                                    "q_txt": "Mention a technological application of Newton's first law used in cars, with explaining the idea of its working.",
+                                    "a_txt": "Cruise control. The idea of working: Pumping fuel at a rate that makes the forces acting on the car balanced through using sensors.",
+                                    "mcq_choices": null
+                                },
+                                {
+                                    "ex_title": "Variant questions",
+                                    "type": "text",
+                                    "q_txt": "Mention the idea of operation of the air hockey game, then mention the name of the law which explains it.",
+                                    "a_txt": "Blowing a continuous stream of air through many small holes on the table surface to reduce the friction forces between the disc and the table, which makes the disc keep its state of motion for a longer period. The law: Newton's first law (law of inertia).",
+                                    "mcq_choices": null
+                                },
+                                {
+                                    "ex_title": "Variant questions",
+                                    "type": "text",
+                                    "q_txt": "Which of the cars below has the least inertia? With explanation: Car (x) with a mass of 4 kg and moves at a velocity of 1 m/s. Car (y) with a mass of 2 kg and moves at a velocity of 6 m/s.",
+                                    "a_txt": "The car (Y) / Because its mass is the least and the less the mass of the car, the less its inertia.",
+                                    "mcq_choices": null
+                                },
+                                {
+                                    "ex_title": "Variant questions",
+                                    "type": "text",
+                                    "q_txt": "Which of the following takes longer time to stop when pressing the brakes: A car with a mass of 1800 kg or a bus with a mass of 80000 kg, both moving at the same velocity? With explanation.",
+                                    "a_txt": "The bus / Because its mass is the greatest and the greater the mass of the moving object, the greater its inertia, making it harder to stop and increasing its stopping time.",
+                                    "mcq_choices": null
+                                }
+                            ]
+                        }
+                    ]
+                }
+            ]
+        }
+    ]
+}

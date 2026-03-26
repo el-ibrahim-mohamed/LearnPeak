@@ -1,0 +1,183 @@
+{
+    "units": [
+        {
+            "unit_num": 1,
+            "unit_name": "Thermal Energy and Changes of Matter",
+            "lessons": [
+                {
+                    "lesson_num": 2,
+                    "lesson_name": "Thermal Changes Accompanying Chemical Changes",
+                    "pages": [
+                        {
+                            "page": 28,
+                            "explanation": [
+                                "When a chemical reaction occurs, neither the used reactants are destroyed, nor new substances are created. Instead, the atoms of the elements of the reactants are rearranged to form new products with the same number of atoms of each element, thus fulfilling the law of conservation of matter. This principle also applies to energy.",
+                                "Activity 1: Law of conservation of energy. Materials: 2 lemons, two copper rods (Cu), two zinc rods (Zn), connecting wires, and an LED bulb. Steps: Insert a copper rod and a zinc rod in each lemon. Connect one zinc rod in the first lemon to one copper rod in the second lemon with a connecting wire. Connect the other copper and zinc rods to the LED bulb. The diagram shows the lemon battery setup with wires connecting the rods to the bulb.",
+                                "Observation: The bulb lights up. Interpretation: Chemical reactions occur inside the lemon, producing an electric current that passes through the wire, as indicated by the lighting of the bulb. Conclusion: The chemical energy stored in the lemon juice is converted into electrical energy, thus fulfilling the law of conservation of energy. The law of conservation of energy states that energy is neither destroyed nor created, but can be transformed from one form to another."
+                            ]
+                        },
+                        {
+                            "page": 29,
+                            "explanation": [
+                                "Scientist Hermann von Helmholtz was a German scientist who proved the law of conservation of energy and clarified that the total energy remains constant within the isolated system.",
+                                "In a chemical reaction, the bonds between the atoms of the reactant molecules are broken. This process is an endothermic process, accompanied by the absorption of thermal energy from the surroundings. The diagram shows O=O and H-H bonds breaking into separate atoms, which requires absorption of energy.",
+                                "New bonds between the atoms of the product molecules are formed. This process is an exothermic process, accompanied by the release of thermal energy to the surroundings. The diagram shows separate atoms forming O-H bonds, which is accompanied by the release of energy.",
+                                "Chemical bonds store energy, and as the bond increases, breaking this bond becomes more difficult. Usually, the amounts of thermal energy absorbed and released in the processes of the breakage and the formation of the bonds in the same reaction are not equal, therefore chemical reactions are usually accompanied by thermal changes, appearing as energy absorbed or energy released from or to the surroundings, thus fulfilling the law of conservation of energy. Chemical reactions are classified into exothermic reactions and endothermic reactions."
+                            ]
+                        },
+                        {
+                            "page": 30,
+                            "explanation": [
+                                "Activity 2: Exothermic reactions. Materials: Dilute hydrochloric acid (HCl), magnesium ribbon (Mg), two nested polystyrene cups, laboratory thermometer, and a glass rod. Steps: Put 50 mL of dilute hydrochloric acid in the nested polystyrene cups. Record the initial temperature T1 using the thermometer. Immerse the magnesium ribbon in the acid with gentle stirring using the glass rod. Record the final temperature T2 of the reaction mixture. The diagram shows the experimental setup with the thermometer inside the nested cups.",
+                                "Observation: Final temperature T2 > Initial temperature T1. Conclusion: The reaction of magnesium with dilute hydrochloric acid is accompanied by releasing thermal energy, which leads to an increase in the temperature of the system, which in turn leads to an increase in the temperature of the surroundings. Such reaction is termed an exothermic reaction. The diagram illustrates heat flowing from the system to the surroundings.",
+                                "System represents the reaction mixture (reactants and products). Surroundings represent the thermometer, the reaction vessel (cup or glass), and the surrounding air. The thermochemical equation which expresses this reaction is: Mg(s) + 2HCl(aq) -> MgCl2(aq) + H2(g) + heat."
+                            ]
+                        },
+                        {
+                            "page": 31,
+                            "explanation": [
+                                "Exothermic reactions are defined as reactions that release thermal energy to the surroundings as a product of the reaction, causing the temperature of the surroundings to rise. Examples include reactions of metals with dilute acids, reactions of alkalis with acids, and reactions of metal carbonates with dilute acids.",
+                                "Exothermic reactions are represented by an energy diagram showing the energy level of reactants higher than the energy level of products. From this diagram, it is clear that the amount of energy released during the formation of new bonds in product molecules is greater than the amount of energy absorbed during the breakage of the bonds in reactant molecules. The difference between the amounts of released energy and absorbed energy appears as released thermal energy from the reaction, thus fulfilling the law of conservation of energy.",
+                                "Application: The reaction of hydrogen gas with oxygen gas to form water is represented by the equation: 2H2(g) + O2(g) -> 2H2O(l). The energy input is 872 kJ + 498 kJ, and the energy output is 1840 kJ."
+                            ]
+                        },
+                        {
+                            "page": 32,
+                            "explanation": [
+                                "The sum of absorbed energies during breaking bonds (energy input) = 872 + 498 = 1370 kJ. The sum of released energies during forming bonds (energy output) = 1840 kJ. Since the sum of released energies (1840 kJ) is greater than the sum of absorbed energies (1370 kJ), this reaction releases an amount of energy equal to the difference (1840 - 1370 = 470 kJ), thus fulfilling the law of conservation of energy. The energy diagram shows the energy levels of reactants and products.",
+                                "Integration with life sciences: Luminous insects (such as fireflies) emit light from the abdominal area as a result of exothermic chemical reactions occurring inside their bodies, in which most of the produced energy is converted into light (not heat).",
+                                "Life Applications: Self-heating cans. Composition: The can contains a separated inner cone (compartment) containing both calcium oxide CaO (quicklime) and water, separated by a thin membrane. How it works: When the button found in the bottom of the can is pressed, the thin membrane which is between CaO and water ruptures. An exothermic chemical reaction occurs between calcium oxide and water, forming calcium hydroxide solution with releasing heat. The diagram shows the structure of the self-heating can."
+                            ]
+                        },
+                        {
+                            "page": 33,
+                            "explanation": [
+                                "The thermochemical equation for the reaction in self-heating cans is: CaO(s) + H2O(l) -> Ca(OH)2(aq) + heat. Its importance: Warming coffee or heating the foods inside it, using the heat released from the reaction without the need for the external heat source. Take care: The common name of calcium hydroxide solution Ca(OH)2(aq) is limewater, while the common name of calcium hydroxide powder Ca(OH)2(s) is slaked lime.",
+                                "Thermite reaction: The reaction of aluminum (Al) with red iron oxide (Fe2O3) is accompanied by the release of a significant amount of thermal energy, leading to melting iron which is produced from the reaction. The thermochemical equation is: 2Al(s) + Fe2O3(s) -> Al2O3(s) + 2Fe(l) + heat. Its importance: This reaction is used in welding the railway tracks. The diagram shows the welding process.",
+                                "Second: Endothermic reactions. Activity 3: Practical. Materials: Barium hydroxide powder Ba(OH)2(s), ammonium chloride powder NH4Cl(s), water, glass rod, glass flask, a piece of wood, and a digital thermometer."
+                            ]
+                        },
+                        {
+                            "page": 34,
+                            "explanation": [
+                                "Steps: Moisten the piece of wood with a little amount of water, then place a beaker containing barium hydroxide powder on this moistened wood piece. Record the initial temperature of the powder T1 using the digital thermometer. Add ammonium chloride powder to the flask and stir the mixture well using the glass rod. Record the final temperature T2 of the reaction mixture. Try to lift the flask off the piece of wood. The diagrams show the setup and the flask sticking to the wood.",
+                                "Observation: Final temperature T2 < Initial temperature T1. The flask sticks to the piece of wood. Explanation: The decrease in the temperature of the surroundings led to the freezing of the water layer between the flask and the piece of wood, which caused them to stick together. Conclusion: The reaction of barium hydroxide with ammonium chloride is accompanied by the absorption of thermal energy, leading to decreasing the temperature of the system, which in turn leads to decreasing the temperature of the surroundings. This reaction is termed an endothermic reaction. The diagram illustrates heat flowing from the surroundings into the system."
+                            ]
+                        },
+                        {
+                            "page": 35,
+                            "explanation": [
+                                "Endothermic reactions are defined as reactions that require the absorption of thermal energy from the surroundings, causing the temperature of the surroundings to decrease (be lowered). Examples include thermal decomposition reaction of limestone (calcium carbonate CaCO3), decomposition reaction of ozone gas O3 in the atmosphere, and sodium bicarbonate reaction with dilute acids. Take care: All thermal decomposition reactions are endothermic.",
+                                "Endothermic reactions are represented by an energy diagram showing the energy level of reactants lower than the energy level of products. From this diagram, it is clear that the amount of energy released during the formation of new bonds in product molecules is less than the amount of energy absorbed during the breakage of the bonds in reactant molecules. The difference between the amounts of released energy and absorbed energy appears as absorbed thermal energy from the surroundings, which fulfills the law of conservation of energy."
+                            ]
+                        },
+                        {
+                            "page": 36,
+                            "questions": [
+                                {
+                                    "ex_title": "Question ? Answer",
+                                    "type": "text",
+                                    "q_txt": "What is the name and molecular formula of each of the following: 1- Quicklime. 2- Limewater. 3- Slaked lime. 4- Limestone.",
+                                    "a_txt": "1- Calcium oxide CaO(s), 2- Calcium hydroxide solution Ca(OH)2(aq), 3- Calcium hydroxide powder Ca(OH)2(s), 4- Calcium carbonate CaCO3(s)",
+                                    "mcq_choices": null
+                                },
+                                {
+                                    "ex_title": "Question ? Answer",
+                                    "type": "text",
+                                    "q_txt": "What happens when quicklime dissolves in water? With explanation.",
+                                    "a_txt": "Thermal energy is released, causing the temperature of the surroundings to rise, as a result of an exothermic chemical reaction between quicklime and water. CaO(s) + H2O(l) -> Ca(OH)2(aq) + heat",
+                                    "mcq_choices": null
+                                },
+                                {
+                                    "ex_title": "Question ? Answer",
+                                    "type": "text",
+                                    "q_txt": "Mention a life application in which quicklime is used.",
+                                    "a_txt": "Self-heating cans.",
+                                    "mcq_choices": null
+                                },
+                                {
+                                    "ex_title": "2",
+                                    "type": "mcq",
+                                    "q_txt": "Which of the following energy diagrams represents a reaction that absorbs the greatest amount of energy?",
+                                    "a_txt": "0",
+                                    "mcq_choices": [
+                                        "a",
+                                        "b",
+                                        "c",
+                                        "d"
+                                    ]
+                                }
+                            ]
+                        },
+                        {
+                            "page": 37,
+                            "explanation": [
+                                "Evaluate Your Understanding: From the opposite energy diagram, what is the type and amount of the accompanying energy (released or absorbed) in this reaction? The diagram shows an energy profile where the reactant energy level is lower than the product energy level, indicating an endothermic reaction. The energy absorbed during breaking bonds in the reactant molecules is (X + Y). The energy released during forming bonds in the product molecules is (Z). The amount of energy = (X + Y) - Z = 100 kJ."
+                            ]
+                        },
+                        {
+                            "page": 38,
+                            "explanation": [
+                                "Comparison between exothermic reactions and endothermic reactions: Exothermic reactions release thermal energy to the surroundings, causing the temperature of the surroundings to increase. Examples: Reactions of metals with dilute acids, reactions of alkalis with acids, reactions of metal carbonates with dilute acids. The energy diagram shows reactants at a higher energy level than products. The amount of energy released during forming new bonds in product molecules is greater than the amount of energy absorbed during breakage of the bonds in the reactant molecules. Therefore, the reaction (system) releases thermal energy equal to the difference between the amount of released energy and absorbed energy, thus fulfilling the law of conservation of energy.",
+                                "Endothermic reactions require the absorption of thermal energy from the surroundings, causing the temperature of the surroundings to decrease. Examples: Decomposition reaction of calcium carbonate, decomposition reaction of ozone gas in the atmosphere, reaction of sodium bicarbonate with dilute acids. The energy diagram shows reactants at a lower energy level than products. The amount of energy released during forming new bonds in product molecules is less than the amount of energy absorbed during breakage of the bonds in the reactant molecules. Therefore, the reaction (system) absorbs thermal energy equal to the difference between the amount of released energy and absorbed energy, thus fulfilling the law of conservation of energy."
+                            ]
+                        },
+                        {
+                            "page": 39,
+                            "questions": [
+                                {
+                                    "ex_title": "Choose the correct answer",
+                                    "type": "mcq",
+                                    "q_txt": "The reaction of magnesium with dilute hydrochloric acid is",
+                                    "a_txt": "3",
+                                    "mcq_choices": [
+                                        "exothermic, and produces carbon dioxide gas.",
+                                        "endothermic, and produces hydrogen gas.",
+                                        "endothermic, and produces carbon dioxide gas.",
+                                        "exothermic, and produces hydrogen gas."
+                                    ]
+                                },
+                                {
+                                    "ex_title": "Choose the correct answer",
+                                    "type": "mcq",
+                                    "q_txt": "Which of the following represents an endothermic reaction?",
+                                    "a_txt": "1",
+                                    "mcq_choices": [
+                                        "The reaction of aluminum with dilute hydrochloric acid.",
+                                        "The decomposition reaction of ozone gas in the atmosphere.",
+                                        "The reaction of sulphuric acid with sodium hydroxide.",
+                                        "The reaction of dilute hydrochloric acid with sodium carbonate."
+                                    ]
+                                },
+                                {
+                                    "ex_title": "Choose the correct answer",
+                                    "type": "mcq",
+                                    "q_txt": "In the process: 2NaCl -> 2Na + Cl2. The breakage of the bonds in NaCl involves",
+                                    "a_txt": "0",
+                                    "mcq_choices": [
+                                        "absorption of energy.",
+                                        "creation of energy.",
+                                        "destruction of energy.",
+                                        "releasing energy."
+                                    ]
+                                },
+                                {
+                                    "ex_title": "Choose the correct answer",
+                                    "type": "mcq",
+                                    "q_txt": "Self-heating cans contain",
+                                    "a_txt": "1",
+                                    "mcq_choices": [
+                                        "slaked lime.",
+                                        "quicklime.",
+                                        "limestone.",
+                                        "baking soda."
+                                    ]
+                                }
+                            ]
+                        }
+                    ]
+                }
+            ]
+        }
+    ]
+}

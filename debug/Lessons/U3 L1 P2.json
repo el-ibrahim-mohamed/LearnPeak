@@ -1,0 +1,724 @@
+{
+    "units": [
+        {
+            "unit_num": 3,
+            "unit_name": "Reproduction in Living Organisms",
+            "lessons": [
+                {
+                    "lesson_num": 1,
+                    "lesson_name": "Cell Division",
+                    "pages": [
+                        {
+                            "page": 157,
+                            "questions": [
+                                {
+                                    "ex_title": "Write the scientific term of each of the following statements",
+                                    "type": "text",
+                                    "q_txt": "A vital process in which the living organism produces new individuals of the same species, ensuring the continuity of life and protecting the species from extinction.",
+                                    "a_txt": "Reproduction.",
+                                    "mcq_choices": null
+                                },
+                                {
+                                    "ex_title": "Write the scientific term of each of the following statements",
+                                    "type": "text",
+                                    "q_txt": "It is the unit of structure and function in living organisms.",
+                                    "a_txt": "Cell.",
+                                    "mcq_choices": null
+                                },
+                                {
+                                    "ex_title": "Write the scientific term of each of the following statements",
+                                    "type": "text",
+                                    "q_txt": "They include all the cells of the living organism, except the reproductive cells.",
+                                    "a_txt": "Somatic cells.",
+                                    "mcq_choices": null
+                                },
+                                {
+                                    "ex_title": "Write the scientific term of each of the following statements",
+                                    "type": "text",
+                                    "q_txt": "The male and female reproductive organs responsible for production of reproductive cells.",
+                                    "a_txt": "Gonads.",
+                                    "mcq_choices": null
+                                },
+                                {
+                                    "ex_title": "Write the scientific term of each of the following statements",
+                                    "type": "text",
+                                    "q_txt": "Specialized cells responsible for sexual reproduction in living organisms.",
+                                    "a_txt": "Gametes.",
+                                    "mcq_choices": null
+                                },
+                                {
+                                    "ex_title": "Write the scientific term of each of the following statements",
+                                    "type": "text",
+                                    "q_txt": "The cell division in which the somatic cell divides into two new diploid daughter cells identical to the parent cell.",
+                                    "a_txt": "Mitosis.",
+                                    "mcq_choices": null
+                                },
+                                {
+                                    "ex_title": "Write the scientific term of each of the following statements",
+                                    "type": "text",
+                                    "q_txt": "The cell division in which the cell divides into four haploid daughter cells, each daughter cell contains half the original number of chromosomes.",
+                                    "a_txt": "Meiosis.",
+                                    "mcq_choices": null
+                                },
+                                {
+                                    "ex_title": "Write the scientific term of each of the following statements",
+                                    "type": "text",
+                                    "q_txt": "A phenomenon that leads to the diversity of genetic traits among the individuals of the same species.",
+                                    "a_txt": "Crossing-over phenomenon.",
+                                    "mcq_choices": null
+                                },
+                                {
+                                    "ex_title": "Write the scientific term of each of the following statements",
+                                    "type": "text",
+                                    "q_txt": "An abnormal cell growth formed when a somatic cell undergoes uncontrolled mitotic division repeatedly and abnormally.",
+                                    "a_txt": "Cancerous tumor.",
+                                    "mcq_choices": null
+                                },
+                                {
+                                    "ex_title": "Write the scientific term of each of the following statements",
+                                    "type": "text",
+                                    "q_txt": "A vital process in which the parental individual produces new individuals that are completely identical in genetic traits.",
+                                    "a_txt": "Asexual reproduction.",
+                                    "mcq_choices": null
+                                },
+                                {
+                                    "ex_title": "Write the scientific term of each of the following statements",
+                                    "type": "text",
+                                    "q_txt": "The form of the asexual reproduction of the potato plant through its tubers.",
+                                    "a_txt": "Vegetative reproduction.",
+                                    "mcq_choices": null
+                                },
+                                {
+                                    "ex_title": "Write the scientific term of each of the following statements",
+                                    "type": "text",
+                                    "q_txt": "A vital process in which two parental individuals of the same species, one is male and the other is female, participate to produce new individuals that carry a combination of genetic traits of both parents.",
+                                    "a_txt": "Sexual reproduction.",
+                                    "mcq_choices": null
+                                },
+                                {
+                                    "ex_title": "Write the scientific term of each of the following statements",
+                                    "type": "text",
+                                    "q_txt": "The fusion of the nucleus of a male gamete with the nucleus of a female gamete to form a zygote.",
+                                    "a_txt": "Fertilization.",
+                                    "mcq_choices": null
+                                },
+                                {
+                                    "ex_title": "Write the scientific term of each of the following statements",
+                                    "type": "text",
+                                    "q_txt": "The cell resulting from the fusion of the nucleus of a male gamete with the nucleus of a female gamete.",
+                                    "a_txt": "Zygote.",
+                                    "mcq_choices": null
+                                },
+                                {
+                                    "ex_title": "Write the scientific term of each of the following statements",
+                                    "type": "text",
+                                    "q_txt": "The stage that transforms by mitosis into an adult frog.",
+                                    "a_txt": "Tadpole stage.",
+                                    "mcq_choices": null
+                                }
+                            ]
+                        },
+                        {
+                            "page": 158,
+                            "questions": [
+                                {
+                                    "ex_title": "Complete the following sentences",
+                                    "type": "complete",
+                                    "q_txt": "Cells in living organisms are classified into two types which are _____ and _____.",
+                                    "a_txt": [
+                                        "somatic cells",
+                                        "reproductive cells"
+                                    ],
+                                    "mcq_choices": null
+                                },
+                                {
+                                    "ex_title": "Complete the following sentences",
+                                    "type": "complete",
+                                    "q_txt": "The male gametes in animals are called _____ and in plants are called _____.",
+                                    "a_txt": [
+                                        "sperms",
+                                        "pollen grains"
+                                    ],
+                                    "mcq_choices": null
+                                },
+                                {
+                                    "ex_title": "Complete the following sentences",
+                                    "type": "complete",
+                                    "q_txt": "The number of chromosomes in the somatic cell is symbolized by _____, while the number of chromosomes in the gamete is symbolized by _____.",
+                                    "a_txt": [
+                                        "2n",
+                                        "n"
+                                    ],
+                                    "mcq_choices": null
+                                },
+                                {
+                                    "ex_title": "Complete the following sentences",
+                                    "type": "complete",
+                                    "q_txt": "In a human female, each intestinal cell contains _____ chromosomes, while each ovum contains _____ chromosomes.",
+                                    "a_txt": [
+                                        "46",
+                                        "23"
+                                    ],
+                                    "mcq_choices": null
+                                },
+                                {
+                                    "ex_title": "Complete the following sentences",
+                                    "type": "complete",
+                                    "q_txt": "The _____ animal is similar to the _____ plant in that the somatic cell of each of them contains 48 chromosomes.",
+                                    "a_txt": [
+                                        "chimpanzee",
+                                        "potato"
+                                    ],
+                                    "mcq_choices": null
+                                },
+                                {
+                                    "ex_title": "Complete the following sentences",
+                                    "type": "complete",
+                                    "q_txt": "The somatic cell of the elephant contains _____ chromosomes, while the somatic cell of the crow contains _____ chromosomes.",
+                                    "a_txt": [
+                                        "56",
+                                        "80"
+                                    ],
+                                    "mcq_choices": null
+                                },
+                                {
+                                    "ex_title": "Complete the following sentences",
+                                    "type": "complete",
+                                    "q_txt": "Cell divisions are classified into two types which are _____ and _____.",
+                                    "a_txt": [
+                                        "mitosis",
+                                        "meiosis"
+                                    ],
+                                    "mcq_choices": null
+                                },
+                                {
+                                    "ex_title": "Complete the following sentences",
+                                    "type": "complete",
+                                    "q_txt": "Mitosis is called _____ division, while meiosis is called _____ division.",
+                                    "a_txt": [
+                                        "equational",
+                                        "reductional"
+                                    ],
+                                    "mcq_choices": null
+                                },
+                                {
+                                    "ex_title": "Complete the following sentences",
+                                    "type": "complete",
+                                    "q_txt": "In human, meiosis occurs in the _____ to form male gametes, while it occurs in the _____ to form female gametes.",
+                                    "a_txt": [
+                                        "testis",
+                                        "ovary"
+                                    ],
+                                    "mcq_choices": null
+                                },
+                                {
+                                    "ex_title": "Complete the following sentences",
+                                    "type": "complete",
+                                    "q_txt": "Somatic cells divide by _____, while gonads divide by _____.",
+                                    "a_txt": [
+                                        "mitosis",
+                                        "meiosis"
+                                    ],
+                                    "mcq_choices": null
+                                },
+                                {
+                                    "ex_title": "Complete the following sentences",
+                                    "type": "complete",
+                                    "q_txt": "Meiosis leads to the production of _____ necessary for the occurrence of _____.",
+                                    "a_txt": [
+                                        "gametes",
+                                        "sexual reproduction"
+                                    ],
+                                    "mcq_choices": null
+                                },
+                                {
+                                    "ex_title": "Complete the following sentences",
+                                    "type": "complete",
+                                    "q_txt": "_____ reproduction in the potato plant through _____ is a form of asexual reproduction.",
+                                    "a_txt": [
+                                        "vegetative",
+                                        "tubers"
+                                    ],
+                                    "mcq_choices": null
+                                },
+                                {
+                                    "ex_title": "Complete the following sentences",
+                                    "type": "complete",
+                                    "q_txt": "_____ reproduction depends on a single parental individual, while _____ reproduction involves two parental individuals.",
+                                    "a_txt": [
+                                        "Asexual",
+                                        "sexual"
+                                    ],
+                                    "mcq_choices": null
+                                },
+                                {
+                                    "ex_title": "Complete the following sentences",
+                                    "type": "complete",
+                                    "q_txt": "_____ reproduction depends on mitosis, while _____ reproduction depends on meiosis.",
+                                    "a_txt": [
+                                        "Asexual",
+                                        "sexual"
+                                    ],
+                                    "mcq_choices": null
+                                },
+                                {
+                                    "ex_title": "Complete the following sentences",
+                                    "type": "complete",
+                                    "q_txt": "_____ reproduction is characterized by the production of individuals having traits shared from both parents, while _____ reproduction is characterized by the production of individuals carrying an exact genetic copy of the parental individual.",
+                                    "a_txt": [
+                                        "sexual",
+                                        "asexual"
+                                    ],
+                                    "mcq_choices": null
+                                },
+                                {
+                                    "ex_title": "Complete the following sentences",
+                                    "type": "complete",
+                                    "q_txt": "When zygote grows by _____ divisions, it gives a new individual whose genetic traits is a combination of the traits of _____.",
+                                    "a_txt": [
+                                        "mitotic",
+                                        "both parental individuals"
+                                    ],
+                                    "mcq_choices": null
+                                },
+                                {
+                                    "ex_title": "Complete the following sentences",
+                                    "type": "complete",
+                                    "q_txt": "In the fertilization process, _____ fuses with _____ to form the zygote.",
+                                    "a_txt": [
+                                        "female gamete nucleus",
+                                        "male gamete nucleus"
+                                    ],
+                                    "mcq_choices": null
+                                },
+                                {
+                                    "ex_title": "Complete the following sentences",
+                                    "type": "complete",
+                                    "q_txt": "In sexual reproduction of the frog, zygote divides several _____ divisions, forming the _____ stage, which transforms into an adult frog.",
+                                    "a_txt": [
+                                        "mitotic",
+                                        "tadpole"
+                                    ],
+                                    "mcq_choices": null
+                                },
+                                {
+                                    "ex_title": "Complete the following sentences",
+                                    "type": "complete",
+                                    "q_txt": "Sexual reproduction is a source of genetic diversity due to the occurrence of _____ phenomenon during _____ stage.",
+                                    "a_txt": [
+                                        "crossing-over",
+                                        "first meiotic"
+                                    ],
+                                    "mcq_choices": null
+                                }
+                            ]
+                        },
+                        {
+                            "page": 159,
+                            "questions": [
+                                {
+                                    "ex_title": "Mark (T) or (X) for each statement, with correction if needed",
+                                    "type": "true_false_with_correction",
+                                    "q_txt": "All living organisms share key characteristics such as nutrition and reproduction.",
+                                    "a_txt": [
+                                        "True",
+                                        null
+                                    ],
+                                    "mcq_choices": null
+                                },
+                                {
+                                    "ex_title": "Mark (T) or (X) for each statement, with correction if needed",
+                                    "type": "true_false_with_correction",
+                                    "q_txt": "Sperms and pollen grains are female gametes.",
+                                    "a_txt": [
+                                        "False",
+                                        {
+                                            "mistake": "female gametes",
+                                            "correction": "male gametes"
+                                        }
+                                    ],
+                                    "mcq_choices": null
+                                },
+                                {
+                                    "ex_title": "Mark (T) or (X) for each statement, with correction if needed",
+                                    "type": "true_false_with_correction",
+                                    "q_txt": "The number of chromosomes in cardiac muscle cells in human is symbolized by the symbol (n).",
+                                    "a_txt": [
+                                        "False",
+                                        {
+                                            "mistake": "(n)",
+                                            "correction": "(2n)"
+                                        }
+                                    ],
+                                    "mcq_choices": null
+                                },
+                                {
+                                    "ex_title": "Mark (T) or (X) for each statement, with correction if needed",
+                                    "type": "true_false_with_correction",
+                                    "q_txt": "The somatic cells of the living organism contain chromosomes in a single form (odd number).",
+                                    "a_txt": [
+                                        "False",
+                                        {
+                                            "mistake": "in a single form (odd number)",
+                                            "correction": "in the form of pairs"
+                                        }
+                                    ],
+                                    "mcq_choices": null
+                                },
+                                {
+                                    "ex_title": "Mark (T) or (X) for each statement, with correction if needed",
+                                    "type": "true_false_with_correction",
+                                    "q_txt": "The number of chromosomes in the human somatic cell is equal to half their number in gametes.",
+                                    "a_txt": [
+                                        "False",
+                                        {
+                                            "mistake": "half",
+                                            "correction": "double"
+                                        }
+                                    ],
+                                    "mcq_choices": null
+                                },
+                                {
+                                    "ex_title": "Mark (T) or (X) for each statement, with correction if needed",
+                                    "type": "true_false_with_correction",
+                                    "q_txt": "In a human female, the number of chromosomes in a liver cell equals the number of chromosomes in one of her ovary cells.",
+                                    "a_txt": [
+                                        "True",
+                                        null
+                                    ],
+                                    "mcq_choices": null
+                                },
+                                {
+                                    "ex_title": "Mark (T) or (X) for each statement, with correction if needed",
+                                    "type": "true_false_with_correction",
+                                    "q_txt": "The number of chromosomes in the sperm equals half the number of chromosomes in the ovum of a female of the same species.",
+                                    "a_txt": [
+                                        "False",
+                                        {
+                                            "mistake": "equals half the number of",
+                                            "correction": "equals the same number of"
+                                        }
+                                    ],
+                                    "mcq_choices": null
+                                },
+                                {
+                                    "ex_title": "Mark (T) or (X) for each statement, with correction if needed",
+                                    "type": "true_false_with_correction",
+                                    "q_txt": "The similar chromosome count of different species of the living organisms does not mean that they are genetically similar.",
+                                    "a_txt": [
+                                        "True",
+                                        null
+                                    ],
+                                    "mcq_choices": null
+                                },
+                                {
+                                    "ex_title": "Mark (T) or (X) for each statement, with correction if needed",
+                                    "type": "true_false_with_correction",
+                                    "q_txt": "There is no relation between the size of the living organism and its chromosome count.",
+                                    "a_txt": [
+                                        "True",
+                                        null
+                                    ],
+                                    "mcq_choices": null
+                                },
+                                {
+                                    "ex_title": "Mark (T) or (X) for each statement, with correction if needed",
+                                    "type": "true_false_with_correction",
+                                    "q_txt": "Division of one cell mitotically produces two cells, each contains half the genetic material present in the parent cell.",
+                                    "a_txt": [
+                                        "False",
+                                        {
+                                            "mistake": "each contains half the genetic material",
+                                            "correction": "each contains a complete copy of the genetic material"
+                                        }
+                                    ],
+                                    "mcq_choices": null
+                                },
+                                {
+                                    "ex_title": "Mark (T) or (X) for each statement, with correction if needed",
+                                    "type": "true_false_with_correction",
+                                    "q_txt": "The cell resulting from meiosis contains the same number of chromosomes as the cell resulting from mitosis of the same species.",
+                                    "a_txt": [
+                                        "False",
+                                        {
+                                            "mistake": "contains the same number of",
+                                            "correction": "contains half the number of"
+                                        }
+                                    ],
+                                    "mcq_choices": null
+                                },
+                                {
+                                    "ex_title": "Mark (T) or (X) for each statement, with correction if needed",
+                                    "type": "true_false_with_correction",
+                                    "q_txt": "The purpose of meiosis is to form gametes.",
+                                    "a_txt": [
+                                        "True",
+                                        null
+                                    ],
+                                    "mcq_choices": null
+                                },
+                                {
+                                    "ex_title": "Mark (T) or (X) for each statement, with correction if needed",
+                                    "type": "true_false_with_correction",
+                                    "q_txt": "The offspring resulting from asexual reproduction acquires traits different from those of the parental individual.",
+                                    "a_txt": [
+                                        "False",
+                                        {
+                                            "mistake": "asexual reproduction",
+                                            "correction": "sexual reproduction"
+                                        }
+                                    ],
+                                    "mcq_choices": null
+                                },
+                                {
+                                    "ex_title": "Mark (T) or (X) for each statement, with correction if needed",
+                                    "type": "true_false_with_correction",
+                                    "q_txt": "Potato tubers that reproduce asexually must contain buds.",
+                                    "a_txt": [
+                                        "True",
+                                        null
+                                    ],
+                                    "mcq_choices": null
+                                },
+                                {
+                                    "ex_title": "Mark (T) or (X) for each statement, with correction if needed",
+                                    "type": "true_false_with_correction",
+                                    "q_txt": "Potato tubers functions as storage organ and energy reservoire to supply the stem and the roots with the necessary nutrients and energy.",
+                                    "a_txt": [
+                                        "True",
+                                        null
+                                    ],
+                                    "mcq_choices": null
+                                },
+                                {
+                                    "ex_title": "Mark (T) or (X) for each statement, with correction if needed",
+                                    "type": "true_false_with_correction",
+                                    "q_txt": "Asexual reproduction keeps the genetic traits of living organisms.",
+                                    "a_txt": [
+                                        "True",
+                                        null
+                                    ],
+                                    "mcq_choices": null
+                                },
+                                {
+                                    "ex_title": "Choose the correct answer",
+                                    "type": "mcq",
+                                    "q_txt": "Among the examples of somatic cells in the plant are _____.",
+                                    "a_txt": 3,
+                                    "mcq_choices": [
+                                        "parenchymal cells and pollen grains.",
+                                        "collenchymal cells and ovules.",
+                                        "pollen grains and ovules.",
+                                        "parenchymal cells and collenchymal cells."
+                                    ]
+                                },
+                                {
+                                    "ex_title": "Choose the correct answer",
+                                    "type": "mcq",
+                                    "q_txt": "Among the examples of gametes in human are _____.",
+                                    "a_txt": 3,
+                                    "mcq_choices": [
+                                        "intestinal cells only.",
+                                        "cardiac muscle cells only.",
+                                        "intestinal cells and cardiac muscle cells.",
+                                        "sperms and ova."
+                                    ]
+                                }
+                            ]
+                        },
+                        {
+                            "page": 160,
+                            "questions": [
+                                {
+                                    "ex_title": "Choose the correct answer",
+                                    "type": "mcq",
+                                    "q_txt": "If the number of chromosomes in the somatic cell is (2n), then their number in the male gamete is _____.",
+                                    "a_txt": 1,
+                                    "mcq_choices": [
+                                        "1/2 n",
+                                        "n",
+                                        "2n",
+                                        "4n"
+                                    ]
+                                },
+                                {
+                                    "ex_title": "Choose the correct answer",
+                                    "type": "mcq",
+                                    "q_txt": "All the following contain half the genetic material (n), except _____.",
+                                    "a_txt": 3,
+                                    "mcq_choices": [
+                                        "pollen grains.",
+                                        "ovules.",
+                                        "sperms.",
+                                        "liver cells."
+                                    ]
+                                },
+                                {
+                                    "ex_title": "Choose the correct answer",
+                                    "type": "mcq",
+                                    "q_txt": "A cell contains 24 chromosomes and it divided mitotically into two cells. What is the number of chromosome pairs in each of them?",
+                                    "a_txt": 1,
+                                    "mcq_choices": [
+                                        "8",
+                                        "12",
+                                        "24",
+                                        "48"
+                                    ]
+                                },
+                                {
+                                    "ex_title": "Choose the correct answer",
+                                    "type": "mcq",
+                                    "q_txt": "A skin cell of an animal contains 8 chromosomes. What is the number of chromosomes present in each gamete produced by this animal?",
+                                    "a_txt": 1,
+                                    "mcq_choices": [
+                                        "2 chromosomes.",
+                                        "4 chromosomes.",
+                                        "8 chromosomes.",
+                                        "16 chromosomes."
+                                    ]
+                                },
+                                {
+                                    "ex_title": "Choose the correct answer",
+                                    "type": "mcq",
+                                    "q_txt": "If a pollen grain of a plant contains 10 chromosomes. What is the number of chromosomes in a collenchymal cell in the stem of this plant?",
+                                    "a_txt": 3,
+                                    "mcq_choices": [
+                                        "5 chromosomes.",
+                                        "10 chromosomes.",
+                                        "5 pairs of chromosomes.",
+                                        "10 pairs of chromosomes."
+                                    ]
+                                },
+                                {
+                                    "ex_title": "Choose the correct answer",
+                                    "type": "mcq",
+                                    "q_txt": "If the chromosome count in a liver cell of an organism is 6 pairs of chromosomes, then the number of chromosomes in one of its gametes equals _____.",
+                                    "a_txt": 2,
+                                    "mcq_choices": [
+                                        "4 chromosomes.",
+                                        "8 chromosomes.",
+                                        "6 chromosomes.",
+                                        "32 chromosomes."
+                                    ]
+                                },
+                                {
+                                    "ex_title": "Choose the correct answer",
+                                    "type": "mcq",
+                                    "q_txt": "The division of a gonad cell in a human male produces _____.",
+                                    "a_txt": 2,
+                                    "mcq_choices": [
+                                        "2 sperms.",
+                                        "2 ova.",
+                                        "4 sperms.",
+                                        "4 ova."
+                                    ]
+                                },
+                                {
+                                    "ex_title": "Choose the correct answer",
+                                    "type": "mcq",
+                                    "q_txt": "The opposite figure shows a type of body cells. Which of the following is correct? (The figure shows a layer of columnar epithelial cells with nuclei).",
+                                    "a_txt": 0,
+                                    "mcq_choices": [
+                                        "They contain the complete number of chromosomes.",
+                                        "They are symbolized by the symbol (n).",
+                                        "They are produced by meiosis.",
+                                        "They represent gametes."
+                                    ]
+                                },
+                                {
+                                    "ex_title": "Choose the correct answer",
+                                    "type": "mcq",
+                                    "q_txt": "The two opposite figures show two types of cells. Which of the following describes the two figures? (Figure 1 shows green plant parenchymal cells, Figure 2 shows animal somatic cells).",
+                                    "a_txt": 0,
+                                    "mcq_choices": [
+                                        "Both are somatic cells.",
+                                        "Both are reproductive cells.",
+                                        "(1) : Found in human, (2) : Found in the stem of the plant.",
+                                        "(1) : Contain (2n) chromosomes, (2) : Contain (n) chromosomes."
+                                    ]
+                                }
+                            ]
+                        },
+                        {
+                            "page": 161,
+                            "questions": [
+                                {
+                                    "ex_title": "Choose the correct answer",
+                                    "type": "mcq",
+                                    "q_txt": "Which of the following figures represents meiosis (I) stage? (Diagrams show cell division paths).",
+                                    "a_txt": 3,
+                                    "mcq_choices": [
+                                        "a (2n -> 2n, 2n)",
+                                        "b (2n -> 2n, 2n, 2n)",
+                                        "c (n -> n, n, n, n)",
+                                        "d (2n -> n, n -> n, n, n, n)"
+                                    ]
+                                },
+                                {
+                                    "ex_title": "Choose the correct answer",
+                                    "type": "mcq",
+                                    "q_txt": "Mitosis in human aims to each of the following, except _____.",
+                                    "a_txt": 3,
+                                    "mcq_choices": [
+                                        "body growth.",
+                                        "replacing damaged tissues.",
+                                        "healing of wounds.",
+                                        "production of gametes."
+                                    ]
+                                },
+                                {
+                                    "ex_title": "Choose the correct answer",
+                                    "type": "mcq",
+                                    "q_txt": "Asexual reproduction _____.",
+                                    "a_txt": 1,
+                                    "mcq_choices": [
+                                        "results in the diversity in genetic traits.",
+                                        "produces new individuals carrying an exact genetic copy of the parental individual.",
+                                        "produces gametes in the gonads.",
+                                        "produces new individuals genetically different from the parental individual."
+                                    ]
+                                },
+                                {
+                                    "ex_title": "Choose the correct answer",
+                                    "type": "mcq",
+                                    "q_txt": "All the following describe the crossing-over phenomenon, except that it _____.",
+                                    "a_txt": 1,
+                                    "mcq_choices": [
+                                        "occurs between homologous chromosomes.",
+                                        "occurs during the second meiotic division.",
+                                        "results in the genetic diversion of the cells.",
+                                        "involves exchange of genetic material."
+                                    ]
+                                },
+                                {
+                                    "ex_title": "Choose the correct answer",
+                                    "type": "mcq",
+                                    "q_txt": "Potato tubers reproduce asexually through the _____.",
+                                    "a_txt": 2,
+                                    "mcq_choices": [
+                                        "leaves.",
+                                        "stems.",
+                                        "buds.",
+                                        "roots."
+                                    ]
+                                },
+                                {
+                                    "ex_title": "Choose the correct answer",
+                                    "type": "mcq",
+                                    "q_txt": "In the opposite figure: The number of chromosomes is equal in both _____. (The figure shows a frog life cycle: Male (2n) produces gamete W, Female (2n) produces gamete X, Fertilization produces zygote Z, Zygote divides to form stage Y).",
+                                    "a_txt": 3,
+                                    "mcq_choices": [
+                                        "(W), (Y).",
+                                        "(X), (Z).",
+                                        "(Z), (Y).",
+                                        "(W), (Z)."
+                                    ]
+                                }
+                            ]
+                        }
+                    ]
+                }
+            ]
+        }
+    ]
+}

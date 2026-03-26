@@ -1,0 +1,88 @@
+{
+    "units": [
+        {
+            "unit_num": 2,
+            "unit_name": "Forces and Motion",
+            "lessons": [
+                {
+                    "lesson_num": 1,
+                    "lesson_name": "Newton's Laws of Motion",
+                    "pages": [
+                        {
+                            "page": 91,
+                            "explanation": [
+                                "Newton's second law explains the effect of the net force on changing the velocity of the object over time. If unbalanced forces whose resultant does not equal zero act on a moving object, its velocity changes during its motion, and the object is described as moving with an acceleration (a). The diagram shows a car being pushed by two unequal forces F1 and F2, resulting in acceleration.",
+                                "The concept of acceleration: The object is described as moving with acceleration in three cases: 1) When its velocity increases over time, as shown by runners covering increasing distances in equal time intervals. 2) When its velocity decreases over time, as shown by runners covering decreasing distances in equal time intervals. 3) When the direction of its motion changes, even if it is moving at constant velocity, as shown by a runner changing direction along a curved path."
+                            ]
+                        },
+                        {
+                            "page": 92,
+                            "explanation": [
+                                "The direction of acceleration is always in the same direction as the effect of the net force. Acceleration (a) is defined as the change in the velocity of the object per unit time, or the rate of change of the velocity. Newton's second law states that if a net force (F) acts on an object of mass (m), it causes the object to have an acceleration (a) in the same direction as the net force.",
+                                "Newton's second law is expressed as: Acceleration (a) = Net force (F) / Mass (m). The measuring unit of Force (F) is Newton (N), Mass (m) is Kilogram (kg), and Acceleration (a) is Newton/Kilogram (N/kg) which is equivalent to meter/second squared (m/s^2). An object with a mass of 1 kg moving with an acceleration of 1 m/s^2 means it is affected by a net force of 1 N in the same direction of motion.",
+                                "To calculate the acceleration: A car with a mass of 1000 kg moves with an engine force of 1300 N. Using the formula a = F/m, a = 1300 / 1000 = 1.3 m/s^2.",
+                                "Evaluate Your Understanding: Calculate the net force acting on a car with mass 1200 kg moving with an acceleration of 3 m/s^2. Using F = m * a, F = 1200 * 3 = 3600 N."
+                            ]
+                        },
+                        {
+                            "page": 93,
+                            "explanation": [
+                                "Question: Does the runner move along the path shown in the figure at a constant velocity or with acceleration? With giving reason. The figure shows a runner at different time intervals. The table shows: Time 0-2s, distance 5m, velocity 2.5 m/s. Time 2-5s, distance 20m, velocity 6.7 m/s. Since the velocity increases over time, the runner moves with acceleration.",
+                                "Factors affecting acceleration: 1) Mass of the object: If two equal forces act on two objects of different mass, the object with greater mass moves with less acceleration. 2) The net force acting on the object: If two different net forces act on two objects of equal mass, the object affected by a greater net force moves with greater acceleration."
+                            ]
+                        },
+                        {
+                            "page": 94,
+                            "explanation": [
+                                "The relationship between acceleration (a) and mass (m) at constant net force (F) is an inverse relationship (a = F/m). When the mass of the object increases, its acceleration decreases. The relationship between acceleration (a) and net force (F) at constant mass (m) is a direct relationship (a = F/m). When the net force acting on the object increases, its acceleration increases.",
+                                "Application: 1) If the net force acting on the object is doubled (F2 = 2F1) while mass is constant, the acceleration increases to double (a2 = 2a1)."
+                            ]
+                        },
+                        {
+                            "page": 95,
+                            "explanation": [
+                                "2) If the mass of the object is doubled (m2 = 2m1) while the net force remains constant, the acceleration decreases to half (a2 = 1/2 a1). 3) If the net force is doubled (F2 = 2F1) and mass is decreased to half (m2 = 1/2 m1), the acceleration increases to 4 times its value (a2 = 4a1).",
+                                "Safety precautions: When a car stops suddenly, the driver collides with the steering wheel or windshield due to inertia. Safety measures include: 1) Fastening the seat belt, which reduces the rushing forward of the driver. 2) The presence of airbags, which work with the seat belt to prolong the collision time, reducing the rate of change of velocity (acceleration) and minimizing the impact on the driver."
+                            ]
+                        },
+                        {
+                            "page": 96,
+                            "explanation": [
+                                "Newton's Third Law: When a person jumps from the front of a boat forward, the boat moves backward. Activity: Using a balloon, fishing line, straw, and binder clip. Steps involve fixing the line, passing it through the straw, inflating the balloon, and attaching it to the straw. Observation: The balloon moves in the opposite direction of the air rushing out. Explanation: Rushing air out represents the action (thrust of air), and the balloon moving opposite represents the reaction (pushing the balloon by the air). They occur simultaneously."
+                            ]
+                        },
+                        {
+                            "page": 97,
+                            "explanation": [
+                                "Conclusion: Action and reaction occur without time difference in two opposite directions on two different objects. Newton's Third Law: For every action, there is an equal and opposite reaction. Example: When a shell is propelled forward, the cannon moves backward.",
+                                "Question: Mention the properties that distinguish the two forces described by Newton's third law. Answer: (1) Equal in magnitude. (2) Opposite in direction. (3) They occur without any time difference. (4) They act along the same line of action. (5) They affect two different objects.",
+                                "Take care: If two forces of the same type, equal in magnitude and opposite in direction, act on one object, they cancel each other's effect (Newton's First Law). If they act on two different objects, they do not cancel each other's effect (Newton's Third Law). Example: A cat resting on a table is Newton's first law (forces on one object). A rocket launch is Newton's third law (forces on two different objects)."
+                            ]
+                        },
+                        {
+                            "page": 98,
+                            "explanation": [
+                                "Question: The figure shows two girls sitting on skateboards. (1) Describe the direction of movement of each girl after the feet push off, with explanation. (2) What is the law which explains what happened? Answer: (1) The two girls move in opposite directions, because action and reaction always act in opposite directions without any time difference. (2) Newton's third law.",
+                                "Life application: The flying water board (Flyboard) operates by pumping water strongly downward (action), allowing the user to fly upward (reaction). Technological application: Drones work by pushing air downwards from the engines (action), resulting in pushing the drone upwards (reaction)."
+                            ]
+                        },
+                        {
+                            "page": 99,
+                            "explanation": [
+                                "Summary of Newton's Laws of Motion: Newton's first law (kinematic state), Newton's second law (changing velocity), Newton's third law (action and reaction).",
+                                "The effect of collisions on changing velocity: If a collision occurs between two moving objects having the same mass and velocity but in opposite directions, both objects move in the opposite direction as they gain acceleration. The direction of acceleration is the same as the affecting force. If a collision occurs between a moving object and a stationary object, a number of possibilities are expected."
+                            ]
+                        },
+                        {
+                            "page": 100,
+                            "explanation": [
+                                "Among them: Elastic collision leads to the stopping of the moving object and the movement of the stationary object at the same velocity of the moving object before collision. Inelastic collision leads to the slowing down of the moving object and the movement of the stationary object, and both move together after collision at half the velocity of the moving object before collision.",
+                                "Take care: In elastic collision, no loss of kinetic energy occurs. In inelastic collision, there is a loss in kinetic energy converted into heat, sound, or deformation."
+                            ]
+                        }
+                    ]
+                }
+            ]
+        }
+    ]
+}

@@ -1,0 +1,988 @@
+{
+    "units": [
+        {
+            "unit_num": 4,
+            "unit_name": "Physical Changes in the Atmosphere",
+            "lessons": [
+                {
+                    "lesson_num": 2,
+                    "lesson_name": "Winds and Weather Forecasts",
+                    "pages": [
+                        {
+                            "page": 245,
+                            "explanation": [],
+                            "questions": [
+                                {
+                                    "ex_title": "Write the scientific term of each of the following statements",
+                                    "type": "text",
+                                    "q_txt": "It is the horizontal movement of air across the Earth's surface, caused by difference in atmospheric pressure.",
+                                    "a_txt": "Wind",
+                                    "mcq_choices": null
+                                },
+                                {
+                                    "ex_title": "Write the scientific term of each of the following statements",
+                                    "type": "text",
+                                    "q_txt": "The atmospheric pressure system at the two polar regions.",
+                                    "a_txt": "High atmospheric pressure",
+                                    "mcq_choices": null
+                                },
+                                {
+                                    "ex_title": "Write the scientific term of each of the following statements",
+                                    "type": "text",
+                                    "q_txt": "The atmospheric pressure system at 60\u00b0 latitudes at north and south.",
+                                    "a_txt": "Low atmospheric pressure",
+                                    "mcq_choices": null
+                                },
+                                {
+                                    "ex_title": "Write the scientific term of each of the following statements",
+                                    "type": "text",
+                                    "q_txt": "The phenomenon of wind deflection in the Northern Hemisphere in a clockwise direction.",
+                                    "a_txt": "Coriolis Effect",
+                                    "mcq_choices": null
+                                },
+                                {
+                                    "ex_title": "Write the scientific term of each of the following statements",
+                                    "type": "text",
+                                    "q_txt": "A region where the atmospheric pressure value at its center is lower than that in the surrounding areas.",
+                                    "a_txt": "Low pressure system",
+                                    "mcq_choices": null
+                                },
+                                {
+                                    "ex_title": "Write the scientific term of each of the following statements",
+                                    "type": "text",
+                                    "q_txt": "A region where the atmospheric pressure value at its center is higher than that in the surrounding areas.",
+                                    "a_txt": "High pressure system",
+                                    "mcq_choices": null
+                                },
+                                {
+                                    "ex_title": "Write the scientific term of each of the following statements",
+                                    "type": "text",
+                                    "q_txt": "They are curved lines connecting points of equal atmospheric pressure at sea level.",
+                                    "a_txt": "Isobars (lines of equal pressure)",
+                                    "mcq_choices": null
+                                },
+                                {
+                                    "ex_title": "Write the scientific term of each of the following statements",
+                                    "type": "text",
+                                    "q_txt": "The atmospheric pressure system at which clouds and rainfall are formed.",
+                                    "a_txt": "Low atmospheric pressure regions",
+                                    "mcq_choices": null
+                                },
+                                {
+                                    "ex_title": "Write the scientific term of each of the following statements",
+                                    "type": "text",
+                                    "q_txt": "The atmospheric pressure system where the weather is clear and sunny.",
+                                    "a_txt": "High atmospheric pressure regions",
+                                    "mcq_choices": null
+                                },
+                                {
+                                    "ex_title": "Complete the following sentences",
+                                    "type": "complete",
+                                    "q_txt": "The _____ arise as a result of the difference in _____ between regions due to the unequal heating of the Earth's surface.",
+                                    "a_txt": [
+                                        "wind",
+                                        "atmospheric pressure"
+                                    ],
+                                    "mcq_choices": null
+                                },
+                                {
+                                    "ex_title": "Complete the following sentences",
+                                    "type": "complete",
+                                    "q_txt": "The increasing of _____, and the _____ percentage in the equatorial region leads to the formation of a low-pressure system.",
+                                    "a_txt": [
+                                        "temperature",
+                                        "humidity"
+                                    ],
+                                    "mcq_choices": null
+                                },
+                                {
+                                    "ex_title": "Complete the following sentences",
+                                    "type": "complete",
+                                    "q_txt": "The wind movement and its _____ increase, as the difference between the values of _____ in adjacent areas increases.",
+                                    "a_txt": [
+                                        "speed",
+                                        "atmospheric pressure"
+                                    ],
+                                    "mcq_choices": null
+                                },
+                                {
+                                    "ex_title": "Complete the following sentences",
+                                    "type": "complete",
+                                    "q_txt": "In the equatorial regions, the atmospheric pressure is _____, while at latitude 30\u00b0N the atmospheric pressure is _____.",
+                                    "a_txt": [
+                                        "low",
+                                        "high"
+                                    ],
+                                    "mcq_choices": null
+                                },
+                                {
+                                    "ex_title": "Complete the following sentences",
+                                    "type": "complete",
+                                    "q_txt": "Wind moves at the Equator in a _____ path, while it moves in both the Earth's hemispheres in _____ paths.",
+                                    "a_txt": [
+                                        "straight",
+                                        "curved"
+                                    ],
+                                    "mcq_choices": null
+                                },
+                                {
+                                    "ex_title": "Complete the following sentences",
+                                    "type": "complete",
+                                    "q_txt": "The rotation of the Earth on _____ leads to the deflection of the wind path due to the _____.",
+                                    "a_txt": [
+                                        "its axis",
+                                        "Coriolis Effect"
+                                    ],
+                                    "mcq_choices": null
+                                }
+                            ]
+                        },
+                        {
+                            "page": 246,
+                            "explanation": [],
+                            "questions": [
+                                {
+                                    "ex_title": "Complete the following sentences",
+                                    "type": "complete",
+                                    "q_txt": "The wind deflects in the Northern Hemisphere to _____ of its original direction, while in the Southern Hemisphere it deflects _____ the direction of the clock's rotation.",
+                                    "a_txt": [
+                                        "the right",
+                                        "opposite to"
+                                    ],
+                                    "mcq_choices": null
+                                },
+                                {
+                                    "ex_title": "Complete the following sentences",
+                                    "type": "complete",
+                                    "q_txt": "The wind deflection is the strongest at _____ due to the _____.",
+                                    "a_txt": [
+                                        "the two poles",
+                                        "Coriolis Effect"
+                                    ],
+                                    "mcq_choices": null
+                                },
+                                {
+                                    "ex_title": "Complete the following sentences",
+                                    "type": "complete",
+                                    "q_txt": "Weather maps show the movement of air masses based on the speed of _____ and _____ systems.",
+                                    "a_txt": [
+                                        "wind",
+                                        "atmospheric pressure"
+                                    ],
+                                    "mcq_choices": null
+                                },
+                                {
+                                    "ex_title": "Complete the following sentences",
+                                    "type": "complete",
+                                    "q_txt": "On weather maps, points of equal atmospheric pressure are connected by _____ lines which called _____.",
+                                    "a_txt": [
+                                        "curved",
+                                        "isobars"
+                                    ],
+                                    "mcq_choices": null
+                                },
+                                {
+                                    "ex_title": "Complete the following sentences",
+                                    "type": "complete",
+                                    "q_txt": "The values of atmospheric pressure _____ as we move away from the _____ of the high-pressure system.",
+                                    "a_txt": [
+                                        "decrease",
+                                        "center"
+                                    ],
+                                    "mcq_choices": null
+                                },
+                                {
+                                    "ex_title": "Complete the following sentences",
+                                    "type": "complete",
+                                    "q_txt": "The letter _____ refers to the _____ atmospheric pressure region and is coloured with red.",
+                                    "a_txt": [
+                                        "L",
+                                        "low"
+                                    ],
+                                    "mcq_choices": null
+                                },
+                                {
+                                    "ex_title": "Complete the following sentences",
+                                    "type": "complete",
+                                    "q_txt": "The _____ air currents are formed at high-pressure system, while the _____ air currents are formed at low-pressure system.",
+                                    "a_txt": [
+                                        "descending",
+                                        "ascending"
+                                    ],
+                                    "mcq_choices": null
+                                },
+                                {
+                                    "ex_title": "Complete the following sentences",
+                                    "type": "complete",
+                                    "q_txt": "The _____ air currents rotate away from the center of the high-pressure region in the _____ direction of the clock's rotation.",
+                                    "a_txt": [
+                                        "descending",
+                                        "same"
+                                    ],
+                                    "mcq_choices": null
+                                },
+                                {
+                                    "ex_title": "Correct the underlined words",
+                                    "type": "correct_underlined",
+                                    "q_txt": "In the tropical region, the high-pressure region is formed.",
+                                    "a_txt": {
+                                        "mistake": "tropical",
+                                        "correction": "polar"
+                                    },
+                                    "mcq_choices": null
+                                },
+                                {
+                                    "ex_title": "Correct the underlined words",
+                                    "type": "correct_underlined",
+                                    "q_txt": "The increasing of both the temperature and the humidity in the polar region leads to the formation of a low-pressure system.",
+                                    "a_txt": {
+                                        "mistake": "polar",
+                                        "correction": "equatorial (tropical)"
+                                    },
+                                    "mcq_choices": null
+                                },
+                                {
+                                    "ex_title": "Correct the underlined words",
+                                    "type": "correct_underlined",
+                                    "q_txt": "Air moves from one region to another that differs in humidity.",
+                                    "a_txt": {
+                                        "mistake": "humidity",
+                                        "correction": "atmospheric pressure"
+                                    },
+                                    "mcq_choices": null
+                                },
+                                {
+                                    "ex_title": "Correct the underlined words",
+                                    "type": "correct_underlined",
+                                    "q_txt": "Wind in the Northern Hemisphere deflects upward of its original direction.",
+                                    "a_txt": {
+                                        "mistake": "upward",
+                                        "correction": "to the right"
+                                    },
+                                    "mcq_choices": null
+                                },
+                                {
+                                    "ex_title": "Correct the underlined words",
+                                    "type": "correct_underlined",
+                                    "q_txt": "The Doppler effect causes the wind moves in curved paths.",
+                                    "a_txt": {
+                                        "mistake": "Doppler",
+                                        "correction": "Coriolis"
+                                    },
+                                    "mcq_choices": null
+                                },
+                                {
+                                    "ex_title": "Mark (T) or (X) for each statement, with correction",
+                                    "type": "true_false_with_correction",
+                                    "q_txt": "Wind is the vertical movement of air.",
+                                    "a_txt": [
+                                        "False",
+                                        {
+                                            "mistake": "vertical",
+                                            "correction": "horizontal"
+                                        }
+                                    ],
+                                    "mcq_choices": null
+                                },
+                                {
+                                    "ex_title": "Mark (T) or (X) for each statement, with correction",
+                                    "type": "true_false_with_correction",
+                                    "q_txt": "The unequal heating of the Earth is considered as the cause, while the wind movement is considered as the result.",
+                                    "a_txt": [
+                                        "True",
+                                        null
+                                    ],
+                                    "mcq_choices": null
+                                },
+                                {
+                                    "ex_title": "Mark (T) or (X) for each statement, with correction",
+                                    "type": "true_false_with_correction",
+                                    "q_txt": "Wind moves from the low-pressure regions.",
+                                    "a_txt": [
+                                        "False",
+                                        {
+                                            "mistake": "low-pressure regions",
+                                            "correction": "the high-pressure regions"
+                                        }
+                                    ],
+                                    "mcq_choices": null
+                                },
+                                {
+                                    "ex_title": "Mark (T) or (X) for each statement, with correction",
+                                    "type": "true_false_with_correction",
+                                    "q_txt": "The wind speed decreases when there is a large difference between atmospheric pressure values in adjacent areas.",
+                                    "a_txt": [
+                                        "False",
+                                        {
+                                            "mistake": "decreases",
+                                            "correction": "increases"
+                                        }
+                                    ],
+                                    "mcq_choices": null
+                                },
+                                {
+                                    "ex_title": "Mark (T) or (X) for each statement, with correction",
+                                    "type": "true_false_with_correction",
+                                    "q_txt": "As a result of the rotation of the Earth around its axis, wind moves in straight paths.",
+                                    "a_txt": [
+                                        "False",
+                                        {
+                                            "mistake": "straight",
+                                            "correction": "curved"
+                                        }
+                                    ],
+                                    "mcq_choices": null
+                                },
+                                {
+                                    "ex_title": "Mark (T) or (X) for each statement, with correction",
+                                    "type": "true_false_with_correction",
+                                    "q_txt": "Wind in the Southern Hemisphere deflects to the left of its original direction.",
+                                    "a_txt": [
+                                        "True",
+                                        null
+                                    ],
+                                    "mcq_choices": null
+                                },
+                                {
+                                    "ex_title": "Mark (T) or (X) for each statement, with correction",
+                                    "type": "true_false_with_correction",
+                                    "q_txt": "The weather is clear and sunny at the high-pressure system.",
+                                    "a_txt": [
+                                        "True",
+                                        null
+                                    ],
+                                    "mcq_choices": null
+                                },
+                                {
+                                    "ex_title": "Mark (T) or (X) for each statement, with correction",
+                                    "type": "true_false_with_correction",
+                                    "q_txt": "Weather maps show symbols that indicate the weather conditions.",
+                                    "a_txt": [
+                                        "True",
+                                        null
+                                    ],
+                                    "mcq_choices": null
+                                }
+                            ]
+                        },
+                        {
+                            "page": 247,
+                            "explanation": [],
+                            "questions": [
+                                {
+                                    "ex_title": "Assign to each icon shown in the following figures the appropriate weather conditions",
+                                    "type": "text",
+                                    "q_txt": "Icon (1) showing white flakes falling from a cloud.",
+                                    "a_txt": "Snowfall",
+                                    "mcq_choices": null
+                                },
+                                {
+                                    "ex_title": "Assign to each icon shown in the following figures the appropriate weather conditions",
+                                    "type": "text",
+                                    "q_txt": "Icon (2) showing a bright sun.",
+                                    "a_txt": "Sunny",
+                                    "mcq_choices": null
+                                },
+                                {
+                                    "ex_title": "Assign to each icon shown in the following figures the appropriate weather conditions",
+                                    "type": "text",
+                                    "q_txt": "Icon (3) showing a cloud with a lightning bolt.",
+                                    "a_txt": "Thunder and lightning",
+                                    "mcq_choices": null
+                                },
+                                {
+                                    "ex_title": "Assign to each icon shown in the following figures the appropriate weather conditions",
+                                    "type": "text",
+                                    "q_txt": "Icon (4) showing a single cloud.",
+                                    "a_txt": "Clouds formation",
+                                    "mcq_choices": null
+                                },
+                                {
+                                    "ex_title": "Assign to each icon shown in the following figures the appropriate weather conditions",
+                                    "type": "text",
+                                    "q_txt": "Icon (5) showing a cloud with raindrops.",
+                                    "a_txt": "Rainfall",
+                                    "mcq_choices": null
+                                },
+                                {
+                                    "ex_title": "Assign to each icon shown in the following figures the appropriate weather conditions",
+                                    "type": "text",
+                                    "q_txt": "Icon (6) showing a swirling vortex.",
+                                    "a_txt": "Hurricanes",
+                                    "mcq_choices": null
+                                },
+                                {
+                                    "ex_title": "Choose the correct answer",
+                                    "type": "mcq",
+                                    "q_txt": "The wind speed is at its maximum when the difference in the atmospheric pressure is _____.",
+                                    "a_txt": 1,
+                                    "mcq_choices": [
+                                        "4 mb between two nearby regions.",
+                                        "20 mb between two nearby regions.",
+                                        "4 mb between two distant regions.",
+                                        "20 mb between two distant regions."
+                                    ]
+                                },
+                                {
+                                    "ex_title": "Choose the correct answer",
+                                    "type": "mcq",
+                                    "q_txt": "The low atmospheric pressure regions are formed at the latitudes of _____.",
+                                    "a_txt": 3,
+                                    "mcq_choices": [
+                                        "90\u00b0N , 0\u00b0",
+                                        "30\u00b0S , 30\u00b0N",
+                                        "60\u00b0S , 30\u00b0N",
+                                        "60\u00b0S , 0\u00b0"
+                                    ]
+                                },
+                                {
+                                    "ex_title": "Choose the correct answer",
+                                    "type": "mcq",
+                                    "q_txt": "The high atmospheric pressure regions are formed at _____.",
+                                    "a_txt": 2,
+                                    "mcq_choices": [
+                                        "increasing of the temperature and the humidity percentage.",
+                                        "increasing of the temperature and decreasing of the humidity percentage.",
+                                        "decreasing of the temperature and the humidity percentage.",
+                                        "decreasing of the temperature and increasing of the humidity percentage."
+                                    ]
+                                },
+                                {
+                                    "ex_title": "Choose the correct answer",
+                                    "type": "mcq",
+                                    "q_txt": "The deflection of wind to the right of its original direction in the Northern Hemisphere is due to _____.",
+                                    "a_txt": 0,
+                                    "mcq_choices": [
+                                        "Coriolis Effect.",
+                                        "high and low pressure zones.",
+                                        "the tilt of the Earth's axis.",
+                                        "The Earth's revolution around the Sun."
+                                    ]
+                                },
+                                {
+                                    "ex_title": "Choose the correct answer",
+                                    "type": "mcq",
+                                    "q_txt": "Wind moves in a straight path _____.",
+                                    "a_txt": 3,
+                                    "mcq_choices": [
+                                        "between the latitudes of 0\u00b0, 30\u00b0N",
+                                        "at the poles.",
+                                        "between the latitudes of 30\u00b0S, 60\u00b0S",
+                                        "at the Equator."
+                                    ]
+                                }
+                            ]
+                        },
+                        {
+                            "page": 248,
+                            "explanation": [],
+                            "questions": [
+                                {
+                                    "ex_title": "Choose the correct answer",
+                                    "type": "mcq",
+                                    "q_txt": "The Coriolis Effect is at its maximum at _____.",
+                                    "a_txt": 2,
+                                    "mcq_choices": [
+                                        "the Equator.",
+                                        "30\u00b0N latitude.",
+                                        "the poles.",
+                                        "60\u00b0S latitude."
+                                    ]
+                                },
+                                {
+                                    "ex_title": "Choose the correct answer",
+                                    "type": "mcq",
+                                    "q_txt": "Which of the following expresses the movement of air currents around the center of a low-pressure system in the Northern Hemisphere?",
+                                    "a_txt": 1,
+                                    "mcq_choices": [
+                                        "In an anticlockwise direction outward.",
+                                        "In an anticlockwise direction inward.",
+                                        "In a clockwise direction outward.",
+                                        "In a clockwise direction inward."
+                                    ]
+                                },
+                                {
+                                    "ex_title": "Choose the correct answer",
+                                    "type": "mcq",
+                                    "q_txt": "The high-pressure regions form _____ air currents _____.",
+                                    "a_txt": 2,
+                                    "mcq_choices": [
+                                        "descending, rotating toward the center of the high-pressure.",
+                                        "rising, rotating toward the center of the high-pressure.",
+                                        "descending, rotating outward from the center of the high-pressure.",
+                                        "rising, rotating outward from the center of the high-pressure."
+                                    ]
+                                },
+                                {
+                                    "ex_title": "Choose the correct answer",
+                                    "type": "mcq",
+                                    "q_txt": "The sky is clear and sunny in _____.",
+                                    "a_txt": 1,
+                                    "mcq_choices": [
+                                        "areas of high humidity.",
+                                        "areas of high-pressure.",
+                                        "areas of high temperature.",
+                                        "areas of low-pressure."
+                                    ]
+                                },
+                                {
+                                    "ex_title": "Choose the correct answer",
+                                    "type": "mcq",
+                                    "q_txt": "Weather maps show the movement of air masses from one region to another based on the _____.",
+                                    "a_txt": 1,
+                                    "mcq_choices": [
+                                        "relative humidity and wind speed.",
+                                        "atmospheric pressure and wind speed.",
+                                        "direction of hurricanes and relative humidity.",
+                                        "difference in latitudes and altitude above sea level."
+                                    ]
+                                },
+                                {
+                                    "ex_title": "Choose the correct answer",
+                                    "type": "mcq",
+                                    "q_txt": "All of the following express high-pressure system, except _____.",
+                                    "a_txt": 3,
+                                    "mcq_choices": [
+                                        "it is symbolized on weather maps by the letter H",
+                                        "the pressure value at its center is greater than its surroundings.",
+                                        "descending air currents are formed above it.",
+                                        "its weather is rainy."
+                                    ]
+                                },
+                                {
+                                    "ex_title": "Choose the correct answer",
+                                    "type": "mcq",
+                                    "q_txt": "From the opposite icon on the weather map (sun with clouds and snow flakes) we can deduce that the weather is likely to be _____.",
+                                    "a_txt": 1,
+                                    "mcq_choices": [
+                                        "completely sunny with cloud formation and rainfall.",
+                                        "partly sunny with clouds formation and snowfall.",
+                                        "completely sunny with snowfall.",
+                                        "partly sunny with rainfall."
+                                    ]
+                                }
+                            ]
+                        },
+                        {
+                            "page": 249,
+                            "explanation": [],
+                            "questions": [
+                                {
+                                    "ex_title": "What is meant by each of the following",
+                                    "type": "text",
+                                    "q_txt": "Wind.",
+                                    "a_txt": "It is the horizontal movement of air across the Earth's surface, caused by difference in atmospheric pressure.",
+                                    "mcq_choices": null
+                                },
+                                {
+                                    "ex_title": "What is meant by each of the following",
+                                    "type": "text",
+                                    "q_txt": "Isobars (lines of equal pressure).",
+                                    "a_txt": "They are curved lines connecting points of equal atmospheric pressure at sea level.",
+                                    "mcq_choices": null
+                                },
+                                {
+                                    "ex_title": "What is meant by each of the following",
+                                    "type": "text",
+                                    "q_txt": "Low-pressure system.",
+                                    "a_txt": "A region where the atmospheric pressure value at its center is lower than that in the surrounding areas.",
+                                    "mcq_choices": null
+                                },
+                                {
+                                    "ex_title": "What is meant by each of the following",
+                                    "type": "text",
+                                    "q_txt": "High-pressure system.",
+                                    "a_txt": "A region where the atmospheric pressure value at its center is higher than that in the surrounding areas.",
+                                    "mcq_choices": null
+                                },
+                                {
+                                    "ex_title": "Give reasons for the following",
+                                    "type": "text",
+                                    "q_txt": "The wind moves horizontally from one region to another on the Earth's surface.",
+                                    "a_txt": "Due to the difference in atmospheric pressure between regions, as a result of the unequal heating of the Earth's surface.",
+                                    "mcq_choices": null
+                                },
+                                {
+                                    "ex_title": "Give reasons for the following",
+                                    "type": "text",
+                                    "q_txt": "The wind moves in curved paths.",
+                                    "a_txt": "As a result of the Coriolis Effect caused by the Earth's rotation around its axis from west to east.",
+                                    "mcq_choices": null
+                                },
+                                {
+                                    "ex_title": "Give reasons for the following",
+                                    "type": "text",
+                                    "q_txt": "The difference in the wind path at the Equator compared to its path at the two poles.",
+                                    "a_txt": "Because at the Equator, the Coriolis Effect is absent, so the wind moves in straight paths, while the Coriolis Effect increases at the two poles, causing the deflection of the wind to be at its maximum.",
+                                    "mcq_choices": null
+                                },
+                                {
+                                    "ex_title": "Give reasons for the following",
+                                    "type": "text",
+                                    "q_txt": "There is no deflection of the wind path at the Equator.",
+                                    "a_txt": "Because of the absence of the Coriolis Effect at the Equator, which allows the wind to move in straight paths without deflection.",
+                                    "mcq_choices": null
+                                },
+                                {
+                                    "ex_title": "Give reasons for the following",
+                                    "type": "text",
+                                    "q_txt": "Clouds and rain are formed at low-pressure system.",
+                                    "a_txt": "Because the rising of air currents in the low pressure regions lead to their cooling and condensation, forming clouds and rainfall.",
+                                    "mcq_choices": null
+                                },
+                                {
+                                    "ex_title": "Give reasons for the following",
+                                    "type": "text",
+                                    "q_txt": "Clear weather at high-pressure system.",
+                                    "a_txt": "Because the descending air currents in the high pressure regions lead to their warming and drying, so the weather in these areas is clear and sunny.",
+                                    "mcq_choices": null
+                                },
+                                {
+                                    "ex_title": "What are the results of each of the following",
+                                    "type": "text",
+                                    "q_txt": "Increasing of the temperature and humidity percentage in the tropical regions.",
+                                    "a_txt": "A low atmospheric pressure region (L) is formed.",
+                                    "mcq_choices": null
+                                },
+                                {
+                                    "ex_title": "What are the results of each of the following",
+                                    "type": "text",
+                                    "q_txt": "Decreasing of the temperature and humidity percentage in the polar regions.",
+                                    "a_txt": "A high atmospheric pressure region (H) is formed.",
+                                    "mcq_choices": null
+                                },
+                                {
+                                    "ex_title": "What are the results of each of the following",
+                                    "type": "text",
+                                    "q_txt": "The difference in the values of atmospheric pressure in nearby regions.",
+                                    "a_txt": "The wind moves from the regions of high atmospheric pressure to the regions of low atmospheric pressure.",
+                                    "mcq_choices": null
+                                },
+                                {
+                                    "ex_title": "What are the results of each of the following",
+                                    "type": "text",
+                                    "q_txt": "The large difference between atmospheric pressure values in adjacent regions.",
+                                    "a_txt": "The movement and the speed of wind increase.",
+                                    "mcq_choices": null
+                                },
+                                {
+                                    "ex_title": "What are the results of each of the following",
+                                    "type": "text",
+                                    "q_txt": "Rotation of the Earth around its axis from west to east relative to the direction of wind movement.",
+                                    "a_txt": "The wind deflects in the Northern Hemisphere to the right of its original direction (in a clockwise direction) and in the Southern Hemisphere to the left of its original direction (in an anticlockwise direction).",
+                                    "mcq_choices": null
+                                },
+                                {
+                                    "ex_title": "What are the results of each of the following",
+                                    "type": "text",
+                                    "q_txt": "Coriolis Effect relative to the direction of wind movement.",
+                                    "a_txt": "The wind deflects in the Northern Hemisphere to the right of its original direction and in the Southern Hemisphere to the left of its original direction.",
+                                    "mcq_choices": null
+                                },
+                                {
+                                    "ex_title": "What are the results of each of the following",
+                                    "type": "text",
+                                    "q_txt": "The absence of Coriolis Effect at the Equator.",
+                                    "a_txt": "The wind moves in straight paths.",
+                                    "mcq_choices": null
+                                },
+                                {
+                                    "ex_title": "Compare between each of the following",
+                                    "type": "text",
+                                    "q_txt": "The wind movement in both the Earth's hemispheres.",
+                                    "a_txt": "In the Northern Hemisphere, wind deflects to the right of its original direction (clockwise). In the Southern Hemisphere, wind deflects to the left of its original direction (anticlockwise).",
+                                    "mcq_choices": null
+                                },
+                                {
+                                    "ex_title": "Compare between each of the following",
+                                    "type": "text",
+                                    "q_txt": "The wind movement at the Equator and at the poles (in terms of: the path).",
+                                    "a_txt": "At the Equator: wind moves in straight paths (no deflection). At the poles: wind moves in curved paths (maximum deflection).",
+                                    "mcq_choices": null
+                                },
+                                {
+                                    "ex_title": "Compare between each of the following",
+                                    "type": "text",
+                                    "q_txt": "The high atmospheric pressure system and low atmospheric pressure system.",
+                                    "a_txt": "High Pressure (H): Decreasing temp/humidity, polar regions, higher pressure at center, descending air currents, clear/sunny weather. Low Pressure (L): Increasing temp/humidity, tropical regions, lower pressure at center, ascending air currents, clouds/rainfall.",
+                                    "mcq_choices": null
+                                },
+                                {
+                                    "ex_title": "Explain the cause and the effect in the relationship between each of the following",
+                                    "type": "text",
+                                    "q_txt": "The atmospheric pressure regions and the wind.",
+                                    "a_txt": "Cause: The difference in atmospheric pressure between regions. Effect: The wind blows from regions of high atmospheric pressure to regions of low atmospheric pressure.",
+                                    "mcq_choices": null
+                                },
+                                {
+                                    "ex_title": "Explain the cause and the effect in the relationship between each of the following",
+                                    "type": "text",
+                                    "q_txt": "The temperature and the humidity percentage and the formation of atmospheric pressure regions.",
+                                    "a_txt": "Cause: Increasing in both the temperature and the humidity percentage in a certain area. Effect: Formation of low atmospheric pressure region L and vice versa.",
+                                    "mcq_choices": null
+                                },
+                                {
+                                    "ex_title": "Explain the cause and the effect in the relationship between each of the following",
+                                    "type": "text",
+                                    "q_txt": "The wind speed and the values of atmospheric pressure in adjacent regions.",
+                                    "a_txt": "Cause: Increase in the difference between atmospheric pressure values in adjacent areas. Effect: Increase the wind speed.",
+                                    "mcq_choices": null
+                                },
+                                {
+                                    "ex_title": "Explain the cause and the effect in the relationship between each of the following",
+                                    "type": "text",
+                                    "q_txt": "Coriolis Effect and the direction of wind movement in both the Earth's hemispheres.",
+                                    "a_txt": "Cause: The Coriolis effect caused by the Earth's rotation around its axis. Effect: The wind deflects in the Northern Hemisphere to the right of its original direction (in a clockwise direction), and in the Southern Hemisphere to the left of its original direction (in an anticlockwise direction).",
+                                    "mcq_choices": null
+                                },
+                                {
+                                    "ex_title": "Explain the cause and the effect in the relationship between each of the following",
+                                    "type": "text",
+                                    "q_txt": "The air currents and different atmospheric pressure regions.",
+                                    "a_txt": "Cause: Difference in atmospheric pressure regions. Effect: Formation of ascending air currents in low atmospheric pressure regions, and descending air currents in high atmospheric pressure regions.",
+                                    "mcq_choices": null
+                                },
+                                {
+                                    "ex_title": "Explain the cause and the effect in the relationship between each of the following",
+                                    "type": "text",
+                                    "q_txt": "The air currents and the weather conditions in different atmospheric pressure regions.",
+                                    "a_txt": "Cause: Difference in the type of air currents. Effect: The ascending air currents in regions of low atmospheric pressure lead to the formation of clouds and rainfall, while the descending air currents in regions of high atmospheric pressure lead to their weather is clear and sunny.",
+                                    "mcq_choices": null
+                                }
+                            ]
+                        },
+                        {
+                            "page": 250,
+                            "explanation": [],
+                            "questions": [
+                                {
+                                    "ex_title": "Study the following figures, then answer the questions",
+                                    "type": "text",
+                                    "q_txt": "The opposite figure shows the thermal regions on the Earth's surface. Explain the wind path at the latitude (W).",
+                                    "a_txt": "It moves in straight paths without deflection.",
+                                    "mcq_choices": null
+                                },
+                                {
+                                    "ex_title": "Study the following figures, then answer the questions",
+                                    "type": "text",
+                                    "q_txt": "The opposite figure shows the thermal regions on the Earth's surface. What is the difference between the wind direction in each of the two regions (X), (Y)?",
+                                    "a_txt": "The region (X): The wind moves to the left of its original direction (in an anticlockwise direction). The region (Y): The wind moves to the right of its original direction (in a clockwise direction).",
+                                    "mcq_choices": null
+                                },
+                                {
+                                    "ex_title": "Study the following figures, then answer the questions",
+                                    "type": "text",
+                                    "q_txt": "The opposite figure shows the thermal regions on the Earth's surface. In which of the two regions (X) or (Y), the temperature is the least? With explanation.",
+                                    "a_txt": "The region (Y) because the temperature decreases as you move away from the Equator.",
+                                    "mcq_choices": null
+                                },
+                                {
+                                    "ex_title": "Study the following figures, then answer the questions",
+                                    "type": "text",
+                                    "q_txt": "The opposite figure shows the thermal regions on the Earth's surface. In which of the regions (X), (Y), (Z), the wind deflection is at its maximum?",
+                                    "a_txt": "The area (Z).",
+                                    "mcq_choices": null
+                                },
+                                {
+                                    "ex_title": "Study the following figures, then answer the questions",
+                                    "type": "text",
+                                    "q_txt": "The opposite figure shows the thermal regions on the Earth's surface. In which of the regions (X), (Y), (Z), the humidity percentage and the temperature are at their lowest?",
+                                    "a_txt": "The area (Z).",
+                                    "mcq_choices": null
+                                },
+                                {
+                                    "ex_title": "Study the following figures, then answer the questions",
+                                    "type": "text",
+                                    "q_txt": "The opposite figure shows the thermal regions on the Earth's surface. At which latitudes shown in the figure, the temperature and humidity are the highest, and what is the effect of that on the atmospheric pressure at this region?",
+                                    "a_txt": "At latitude (W) (the Equator), the atmospheric pressure there is low.",
+                                    "mcq_choices": null
+                                },
+                                {
+                                    "ex_title": "Study the following figures, then answer the questions",
+                                    "type": "text",
+                                    "q_txt": "The opposite figure shows the main atmospheric pressure zones. Replace the numbers shown in the figure with the appropriate high or low pressure regions, and determine the degree of each latitude.",
+                                    "a_txt": "(1): high atmospheric pressure region (30\u00b0 N). (2): low atmospheric pressure region (0\u00b0). (3): low atmospheric pressure region (60\u00b0 S).",
+                                    "mcq_choices": null
+                                },
+                                {
+                                    "ex_title": "Study the following figures, then answer the questions",
+                                    "type": "text",
+                                    "q_txt": "The opposite figure shows the main atmospheric pressure zones. What is the reason for the wind movement shown in the figure?",
+                                    "a_txt": "The difference in atmospheric pressure between regions is due to the unequal heating of the Earth's surface.",
+                                    "mcq_choices": null
+                                },
+                                {
+                                    "ex_title": "Study the following figures, then answer the questions",
+                                    "type": "text",
+                                    "q_txt": "The opposite figure shows the main atmospheric pressure zones. What is the reason for the curvature of the wind paths?",
+                                    "a_txt": "Coriolis Effect as a result of the rotation of the Earth around its axis from west to east.",
+                                    "mcq_choices": null
+                                },
+                                {
+                                    "ex_title": "Study the following figures, then answer the questions",
+                                    "type": "text",
+                                    "q_txt": "The opposite figure shows the main atmospheric pressure zones. At which latitudes is the wind path not curved?",
+                                    "a_txt": "At latitude (2) (the Equator).",
+                                    "mcq_choices": null
+                                },
+                                {
+                                    "ex_title": "Study the following figures, then answer the questions",
+                                    "type": "text",
+                                    "q_txt": "From the opposite weather map: Replace the two letters (X) and (Y) with the appropriate atmospheric pressure regions, then explain with two reasons.",
+                                    "a_txt": "(X): high pressure region, (Y): low pressure region, because air currents rotate away from the center of pressure (X) and toward the center of pressure (Y) and because the wind direction is from (X) to (Y).",
+                                    "mcq_choices": null
+                                },
+                                {
+                                    "ex_title": "Study the following figures, then answer the questions",
+                                    "type": "text",
+                                    "q_txt": "From the opposite weather map: What is the name given to the curved lines, and what do they indicate?",
+                                    "a_txt": "Isobars, each line connects points of equal atmospheric pressure at sea level.",
+                                    "mcq_choices": null
+                                },
+                                {
+                                    "ex_title": "Study the following figures, then answer the questions",
+                                    "type": "text",
+                                    "q_txt": "From the opposite weather map: What are the types of air currents formed at each of (X), (Y)? With explanation.",
+                                    "a_txt": "Descending air currents are formed at (X) because it is a high atmospheric pressure region, while ascending air currents are formed at (Y) because it is a low atmospheric pressure region.",
+                                    "mcq_choices": null
+                                },
+                                {
+                                    "ex_title": "Study the following figures, then answer the questions",
+                                    "type": "text",
+                                    "q_txt": "From the opposite weather map: Which region is characterized by clear and sunny weather?",
+                                    "a_txt": "At the region (X), because of the descending air currents in high atmospheric pressure regions lead to their warming and drying, so the weather in these areas is clear and sunny.",
+                                    "mcq_choices": null
+                                }
+                            ]
+                        },
+                        {
+                            "page": 251,
+                            "explanation": [],
+                            "questions": [
+                                {
+                                    "ex_title": "Study the following figures, then answer the questions",
+                                    "type": "text",
+                                    "q_txt": "The two opposite figures show two icons that indicate the weather conditions. What does each icon indicate?",
+                                    "a_txt": "Figure (1): Sunny weather. Figure (2): Area of rainfall.",
+                                    "mcq_choices": null
+                                },
+                                {
+                                    "ex_title": "Study the following figures, then answer the questions",
+                                    "type": "text",
+                                    "q_txt": "The two opposite figures show two icons that indicate the weather conditions. Which one represents the weather conditions at a low atmospheric pressure region? With explanation.",
+                                    "a_txt": "Figure (2) / Because the rising of air currents in the low atmospheric pressure region leads to their cooling and condensation, forming clouds and rain.",
+                                    "mcq_choices": null
+                                },
+                                {
+                                    "ex_title": "Study the following figures, then answer the questions",
+                                    "type": "text",
+                                    "q_txt": "The two opposite figures show two icons that indicate the weather conditions. Which one represents the weather conditions at a high atmospheric pressure region? With explanation.",
+                                    "a_txt": "Figure (1) / Because the descent of air currents in the high atmospheric pressure region leads to their warming and drying, so the weather in this area is clear and sunny.",
+                                    "mcq_choices": null
+                                },
+                                {
+                                    "ex_title": "Variant questions",
+                                    "type": "text",
+                                    "q_txt": "Give a brief summary of how atmospheric pressure regions are formed in the equatorial regions.",
+                                    "a_txt": "The increasing of both temperature and humidity in the equatorial region leads to the formation of a low atmospheric pressure region (L).",
+                                    "mcq_choices": null
+                                },
+                                {
+                                    "ex_title": "Variant questions",
+                                    "type": "text",
+                                    "q_txt": "Give a brief summary of how atmospheric pressure regions are formed in the polar regions.",
+                                    "a_txt": "The decreasing of both temperature and humidity in the polar regions leads to the formation of a high atmospheric pressure region (H).",
+                                    "mcq_choices": null
+                                },
+                                {
+                                    "ex_title": "Variant questions",
+                                    "type": "text",
+                                    "q_txt": "Explain the reason for the formation of high-pressure system in the polar regions.",
+                                    "a_txt": "Due to the low temperature and humidity in this region.",
+                                    "mcq_choices": null
+                                },
+                                {
+                                    "ex_title": "Variant questions",
+                                    "type": "text",
+                                    "q_txt": "Explain the reason for the formation of low-pressure system in the equatorial regions.",
+                                    "a_txt": "Due to the high temperature and humidity in this region.",
+                                    "mcq_choices": null
+                                },
+                                {
+                                    "ex_title": "Variant questions",
+                                    "type": "text",
+                                    "q_txt": "Wind is the movement of air on the Earth's surface: Is the wind movement horizontal or vertical on the Earth's surface?",
+                                    "a_txt": "Horizontal movement.",
+                                    "mcq_choices": null
+                                },
+                                {
+                                    "ex_title": "Variant questions",
+                                    "type": "text",
+                                    "q_txt": "Wind is the movement of air on the Earth's surface: How does the wind speed increase in adjacent areas?",
+                                    "a_txt": "Wind speed increases as the difference between atmospheric pressure values in adjacent regions increases.",
+                                    "mcq_choices": null
+                                },
+                                {
+                                    "ex_title": "Variant questions",
+                                    "type": "text",
+                                    "q_txt": "Explain the Coriolis Effect on the direction of wind in both the Earth's hemispheres, indicating which regions have the maximum wind deflection.",
+                                    "a_txt": "Wind deflects to the right of its original direction in the Northern Hemisphere (clockwise) and to the left in the Southern Hemisphere (anticlockwise). Maximum deflection occurs at the poles.",
+                                    "mcq_choices": null
+                                },
+                                {
+                                    "ex_title": "Variant questions",
+                                    "type": "text",
+                                    "q_txt": "What happens to the values of atmospheric pressure as we move from the center to the outward at the low atmospheric pressure region?",
+                                    "a_txt": "Increases.",
+                                    "mcq_choices": null
+                                },
+                                {
+                                    "ex_title": "Variant questions",
+                                    "type": "text",
+                                    "q_txt": "What happens to the values of atmospheric pressure as we move from the center to the outward at the high atmospheric pressure region?",
+                                    "a_txt": "Decreases.",
+                                    "mcq_choices": null
+                                },
+                                {
+                                    "ex_title": "Variant questions",
+                                    "type": "text",
+                                    "q_txt": "Where do rising air currents form? And what is the effect of that on the weather conditions?",
+                                    "a_txt": "They are formed at the regions of low atmospheric pressure, causing the formation of clouds and rainfall.",
+                                    "mcq_choices": null
+                                },
+                                {
+                                    "ex_title": "Variant questions",
+                                    "type": "text",
+                                    "q_txt": "What is the difference between the wind and the air currents? (In two points).",
+                                    "a_txt": "Winds: Horizontal movement of air, deflect right in North and left in South. Air currents: Vertical movement of air, ascending at low pressure and descending at high pressure.",
+                                    "mcq_choices": null
+                                },
+                                {
+                                    "ex_title": "Variant questions",
+                                    "type": "text",
+                                    "q_txt": "What is the other name given to lines of equal pressure?",
+                                    "a_txt": "Isobars.",
+                                    "mcq_choices": null
+                                },
+                                {
+                                    "ex_title": "Variant questions",
+                                    "type": "text",
+                                    "q_txt": "If the atmospheric pressure in city (X) is 1035 mb and in city (Y) is 768 mm.Hg Show with mathematical calculations in which city the atmospheric pressure is greater?",
+                                    "a_txt": "The atmospheric pressure in the city (Y) = 768 / 0.75 = 1024 mb. Therefore, the atmospheric pressure in the city (X) (1035 mb) is greater than in the city (Y) (1024 mb).",
+                                    "mcq_choices": null
+                                },
+                                {
+                                    "ex_title": "Variant questions",
+                                    "type": "text",
+                                    "q_txt": "If the atmospheric pressure in one of the areas is 1020 mb. Calculate its value in mm.Hg, and is it a high-pressure system or low-pressure system? With explanation.",
+                                    "a_txt": "Atmospheric pressure (mm.Hg) = 1020 x 0.75 = 765 mm.Hg. It is considered a high atmospheric pressure region, because the atmospheric pressure there is greater than 1013.25 mb.",
+                                    "mcq_choices": null
+                                }
+                            ]
+                        }
+                    ]
+                }
+            ]
+        }
+    ]
+}

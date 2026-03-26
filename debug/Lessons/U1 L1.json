@@ -1,0 +1,914 @@
+{
+    "units": [
+        {
+            "unit_num": 1,
+            "unit_name": "Thermal Energy and Changes of Matter",
+            "lessons": [
+                {
+                    "lesson_num": 1,
+                    "lesson_name": "Thermal Changes Accompanying Physical Changes",
+                    "pages": [
+                        {
+                            "page": 9,
+                            "explanation": [
+                                "When you rub your hands using antiseptic hand gel, your hands feel cold. This is due to the absorption of heat from the hands when the alcohol present in the hand gel evaporates. This process is described as Endothermic. When you rub your hands using laundry (detergent) powder and water, your hands feel warm. This is due to the release of heat during the dissolution of laundry (detergent) powder in water. This process is described as Exothermic.",
+                                "Both the processes of changing the states of matter from one state to another and the dissolution process are considered physical processes that are accompanied by the release (loss) or absorption (gaining) of thermal energy to or from the surroundings. They are reversible processes that do not involve breaking or forming new bonds, as shown in the following diagram. The diagram illustrates thermal changes accompanying the transformations of states of matter. Endothermic processes include gaining of thermal energy (heating) for processes like Sublimation, Evaporation, and Melting. Exothermic processes include loss of thermal energy (cooling) for processes like Condensation, Freezing, and Deposition. The diagram shows the cycle between Solid state (ice), Liquid state (water), and Gaseous state (water vapour)."
+                            ]
+                        },
+                        {
+                            "page": 10,
+                            "explanation": [
+                                "Technological application: refrigeration cycle in the refrigerator. The refrigeration cycle in the refrigerator is a closed and repeated thermal process, in which heat is withdrawn (extracted) from inside the refrigerator and transferred to the surrounding medium (air) using a refrigerant (eco-friendly freons).",
+                                "This cycle includes endothermic processes and exothermic processes, and the freon passes through several stages as follows: 1. Expansion and evaporation: The liquid freon passes under high pressure through a narrow valve, turning into a cold gas, which absorbs the heat of the food inside the refrigerator (endothermic process). 2. Compression: The compressor (refrigerator motor) draws the gas and compresses it, so its temperature rises. 3. Condensation: The hot gas passes through the pipes network located behind the refrigerator, so it cools down turning into a liquid, and this is accompanied by the release of heat to the surrounding medium (exothermic process). The refrigeration cycle is repeated again continuously.",
+                                "Its importance is cooling the food inside the refrigerator by continuously transferring heat from inside the refrigerator to its outside. The diagram shows the refrigeration cycle with arrows indicating absorbed heat inside and released heat outside."
+                            ]
+                        },
+                        {
+                            "page": 11,
+                            "explanation": [
+                                "Thermal changes accompanying dissolution: The dissolution of any substance (solute) in another substance (solvent) is accompanied by the loss or absorption of thermal energy to or from the surroundings. The thermal change accompanying the dissolution process is called the heat of dissolution. Heat of dissolution is the amount of heat absorbed or released when dissolving a specific quantity of solute in a known volume of solvent to form a solution. Exothermic dissolution and endothermic dissolution: The thermal change accompanying the dissolution process depends on the type of solute in the solvent (water), as illustrated below.",
+                                "When adding 4 g of sodium hydroxide NaOH(s) to 100 mL of water its initial temperature T1 inside two nested heat-insulating polystyrene cups, with gentle stirring using a glass rod, it is observed after 15 s: Increase in the final temperature T2, where final temperature T2 > initial temperature T1. When adding 8 g of ammonium nitrate NH4NO3(s) to 100 mL of water its initial temperature T1 inside two nested heat-insulating polystyrene cups, with gentle stirring using a glass rod, it is observed after 15 s: Decrease in the final temperature T2, where final temperature T2 < initial temperature T1. The system is the solution (solute and solvent), and the surrounding medium is the thermometer, cup, and air inside the cup."
+                            ]
+                        },
+                        {
+                            "page": 12,
+                            "explanation": [
+                                "Exothermic dissolution is a physical change accompanied by the release of thermal energy to the surroundings when a substance dissolves in water. Endothermic dissolution is a physical change accompanied by the absorption of thermal energy from the surroundings when a substance dissolves in water.",
+                                "Examples of substances whose dissolving in water are exothermic include Sodium hydroxide, Calcium chloride, Sodium carbonate, Anhydrous copper sulphate, Anhydrous cobalt chloride, and Anhydrous lithium chloride. Examples of substances whose dissolving in water are endothermic include Ammonium nitrate, Potassium sulphate, Sodium bicarbonate, Hydrated copper sulphate, Hydrated cobalt chloride, and Hydrated lithium chloride.",
+                                "Take care: It is possible to increase the thermal insulation when conducting such these experiments by increasing the number of polystyrene cups used. The molecules of some substances are bonded to a specific number of water molecules in an exothermic process, and such substances are known as hydrated substances. Water molecules can be removed from hydrated substances by heating in an endothermic process to become anhydrous molecules.",
+                                "And it is possible for anhydrous molecules to return to their hydrated form again by adding drops of water to them. The diagram shows the cycle between Hydrated substance and Anhydrous substance, with 'Adding water droplets (exothermic process)' and 'Heating (endothermic process)' arrows."
+                            ]
+                        },
+                        {
+                            "page": 13,
+                            "explanation": [
+                                "Applications: 1. Conversion of anhydrous copper sulphate to hydrated copper sulphate and vice versa. Hydrated copper sulphate (CuSO4.5H2O(s)) is blue. Adding water droplets (exothermic process) converts it to hydrated form. Heating (endothermic process) converts it to Anhydrous copper sulphate (CuSO4(s)) which is white. 2. Conversion of anhydrous cobalt chloride to hydrated cobalt chloride and vice versa. Hydrated cobalt chloride (CoCl2.6H2O(s)) is pink. Adding water droplets (exothermic process) converts it to hydrated form. Heating (endothermic process) converts it to Anhydrous cobalt chloride (CoCl2(s)) which is blue.",
+                                "When diluting concentrated acids, the acid is dripped onto the inner walls of the container containing the water, not the reverse. Because when water is added to concentrated acid, a large amount of thermal energy is released, leading to violent instant boiling of the water and splashing of acid outside the reaction container, which may cause severe damage. While, adding the acid gradually to the water allows the water to absorb the released heat without causing damage."
+                            ]
+                        },
+                        {
+                            "page": 14,
+                            "explanation": [
+                                "The relationship between the thermal change accompanying the dissolution process and the mass of the solute. The following table illustrates the amount of thermal change accompanying the dissolution of different masses of anhydrous lithium chloride (LiCl(s)) in 30 mL of distilled water. For 1 g, initial temperature 21\u00b0C, final temperature 25.5\u00b0C, change is 4.5\u00b0C. For 2 g, initial temperature 21\u00b0C, final temperature 30\u00b0C, change is 9\u00b0C. For 3 g, initial temperature 21\u00b0C, final temperature 34.5\u00b0C, change is 13.5\u00b0C. For 4 g, initial temperature 21\u00b0C, final temperature 39\u00b0C, change is 18\u00b0C.",
+                                "The opposite graph illustrates the relationship between the amount of change in temperature (\u0394T) and the mass of the dissolved salt (m) in a certain volume of water, showing a linear positive correlation."
+                            ]
+                        },
+                        {
+                            "page": 15,
+                            "explanation": [
+                                "From the previous table and graph, we can conclude that: Independent variable is Mass of anhydrous lithium chloride (solute), Dependent variable is Amount of change in temperature (\u0394T), Controlled variable is Volume of water (solvent). The dissolution of anhydrous lithium chloride in water is exothermic because it is accompanied by a rise in the temperature of the solution (system).",
+                                "The amount of thermal energy released or absorbed as a result of the dissolution process is directly proportional to the mass of the dissolved salt in a certain volume of solvent (water): \"As the mass of anhydrous lithium chloride salt (solute) increases, the amount of raising in temperature increases.\" Doubling the mass of the dissolved substance while keeping the volume of the solvent (water) constant (cause), usually leads to a change in temperature by constant amount (effect), as shown in the table: 2g -> 9\u00b0C, 4g -> 18\u00b0C, 6g -> 27\u00b0C."
+                            ]
+                        },
+                        {
+                            "page": 16,
+                            "explanation": [
+                                "Life application: Instant cold and hot compresses (packs). Its composition: These compresses are used only once. They consist of a flexible bag containing a chemical substance (solute) and water inside a thin bag which ruptures by pressing on it, thus the solute mixes with the water and endothermic or exothermic dissolution occurs.",
+                                "Its types: Instant hot compresses use Magnesium sulphate salt (MgSO4(s)) and involve exothermic dissolution. Instant cold compresses use Ammonium nitrate salt (NH4NO3(s)) and involve endothermic dissolution. Its use: Instant hot compresses are used to relieve pain associated with muscle fatigue (strain) because they work by widening (expanding) the blood vessels, which increases blood flow to the stressed areas, causing relaxing of the contracting muscles and relieving pain. Instant cold compresses are used to reduce the severity of swelling because they work by narrowing the blood vessels, which reduces blood flow to the injured area, thus reducing the swelling.t5r"
+                            ]
+                        },
+                        {
+                            "page": 17,
+                            "questions": [
+                                {
+                                    "ex_title": "Choose the correct answer",
+                                    "type": "mcq",
+                                    "q_txt": "(1) All of the following are endothermic processes, except",
+                                    "a_txt": 2,
+                                    "mcq_choices": [
+                                        "Melting",
+                                        "Sublimation",
+                                        "Condensation",
+                                        "Evaporation"
+                                    ]
+                                },
+                                {
+                                    "ex_title": "Choose the correct answer",
+                                    "type": "mcq",
+                                    "q_txt": "(2) The dissolution process,",
+                                    "a_txt": 2,
+                                    "mcq_choices": [
+                                        "is always exothermic",
+                                        "is always endothermic",
+                                        "it may be exothermic or endothermic",
+                                        "it is often not accompanied by a thermal change"
+                                    ]
+                                },
+                                {
+                                    "ex_title": "Choose the correct answer",
+                                    "type": "mcq",
+                                    "q_txt": "(3) When adding drops of water to anhydrous copper sulphate, the colour changes from",
+                                    "a_txt": 3,
+                                    "mcq_choices": [
+                                        "pink to blue",
+                                        "blue to white",
+                                        "blue to pink",
+                                        "white to blue"
+                                    ]
+                                },
+                                {
+                                    "ex_title": "Choose the correct answer",
+                                    "type": "mcq",
+                                    "q_txt": "(4) Dissolution of anhydrous lithium chloride in water is",
+                                    "a_txt": 1,
+                                    "mcq_choices": [
+                                        "an endothermic physical process",
+                                        "an exothermic physical process",
+                                        "an endothermic chemical process",
+                                        "an exothermic chemical process"
+                                    ]
+                                },
+                                {
+                                    "ex_title": "Mention the importance of each of the following",
+                                    "type": "text",
+                                    "q_txt": "(1) Refrigeration cycle in the refrigerator.",
+                                    "a_txt": "It keeps the food in the refrigerator cool by continuously transferring heat from inside the refrigerator to its outside.",
+                                    "mcq_choices": null
+                                },
+                                {
+                                    "ex_title": "Mention the importance of each of the following",
+                                    "type": "text",
+                                    "q_txt": "(2) Instant hot compresses.",
+                                    "a_txt": "It is used to relieve pain associated with muscle strain.",
+                                    "mcq_choices": null
+                                }
+                            ]
+                        },
+                        {
+                            "page": 18,
+                            "questions": [
+                                {
+                                    "ex_title": "Write the scientific term of each of the following statements",
+                                    "type": "text",
+                                    "q_txt": "(1) A closed and repeated thermal process, in which heat is withdrawn from inside the refrigerator to the surroundings (air) using a refrigerant (eco-friendly freons).",
+                                    "a_txt": "Refrigeration cycle in the refrigerator",
+                                    "mcq_choices": null
+                                },
+                                {
+                                    "ex_title": "Write the scientific term of each of the following statements",
+                                    "type": "text",
+                                    "q_txt": "(2) The refrigerator coolant liquid.",
+                                    "a_txt": "Eco-friendly freons",
+                                    "mcq_choices": null
+                                },
+                                {
+                                    "ex_title": "Write the scientific term of each of the following statements",
+                                    "type": "text",
+                                    "q_txt": "(3) The amount of heat absorbed or released when dissolving a specific quantity of solute in a known volume of solvent to form a solution.",
+                                    "a_txt": "Heat of dissolution",
+                                    "mcq_choices": null
+                                },
+                                {
+                                    "ex_title": "Write the scientific term of each of the following statements",
+                                    "type": "text",
+                                    "q_txt": "(4) Dissolution accompanied by a rise in the temperature of the surroundings.",
+                                    "a_txt": "Exothermic dissolution",
+                                    "mcq_choices": null
+                                },
+                                {
+                                    "ex_title": "Write the scientific term of each of the following statements",
+                                    "type": "text",
+                                    "q_txt": "(5) A physical change accompanied by the absorption of thermal energy from the surroundings when a substance dissolves in water.",
+                                    "a_txt": "Endothermic dissolution",
+                                    "mcq_choices": null
+                                },
+                                {
+                                    "ex_title": "Write the scientific term of each of the following statements",
+                                    "type": "text",
+                                    "q_txt": "(6) Substances whose molecules are linked to a specific number of water molecules through an exothermic process.",
+                                    "a_txt": "Hydrated substances",
+                                    "mcq_choices": null
+                                },
+                                {
+                                    "ex_title": "Write the scientific term of each of the following statements",
+                                    "type": "text",
+                                    "q_txt": "(7) A salt whose colour changes from blue to pink when drops of water are added to it.",
+                                    "a_txt": "Anhydrous cobalt chloride",
+                                    "mcq_choices": null
+                                },
+                                {
+                                    "ex_title": "Write the scientific term of each of the following statements",
+                                    "type": "text",
+                                    "q_txt": "(8) Compresses used only once, in which endothermic or exothermic dissolution occurs.",
+                                    "a_txt": "Instant cold and hot compresses (Packs)",
+                                    "mcq_choices": null
+                                },
+                                {
+                                    "ex_title": "Complete the following sentences",
+                                    "type": "complete",
+                                    "q_txt": "(1) According to thermal energy, the evaporation of alcohol is an _____ process, while the dissolution of laundry powder (washing powder) in water is an _____ process.",
+                                    "a_txt": [
+                                        "endothermic",
+                                        "exothermic"
+                                    ],
+                                    "mcq_choices": null
+                                },
+                                {
+                                    "ex_title": "Complete the following sentences",
+                                    "type": "complete",
+                                    "q_txt": "(2) The transformation of a substance from one state to another is accompanied by _____ or _____ of thermal energy to or from the surroundings.",
+                                    "a_txt": [
+                                        "loss",
+                                        "absorption"
+                                    ],
+                                    "mcq_choices": null
+                                },
+                                {
+                                    "ex_title": "Complete the following sentences",
+                                    "type": "complete",
+                                    "q_txt": "(3) According to thermal energy, the transformation of a substance from the solid state to the gaseous state is a _____ process, while the transformation of a substance from the liquid state to the solid state is a _____ process.",
+                                    "a_txt": [
+                                        "endothermic",
+                                        "exothermic"
+                                    ],
+                                    "mcq_choices": null
+                                },
+                                {
+                                    "ex_title": "Complete the following sentences",
+                                    "type": "complete",
+                                    "q_txt": "(4) According to thermal energy, the deposition process is a _____ process, which is the opposite of the _____ process.",
+                                    "a_txt": [
+                                        "exothermic",
+                                        "sublimation"
+                                    ],
+                                    "mcq_choices": null
+                                },
+                                {
+                                    "ex_title": "Complete the following sentences",
+                                    "type": "complete",
+                                    "q_txt": "(5) Freon passes through three stages during the refrigeration cycle in the refrigerator, which are _____, compression and _____.",
+                                    "a_txt": [
+                                        "expansion and evaporation",
+                                        "condensation"
+                                    ],
+                                    "mcq_choices": null
+                                },
+                                {
+                                    "ex_title": "Complete the following sentences",
+                                    "type": "complete",
+                                    "q_txt": "(6) According to thermal energy, the dissolution of sodium carbonate salt in water is a _____ process, while the dissolution of sodium bicarbonate salt in water is a _____ process.",
+                                    "a_txt": [
+                                        "exothermic",
+                                        "endothermic"
+                                    ],
+                                    "mcq_choices": null
+                                },
+                                {
+                                    "ex_title": "Complete the following sentences",
+                                    "type": "complete",
+                                    "q_txt": "(7) When water is added to anhydrous cobalt chloride, the colour changes from _____ to _____.",
+                                    "a_txt": [
+                                        "blue",
+                                        "pink"
+                                    ],
+                                    "mcq_choices": null
+                                },
+                                {
+                                    "ex_title": "Complete the following sentences",
+                                    "type": "complete",
+                                    "q_txt": "(8) When diluting concentrated acids, _____ is added to _____ and not the opposite.",
+                                    "a_txt": [
+                                        "acid",
+                                        "water"
+                                    ],
+                                    "mcq_choices": null
+                                }
+                            ]
+                        },
+                        {
+                            "page": 19,
+                            "questions": [
+                                {
+                                    "ex_title": "Complete the following sentences",
+                                    "type": "complete",
+                                    "q_txt": "(9) When doubling the mass of solute while keeping the volume of _____ constant, the temperature usually changes by _____.",
+                                    "a_txt": [
+                                        "solvent",
+                                        "constant amount"
+                                    ],
+                                    "mcq_choices": null
+                                },
+                                {
+                                    "ex_title": "Complete the following sentences",
+                                    "type": "complete",
+                                    "q_txt": "(10) Instant _____ compresses work to narrow blood vessels, while instant _____ compresses help to relieve pain associated with muscle strain.",
+                                    "a_txt": [
+                                        "cold",
+                                        "hot"
+                                    ],
+                                    "mcq_choices": null
+                                },
+                                {
+                                    "ex_title": "Complete the following diagrams",
+                                    "type": "complete",
+                                    "q_txt": "(1) Diagram 1: Ice -> Melting -> (2) -> (3) -> Water vapour. (4) -> Condensation -> (5) -> (1) processes.",
+                                    "a_txt": [
+                                        "Endothermic",
+                                        "Water",
+                                        "Evaporation",
+                                        "Freezing",
+                                        "Exothermic"
+                                    ],
+                                    "mcq_choices": null
+                                },
+                                {
+                                    "ex_title": "Complete the following diagrams",
+                                    "type": "complete",
+                                    "q_txt": "(2) Diagram 2: CuSO4(s) (Its colour is (2)) -> Adding drops of water (an (3) process) -> Hydrated copper sulphate (4) (Its colour is (5)). Heating (an (6) process).",
+                                    "a_txt": [
+                                        "Anhydrous copper sulphate",
+                                        "White",
+                                        "exothermic",
+                                        "CuSO4.5H2O(s)",
+                                        "Blue",
+                                        "endothermic"
+                                    ],
+                                    "mcq_choices": null
+                                },
+                                {
+                                    "ex_title": "Complete the following diagrams",
+                                    "type": "complete",
+                                    "q_txt": "(3) Diagram 3: Anhydrous cobalt chloride (1) (Its colour is (2)) -> Adding drops of water (an (3) process) -> (4) (CoCl2.6H2O(s)) (Its colour is (5)). Heating (an (6) process).",
+                                    "a_txt": [
+                                        "CoCl2(s)",
+                                        "Blue",
+                                        "exothermic",
+                                        "Hydrated cobalt chloride",
+                                        "Pink",
+                                        "endothermic"
+                                    ],
+                                    "mcq_choices": null
+                                },
+                                {
+                                    "ex_title": "Put (T) in front of the correct statements and (X) in front of the wrong ones, and correct them",
+                                    "type": "true_false_with_correction",
+                                    "q_txt": "(1) The condensation of freon in the refrigeration cycle of the refrigerator is an exothermic process.",
+                                    "a_txt": [
+                                        "True",
+                                        null
+                                    ],
+                                    "mcq_choices": null
+                                },
+                                {
+                                    "ex_title": "Put (T) in front of the correct statements and (X) in front of the wrong ones, and correct them",
+                                    "type": "true_false_with_correction",
+                                    "q_txt": "(2) When magnesium sulphate dissolves in water, the final temperature becomes higher than its initial temperature.",
+                                    "a_txt": [
+                                        "True",
+                                        null
+                                    ],
+                                    "mcq_choices": null
+                                },
+                                {
+                                    "ex_title": "Put (T) in front of the correct statements and (X) in front of the wrong ones, and correct them",
+                                    "type": "true_false_with_correction",
+                                    "q_txt": "(3) Hydrated substances turn into anhydrous substances by heating.",
+                                    "a_txt": [
+                                        "True",
+                                        null
+                                    ],
+                                    "mcq_choices": null
+                                },
+                                {
+                                    "ex_title": "Put (T) in front of the correct statements and (X) in front of the wrong ones, and correct them",
+                                    "type": "true_false_with_correction",
+                                    "q_txt": "(4) When adding water to anhydrous copper sulphate, the colour changes from pink to blue.",
+                                    "a_txt": [
+                                        "False",
+                                        {
+                                            "mistake": "pink",
+                                            "correction": "white"
+                                        }
+                                    ],
+                                    "mcq_choices": null
+                                },
+                                {
+                                    "ex_title": "Put (T) in front of the correct statements and (X) in front of the wrong ones, and correct them",
+                                    "type": "true_false_with_correction",
+                                    "q_txt": "(5) Hydrated cobalt chloride binds with eight molecules of water.",
+                                    "a_txt": [
+                                        "False",
+                                        {
+                                            "mistake": "eight",
+                                            "correction": "six"
+                                        }
+                                    ],
+                                    "mcq_choices": null
+                                },
+                                {
+                                    "ex_title": "Put (T) in front of the correct statements and (X) in front of the wrong ones, and correct them",
+                                    "type": "true_false_with_correction",
+                                    "q_txt": "(6) The process of diluting concentrated sulphuric acid with water is an endothermic process.",
+                                    "a_txt": [
+                                        "False",
+                                        {
+                                            "mistake": "endothermic",
+                                            "correction": "exothermic"
+                                        }
+                                    ],
+                                    "mcq_choices": null
+                                },
+                                {
+                                    "ex_title": "Put (T) in front of the correct statements and (X) in front of the wrong ones, and correct them",
+                                    "type": "true_false_with_correction",
+                                    "q_txt": "(7) The amount of thermal energy released from the dissolution process is inversely proportional to the mass of salt dissolved when the volume of the solvent is constant.",
+                                    "a_txt": [
+                                        "False",
+                                        {
+                                            "mistake": "inversely",
+                                            "correction": "directly"
+                                        }
+                                    ],
+                                    "mcq_choices": null
+                                },
+                                {
+                                    "ex_title": "Put (T) in front of the correct statements and (X) in front of the wrong ones, and correct them",
+                                    "type": "true_false_with_correction",
+                                    "q_txt": "(8) Instant cold compresses work to widening the blood vessels, which increases blood flow to the stressed areas.",
+                                    "a_txt": [
+                                        "False",
+                                        {
+                                            "mistake": "widening",
+                                            "correction": "narrowing"
+                                        }
+                                    ],
+                                    "mcq_choices": null
+                                },
+                                {
+                                    "ex_title": "Choose the correct answer",
+                                    "type": "mcq",
+                                    "q_txt": "(1) All of the following are exothermic processes, except the _____ process.",
+                                    "a_txt": 1,
+                                    "mcq_choices": [
+                                        "freezing",
+                                        "sublimation",
+                                        "condensation",
+                                        "deposition"
+                                    ]
+                                }
+                            ]
+                        },
+                        {
+                            "page": 20,
+                            "questions": [
+                                {
+                                    "ex_title": "Choose the correct answer",
+                                    "type": "mcq",
+                                    "q_txt": "(2) The refrigeration cycle in the refrigerator includes",
+                                    "a_txt": 2,
+                                    "mcq_choices": [
+                                        "only an endothermic process.",
+                                        "only an exothermic process.",
+                                        "an internal endothermic process and an external exothermic process.",
+                                        "an internal exothermic process and an external endothermic process."
+                                    ]
+                                },
+                                {
+                                    "ex_title": "Choose the correct answer",
+                                    "type": "mcq",
+                                    "q_txt": "(3) What is the change that indicate the occurrence of all exothermic processes?",
+                                    "a_txt": 2,
+                                    "mcq_choices": [
+                                        "Formation of gas bubbles.",
+                                        "No thermal change occurs.",
+                                        "The temperature of the surrounding medium increases.",
+                                        "The temperature of the surrounding medium decreases."
+                                    ]
+                                },
+                                {
+                                    "ex_title": "Choose the correct answer",
+                                    "type": "mcq",
+                                    "q_txt": "(4) Which of these substances, when dissolved in water, is accompanied by releasing thermal energy to the surrounding medium?",
+                                    "a_txt": 3,
+                                    "mcq_choices": [
+                                        "Hydrated cobalt chloride.",
+                                        "Sodium bicarbonate.",
+                                        "Ammonium nitrate.",
+                                        "Sodium hydroxide."
+                                    ]
+                                },
+                                {
+                                    "ex_title": "Choose the correct answer",
+                                    "type": "mcq",
+                                    "q_txt": "(5) All of the following salts lead to a decrease in the temperature of the solution when dissolved in water, except",
+                                    "a_txt": 3,
+                                    "mcq_choices": [
+                                        "hydrated copper sulphate.",
+                                        "sodium bicarbonate.",
+                                        "potassium sulphate.",
+                                        "anhydrous lithium chloride."
+                                    ]
+                                },
+                                {
+                                    "ex_title": "Choose the correct answer",
+                                    "type": "mcq",
+                                    "q_txt": "(6) When an amount of calcium chloride dissolves in water with a temperature of T1, the temperature of the solution becomes T2. Which of the following represents the relation between T1 and T2?",
+                                    "a_txt": 2,
+                                    "mcq_choices": [
+                                        "T2 < T1",
+                                        "T2 = T1",
+                                        "T1 < T2",
+                                        "T1 >= T2"
+                                    ]
+                                },
+                                {
+                                    "ex_title": "Choose the correct answer",
+                                    "type": "mcq",
+                                    "q_txt": "(7) Which of the following expresses the correct colours of salts?",
+                                    "a_txt": 1,
+                                    "mcq_choices": [
+                                        "Blue, White, Blue, Pink",
+                                        "Blue, White, Pink, Blue",
+                                        "White, Blue, Blue, Pink",
+                                        "White, Blue, Pink, White"
+                                    ]
+                                },
+                                {
+                                    "ex_title": "Choose the correct answer",
+                                    "type": "mcq",
+                                    "q_txt": "(8) What is the molecular formula of the blue salt that turns white by heating?",
+                                    "a_txt": 2,
+                                    "mcq_choices": [
+                                        "CuSO4",
+                                        "CoCl2.6H2O",
+                                        "CuSO4.5H2O",
+                                        "CoCl2"
+                                    ]
+                                },
+                                {
+                                    "ex_title": "Choose the correct answer",
+                                    "type": "mcq",
+                                    "q_txt": "(9) When adding drops of water to anhydrous copper sulphate, ...............",
+                                    "a_txt": 3,
+                                    "mcq_choices": [
+                                        "energy is absorbed from the surrounding medium and the colour changes from blue to white.",
+                                        "energy is absorbed from the surrounding medium and the colour changes from white to blue.",
+                                        "energy is released to the surrounding medium and the colour changes from blue to white.",
+                                        "energy is released to the surrounding medium and the colour changes from white to blue."
+                                    ]
+                                }
+                            ]
+                        },
+                        {
+                            "page": 21,
+                            "questions": [
+                                {
+                                    "ex_title": "Choose the correct answer",
+                                    "type": "mcq",
+                                    "q_txt": "(10) From the opposite diagram: Which of the following expresses each of the two processes (X), (Y)?",
+                                    "a_txt": 2,
+                                    "mcq_choices": [
+                                        "(X), (Y) are both endothermic processes.",
+                                        "(X), (Y) are both exothermic processes.",
+                                        "(X): endothermic process, (Y): exothermic process.",
+                                        "(X): exothermic process, (Y): endothermic process."
+                                    ]
+                                },
+                                {
+                                    "ex_title": "Choose the correct answer",
+                                    "type": "mcq",
+                                    "q_txt": "(11) The opposite table illustrates the initial and final temperatures of water before and after dissolving four different substances in it. Which of these processes is endothermic?",
+                                    "a_txt": 1,
+                                    "mcq_choices": [
+                                        "(1), (3)",
+                                        "(1), (4)",
+                                        "(2), (3)",
+                                        "(2), (4)"
+                                    ]
+                                },
+                                {
+                                    "ex_title": "Choose the correct answer",
+                                    "type": "mcq",
+                                    "q_txt": "(12) In instant hot compresses, the solute is ...............",
+                                    "a_txt": 0,
+                                    "mcq_choices": [
+                                        "MgSO4",
+                                        "NH4NO3",
+                                        "NaHCO3",
+                                        "K2SO4"
+                                    ]
+                                },
+                                {
+                                    "ex_title": "Choose the correct answer",
+                                    "type": "mcq",
+                                    "q_txt": "(13) The person who suffers from swelling in his feet uses a compress containing the solute (X). What is the substance (X)?",
+                                    "a_txt": 3,
+                                    "mcq_choices": [
+                                        "Concentrated sulphuric acid.",
+                                        "Calcium chloride.",
+                                        "Sodium hydroxide.",
+                                        "Ammonium nitrate."
+                                    ]
+                                },
+                                {
+                                    "ex_title": "Write the molecular formulas representing each of the following salts",
+                                    "type": "text",
+                                    "q_txt": "(1) A pink salt turns blue by heating.",
+                                    "a_txt": "CoCl2.6H2O(s)",
+                                    "mcq_choices": null
+                                },
+                                {
+                                    "ex_title": "Write the molecular formulas representing each of the following salts",
+                                    "type": "text",
+                                    "q_txt": "(2) A white salt turns blue by adding water to it.",
+                                    "a_txt": "CuSO4(s)",
+                                    "mcq_choices": null
+                                },
+                                {
+                                    "ex_title": "Write the molecular formulas representing each of the following salts",
+                                    "type": "text",
+                                    "q_txt": "(3) A salt used in instant cold compresses.",
+                                    "a_txt": "NH4NO3(s)",
+                                    "mcq_choices": null
+                                },
+                                {
+                                    "ex_title": "Write the molecular formulas representing each of the following salts",
+                                    "type": "text",
+                                    "q_txt": "(4) A salt used in instant hot compresses.",
+                                    "a_txt": "MgSO4(s)",
+                                    "mcq_choices": null
+                                },
+                                {
+                                    "ex_title": "What is meant by each of the following",
+                                    "type": "text",
+                                    "q_txt": "(1) Refrigeration cycle in the refrigerator.",
+                                    "a_txt": "It is a closed and repeated thermal process in which heat is withdrawn from inside the refrigerator and transferred to the surroundings (air) using a refrigerant (eco-friendly freons).",
+                                    "mcq_choices": null
+                                },
+                                {
+                                    "ex_title": "What is meant by each of the following",
+                                    "type": "text",
+                                    "q_txt": "(2) Heat of dissolution.",
+                                    "a_txt": "It is the amount of heat absorbed or released when dissolving a specific quantity of solute in a known volume of solvent to form a solution.",
+                                    "mcq_choices": null
+                                },
+                                {
+                                    "ex_title": "What is meant by each of the following",
+                                    "type": "text",
+                                    "q_txt": "(3) Exothermic dissolution.",
+                                    "a_txt": "It is a physical change accompanied by the release of thermal energy to the surroundings when a substance dissolves in water.",
+                                    "mcq_choices": null
+                                },
+                                {
+                                    "ex_title": "What is meant by each of the following",
+                                    "type": "text",
+                                    "q_txt": "(4) Endothermic dissolution.",
+                                    "a_txt": "It is a physical change accompanied by the absorption of thermal energy from the surroundings when a substance dissolves in water.",
+                                    "mcq_choices": null
+                                },
+                                {
+                                    "ex_title": "Mention the importance of each of the following",
+                                    "type": "text",
+                                    "q_txt": "(1) Refrigeration cycle in the refrigerator.",
+                                    "a_txt": "It keeps the food cool inside the refrigerator by continuously transferring heat from inside the refrigerator to its outside.",
+                                    "mcq_choices": null
+                                },
+                                {
+                                    "ex_title": "Mention the importance of each of the following",
+                                    "type": "text",
+                                    "q_txt": "(2) Polystyrene cups in laboratory experiments.",
+                                    "a_txt": "They are used in thermal insulation.",
+                                    "mcq_choices": null
+                                },
+                                {
+                                    "ex_title": "Mention the importance of each of the following",
+                                    "type": "text",
+                                    "q_txt": "(3) Instant cold compresses.",
+                                    "a_txt": "It is used to reduce the severity of swelling.",
+                                    "mcq_choices": null
+                                },
+                                {
+                                    "ex_title": "Mention the importance of each of the following",
+                                    "type": "text",
+                                    "q_txt": "(4) Instant hot compresses.",
+                                    "a_txt": "It is used to relieve pain associated with muscle strain (fatigue).",
+                                    "mcq_choices": null
+                                }
+                            ]
+                        },
+                        {
+                            "page": 22,
+                            "questions": [
+                                {
+                                    "ex_title": "Give reasons for the following",
+                                    "type": "text",
+                                    "q_txt": "(1) When you rub your hands with an antiseptic hand gel, you feel your hands are cold.",
+                                    "a_txt": "Due to the absorption of heat from the hands when the alcohol present in the hand gel evaporates.",
+                                    "mcq_choices": null
+                                },
+                                {
+                                    "ex_title": "Give reasons for the following",
+                                    "type": "text",
+                                    "q_txt": "(2) When you rub your hands with laundry powder (washing powder) and water, you feel your hands are warm.",
+                                    "a_txt": "Due to the release of heat during the dissolution of laundry powder (washing powder) in water.",
+                                    "mcq_choices": null
+                                },
+                                {
+                                    "ex_title": "Give reasons for the following",
+                                    "type": "text",
+                                    "q_txt": "(3) The transformation of a substance from one state to another is accompanied by a thermal change.",
+                                    "a_txt": "Because it is accompanied by a loss or absorption of thermal energy to or from the surroundings.",
+                                    "mcq_choices": null
+                                },
+                                {
+                                    "ex_title": "Give reasons for the following",
+                                    "type": "text",
+                                    "q_txt": "(4) The sublimation process is an endothermic process.",
+                                    "a_txt": "Because it is accompanied by the absorption of thermal energy from the surroundings.",
+                                    "mcq_choices": null
+                                },
+                                {
+                                    "ex_title": "Give reasons for the following",
+                                    "type": "text",
+                                    "q_txt": "(5) The refrigerator works to preserve the food inside it from spoilage.",
+                                    "a_txt": "Because it works by withdrawing heat from inside the refrigerator and transferring it to the surroundings (air) using the refrigerant, so it keeps the food inside cool.",
+                                    "mcq_choices": null
+                                },
+                                {
+                                    "ex_title": "Give reasons for the following",
+                                    "type": "text",
+                                    "q_txt": "(6) The dissolution process is accompanied by a thermal change.",
+                                    "a_txt": "Because it is accompanied by a loss or absorption of thermal energy to or from the surroundings.",
+                                    "mcq_choices": null
+                                },
+                                {
+                                    "ex_title": "Give reasons for the following",
+                                    "type": "text",
+                                    "q_txt": "(7) The dissolution of anhydrous lithium chloride salt in water is exothermic.",
+                                    "a_txt": "Because it is accompanied by an increase in the temperature of the solution.",
+                                    "mcq_choices": null
+                                },
+                                {
+                                    "ex_title": "Give reasons for the following",
+                                    "type": "text",
+                                    "q_txt": "(8) The process of converting anhydrous salts to hydrated salts is a reversible process.",
+                                    "a_txt": "Because when drops of water are added to anhydrous salts, they turn into hydrated salts, and upon heating, they turn back into anhydrous salts again.",
+                                    "mcq_choices": null
+                                },
+                                {
+                                    "ex_title": "Give reasons for the following",
+                                    "type": "text",
+                                    "q_txt": "(9) It is preferable to use several polystyrene cups in laboratory experiments.",
+                                    "a_txt": "To increase thermal insulation.",
+                                    "mcq_choices": null
+                                },
+                                {
+                                    "ex_title": "Give reasons for the following",
+                                    "type": "text",
+                                    "q_txt": "(10) When diluting concentrated nitric acid, the acid is added to the water and not the opposite.",
+                                    "a_txt": "Because when water is added to concentrated acid, a large amount of thermal energy is released, leading to violent instant boiling of the water and splashing of acid outside the reaction container, which may cause severe damage. While, adding acid to water allows the water to absorb the released heat without causing damage.",
+                                    "mcq_choices": null
+                                },
+                                {
+                                    "ex_title": "Give reasons for the following",
+                                    "type": "text",
+                                    "q_txt": "(11) Instant cold compresses are used to reduce the severity of swelling.",
+                                    "a_txt": "Because they work by narrowing the blood vessels, which reduces blood flow to the injured area and thus reducing the swelling.",
+                                    "mcq_choices": null
+                                },
+                                {
+                                    "ex_title": "Give reasons for the following",
+                                    "type": "text",
+                                    "q_txt": "(12) Instant hot compresses are used to relieve pain associated with muscle strain.",
+                                    "a_txt": "Because they work by widening the blood vessels, which increases blood flow to the stressed areas, causing relaxing the contracting muscles and relieving pain.",
+                                    "mcq_choices": null
+                                },
+                                {
+                                    "ex_title": "What happens when",
+                                    "type": "text",
+                                    "q_txt": "(1) Rubbing your hands using an antiseptic hand gel \u00abIn terms of: thermal change\u00bb.",
+                                    "a_txt": "Your hands feel cold.",
+                                    "mcq_choices": null
+                                },
+                                {
+                                    "ex_title": "What happens when",
+                                    "type": "text",
+                                    "q_txt": "(2) Rubbing your hands using laundry powder (washing powder) and water \u00abIn terms of: thermal change\u00bb.",
+                                    "a_txt": "Your hands feel warm.",
+                                    "mcq_choices": null
+                                },
+                                {
+                                    "ex_title": "What happens when",
+                                    "type": "text",
+                                    "q_txt": "(3) The transformation of a substance from the solid state to the gaseous state directly \u00abIn terms of: thermal change\u00bb.",
+                                    "a_txt": "The temperature of the surroundings decreases.",
+                                    "mcq_choices": null
+                                },
+                                {
+                                    "ex_title": "What happens when",
+                                    "type": "text",
+                                    "q_txt": "(4) The dissolution of anhydrous lithium chloride salt in water \u00abIn terms of: thermal change\u00bb.",
+                                    "a_txt": "The temperature of the surroundings increases.",
+                                    "mcq_choices": null
+                                },
+                                {
+                                    "ex_title": "What happens when",
+                                    "type": "text",
+                                    "q_txt": "(5) Adding ammonium nitrate to a polystyrene cup containing 100 mL of water \u00abIn terms of: thermal change\u00bb.",
+                                    "a_txt": "The temperature of the surroundings decreases.",
+                                    "mcq_choices": null
+                                },
+                                {
+                                    "ex_title": "What happens when",
+                                    "type": "text",
+                                    "q_txt": "(6) Increasing the mass of sodium hydroxide dissolved in water \u00abIn terms of: thermal change\u00bb.",
+                                    "a_txt": "The amount of change in temperature increases.",
+                                    "mcq_choices": null
+                                },
+                                {
+                                    "ex_title": "What happens when",
+                                    "type": "text",
+                                    "q_txt": "(7) Heating blue hydrated copper sulphate salt \u00abIn terms of: colour change\u00bb.",
+                                    "a_txt": "It turns into white anhydrous copper sulphate.",
+                                    "mcq_choices": null
+                                },
+                                {
+                                    "ex_title": "What happens when",
+                                    "type": "text",
+                                    "q_txt": "(8) Adding water to anhydrous cobalt chloride \u00abIn terms of: colour change\u00bb.",
+                                    "a_txt": "It turns into pink hydrated cobalt chloride.",
+                                    "mcq_choices": null
+                                },
+                                {
+                                    "ex_title": "What happens when",
+                                    "type": "text",
+                                    "q_txt": "(9) Diluting concentrated hydrochloric acid by adding water to it.",
+                                    "a_txt": "A large amount of thermal energy is released, leading to violent instant boiling of water and splashing of acid outside the reaction container, which may cause severe damage.",
+                                    "mcq_choices": null
+                                },
+                                {
+                                    "ex_title": "What happens when",
+                                    "type": "text",
+                                    "q_txt": "(10) Doubling the mass of solute while keeping the volume of solvent constant \u00abIn terms of: temperature\u00bb.",
+                                    "a_txt": "The temperature usually changes by a constant amount.",
+                                    "mcq_choices": null
+                                },
+                                {
+                                    "ex_title": "What happens when",
+                                    "type": "text",
+                                    "q_txt": "(11) Pressing on instant cold compresses.",
+                                    "a_txt": "The thin bag ruptures, causing the solute to mix with water and an endothermic dissolution occurs.",
+                                    "mcq_choices": null
+                                }
+                            ]
+                        },
+                        {
+                            "page": 23,
+                            "questions": [
+                                {
+                                    "ex_title": "Compare between each of the following",
+                                    "type": "text",
+                                    "q_txt": "(1) Exothermic dissolution and endothermic dissolution \u00abIn terms of: definition - with two examples\u00bb.",
+                                    "a_txt": "Exothermic dissolution: It is a physical change accompanied by the release of thermal energy to the surroundings when a substance dissolves in water. Examples: Sodium hydroxide, Calcium chloride. Endothermic dissolution: It is a physical change accompanied by the absorption of thermal energy from the surroundings when a substance dissolves in water. Examples: Ammonium nitrate, Potassium sulphate.",
+                                    "mcq_choices": null
+                                },
+                                {
+                                    "ex_title": "Compare between each of the following",
+                                    "type": "text",
+                                    "q_txt": "(2) Hydrated cobalt chloride and hydrated copper sulphate \u00abIn terms of: colour - molecular formula - effect of heating\u00bb.",
+                                    "a_txt": "Hydrated cobalt chloride: Colour is Pink, Molecular formula is CoCl2.6H2O, Effect of heating is it turns into blue anhydrous cobalt chloride. Hydrated copper sulphate: Colour is Blue, Molecular formula is CuSO4.5H2O, Effect of heating is it turns into white anhydrous copper sulphate.",
+                                    "mcq_choices": null
+                                },
+                                {
+                                    "ex_title": "Compare between each of the following",
+                                    "type": "text",
+                                    "q_txt": "(3) Instant cold compresses and instant hot compresses \u00abIn terms of: solute - use\u00bb.",
+                                    "a_txt": "Instant cold compresses: Solute is Ammonium nitrate salt (NH4NO3(s)), Use is to reduce the severity of swelling. Instant hot compresses: Solute is Magnesium sulphate salt (MgSO4(s)), Use is to relieve pain associated with muscle strain.",
+                                    "mcq_choices": null
+                                },
+                                {
+                                    "ex_title": "Study the following figures, then answer",
+                                    "type": "text",
+                                    "q_txt": "(1) The opposite figure illustrates the transformation of hydrated copper sulphate salt by heating into salt (X) after the release of substance (Y): (1) Determine the name and formula of both salt (X) and substance (Y). (2) What happens when drops of water are added to the resulting salt (X)?",
+                                    "a_txt": "(1) The salt (X) is Anhydrous copper sulphate and its formula is CuSO4(s). The substance (Y) is Water vapour and its formula is H2O(v). (2) It turns into blue hydrated copper sulphate.",
+                                    "mcq_choices": null
+                                },
+                                {
+                                    "ex_title": "Study the following figures, then answer",
+                                    "type": "text",
+                                    "q_txt": "(2) The opposite figure illustrates two methods for diluting concentrated hydrochloric acid. Which of them represents the correct method? With explanation.",
+                                    "a_txt": "The method (2) is correct because this allows water to absorb the released heat from adding concentrated acid to it without causing damage.",
+                                    "mcq_choices": null
+                                },
+                                {
+                                    "ex_title": "Variant questions",
+                                    "type": "text",
+                                    "q_txt": "(1) When dissolving blue anhydrous cobalt chloride in water at a temperature of 17\u00b0C, the temperature of the solution became 21\u00b0C: (1) Determine the type of this dissolution, with explanation. (2) Write the name and formula of the salt produced from the dissolution. (3) What happens when the salt produced from the dissolution is heated?",
+                                    "a_txt": "(1) Exothermic dissolution because the final temperature is higher than the initial temperature. (2) Hydrated cobalt chloride salt / CoCl2.6H2O(s). (3) Hydrated cobalt chloride (pink) turns into anhydrous cobalt chloride (blue).",
+                                    "mcq_choices": null
+                                },
+                                {
+                                    "ex_title": "Variant questions",
+                                    "type": "text",
+                                    "q_txt": "(2) When dissolving four equal masses of different substances (W, X, Y, Z) in the same volume of water the temperature of the water rose in the case of the two substances (W), (X) by 8\u00b0C, 9\u00b0C respectively, and decreased in the case of the two substances (Y), (Z) by 6\u00b0C, 4\u00b0C, respectively. Which of these substances, its dissolution in water is: (1) More exothermic. (2) More endothermic.",
+                                    "a_txt": "(1) The substance (X). (2) The substance (Y).",
+                                    "mcq_choices": null
+                                }
+                            ]
+                        }
+                    ]
+                }
+            ]
+        }
+    ]
+}

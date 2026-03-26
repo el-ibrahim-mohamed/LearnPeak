@@ -1,0 +1,182 @@
+{
+    "units": [
+        {
+            "unit_num": 4,
+            "unit_name": "Physical Changes in the Atmosphere",
+            "lessons": [
+                {
+                    "lesson_num": 1,
+                    "lesson_name": "Effect of Temperature and Pressure on Climate",
+                    "pages": [
+                        {
+                            "page": 204,
+                            "explanation": [
+                                "When it is said in a weather forecast for one day that the weather is hot and humid over Cairo and the Nile Delta (Lower Egypt), very hot and humid over South Sinai and the south of the country during the day and warm and humid at night over most areas, so it talks about weather. But when it is said that the Mediterranean coastal countries have a hot dry climate in summer and a mild, rainy climate in winter, then it talks about climate. Weather is the overall instantaneous condition of the atmosphere at certain place and time. Climate is the atmospheric condition in a certain place over a long period of time.",
+                                "The key elements of weather and climate are similar. These elements include: 1. Temperature, 2. Solar radiation, 3. Atmospheric pressure, 4. Wind, 5. Humidity, 6. Condensation, and 7. Precipitation. The diagram shows these seven elements connected in a circular flow. Temperature and Atmospheric pressure are topics of the first lesson, while Wind is the topic of the second lesson.",
+                                "Temperature is considered the most important climatic element because of its direct impact on human life and the distribution of plants and animals on the Earth's surface. For example, the Caracal (Egyptian lynx) is found in hot regions, while the polar bear is found in the northern polar region. The page includes photos of a Caracal in a desert-like setting and a polar bear in a snowy environment."
+                            ]
+                        },
+                        {
+                            "page": 205,
+                            "explanation": [
+                                "There are several factors that lead to differences in air temperature from one region to another, the most important of them include: 1. Differences in latitude, 2. Proximity to water bodies, and 3. Altitude above sea level.",
+                                "The location of any place on the Earth's surface is determined using two sets of lines, which are Longitudes and Latitudes. The figure shows two globes, one highlighting vertical longitude lines and the other highlighting horizontal latitude lines.",
+                                "There are several main latitudes: The Tropic of Cancer is the latitude located north of the Equator at 23.5\u00b0N. The Equator bisects the Earth's surface at the middle between the two poles at 0\u00b0. The Tropic of Capricorn is located south of the Equator at 23.5\u00b0S. A diagram illustrates these lines on a globe along with the Arctic Circle (66.5\u00b0N), Antarctic Circle (66.5\u00b0S), North Pole (90\u00b0N), and South Pole (90\u00b0S)."
+                            ]
+                        },
+                        {
+                            "page": 206,
+                            "explanation": [
+                                "The thermal zones on the Earth's surface differ as a result of the difference in the angle of inclination of the Sun rays falling on them. The diagram shows the Earth divided into zones: the hot (tropical) zone near the Equator receiving perpendicular rays, temperate zones receiving inclined rays, and cold (polar) zones receiving more inclined rays.",
+                                "Temperature is high near the Equator because the Sun rays fall perpendicular to these areas. Temperature decreases as you move north or south farther from the Equator towards the poles due to the increase in the angle of inclination of the Sun rays falling on these areas. Therefore, the distribution of thermal zones in the world varies according to latitudes.",
+                                "Take care: Egypt lies between latitudes 22\u00b0N and 32\u00b0N. However, the location of Aswan (24\u00b0N) near the tropic of Cancer makes its climate extremely hot and dry throughout the year and it is the hottest and driest city in Egypt."
+                            ],
+                            "questions": [
+                                {
+                                    "ex_title": "Identify the thermal zones in which each city is located",
+                                    "type": "text",
+                                    "q_txt": "In the opposite table: Identify the thermal zones in which each city is located. (Alexandria: 31\u00b0N, Cairo: 30\u00b0N, Aswan: 24\u00b0N)",
+                                    "a_txt": "The temperate zone to the north extends from 23.5\u00b0N to 66.5\u00b0N. Alexandria, Cairo and Aswan are all located in the temperate zone.",
+                                    "mcq_choices": null
+                                }
+                            ]
+                        },
+                        {
+                            "page": 207,
+                            "explanation": [
+                                "Remember that when the specific heat of a substance is high, the amount of heat required to raise the temperature of 1 kilogram of the substance by 1\u00b0C is large. Therefore, the increase in temperature of a certain mass of the substance is small when it gains a certain amount of heat. The substance takes a long time to lose the energy it has gained (i.e. it cools down slowly).",
+                                "The temperature of the air is affected by the temperatures of the water or land beneath it, appearing in the phenomena of sea breeze and land breeze. Sea breeze is the movement of cool, refreshing air from the sea towards the land during the daytime. Land breeze is the movement of cool, relatively dry air from the land towards the sea at night. Diagrams illustrate the circulation of hot and cool air over land and water for both day and night.",
+                                "The specific heat of water, being higher than that of the adjacent land, makes water bodies cooler than land during the daytime and warmer than land at night. During the day, air above land is hotter, rises, and is replaced by cool air from the sea. At night, air above the sea is warmer, rises, and is replaced by cool air from the land."
+                            ]
+                        },
+                        {
+                            "page": 208,
+                            "explanation": [
+                                "Air density decreases as altitude increases above sea level. This leads to a decrease in temperature because elevation leads to the expansion of air, which decreases its density, causing air particles to move farther apart and slow down. A diagram shows a mountain with air particles becoming less dense at higher elevations.",
+                                "The weather forecast shows the maximum and minimum temperatures for each day, through which it is possible to calculate both the daily temperature range and the daily average temperature. Maximum temperature is the highest temperature in one day. Minimum temperature is the lowest temperature in one day. Daily temperature range = Maximum temperature - Minimum temperature. Daily average temperature = (Maximum temperature + Minimum temperature) / 2."
+                            ]
+                        },
+                        {
+                            "page": 209,
+                            "questions": [
+                                {
+                                    "ex_title": "From the two opposite figures, calculate",
+                                    "type": "text",
+                                    "q_txt": "The daily temperature range for Alexandria governorate on Wednesday 3 April.",
+                                    "a_txt": "Daily temperature range = Maximum temperature - Minimum temperature = 23 - 16 = 7\u00b0C",
+                                    "mcq_choices": null
+                                },
+                                {
+                                    "ex_title": "From the two opposite figures, calculate",
+                                    "type": "text",
+                                    "q_txt": "The difference between the average temperature in Sharqia governorate on Wednesday 3 April and Tuesday 16 April.",
+                                    "a_txt": "Average temperature on 3 April = (33 + 14) / 2 = 23.5\u00b0C. Average temperature on 16 April = (31 + 18) / 2 = 24.5\u00b0C. The difference between the average temperatures = 24.5 - 23.5 = 1\u00b0C",
+                                    "mcq_choices": null
+                                },
+                                {
+                                    "ex_title": "If the maximum temperature on one day in one of the cities is 32\u00b0C and the daily temperature range is 15\u00b0C, calculate",
+                                    "type": "text",
+                                    "q_txt": "Minimum temperature for this day.",
+                                    "a_txt": "Daily temperature range = Maximum temperature - Minimum temperature. Minimum temperature = Maximum temperature - Daily temperature range = 32 - 15 = 17\u00b0C",
+                                    "mcq_choices": null
+                                },
+                                {
+                                    "ex_title": "If the maximum temperature on one day in one of the cities is 32\u00b0C and the daily temperature range is 15\u00b0C, calculate",
+                                    "type": "text",
+                                    "q_txt": "Daily average temperature.",
+                                    "a_txt": "Daily average temperature = (Maximum temperature + Minimum temperature) / 2 = (32 + 17) / 2 = 24.5\u00b0C",
+                                    "mcq_choices": null
+                                },
+                                {
+                                    "ex_title": "If the maximum temperature on a certain day in one of the cities is 30\u00b0C and the daily average temperature is 26\u00b0C, calculate",
+                                    "type": "text",
+                                    "q_txt": "Minimum temperature for this day.",
+                                    "a_txt": "Daily average temperature = (Maximum temperature + Minimum temperature (x)) / 2. 26 = (30 + X) / 2. 52 = 30 + X. Minimum temperature (x) = 52 - 30 = 22\u00b0C",
+                                    "mcq_choices": null
+                                },
+                                {
+                                    "ex_title": "If the maximum temperature on a certain day in one of the cities is 30\u00b0C and the daily average temperature is 26\u00b0C, calculate",
+                                    "type": "text",
+                                    "q_txt": "Daily temperature range.",
+                                    "a_txt": "Daily temperature range = Maximum temperature - Minimum temperature = 30 - 22 = 8\u00b0C",
+                                    "mcq_choices": null
+                                }
+                            ]
+                        },
+                        {
+                            "page": 211,
+                            "explanation": [
+                                "Atmospheric pressure is related to the weight of air. An illustration shows a balanced first-class lever with two balloons; when one is pierced with a sharp pin, an imbalance of the lever occurs, which proves that atmospheric air has weight.",
+                                "Activity: Proving that atmospheric air has pressure. Materials include a peeled boiled egg, empty bottle, pieces of paper, and a matchstick. When burning paper is put in the bottle and the mouth is closed with the egg, the egg falls inside after the flame goes out. This happens because the trapped air cools, its volume decreases, leading to a decrease in pressure inside compared to outside, pushing the egg in.",
+                                "Conclusion: Atmospheric air has pressure."
+                            ]
+                        },
+                        {
+                            "page": 212,
+                            "explanation": [
+                                "Atmospheric pressure is the weight of a column of air with a cross-sectional area of 1 m\u00b2 and a height extending to the top of the atmosphere. A diagram shows a long column of air extending from the Earth's surface into space.",
+                                "Atmospheric pressure is measured by a device known as the mercury barometer. Atmospheric pressure at sea level is known as normal atmospheric pressure. It is equivalent to the weight of a column of mercury 76 cm high (760 mm.Hg) acting on a unit area. A diagram of a mercury barometer shows a glass tube with mercury and a Torricelli's vacuum at the top.",
+                                "Normal atmospheric pressure (760 mm.Hg) is equivalent to 1013.25 millibar (mb). Each 1 millibar (mb) is equivalent to 0.75 mm mercury (mm.Hg). The formula is: Atmospheric pressure (millibar mb) = Atmospheric pressure (millimeter mercury mm.Hg) / 0.75.",
+                                "There are several factors that affect atmospheric pressure, including: 1. Altitude (height) above the sea level, 2. Temperature, and 3. Humidity."
+                            ]
+                        },
+                        {
+                            "page": 213,
+                            "explanation": [
+                                "As we go higher above the sea level, the atmospheric pressure decreases because as we go higher above the sea level, the weight of the air column on the unit area decreases. A diagram shows a mountain with 'Low atmospheric pressure' at the peak and 'High atmospheric pressure' at the base. A table shows pressure values decreasing as altitude increases.",
+                                "Take care: The decrease in atmospheric pressure is followed by a decrease in the length of the mercury column in the mercury barometer and an increase in the length of the Torricelli's vacuum. Diagrams show the mercury level dropping as pressure decreases."
+                            ],
+                            "questions": [
+                                {
+                                    "ex_title": "Calculate mercury column length and location",
+                                    "type": "text",
+                                    "q_txt": "If the atmospheric pressure in a certain area is 1000 mb, find the length of the mercury column in the mercury barometer in centimeters when it is placed in this area. Is this area located at sea level? Explain.",
+                                    "a_txt": "Atmospheric pressure (mm.Hg) = Atmospheric pressure (mb) x 0.75 = 1000 x 0.75 = 750 mm.Hg. The length of the column in centimeters = 750 / 10 = 75 cm.Hg. The area is located above the sea level because atmospheric pressure is less than 76 cm.Hg.",
+                                    "mcq_choices": null
+                                }
+                            ]
+                        },
+                        {
+                            "page": 214,
+                            "explanation": [
+                                "Increasing the temperature of the Earth's surface leads to the expansion of air near the surface, which leads to decreasing air density and therefore the atmospheric pressure decreases. Conversely, decreasing the temperature leads to contraction of air, increasing air density, and therefore the atmospheric pressure increases.",
+                                "Humidity is the amount of water vapour present in the air. The percentage (value) of humidity varies from one place to another and from one time to another. A photo shows a hygrometer measuring humidity.",
+                                "The concept of absolute humidity differs from the concept of relative humidity. Absolute humidity is the actual mass of water vapour present in a certain volume of atmospheric air measured in (g/m\u00b3). Relative humidity is the percentage of the actual amount of water vapour present in a certain volume of air (absolute humidity) to the maximum amount of water vapour that the same volume of air can hold at the same temperature (maximum capacity)."
+                            ]
+                        },
+                        {
+                            "page": 215,
+                            "explanation": [
+                                "Both absolute humidity and relative humidity are expressed mathematically as follows: Absolute humidity = (The mass of water vapour (g)) / (The volume of atmospheric air (m\u00b3)). Relative humidity = (Absolute humidity / Maximum capacity) * 100%.",
+                                "Atmospheric pressure decreases slightly as humidity increases because the density of water vapour is less than the density of dry air. For illustration, the mass per unit volume of water vapour is less than the average mass per unit volume of nitrogen and oxygen (the main components of dry air). Therefore, the density of humid air is less than the density of dry air."
+                            ],
+                            "questions": [
+                                {
+                                    "ex_title": "Calculate humidity",
+                                    "type": "text",
+                                    "q_txt": "5 m\u00b3 of air contains 40 g of water vapour, if the maximum mass of water vapour that 1 m\u00b3 of this air can hold is 22.8 g, calculate: Absolute humidity.",
+                                    "a_txt": "Absolute humidity = The mass of water vapour / The volume of atmospheric air = 40 / 5 = 8 g/m\u00b3",
+                                    "mcq_choices": null
+                                },
+                                {
+                                    "ex_title": "Calculate humidity",
+                                    "type": "text",
+                                    "q_txt": "5 m\u00b3 of air contains 40 g of water vapour, if the maximum mass of water vapour that 1 m\u00b3 of this air can hold is 22.8 g, calculate: Relative humidity.",
+                                    "a_txt": "Relative humidity = (Absolute humidity / Maximum capacity) x 100% = (8 / 22.8) x 100% = 35%",
+                                    "mcq_choices": null
+                                }
+                            ]
+                        },
+                        {
+                            "page": 216,
+                            "explanation": [
+                                "Integration with biology: The spread of influenza increases in winter due to the low humidity of the cold air. When we move from open areas (outdoors) in winter (cold air) to indoors (warm air), the maximum capacity of air increases while the absolute humidity remains the same, which leads to a sharp decrease in the relative humidity.",
+                                "The consequences of decrease in relative humidity on viruses: A sharp decrease in humidity causes the rapid evaporation of the respiratory droplets carrying the viruses, allowing the viruses to remain suspended in the air for longer periods of time. On the body: Warm air causes the evaporation of moisture from the mucous membranes lining the nose and respiratory tract, which weakens their ability to trap and defend against viral infections."
+                            ]
+                        }
+                    ]
+                }
+            ]
+        }
+    ]
+}

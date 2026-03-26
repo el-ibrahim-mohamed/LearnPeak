@@ -1,0 +1,662 @@
+{
+    "units": [
+        {
+            "unit_num": 2,
+            "unit_name": "Forces and Motion",
+            "lessons": [
+                {
+                    "lesson_num": 1,
+                    "lesson_name": "Newton's Laws of Motion",
+                    "pages": [
+                        {
+                            "page": 107,
+                            "questions": [
+                                {
+                                    "ex_title": "Write the scientific term (name) of each of the following statements",
+                                    "type": "text",
+                                    "q_txt": "The change in the velocity of an object per unit time.",
+                                    "a_txt": "Acceleration",
+                                    "mcq_choices": null
+                                },
+                                {
+                                    "ex_title": "Write the scientific term (name) of each of the following statements",
+                                    "type": "text",
+                                    "q_txt": "The rate of change of velocity.",
+                                    "a_txt": "Acceleration",
+                                    "mcq_choices": null
+                                },
+                                {
+                                    "ex_title": "Write the scientific term (name) of each of the following statements",
+                                    "type": "text",
+                                    "q_txt": "If a net force (F) acts on an object with a mass (m), it causes the object to have an acceleration (a) in the same direction as the net force.",
+                                    "a_txt": "Newton's second law",
+                                    "mcq_choices": null
+                                },
+                                {
+                                    "ex_title": "Write the scientific term (name) of each of the following statements",
+                                    "type": "text",
+                                    "q_txt": "A safety device that works with the seat belt in the car to prolong the time of collision, and thus reduce the rate of change in velocity, which in turn minimizes the force of collision acting on the driver.",
+                                    "a_txt": "Airbag",
+                                    "mcq_choices": null
+                                },
+                                {
+                                    "ex_title": "Write the scientific term (name) of each of the following statements",
+                                    "type": "text",
+                                    "q_txt": "For every action, there is an equal and opposite reaction.",
+                                    "a_txt": "Newton's third law",
+                                    "mcq_choices": null
+                                },
+                                {
+                                    "ex_title": "Write the scientific term (name) of each of the following statements",
+                                    "type": "text",
+                                    "q_txt": "A collision between a stationary object and a moving object having the same mass and no loss of kinetic energy occurs.",
+                                    "a_txt": "Elastic collision",
+                                    "mcq_choices": null
+                                },
+                                {
+                                    "ex_title": "Write the scientific term (name) of each of the following statements",
+                                    "type": "text",
+                                    "q_txt": "A collision between a stationary object and a moving object having the same mass in which kinetic energy is lost.",
+                                    "a_txt": "Inelastic collision",
+                                    "mcq_choices": null
+                                }
+                            ]
+                        },
+                        {
+                            "page": 108,
+                            "questions": [
+                                {
+                                    "ex_title": "Complete the following statements",
+                                    "type": "complete",
+                                    "q_txt": "When the velocity of an object increases or decreases, the object acquires _____ whose direction is _____ as the direction of the net force acting on the object.",
+                                    "a_txt": [
+                                        "acceleration",
+                                        "the same"
+                                    ],
+                                    "mcq_choices": null
+                                },
+                                {
+                                    "ex_title": "Complete the following statements",
+                                    "type": "complete",
+                                    "q_txt": "Acceleration is measured in the unit _____ which is equivalent to _____.",
+                                    "a_txt": [
+                                        "Newton/kg (N/kg)",
+                                        "meter/second^2 (m/s^2)"
+                                    ],
+                                    "mcq_choices": null
+                                },
+                                {
+                                    "ex_title": "Complete the following statements",
+                                    "type": "complete",
+                                    "q_txt": "The factors affecting acceleration are _____ and _____.",
+                                    "a_txt": [
+                                        "the mass of the object",
+                                        "the net force acting on the object"
+                                    ],
+                                    "mcq_choices": null
+                                },
+                                {
+                                    "ex_title": "Complete the following statements",
+                                    "type": "complete",
+                                    "q_txt": "As the mass of the object increases, its acceleration _____ at constant _____.",
+                                    "a_txt": [
+                                        "decreases",
+                                        "the net force acting on it"
+                                    ],
+                                    "mcq_choices": null
+                                },
+                                {
+                                    "ex_title": "Complete the following statements",
+                                    "type": "complete",
+                                    "q_txt": "The safety precautions in cars include _____, _____.",
+                                    "a_txt": [
+                                        "seat belt",
+                                        "airbag"
+                                    ],
+                                    "mcq_choices": null
+                                },
+                                {
+                                    "ex_title": "Complete the following statements",
+                                    "type": "complete",
+                                    "q_txt": "Among the properties of the action force and reaction force is that they are _____ in magnitude and _____ in direction.",
+                                    "a_txt": [
+                                        "equal",
+                                        "opposite"
+                                    ],
+                                    "mcq_choices": null
+                                },
+                                {
+                                    "ex_title": "Complete the following statements",
+                                    "type": "complete",
+                                    "q_txt": "When an elastic collision occurs between two identical masses, one stationary and the other is moving, the stationary mass _____ and the moving mass _____.",
+                                    "a_txt": [
+                                        "moves",
+                                        "stops"
+                                    ],
+                                    "mcq_choices": null
+                                },
+                                {
+                                    "ex_title": "Complete the following statements",
+                                    "type": "complete",
+                                    "q_txt": "When a collision occurs between two identical masses with a loss of kinetic energy as heat or sound, the collision is known as _____ and if there is no loss of kinetic energy, the collision is known as _____.",
+                                    "a_txt": [
+                                        "inelastic",
+                                        "elastic"
+                                    ],
+                                    "mcq_choices": null
+                                },
+                                {
+                                    "ex_title": "Complete the following statements",
+                                    "type": "complete",
+                                    "q_txt": "The air hockey game represents a technological application of Newton's _____ law, while the flyboard represents a life application of Newton's _____ law.",
+                                    "a_txt": [
+                                        "first",
+                                        "third"
+                                    ],
+                                    "mcq_choices": null
+                                },
+                                {
+                                    "ex_title": "Correct the underlined parts",
+                                    "type": "correct_underlined",
+                                    "q_txt": "The backward movement of the cannon when the shell is propelled forward represents an application of Newton's first law.",
+                                    "a_txt": {
+                                        "mistake": "Newton's first law",
+                                        "correction": "Newton's third law"
+                                    },
+                                    "mcq_choices": null
+                                },
+                                {
+                                    "ex_title": "Correct the underlined parts",
+                                    "type": "correct_underlined",
+                                    "q_txt": "The action force and reaction force always act on one object.",
+                                    "a_txt": {
+                                        "mistake": "one object",
+                                        "correction": "two different objects"
+                                    },
+                                    "mcq_choices": null
+                                },
+                                {
+                                    "ex_title": "Correct the underlined parts",
+                                    "type": "correct_underlined",
+                                    "q_txt": "When an elastic collision occurs between a stationary object and a moving object having the same mass, the stationary object moves at twice velocity of the moving object before the collision.",
+                                    "a_txt": {
+                                        "mistake": "twice",
+                                        "correction": "the same"
+                                    },
+                                    "mcq_choices": null
+                                },
+                                {
+                                    "ex_title": "Mark (T) or (X) for each statement, with correction if needed",
+                                    "type": "true_false_with_correction",
+                                    "q_txt": "When the velocity of an object changes over time, the object acquires acceleration in the same direction as the net force acting on it.",
+                                    "a_txt": [
+                                        "True",
+                                        null
+                                    ],
+                                    "mcq_choices": null
+                                },
+                                {
+                                    "ex_title": "Mark (T) or (X) for each statement, with correction if needed",
+                                    "type": "true_false_with_correction",
+                                    "q_txt": "The greater the net force acting on the object, the less its acceleration at constant mass.",
+                                    "a_txt": [
+                                        "False",
+                                        {
+                                            "mistake": "less",
+                                            "correction": "more"
+                                        }
+                                    ],
+                                    "mcq_choices": null
+                                },
+                                {
+                                    "ex_title": "Mark (T) or (X) for each statement, with correction if needed",
+                                    "type": "true_false_with_correction",
+                                    "q_txt": "The airbag works with the seat belt to increase the rate of change in velocity when the brakes are applied.",
+                                    "a_txt": [
+                                        "False",
+                                        {
+                                            "mistake": "increase",
+                                            "correction": "reduce"
+                                        }
+                                    ],
+                                    "mcq_choices": null
+                                },
+                                {
+                                    "ex_title": "Mark (T) or (X) for each statement, with correction if needed",
+                                    "type": "true_false_with_correction",
+                                    "q_txt": "The action force and reaction force act without any time difference.",
+                                    "a_txt": [
+                                        "True",
+                                        null
+                                    ],
+                                    "mcq_choices": null
+                                },
+                                {
+                                    "ex_title": "Mark (T) or (X) for each statement, with correction if needed",
+                                    "type": "true_false_with_correction",
+                                    "q_txt": "In elastic collisions, part of the energy is lost as heat, sound or the object is deformed.",
+                                    "a_txt": [
+                                        "False",
+                                        {
+                                            "mistake": "In elastic collisions",
+                                            "correction": "In inelastic collisions"
+                                        }
+                                    ],
+                                    "mcq_choices": null
+                                },
+                                {
+                                    "ex_title": "Mark (T) or (X) for each statement, with correction if needed",
+                                    "type": "true_false_with_correction",
+                                    "q_txt": "In drones, the downward push of air from the engines represents the reaction force.",
+                                    "a_txt": [
+                                        "False",
+                                        {
+                                            "mistake": "reaction",
+                                            "correction": "action"
+                                        }
+                                    ],
+                                    "mcq_choices": null
+                                }
+                            ]
+                        },
+                        {
+                            "page": 109,
+                            "questions": [
+                                {
+                                    "ex_title": "Choose the correct answer",
+                                    "type": "mcq",
+                                    "q_txt": "All the following are cases in which the object moves with acceleration, except _____.",
+                                    "a_txt": 2,
+                                    "mcq_choices": [
+                                        "when its velocity increases over time.",
+                                        "when its velocity decreases over time.",
+                                        "when it moves at a constant velocity.",
+                                        "when its direction of motion changes."
+                                    ]
+                                },
+                                {
+                                    "ex_title": "Choose the correct answer",
+                                    "type": "mcq",
+                                    "q_txt": "Newton's second law is represented by the equation _____.",
+                                    "a_txt": 2,
+                                    "mcq_choices": [
+                                        "F = m / v",
+                                        "F = a / m",
+                                        "F = m a",
+                                        "a = F / v"
+                                    ]
+                                },
+                                {
+                                    "ex_title": "Choose the correct answer",
+                                    "type": "mcq",
+                                    "q_txt": "In the opposite figure showing a 50 kg object with 150 N force to the left and 400 N force to the right: The magnitude of the net force acting on the object equals _____.",
+                                    "a_txt": 2,
+                                    "mcq_choices": [
+                                        "550 N",
+                                        "400 N",
+                                        "250 N",
+                                        "150 N"
+                                    ]
+                                },
+                                {
+                                    "ex_title": "Choose the correct answer",
+                                    "type": "mcq",
+                                    "q_txt": "In the opposite figure showing a 50 kg object with 150 N force to the left and 400 N force to the right: The acceleration of the object equals _____.",
+                                    "a_txt": 3,
+                                    "mcq_choices": [
+                                        "1 m/s^2",
+                                        "2 m/s^2",
+                                        "4 m/s^2",
+                                        "5 m/s^2"
+                                    ]
+                                },
+                                {
+                                    "ex_title": "Choose the correct answer",
+                                    "type": "mcq",
+                                    "q_txt": "The acceleration with which an object moves is directly proportional to _____.",
+                                    "a_txt": 0,
+                                    "mcq_choices": [
+                                        "the net force acting on it.",
+                                        "its volume.",
+                                        "stopping time.",
+                                        "its mass."
+                                    ]
+                                },
+                                {
+                                    "ex_title": "Choose the correct answer",
+                                    "type": "mcq",
+                                    "q_txt": "Which of the following figures expresses the relationship between the acceleration of the object (a) and the force acting on it (F) when the mass of the object (m) is constant?",
+                                    "a_txt": 1,
+                                    "mcq_choices": [
+                                        "Graph (a) showing a curve.",
+                                        "Graph (b) showing a straight line through the origin.",
+                                        "Graph (c) showing a horizontal line.",
+                                        "Graph (d) showing a downward curve."
+                                    ]
+                                },
+                                {
+                                    "ex_title": "Choose the correct answer",
+                                    "type": "mcq",
+                                    "q_txt": "The acceleration of a moving object is inversely proportional to its mass at constant net force. Which of the following represents the controlled variable and the dependent variable, respectively?",
+                                    "a_txt": 1,
+                                    "mcq_choices": [
+                                        "The mass, the net force.",
+                                        "The net force, the acceleration.",
+                                        "The net force, the mass.",
+                                        "The acceleration, the net force."
+                                    ]
+                                },
+                                {
+                                    "ex_title": "Choose the correct answer",
+                                    "type": "mcq",
+                                    "q_txt": "What does protect the driver from hitting the windshield of a moving car when the brakes are applied suddenly?",
+                                    "a_txt": 0,
+                                    "mcq_choices": [
+                                        "Seat belt.",
+                                        "Inertia.",
+                                        "Speedometer.",
+                                        "Cruise control."
+                                    ]
+                                }
+                            ]
+                        },
+                        {
+                            "page": 110,
+                            "questions": [
+                                {
+                                    "ex_title": "Choose the correct answer",
+                                    "type": "mcq",
+                                    "q_txt": "When a balloon is inflated with air and then released so that the air rushes out, the balloon moves in the opposite direction to the rushing of the air and this is explained by _____.",
+                                    "a_txt": 2,
+                                    "mcq_choices": [
+                                        "Newton's first law.",
+                                        "Newton's second law.",
+                                        "Newton's third law.",
+                                        "law of inertia."
+                                    ]
+                                },
+                                {
+                                    "ex_title": "Choose the correct answer",
+                                    "type": "mcq",
+                                    "q_txt": "All the following statements match the action force and reaction force, except that _____.",
+                                    "a_txt": 2,
+                                    "mcq_choices": [
+                                        "the magnitude of the action force = the magnitude of the reaction force.",
+                                        "the direction of the action force is opposite to the direction of the reaction force.",
+                                        "the action force and reaction force act on the same object.",
+                                        "the action force and reaction force act on two different objects."
+                                    ]
+                                },
+                                {
+                                    "ex_title": "Choose the correct answer",
+                                    "type": "mcq",
+                                    "q_txt": "If an elastic collision occurs between two balls of the same mass, one of them (x) is stationary and the other (y) is moving, then _____.",
+                                    "a_txt": 0,
+                                    "mcq_choices": [
+                                        "the ball (y) stops completely and the ball (x) moves at the same velocity as the ball (y).",
+                                        "the ball (y) stops completely and the ball (x) moves at half the velocity of the ball (y).",
+                                        "the two balls (x) and (y) move together at the same velocity.",
+                                        "the ball (y) bounces back at the same velocity."
+                                    ]
+                                },
+                                {
+                                    "ex_title": "What is meant by each of the following",
+                                    "type": "text",
+                                    "q_txt": "Acceleration.",
+                                    "a_txt": "The change in the velocity of the object per unit time (or) the rate of change of velocity.",
+                                    "mcq_choices": null
+                                },
+                                {
+                                    "ex_title": "What is meant by each of the following",
+                                    "type": "text",
+                                    "q_txt": "Newton's second law.",
+                                    "a_txt": "If a net force (F) acts on an object of mass (m), it causes the object to have an acceleration (a) in the same direction as the net force.",
+                                    "mcq_choices": null
+                                },
+                                {
+                                    "ex_title": "What is meant by each of the following",
+                                    "type": "text",
+                                    "q_txt": "Newton's third law.",
+                                    "a_txt": "For every action, there is an equal and opposite reaction.",
+                                    "mcq_choices": null
+                                },
+                                {
+                                    "ex_title": "Give reasons for the following",
+                                    "type": "text",
+                                    "q_txt": "The importance of fastening the seat belt inside cars.",
+                                    "a_txt": "To protect the driver from being rushed forward toward the steering wheel during sudden stops.",
+                                    "mcq_choices": null
+                                },
+                                {
+                                    "ex_title": "Give reasons for the following",
+                                    "type": "text",
+                                    "q_txt": "The importance of the airbag in the car.",
+                                    "a_txt": "Because it works with the seat belt to increase the collision time and thus reduce the rate of change in velocity (acceleration), which reduces the impact force on the driver.",
+                                    "mcq_choices": null
+                                },
+                                {
+                                    "ex_title": "Give reasons for the following",
+                                    "type": "text",
+                                    "q_txt": "When a shell is fired forward from a cannon, the cannon moves backward.",
+                                    "a_txt": "Because the movement of the cannon represents the reaction to the force of firing the shell (the action), and they act in opposite directions without any time difference.",
+                                    "mcq_choices": null
+                                },
+                                {
+                                    "ex_title": "What happens in the following cases",
+                                    "type": "text",
+                                    "q_txt": "If unbalanced forces act on a moving object.",
+                                    "a_txt": "The object gains acceleration in the same direction as the net force.",
+                                    "mcq_choices": null
+                                },
+                                {
+                                    "ex_title": "What happens in the following cases",
+                                    "type": "text",
+                                    "q_txt": "If two objects with different masses are affected by a net force of the same magnitude (Regarding the acceleration of motion).",
+                                    "a_txt": "The object with greater mass moves with less acceleration, and vice versa.",
+                                    "mcq_choices": null
+                                },
+                                {
+                                    "ex_title": "What happens in the following cases",
+                                    "type": "text",
+                                    "q_txt": "Reducing the net force acting on the same object to half (Regarding the acceleration).",
+                                    "a_txt": "The acceleration is reduced to half.",
+                                    "mcq_choices": null
+                                }
+                            ]
+                        },
+                        {
+                            "page": 111,
+                            "questions": [
+                                {
+                                    "ex_title": "What happens in the following cases",
+                                    "type": "text",
+                                    "q_txt": "Doubling the mass of an object while keeping the net force acting on it constant (Regarding the acceleration).",
+                                    "a_txt": "The acceleration is reduced to half.",
+                                    "mcq_choices": null
+                                },
+                                {
+                                    "ex_title": "What happens in the following cases",
+                                    "type": "text",
+                                    "q_txt": "The driver does not fasten the seat belt in an accelerating car when the brakes are applied suddenly.",
+                                    "a_txt": "The driver is rushed quickly forward toward the steering wheel, putting him at risk.",
+                                    "mcq_choices": null
+                                },
+                                {
+                                    "ex_title": "What happens in the following cases",
+                                    "type": "text",
+                                    "q_txt": "When a collision occurs between two moving objects having the same mass and the same velocity in opposite directions.",
+                                    "a_txt": "Both will move in the opposite direction and at the same velocity, as they acquire acceleration in the same direction as the force acting on each of them.",
+                                    "mcq_choices": null
+                                },
+                                {
+                                    "ex_title": "What happens in the following cases",
+                                    "type": "text",
+                                    "q_txt": "When an elastic collision occurs between a stationary object and a moving object with the same mass.",
+                                    "a_txt": "The object that was moving will stop, and the object that was stationary will move with the same velocity as the moving object before the collision.",
+                                    "mcq_choices": null
+                                },
+                                {
+                                    "ex_title": "What happens in the following cases",
+                                    "type": "text",
+                                    "q_txt": "When an inelastic collision occurs between a stationary object and a moving object (Regarding kinetic energy).",
+                                    "a_txt": "There is a loss of energy in the form of heat, sound, or deformation of the shape of the object.",
+                                    "mcq_choices": null
+                                },
+                                {
+                                    "ex_title": "Variant problems",
+                                    "type": "text",
+                                    "q_txt": "Calculate the acceleration with which an object of mass 50 kg moves when acted upon by a net force of 200 N.",
+                                    "a_txt": "a = F / m = 200 / 50 = 4 m/s^2.",
+                                    "mcq_choices": null
+                                },
+                                {
+                                    "ex_title": "Variant problems",
+                                    "type": "text",
+                                    "q_txt": "Calculate the required force to move a car of mass 500 kg with an acceleration of 2 N/kg.",
+                                    "a_txt": "F = m x a = 500 x 2 = 1000 N.",
+                                    "mcq_choices": null
+                                },
+                                {
+                                    "ex_title": "Variant problems",
+                                    "type": "text",
+                                    "q_txt": "Calculate the net force that propels a rocket of mass 5000 kg upward with an acceleration of 20 N/kg.",
+                                    "a_txt": "F = m x a = 5000 x 20 = 100000 N.",
+                                    "mcq_choices": null
+                                },
+                                {
+                                    "ex_title": "Variant problems",
+                                    "type": "text",
+                                    "q_txt": "From the opposite figure showing two objects (X) and (Y) of mass 5g each moving towards each other at 3 m/s: What is the velocity of each of the two objects (x) and (y) after an elastic collision between them?",
+                                    "a_txt": "The velocity of object (X) = 3 m/s, The velocity of object (Y) = 3 m/s (in opposite directions).",
+                                    "mcq_choices": null
+                                },
+                                {
+                                    "ex_title": "Variant problems",
+                                    "type": "text",
+                                    "q_txt": "A ball of mass 2 kg moving at a velocity of 3 m/s collides inelastically with another stationary ball of the same mass. What is the velocity at which the two balls move together after collision?",
+                                    "a_txt": "Both balls move at half the velocity of the moving object before the collision = 1/2 x 3 = 1.5 m/s.",
+                                    "mcq_choices": null
+                                },
+                                {
+                                    "ex_title": "Variant problems",
+                                    "type": "text",
+                                    "q_txt": "A ball (x) of mass 1 kg moving at a velocity of 4 m/s collides elastically with a stationary ball (y) having the same mass. Calculate the velocity of each ball after the collision.",
+                                    "a_txt": "The velocity of the moving ball (X) after the collision = zero, the velocity of the stationary ball (Y) after the collision = 4 m/s.",
+                                    "mcq_choices": null
+                                },
+                                {
+                                    "ex_title": "Study the following figures, then answer",
+                                    "type": "text",
+                                    "q_txt": "The opposite figure shows the effect of two forces on each of two objects moving in a straight line: (1) 2N left and 2N right, (2) 3N left and 2N right. Which of them is moving at a constant velocity, and which is moving with acceleration? Explain.",
+                                    "a_txt": "The object (1) moves at a regular velocity / Because the forces acting on it are balanced and their net force = zero. The object (2) moves with acceleration / Because the forces acting on it are unbalanced and their net force is not equal zero.",
+                                    "mcq_choices": null
+                                }
+                            ]
+                        },
+                        {
+                            "page": 112,
+                            "questions": [
+                                {
+                                    "ex_title": "Study the following figures, then answer",
+                                    "type": "text",
+                                    "q_txt": "The following two figures illustrate the movement of two identical vehicles affected by the same net force: (1) vehicle with two 100kg loads, (2) vehicle with one 100kg load. In which of the two cases, the acceleration is greater? Explain.",
+                                    "a_txt": "In case (2) / Because as the mass of the object decreases, its acceleration increases when the net force acting on it is constant.",
+                                    "mcq_choices": null
+                                },
+                                {
+                                    "ex_title": "Study the following figures, then answer",
+                                    "type": "text",
+                                    "q_txt": "The following two figures illustrate the movement of two identical vehicles affected by the same net force: (1) vehicle with two 100kg loads, (2) vehicle with one 100kg load. Specify the controlled variable in both cases.",
+                                    "a_txt": "The net force acting on the object.",
+                                    "mcq_choices": null
+                                },
+                                {
+                                    "ex_title": "Study the following figures, then answer",
+                                    "type": "text",
+                                    "q_txt": "The following two figures illustrate the forces acting to pull the same person: (1) two people pulling, (2) one person pulling. In which of the two cases, the acceleration is greater?",
+                                    "a_txt": "In case (1).",
+                                    "mcq_choices": null
+                                },
+                                {
+                                    "ex_title": "Study the following figures, then answer",
+                                    "type": "text",
+                                    "q_txt": "The following two figures illustrate the forces acting to pull the same person: (1) two people pulling, (2) one person pulling. Specify the controlled variable in both cases.",
+                                    "a_txt": "The mass of the object.",
+                                    "mcq_choices": null
+                                },
+                                {
+                                    "ex_title": "Study the following figures, then answer",
+                                    "type": "text",
+                                    "q_txt": "Draw the graph that shows the relationship between the acceleration of a moving object (a) and the net force (F) acting on it, Indicating the dependent variable and the independent variable.",
+                                    "a_txt": "The graph is a straight line starting from the origin. The dependent variable: Acceleration of the object (a). The independent variable: The net force (F) acting on the object.",
+                                    "mcq_choices": null
+                                },
+                                {
+                                    "ex_title": "Study the following figures, then answer",
+                                    "type": "text",
+                                    "q_txt": "The opposite figure represents two security and safety precautions in the car: What are the two precautions? And what is their importance?",
+                                    "a_txt": "Seat belt: It works to reduce the rushing forward of the driver towards the steering wheel during sudden stopping. Airbag: It works with the seat belt to increase the collision time and thus reducing the rate of change of velocity (acceleration), which minimizes the impact force on the driver.",
+                                    "mcq_choices": null
+                                },
+                                {
+                                    "ex_title": "Study the following figures, then answer",
+                                    "type": "text",
+                                    "q_txt": "From the opposite figure showing a balloon releasing air: Explain the reason for the rushing of the balloon in the opposite direction to the rushing of the air coming out of it. What do you conclude from that?",
+                                    "a_txt": "Because the rushing of air from the balloon represents the direction of the action, while the movement of the balloon in the opposite direction to the air expulsion represents the reaction. We conclude from this that the action and reaction forces always act in opposite directions on two different objects.",
+                                    "mcq_choices": null
+                                },
+                                {
+                                    "ex_title": "Variant questions",
+                                    "type": "text",
+                                    "q_txt": "Mention the factors affecting the acceleration.",
+                                    "a_txt": "The mass of the object, The net force acting on the object.",
+                                    "mcq_choices": null
+                                },
+                                {
+                                    "ex_title": "Variant questions",
+                                    "type": "text",
+                                    "q_txt": "What is the meaning of that the net force acting on an object of mass 1 kg equals 1 N?",
+                                    "a_txt": "This means that the object moves with an acceleration of 1 m/s^2 in the same direction as the net force.",
+                                    "mcq_choices": null
+                                },
+                                {
+                                    "ex_title": "Variant questions",
+                                    "type": "text",
+                                    "q_txt": "Mention a technological application of Newton's third law, with explaining its idea of operation.",
+                                    "a_txt": "Unmanned aerial vehicles (drones). The idea of its operation: It works by pushing air downwards from the engines (action), resulting in pushing the drone upwards (reaction) with an equal force.",
+                                    "mcq_choices": null
+                                }
+                            ]
+                        },
+                        {
+                            "page": 113,
+                            "questions": [
+                                {
+                                    "ex_title": "Variant questions",
+                                    "type": "text",
+                                    "q_txt": "Mention a life application of Newton's third law, with explaining its idea of operation.",
+                                    "a_txt": "The fly water board (Flyboard). The idea of its operation: It operates by pumping water downward through the board nozzles strongly (action), allowing the user to fly upward in the air (reaction).",
+                                    "mcq_choices": null
+                                },
+                                {
+                                    "ex_title": "Variant questions",
+                                    "type": "text",
+                                    "q_txt": "Explain the action force and reaction force when the rocket thrusts in the opposite direction to the movement of the exhaust gases.",
+                                    "a_txt": "Action force: It is the rushing of gases moving downward. Reaction force: It is the launch of the rocket upward.",
+                                    "mcq_choices": null
+                                },
+                                {
+                                    "ex_title": "Variant questions",
+                                    "type": "text",
+                                    "q_txt": "Compare between elastic collision and inelastic collision between two objects having equal mass, in terms of: (1) Loss of kinetic energy. (2) Velocity of objects after collision.",
+                                    "a_txt": "Elastic collision: (1) No loss of energy occurs. (2) Stationary object: Its velocity becomes equal to the velocity of the moving object before the collision. Moving object: It stops and its velocity becomes zero. Inelastic collision: (1) There is a loss of energy. (2) Both objects (stationary and moving) move after the collision at half the velocity of the moving object before the collision.",
+                                    "mcq_choices": null
+                                }
+                            ]
+                        }
+                    ]
+                }
+            ]
+        }
+    ]
+}

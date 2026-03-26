@@ -1,0 +1,825 @@
+{
+    "units": [
+        {
+            "unit_num": 1,
+            "unit_name": "Thermal Energy and Changes of Matter",
+            "lessons": [
+                {
+                    "lesson_num": 2,
+                    "lesson_name": "Thermal Changes Accompanying Chemical Changes",
+                    "pages": [
+                        {
+                            "page": 41,
+                            "questions": [
+                                {
+                                    "ex_title": "Write the scientific term of each of the following statements:",
+                                    "type": "text",
+                                    "q_txt": "Energy is neither destroyed nor created, but it is transformed from one form to another.",
+                                    "a_txt": "Law of conservation of energy."
+                                },
+                                {
+                                    "ex_title": "Write the scientific term of each of the following statements:",
+                                    "type": "text",
+                                    "q_txt": "A scientist who explained that the total energy remains constant within the isolated system.",
+                                    "a_txt": "Hermann Von Helmholtz."
+                                },
+                                {
+                                    "ex_title": "Write the scientific term of each of the following statements:",
+                                    "type": "text",
+                                    "q_txt": "Reactions that release thermal energy to the surroundings as a product, causing the temperature of the surroundings to rise.",
+                                    "a_txt": "Exothermic reactions."
+                                },
+                                {
+                                    "ex_title": "Write the scientific term of each of the following statements:",
+                                    "type": "text",
+                                    "q_txt": "Cans used for warming coffee or heating the food inside them.",
+                                    "a_txt": "Self-heating cans."
+                                },
+                                {
+                                    "ex_title": "Write the scientific term of each of the following statements:",
+                                    "type": "text",
+                                    "q_txt": "The reaction of heating aluminum with red iron oxide.",
+                                    "a_txt": "Thermite reaction."
+                                },
+                                {
+                                    "ex_title": "Write the scientific term of each of the following statements:",
+                                    "type": "text",
+                                    "q_txt": "Reactions that require the absorption of thermal energy from the surroundings, causing the temperature of the surroundings to decrease.",
+                                    "a_txt": "Endothermic reactions."
+                                },
+                                {
+                                    "ex_title": "Complete the following sentences:",
+                                    "type": "complete",
+                                    "q_txt": "In the chemical reaction, the bonds between the atoms of the _____ molecules are broken and new bonds between the atoms of the _____ molecules are formed.",
+                                    "a_txt": [
+                                        "reactant",
+                                        "product"
+                                    ]
+                                },
+                                {
+                                    "ex_title": "Complete the following sentences:",
+                                    "type": "complete",
+                                    "q_txt": "According to the accompanying thermal changes, breaking chemical bonds is an _____ process, while forming chemical bonds is an _____ process.",
+                                    "a_txt": [
+                                        "endothermic",
+                                        "exothermic"
+                                    ]
+                                },
+                                {
+                                    "ex_title": "Complete the following sentences:",
+                                    "type": "complete",
+                                    "q_txt": "Chemical reactions are classified according to the accompanying thermal changes into _____ and _____.",
+                                    "a_txt": [
+                                        "exothermic reactions",
+                                        "endothermic reactions"
+                                    ]
+                                },
+                                {
+                                    "ex_title": "Complete the following sentences:",
+                                    "type": "complete",
+                                    "q_txt": "According to the accompanying thermal changes, the reaction of sodium carbonate with dilute hydrochloric acid is an _____ reaction, while the decomposition of calcium carbonate is an _____ reaction.",
+                                    "a_txt": [
+                                        "exothermic",
+                                        "endothermic"
+                                    ]
+                                },
+                                {
+                                    "ex_title": "Complete the following sentences:",
+                                    "type": "complete",
+                                    "q_txt": "In exothermic reactions, the amount of energy _____ during forming new bonds in the product molecules is greater than the amount of energy _____ during breaking bonds in the reactant molecules.",
+                                    "a_txt": [
+                                        "released",
+                                        "absorbed"
+                                    ]
+                                },
+                                {
+                                    "ex_title": "Complete the following sentences:",
+                                    "type": "complete",
+                                    "q_txt": "Chemical reactions are accompanied by thermal changes that appear as _____ or _____ to or from the surroundings, fulfilling the law of _____.",
+                                    "a_txt": [
+                                        "energy released",
+                                        "energy absorbed",
+                                        "conservation of energy"
+                                    ]
+                                },
+                                {
+                                    "ex_title": "Complete the following sentences:",
+                                    "type": "complete",
+                                    "q_txt": "Luminous insects use the light emitted from their bodies for various purposes such as _____.",
+                                    "a_txt": [
+                                        "mating / self-defense"
+                                    ]
+                                }
+                            ]
+                        },
+                        {
+                            "page": 42,
+                            "questions": [
+                                {
+                                    "ex_title": "Complete the following sentences:",
+                                    "type": "complete",
+                                    "q_txt": "The molecular formula of quicklime is _____, while the molecular formula of slacked lime is _____.",
+                                    "a_txt": [
+                                        "CaO(s)",
+                                        "Ca(OH)2(s)"
+                                    ]
+                                },
+                                {
+                                    "ex_title": "Complete the following sentences:",
+                                    "type": "complete",
+                                    "q_txt": "_____ reactions release heat energy, while _____ reactions absorb energy.",
+                                    "a_txt": [
+                                        "Exothermic",
+                                        "endothermic"
+                                    ]
+                                },
+                                {
+                                    "ex_title": "Mark (\u2713) or (\u2717) for each statement, with correction if needed:",
+                                    "type": "true_false_with_correction",
+                                    "q_txt": "The chemical energy stored in lemon juice is converted into electrical energy, fulfilling the law of conservation of matter.",
+                                    "a_txt": [
+                                        "False",
+                                        {
+                                            "mistake": "conservation of matter",
+                                            "correction": "conservation of energy"
+                                        }
+                                    ]
+                                },
+                                {
+                                    "ex_title": "Mark (\u2713) or (\u2717) for each statement, with correction if needed:",
+                                    "type": "true_false_with_correction",
+                                    "q_txt": "Breaking bonds between the atoms of the reactant molecules is accompanied by releasing heat energy to the surroundings.",
+                                    "a_txt": [
+                                        "False",
+                                        {
+                                            "mistake": "releasing",
+                                            "correction": "absorption of heat energy from"
+                                        }
+                                    ]
+                                },
+                                {
+                                    "ex_title": "Mark (\u2713) or (\u2717) for each statement, with correction if needed:",
+                                    "type": "true_false_with_correction",
+                                    "q_txt": "In exothermic reactions, the final temperature is equal to the initial temperature.",
+                                    "a_txt": [
+                                        "False",
+                                        {
+                                            "mistake": "equal to",
+                                            "correction": "greater than"
+                                        }
+                                    ]
+                                },
+                                {
+                                    "ex_title": "Mark (\u2713) or (\u2717) for each statement, with correction if needed:",
+                                    "type": "true_false_with_correction",
+                                    "q_txt": "Luminous insects emit light from the abdominal area as a result of endothermic reactions occurring inside their bodies.",
+                                    "a_txt": [
+                                        "False",
+                                        {
+                                            "mistake": "endothermic",
+                                            "correction": "exothermic"
+                                        }
+                                    ]
+                                },
+                                {
+                                    "ex_title": "Mark (\u2713) or (\u2717) for each statement, with correction if needed:",
+                                    "type": "true_false_with_correction",
+                                    "q_txt": "Self-heating cans contain calcium hydroxide and water.",
+                                    "a_txt": [
+                                        "False",
+                                        {
+                                            "mistake": "calcium hydroxide",
+                                            "correction": "calcium oxide"
+                                        }
+                                    ]
+                                },
+                                {
+                                    "ex_title": "Mark (\u2713) or (\u2717) for each statement, with correction if needed:",
+                                    "type": "true_false_with_correction",
+                                    "q_txt": "The reaction of iron with aluminum oxide is known as the thermite reaction.",
+                                    "a_txt": [
+                                        "False",
+                                        {
+                                            "mistake": "iron with aluminum oxide",
+                                            "correction": "aluminum with red iron oxide"
+                                        }
+                                    ]
+                                },
+                                {
+                                    "ex_title": "Mark (\u2713) or (\u2717) for each statement, with correction if needed:",
+                                    "type": "true_false",
+                                    "q_txt": "In endothermic reactions, heat transfers from the system to the surroundings.",
+                                    "a_txt": [
+                                        "False",
+                                        {
+                                            "mistake": "endothermic",
+                                            "correction": "exothermic"
+                                        }
+                                    ]
+                                },
+                                {
+                                    "ex_title": "Mark (\u2713) or (\u2717) for each statement, with correction if needed:",
+                                    "type": "true_false",
+                                    "q_txt": "Endothermic reactions are accompanied by an increase in the temperature of the surroundings.",
+                                    "a_txt": [
+                                        "False",
+                                        {
+                                            "mistake": "increase",
+                                            "correction": "decrease"
+                                        }
+                                    ]
+                                },
+                                {
+                                    "ex_title": "Mark (\u2713) or (\u2717) for each statement, with correction if needed:",
+                                    "type": "true_false_with_correction",
+                                    "q_txt": "The common name of calcium carbonate is quicklime, while the common name of calcium hydroxide solution is limewater.",
+                                    "a_txt": [
+                                        "False",
+                                        {
+                                            "mistake": "calcium carbonate",
+                                            "correction": "calcium oxide"
+                                        }
+                                    ]
+                                },
+                                {
+                                    "ex_title": "Mark (\u2713) or (\u2717) for each statement, with correction if needed:",
+                                    "type": "true_false_with_correction",
+                                    "q_txt": "As the bond energy increases, breaking this bond becomes more difficult.",
+                                    "a_txt": ["True", null]
+                                },
+                                {
+                                    "ex_title": "Choose the correct answer:",
+                                    "type": "mcq",
+                                    "q_txt": "From the opposite figure: Which of the following expresses the occurring energy transformations?",
+                                    "a_txt": 0,
+                                    "mcq_choices": [
+                                        "Chemical energy \u2192 Electrical energy.",
+                                        "Electrical energy \u2192 Chemical energy.",
+                                        "Light energy \u2192 Electrical energy.",
+                                        "Light energy \u2192 Chemical energy."
+                                    ]
+                                },
+                                {
+                                    "ex_title": "Choose the correct answer:",
+                                    "type": "mcq",
+                                    "q_txt": "The process: N2 + heat \u2192 N + N represents",
+                                    "a_txt": 0,
+                                    "mcq_choices": [
+                                        "breaking bonds process which is endothermic.",
+                                        "breaking bonds process which is exothermic.",
+                                        "forming bonds process which is endothermic.",
+                                        "forming bonds process which is exothermic."
+                                    ]
+                                },
+                                {
+                                    "ex_title": "Choose the correct answer:",
+                                    "type": "mcq",
+                                    "q_txt": "When a strip of aluminum is immersed in dilute hydrochloric acid whose temperature is 25\u00b0C, the temperature of the solution becomes",
+                                    "a_txt": 0,
+                                    "mcq_choices": [
+                                        "greater than 25\u00b0C",
+                                        "less than 25\u00b0C",
+                                        "equal to 25\u00b0C",
+                                        "less than or equal to 25\u00b0C"
+                                    ]
+                                }
+                            ]
+                        },
+                        {
+                            "page": 43,
+                            "questions": [
+                                {
+                                    "ex_title": "Choose the correct answer:",
+                                    "type": "mcq",
+                                    "q_txt": "Which of the following expresses what happens in the exothermic reaction?",
+                                    "a_txt": 3,
+                                    "mcq_choices": [
+                                        "Heat is transferred from the surroundings, Temperature of the reaction mixture Decreases",
+                                        "Heat is transferred from the surroundings, Temperature of the reaction mixture Increases",
+                                        "Heat is transferred To the surroundings, Temperature of the reaction mixture Decreases",
+                                        "Heat is transferred To the surroundings, Temperature of the reaction mixture Increases"
+                                    ]
+                                },
+                                {
+                                    "ex_title": "Choose the correct answer:",
+                                    "type": "mcq",
+                                    "q_txt": "In the reaction: H2 + Cl2 \u2192 2HCl + heat. What is the source of the thermal change in this reaction?",
+                                    "a_txt": 2,
+                                    "mcq_choices": [
+                                        "Absorption of energy during forming bonds only.",
+                                        "Releasing energy during breaking bonds only.",
+                                        "Absorption of energy during breaking bonds and releasing energy during forming bonds.",
+                                        "Releasing energy during breaking bonds and absorption of energy during forming bonds."
+                                    ]
+                                },
+                                {
+                                    "ex_title": "Choose the correct answer:",
+                                    "type": "mcq",
+                                    "q_txt": "Which of the following illustrates the molecular formula of each of limestone (X) and quicklime (Y)?",
+                                    "a_txt": 2,
+                                    "mcq_choices": [
+                                        "(x): CaO, (y): CaCO3",
+                                        "(x): Ca(OH)2, (y): CaCO3",
+                                        "(x): CaCO3, (y): CaO",
+                                        "(x): CaCO3, (y): Ca(OH)2"
+                                    ]
+                                },
+                                {
+                                    "ex_title": "Choose the correct answer:",
+                                    "type": "mcq",
+                                    "q_txt": "In endothermic reactions, ......",
+                                    "a_txt": 2,
+                                    "mcq_choices": [
+                                        "heat is transferred from the system to the surroundings.",
+                                        "temperature of the surroundings increases.",
+                                        "the energy of the bond breaking in the reactants is greater than the energy of the bond forming in the products.",
+                                        "the energy of the bond breaking in the reactants is equal to the energy of the bond forming in the products."
+                                    ]
+                                },
+                                {
+                                    "ex_title": "Choose the correct answer:",
+                                    "type": "mcq",
+                                    "q_txt": "Which of the following pairs of substances their reaction together leads to a decrease in the temperature of the surroundings?",
+                                    "a_txt": 1,
+                                    "mcq_choices": [
+                                        "Al + Fe2O3",
+                                        "NH4Cl + Ba(OH)2",
+                                        "Mg + HCl",
+                                        "NaOH + HCl"
+                                    ]
+                                }
+                            ]
+                        },
+                        {
+                            "page": 44,
+                            "questions": [
+                                {
+                                    "ex_title": "Choose the correct answer:",
+                                    "type": "mcq",
+                                    "q_txt": "From the energy diagram shown in the opposite figure: Which of the following is correct?",
+                                    "a_txt": 2,
+                                    "mcq_choices": [
+                                        "(A) represents the released energy during bond formation.",
+                                        "(C) represents the absorbed energy during bond breakage.",
+                                        "(B) represents the energy released from the reaction.",
+                                        "The difference between (C) and (B) represents the energy released from the reaction."
+                                    ]
+                                },
+                                {
+                                    "ex_title": "Choose the correct answer:",
+                                    "type": "mcq",
+                                    "q_txt": "Based on the opposite energy diagram: Which of the following is correct?",
+                                    "a_txt": 2,
+                                    "mcq_choices": [
+                                        "Heat is transferred from the surroundings to the system.",
+                                        "The reaction is endothermic.",
+                                        "The released energy during forming bonds between product molecules is greater than the energy required to break bonds in reactant molecules.",
+                                        "The released energy during forming bonds between product molecules equals the energy required to break bonds in reactant molecules."
+                                    ]
+                                },
+                                {
+                                    "ex_title": "Choose the correct answer:",
+                                    "type": "mcq",
+                                    "q_txt": "According to the opposite energy diagram: What is the number which indicates the amount of energy absorbed from the surroundings in this reaction?",
+                                    "a_txt": 3,
+                                    "mcq_choices": [
+                                        "(1).",
+                                        "(2).",
+                                        "(3).",
+                                        "(4)."
+                                    ]
+                                },
+                                {
+                                    "ex_title": "Choose the correct answer:",
+                                    "type": "mcq",
+                                    "q_txt": "The opposite graph illustrates the energy diagram of a chemical reaction: Which of the following expresses both the type of reaction and the value of the energy change accompanying this reaction?",
+                                    "a_txt": 0,
+                                    "mcq_choices": [
+                                        "Endothermic / 20 kJ",
+                                        "Exothermic / 20 kJ",
+                                        "Endothermic / 40 kJ",
+                                        "Exothermic / 40 kJ"
+                                    ]
+                                }
+                            ]
+                        },
+                        {
+                            "page": 45,
+                            "questions": [
+                                {
+                                    "ex_title": "Classify the following reactions into endothermic or exothermic:",
+                                    "type": "text",
+                                    "q_txt": "The reaction of barium hydroxide powder with ammonium chloride powder.",
+                                    "a_txt": "Endothermic reaction."
+                                },
+                                {
+                                    "ex_title": "Classify the following reactions into endothermic or exothermic:",
+                                    "type": "text",
+                                    "q_txt": "Thermite reaction.",
+                                    "a_txt": "Exothermic reaction."
+                                },
+                                {
+                                    "ex_title": "Classify the following reactions into endothermic or exothermic:",
+                                    "type": "text",
+                                    "q_txt": "The reaction of hydrogen gas with oxygen gas to form water.",
+                                    "a_txt": "Exothermic reaction."
+                                },
+                                {
+                                    "ex_title": "Classify the following reactions into endothermic or exothermic:",
+                                    "type": "text",
+                                    "q_txt": "The decomposition reaction of ozone gas in the atmosphere.",
+                                    "a_txt": "Endothermic reaction."
+                                },
+                                {
+                                    "ex_title": "Classify the following reactions into endothermic or exothermic:",
+                                    "type": "text",
+                                    "q_txt": "The reaction of potassium bicarbonate with dilute sulphuric acid.",
+                                    "a_txt": "Endothermic reaction."
+                                },
+                                {
+                                    "ex_title": "Classify the following reactions into endothermic or exothermic:",
+                                    "type": "text",
+                                    "q_txt": "The reaction of water with quicklime.",
+                                    "a_txt": "Exothermic reaction."
+                                },
+                                {
+                                    "ex_title": "Classify the following reactions into endothermic or exothermic:",
+                                    "type": "text",
+                                    "q_txt": "The thermal decomposition of carbonic acid.",
+                                    "a_txt": "Endothermic reaction."
+                                },
+                                {
+                                    "ex_title": "What is meant by each of the following:",
+                                    "type": "text",
+                                    "q_txt": "Law of conservation of energy.",
+                                    "a_txt": "Energy is neither destroyed nor created, but it is transformed from one form to another."
+                                },
+                                {
+                                    "ex_title": "What is meant by each of the following:",
+                                    "type": "text",
+                                    "q_txt": "Exothermic reactions.",
+                                    "a_txt": "Reactions that release thermal energy to the surroundings as a product, causing the temperature of the surroundings to rise."
+                                },
+                                {
+                                    "ex_title": "What is meant by each of the following:",
+                                    "type": "text",
+                                    "q_txt": "Endothermic reactions.",
+                                    "a_txt": "Reactions that require the absorption of thermal energy from the surroundings, causing the temperature of the surroundings to decrease."
+                                },
+                                {
+                                    "ex_title": "Give reasons for the following:",
+                                    "type": "text",
+                                    "q_txt": "Chemical reactions usually involve thermal changes.",
+                                    "a_txt": "Because in most reactions, the amounts of thermal energy absorbed and released during the breaking and forming of bonds in the same reaction are not equal, so the reaction absorbs or releases thermal energy which fulfills the law of conservation of energy."
+                                },
+                                {
+                                    "ex_title": "Give reasons for the following:",
+                                    "type": "text",
+                                    "q_txt": "The reactions of acids with alkalis are exothermic.",
+                                    "a_txt": "Because the amount of energy released during the formation of new bonds in the product molecules is greater than the amount of energy absorbed during the breakage of the bonds in the reactant molecules."
+                                },
+                                {
+                                    "ex_title": "Give reasons for the following:",
+                                    "type": "text",
+                                    "q_txt": "The reaction of magnesium with dilute hydrochloric acid is accompanied by releasing heat energy.",
+                                    "a_txt": "Because an exothermic reaction occurs between magnesium and hydrochloric acid, with releasing heat and used in warming coffee."
+                                },
+                                {
+                                    "ex_title": "Give reasons for the following:",
+                                    "type": "text",
+                                    "q_txt": "Coffee can be warmed in self-heating cans without the need for an external heat source.",
+                                    "a_txt": "Because an exothermic reaction occurs between calcium oxide and water, with releasing heat and used in warming coffee."
+                                },
+                                {
+                                    "ex_title": "Give reasons for the following:",
+                                    "type": "text",
+                                    "q_txt": "The thermite reaction is used in railway tracks welding.",
+                                    "a_txt": "Because it is an exothermic reaction that results in the release of a significant amount of thermal energy, leading to melting iron which is produced from the reaction."
+                                },
+                                {
+                                    "ex_title": "Give reasons for the following:",
+                                    "type": "text",
+                                    "q_txt": "When barium hydroxide powder is added to ammonium chloride powder, the temperature of the surroundings decreases.",
+                                    "a_txt": "Because it is an endothermic reaction accompanied by the absorption of thermal energy from the surroundings leading to decreasing the temperature."
+                                },
+                                {
+                                    "ex_title": "Give reasons for the following:",
+                                    "type": "text",
+                                    "q_txt": "The decomposition reaction of ozone gas in the atmosphere is endothermic.",
+                                    "a_txt": "Because the amount of energy released during the formation of new bonds in the product molecules is less than the amount of energy absorbed during the breakage of the bonds in the reactant molecules."
+                                },
+                                {
+                                    "ex_title": "What are the results of each of the following:",
+                                    "type": "text",
+                                    "q_txt": "The occurrence of a chemical reaction in terms of the bonds present between the atoms of the reactant molecules and the product molecules.",
+                                    "a_txt": "The bonds between the atoms of the reactant molecules are broken (endothermic process) and new bonds are formed between the atoms of the product molecules (exothermic process)."
+                                },
+                                {
+                                    "ex_title": "What are the results of each of the following:",
+                                    "type": "text",
+                                    "q_txt": "The reaction of magnesium with dilute hydrochloric acid.",
+                                    "a_txt": "An amount of thermal energy as a product of the reaction is released to the surroundings, causing its temperature to rise."
+                                },
+                                {
+                                    "ex_title": "What are the results of each of the following:",
+                                    "type": "text",
+                                    "q_txt": "Pressing the button found in the bottom of the self-heating can.",
+                                    "a_txt": "The thin membrane which is between calcium oxide and water ruptures, forming calcium hydroxide solution with releasing heat."
+                                },
+                                {
+                                    "ex_title": "What are the results of each of the following:",
+                                    "type": "text",
+                                    "q_txt": "The occurrence of the thermite reaction.",
+                                    "a_txt": "A significant amount of thermal energy is released, leading to melting iron which is produced from the reaction."
+                                },
+                                {
+                                    "ex_title": "What are the results of each of the following:",
+                                    "type": "text",
+                                    "q_txt": "Adding ammonium chloride powder to barium hydroxide powder.",
+                                    "a_txt": "The temperature of the surroundings decreases as a result of an endothermic reaction between ammonium chloride powder and barium hydroxide."
+                                },
+                                {
+                                    "ex_title": "Mention the importance (or use) of each of the following:",
+                                    "type": "text",
+                                    "q_txt": "Exothermic reactions for some types of insects.",
+                                    "a_txt": "Insects use the light produced from exothermic reactions inside their bodies for various purposes such as mating and self-defense."
+                                },
+                                {
+                                    "ex_title": "Mention the importance (or use) of each of the following:",
+                                    "type": "text",
+                                    "q_txt": "Self-heating cans.",
+                                    "a_txt": "It is used in warming coffee or heating the foods inside it without the need for an external heat source."
+                                },
+                                {
+                                    "ex_title": "Mention the importance (or use) of each of the following:",
+                                    "type": "text",
+                                    "q_txt": "Thermite reaction.",
+                                    "a_txt": "It is used in welding the railway tracks."
+                                }
+                            ]
+                        },
+                        {
+                            "page": 46,
+                            "questions": [
+                                {
+                                    "ex_title": "Study the following figures, then answer:",
+                                    "type": "text",
+                                    "q_txt": "In the opposite figure: What happens when both the copper rod and the zinc rod are connected to the LED bulb? Explain.",
+                                    "a_txt": "The bulb lights up / As a result of chemical reactions inside the lemon, which produce an electric current that lights the bulb."
+                                },
+                                {
+                                    "ex_title": "Study the following figures, then answer:",
+                                    "type": "text",
+                                    "q_txt": "In the opposite figure: Determine the occurring energy transformations.",
+                                    "a_txt": "The stored chemical energy in lemon juice is converted into electrical energy."
+                                },
+                                {
+                                    "ex_title": "Study the following figures, then answer:",
+                                    "type": "text",
+                                    "q_txt": "In the opposite figure, ammonium chloride powder is added to barium hydroxide powder whose temperature was T1, so the temperature changes to T2: Which is greater T1 or T2?",
+                                    "a_txt": "T1"
+                                },
+                                {
+                                    "ex_title": "Study the following figures, then answer:",
+                                    "type": "text",
+                                    "q_txt": "In the opposite figure, ammonium chloride powder is added to barium hydroxide powder whose temperature was T1, so the temperature changes to T2: What happens when the flask is lifted from the piece of wood? Explain.",
+                                    "a_txt": "The flask sticks to the piece of wood / Due to the decrease in the temperature of the surroundings, which led to the freezing of the water layer between the flask and the piece of wood, causing them to stick together."
+                                },
+                                {
+                                    "ex_title": "Study the following figures, then answer:",
+                                    "type": "text",
+                                    "q_txt": "The opposite energy diagram represents the reaction of magnesium with dilute hydrochloric acid: Add to the opposite energy diagram: 1- The symbols and formulas of the products, and write their physical states. 2- An arrow representing the energy accompanying this reaction.",
+                                    "a_txt": "Mg(s) + 2HCl(aq) \u2192 MgCl2(aq) + H2(g) + heat"
+                                },
+                                {
+                                    "ex_title": "Study the following figures, then answer:",
+                                    "type": "text",
+                                    "q_txt": "The opposite energy diagram represents the reaction of magnesium with dilute hydrochloric acid: Is the reaction exothermic or endothermic? Explain.",
+                                    "a_txt": "The reaction is exothermic / Because the amount of energy released during the formation of new bonds in the product molecules is greater than the amount of energy absorbed during the breakage of the bonds in the reactant molecules."
+                                },
+                                {
+                                    "ex_title": "Study the following figures, then answer:",
+                                    "type": "text",
+                                    "q_txt": "The reaction of aluminum with red iron oxide is accompanied by the release of a large amount of thermal energy: What is the name of this reaction? What is its importance?",
+                                    "a_txt": "Thermite reaction / Used in welding the railway tracks."
+                                },
+                                {
+                                    "ex_title": "Study the following figures, then answer:",
+                                    "type": "text",
+                                    "q_txt": "The reaction of aluminum with red iron oxide is accompanied by the release of a large amount of thermal energy: Write the balanced symbolic equation which represents this reaction.",
+                                    "a_txt": "2Al(s) + Fe2O3(s) \u2192 Al2O3(s) + 2Fe(l) + heat"
+                                },
+                                {
+                                    "ex_title": "Variant questions:",
+                                    "type": "text",
+                                    "q_txt": "Compare between exothermic reactions and endothermic reactions \u00abIn terms of: Definition - Examples - Energy diagram\u00bb.",
+                                    "a_txt": "Exothermic: Reactions that release thermal energy to the surroundings as a product of the reaction, causing the temperature of the surroundings to rise. Examples: Reaction of metals with dilute acids, reaction of alkalis with acids, reaction of metal carbonates with dilute acids. Endothermic: Reactions that require the absorption of thermal energy from the surroundings, causing the temperature of the surroundings to decrease. Examples: Decomposition reaction of calcium carbonate, decomposition reaction of ozone gas in the atmosphere, reaction of sodium bicarbonate with dilute acids."
+                                },
+                                {
+                                    "ex_title": "Variant questions:",
+                                    "type": "text",
+                                    "q_txt": "What is the thermal change that occurs to each of the system and the surroundings during the exothermic and the endothermic reactions?",
+                                    "a_txt": "In exothermic reactions, the temperature of the system and the surroundings increase. In endothermic reactions, the temperature of the system and the surroundings decrease."
+                                }
+                            ]
+                        },
+                        {
+                            "page": 47,
+                            "questions": [
+                                {
+                                    "ex_title": "Variant questions:",
+                                    "type": "text",
+                                    "q_txt": "Calcium is a component of each of quicklime, slacked lime, and limestone: What is the name and molecular formula of each of the following: 1- Quicklime. 2- Slaked lime. 3- Limestone.",
+                                    "a_txt": "1- Calcium oxide CaO(s), 2- Calcium hydroxide powder Ca(OH)2(s), 3- Calcium carbonate CaCO3(s)"
+                                },
+                                {
+                                    "ex_title": "Variant questions:",
+                                    "type": "text",
+                                    "q_txt": "Calcium is a component of each of quicklime, slacked lime, and limestone: What is the type of thermal change that occurs when water is added to quicklime? What is the technological application based on the resulting reaction?",
+                                    "a_txt": "Exothermic reaction / self-heating cans."
+                                },
+                                {
+                                    "ex_title": "Variant questions:",
+                                    "type": "text",
+                                    "q_txt": "Copper carbonate decomposes thermally, according to the following thermochemical equation: CuCO3(s) + heat \u2192 CuO(s) + CO2(g). Is this reaction exothermic or endothermic? Explain.",
+                                    "a_txt": "Endothermic reaction / Because it is accompanied by the absorption of thermal energy from the surroundings."
+                                },
+                                {
+                                    "ex_title": "Variant questions:",
+                                    "type": "text",
+                                    "q_txt": "Copper carbonate decomposes thermally, according to the following thermochemical equation: CuCO3(s) + heat \u2192 CuO(s) + CO2(g). Which is greater: The absorbed energy during breaking bonds or the released energy during forming bonds?",
+                                    "a_txt": "The absorbed energy during the breakage of the bonds in the reactant molecules is greater than the released energy during the formation of new bonds in the product molecules."
+                                },
+                                {
+                                    "ex_title": "Variant questions:",
+                                    "type": "text",
+                                    "q_txt": "In the reaction: A + B \u2192 C + D. If the energy absorbed to break the bonds between the atoms of the molecules of each of (A) and (B), respectively, are 1640 kJ and 992 kJ, while the energy released when bonds are formed between atoms of molecules of (C) is 1610 kJ and that between atoms of molecules of (D) is 1840 kJ. Show with mathematical calculations whether the reaction is exothermic or endothermic.",
+                                    "a_txt": "The sum of absorbed energies during the breakage of the bonds = 1640 + 992 = 2632 kJ. The sum of released energies during the formation of the bonds = 1610 + 1840 = 3450 kJ. The sum of released energies (3450 kJ) > the sum of absorbed energies (2632 kJ). The reaction is exothermic."
+                                },
+                                {
+                                    "ex_title": "Variant questions:",
+                                    "type": "text",
+                                    "q_txt": "In the reaction: H2(g) + Cl2(g) \u2192 2HCl(g). If the absorbed energy for breaking bonds between the atoms of hydrogen and chlorine molecules are 432 kJ and 240 kJ respectively and the released energy during the formation of bonds between the atoms of hydrogen chloride molecules is 860 kJ: Verify the law of conservation of energy for this reaction.",
+                                    "a_txt": "The sum of absorbed energies during breaking the bonds = 432 + 240 = 672 kJ. The sum of released energies during forming new bonds = 860 kJ. The sum of released energies from forming the bonds > the sum of absorbed energies during breaking the bonds. This reaction releases an amount of energy = 860 - 672 = 188 kJ which fulfills the law of conservation of energy."
+                                },
+                                {
+                                    "ex_title": "Variant questions:",
+                                    "type": "text",
+                                    "q_txt": "In the reaction: H2(g) + Cl2(g) \u2192 2HCl(g). Is this reaction exothermic or endothermic? With explanation.",
+                                    "a_txt": "The reaction is exothermic because the sum of released energies (860 kJ) > the sum of absorbed energies (672 kJ)."
+                                },
+                                {
+                                    "ex_title": "Variant questions:",
+                                    "type": "text",
+                                    "q_txt": "5 g of each of ammonium nitrate and calcium oxide were added to two equal volumes of water separately, resulting in a change in the temperature of water: What is the type of the thermal change which occurs in each case?",
+                                    "a_txt": "In the case of ammonium nitrate: Endothermic dissolution. In the case of calcium oxide: Exothermic reaction."
+                                },
+                                {
+                                    "ex_title": "Variant questions:",
+                                    "type": "text",
+                                    "q_txt": "5 g of each of ammonium nitrate and calcium oxide were added to two equal volumes of water separately, resulting in a change in the temperature of water: In which of the two cases is the thermal change due to a chemical reaction? With explanation.",
+                                    "a_txt": "When calcium oxide is added to water / because it produces a new substance, which is calcium hydroxide. CaO(s) + H2O(l) \u2192 Ca(OH)2(aq) + heat"
+                                }
+                            ]
+                        },
+                        {
+                            "page": 48,
+                            "questions": [
+                                {
+                                    "ex_title": "Choose the correct answer:",
+                                    "type": "mcq",
+                                    "q_txt": "Four equal masses of the substances (W), (X), (Y) and (Z) were added to equal amounts of the same acid (its temperature is 21\u00b0C) and the final temperatures (T2) were recorded in the opposite table: Which of these substances its reaction absorbs the highest amount of heat?",
+                                    "a_txt": 3,
+                                    "mcq_choices": [
+                                        "(w).",
+                                        "(x).",
+                                        "(y).",
+                                        "(z)."
+                                    ]
+                                },
+                                {
+                                    "ex_title": "Choose the correct answer:",
+                                    "type": "mcq",
+                                    "q_txt": "Which of the following energy diagrams represents the thermite reaction?",
+                                    "a_txt": 0,
+                                    "mcq_choices": [
+                                        "(a)",
+                                        "(b)",
+                                        "(c)",
+                                        "(d)"
+                                    ]
+                                },
+                                {
+                                    "ex_title": "Choose the correct answer:",
+                                    "type": "mcq",
+                                    "q_txt": "Which of the following figures represents a thermal decomposition reaction that absorbs the least amount of thermal energy?",
+                                    "a_txt": 2,
+                                    "mcq_choices": [
+                                        "(a)",
+                                        "(b)",
+                                        "(c)",
+                                        "(d)"
+                                    ]
+                                }
+                            ]
+                        },
+                        {
+                            "page": 49,
+                            "questions": [
+                                {
+                                    "ex_title": "Choose the correct answer:",
+                                    "type": "mcq",
+                                    "q_txt": "Which of the following energy diagrams represents an acid-alkali reaction that releases the largest amount of thermal energy?",
+                                    "a_txt": 2,
+                                    "mcq_choices": [
+                                        "(a)",
+                                        "(b)",
+                                        "(c)",
+                                        "(d)"
+                                    ]
+                                },
+                                {
+                                    "ex_title": "These are three energy diagrams representing three chemical reactions:",
+                                    "type": "text",
+                                    "q_txt": "Identify the type of the thermal change represented by each diagram.",
+                                    "a_txt": "(1): Endothermic reaction. (2), (3): Exothermic reactions."
+                                },
+                                {
+                                    "ex_title": "These are three energy diagrams representing three chemical reactions:",
+                                    "type": "text",
+                                    "q_txt": "Which of these diagrams represents the reaction which releases the highest amount of thermal energy?",
+                                    "a_txt": "Energy diagram (2)."
+                                },
+                                {
+                                    "ex_title": "Choose the correct answer for questions (1) - (4):",
+                                    "type": "mcq",
+                                    "q_txt": "The dissolution of which of the following substances in water leads to a chemical change accompanied by the release of thermal energy?",
+                                    "a_txt": 1,
+                                    "mcq_choices": [
+                                        "Sodium hydroxide.",
+                                        "Calcium oxide.",
+                                        "Calcium carbonate.",
+                                        "Sodium chloride."
+                                    ]
+                                },
+                                {
+                                    "ex_title": "Choose the correct answer for questions (1) - (4):",
+                                    "type": "mcq",
+                                    "q_txt": "You have two reactions: (1) Sodium carbonate + dilute sulphuric acid. (2) Sodium bicarbonate + dilute sulphuric acid. Which of the following correctly describes reactions (1) and (2)?",
+                                    "a_txt": 3,
+                                    "mcq_choices": [
+                                        "Endothermic, Exothermic",
+                                        "Endothermic, Endothermic",
+                                        "Exothermic, Exothermic",
+                                        "Exothermic, Endothermic"
+                                    ]
+                                }
+                            ]
+                        },
+                        {
+                            "page": 50,
+                            "questions": [
+                                {
+                                    "ex_title": "Choose the correct answer for questions (1) - (4):",
+                                    "type": "mcq",
+                                    "q_txt": "The opposite table shows the initial temperatures (T1) and final temperatures (T2) for four chemical reactions with the same amount of reactants. Which of these reactions has absorbed the greatest amount of thermal energy?",
+                                    "a_txt": 0,
+                                    "mcq_choices": [
+                                        "(1).",
+                                        "(2).",
+                                        "(3).",
+                                        "(4)."
+                                    ]
+                                },
+                                {
+                                    "ex_title": "Choose the correct answer for questions (1) - (4):",
+                                    "type": "mcq",
+                                    "q_txt": "Which of the following graphs represents an exothermic reaction that releases the least amount of thermal energy?",
+                                    "a_txt": 1,
+                                    "mcq_choices": [
+                                        "(a)",
+                                        "(b)",
+                                        "(c)",
+                                        "(d)"
+                                    ]
+                                },
+                                {
+                                    "ex_title": "Hydrogen gas reacts with chlorine gas, according to the following thermochemical equation: H2(g) + Cl2(g) \u2192 2HCl(g) + heat",
+                                    "type": "text",
+                                    "q_txt": "Is this reaction exothermic or endothermic? Explain your answer.",
+                                    "a_txt": "Exothermic reaction / Because it is accompanied by the release of thermal energy as a product of the reaction to the surroundings."
+                                },
+                                {
+                                    "ex_title": "Hydrogen gas reacts with chlorine gas, according to the following thermochemical equation: H2(g) + Cl2(g) \u2192 2HCl(g) + heat",
+                                    "type": "text",
+                                    "q_txt": "Which is greater: The energy absorbed during breaking bonds or the energy released during forming new bonds?",
+                                    "a_txt": "The energy released during forming new bonds is greatest."
+                                }
+                            ]
+                        }
+                    ]
+                }
+            ]
+        }
+    ]
+}

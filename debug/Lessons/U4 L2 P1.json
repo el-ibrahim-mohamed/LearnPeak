@@ -1,0 +1,104 @@
+{
+    "units": [
+        {
+            "unit_num": 4,
+            "unit_name": "Physical Changes in the Atmosphere",
+            "lessons": [
+                {
+                    "lesson_num": 2,
+                    "lesson_name": "Winds and Weather Forecasts",
+                    "pages": [
+                        {
+                            "page": 232,
+                            "explanation": [
+                                "The temperature and humidity percentage differ in the tropical (equatorial) regions compared to that in the polar regions. In tropical regions, the perpendicularity of Sun rays and richness of large water bodies cause high temperatures and high humidity due to high evaporation. This leads to air heating, expansion, and rising, which decreases its density and forms a low atmospheric pressure region (L).",
+                                "In polar regions, the inclination of Sun rays and the presence of frozen water cause low temperatures and low humidity due to low evaporation. This leads to air cooling, contraction, and sinking, which increases its density and forms a high atmospheric pressure region (H). A diagram illustrates this with cylinders showing low-density air particles widely spaced and high-density particles tightly packed."
+                            ],
+                            "questions": []
+                        },
+                        {
+                            "page": 233,
+                            "explanation": [
+                                "Air moves from regions of high atmospheric pressure to regions of low atmospheric pressure in the form of wind. Wind is the horizontal movement of air across the Earth's surface, caused by differences in atmospheric pressure between regions due to unequal heating of the Earth's surface. A map of the Earth shows main atmospheric pressure zones with 'H' and 'L' labels at specific latitudes like 0\u00b0, 30\u00b0, and 60\u00b0.",
+                                "Check Your Understanding: Compare between 30\u00b0N and 60\u00b0S latitudes in terms of atmospheric pressure and wind movement. Take care: The wind movement and its speed increase when there is a large difference between atmospheric pressure values in adjacent areas. The provided diagram shows high pressure at 30\u00b0N and 30\u00b0S, and low pressure at the Equator and 60\u00b0N/60\u00b0S latitudes."
+                            ],
+                            "questions": []
+                        },
+                        {
+                            "page": 234,
+                            "explanation": [
+                                "Question: A table shows atmospheric pressure over sea level and land. On Saturday, sea level is 1018 mb and land is 1014 mb. On Sunday, sea level is 1020 mb and land is 1012 mb. Answer: On Saturday, wind moves from sea level to land. On Sunday, wind speed increases because the pressure difference is 8 mb, compared to 4 mb on Saturday. A table shows pressure differences for sea breezes (4-8 mb), winter storms (35 mb), and hurricanes (80 mb).",
+                                "The Coriolis Effect explains why wind moves in curved paths. When a person pushes a ball on a stationary disc, it moves in a straight path. However, on a rotating disc, the ball appears to deflect from its path due to an imaginary force known as the Coriolis Effect. Diagrams illustrate a person on a disc to show the difference between straight and curved paths during rotation."
+                            ],
+                            "questions": []
+                        },
+                        {
+                            "page": 235,
+                            "explanation": [
+                                "Wind does not move in straight paths but in curved paths due to the Coriolis Effect. In the Northern Hemisphere, wind deflects to the right of its original path in a clockwise direction. In the Southern Hemisphere, it deflects to the left in an anticlockwise direction. A diagram of the Earth shows these curved wind directions relative to the Equator and poles, with arrows indicating the direction of deflection.",
+                                "Take care: Wind moves at the Equator in a straight path without deflection because the Coriolis Effect is absent there. Deflection is at its maximum at the poles. A question asks which figure expresses the relationship between Earth's rotation and wind path. Figure (2) shows a curved dye path on a rotating balloon, representing the wind's movement due to the Coriolis Effect, while Figure (1) shows a straight path on a fixed balloon."
+                            ],
+                            "questions": []
+                        },
+                        {
+                            "page": 236,
+                            "explanation": [
+                                "Weather maps show the movement of air masses based on wind speed and atmospheric pressure systems. Points of equal atmospheric pressure at sea level are represented by lines called isobars. Isobars are curved lines connecting these points. A visual example shows a weather map with isobar lines labeled with values such as 1000, 1030, and 1045 mb, indicating pressure gradients across a geographic area.",
+                                "Atmospheric pressure systems are classified as low-pressure or high-pressure systems. A low-pressure system is a region where the center pressure is lower than the surrounding areas. A high-pressure system is a region where the center pressure is higher than the surroundings. The map shows 'L' at the center of low-pressure systems and 'H' at the center of high-pressure systems, with arrows indicating air flow."
+                            ],
+                            "questions": []
+                        },
+                        {
+                            "page": 237,
+                            "explanation": [
+                                "A low-pressure system (L, red) has isobar values that increase moving away from the center. It forms rising air currents that rotate anticlockwise in the Northern Hemisphere, leading to cooling, condensation, and rainfall. A high-pressure system (H, blue) has isobar values that decrease moving away from the center. It forms descending air currents that rotate clockwise in the Northern Hemisphere, leading to warming, drying, and clear, sunny weather.",
+                                "Take care: Wind is the horizontal movement of air on the Earth's surface, while air currents are the vertical movement of air (upward or downward). A diagram compares these movements, showing horizontal arrows for wind and vertical arrows for ascending and descending air currents over a land surface with a mountain, illustrating how they differ in direction."
+                            ],
+                            "questions": []
+                        },
+                        {
+                            "page": 238,
+                            "explanation": [
+                                "Weather maps show isobars and pressure areas, while weather forecast maps use icons and symbols to show expected conditions and temperatures. Forecast maps are simplified tools derived from weather maps. An example image shows a digital weather forecast for a city on Monday, displaying a sun and cloud icon with a temperature of +20\u00b0C, along with a five-day outlook.",
+                                "A table lists common weather icons: a sun for Sunny, clouds for Clouds formation, a cloud with rain for Rainfall, a cloud with snow for Snowfall, a cloud with lightning for Thunder and lightning, and a spiral for Hurricanes. Each icon is accompanied by a photograph showing the actual weather condition, such as a sunset for sunny weather or a lightning strike for thunder."
+                            ],
+                            "questions": []
+                        },
+                        {
+                            "page": 240,
+                            "explanation": [
+                                "Weather forecasting predicts future weather conditions by collecting and analyzing data like temperature, pressure, wind speed, and storm tracks. Instruments used include Stevenson screens, weather buoys, radiosondes, satellites, and weather stations. A Stevenson screen is a white wooden box with slanted openings, 65 cm high, placed 120 cm above the ground to protect instruments from ground heat and allow air circulation.",
+                                "The Stevenson screen is placed away from trees and buildings to avoid obstacles that might affect measurements. Inside, it contains instruments to measure temperature, atmospheric pressure, and humidity. A diagram shows the dimensions of the screen (65 cm height, 120 cm stand) and its slanted wooden slats, explaining how its design ensures accurate readings by reflecting sunlight and allowing air flow."
+                            ],
+                            "questions": []
+                        },
+                        {
+                            "page": 241,
+                            "explanation": [
+                                "Weather buoys float in oceans to collect sensor data, which is sent via satellites to observation centers. A radiosonde is a device carrying instruments for temperature, humidity, pressure, and wind speed, attached to a balloon filled with helium or hydrogen and a parachute. It is launched twice daily. A diagram shows the structure of a radiosonde, including the balloon, parachute, and the instrument device itself.",
+                                "As the radiosonde rises, the balloon expands because outside atmospheric pressure decreases. Sensors transmit data via radio waves to ground stations. The balloon eventually bursts at 20-35 km altitude due to expansion, and the device falls back to Earth by parachute. A visual sequence shows the balloon's ascent, its expansion, the burst, and the parachute landing, along with the transmission of data to a ground station."
+                            ],
+                            "questions": []
+                        },
+                        {
+                            "page": 242,
+                            "explanation": [
+                                "Question: A balloon inflated at sea level is moved to Region 1 (1045 mb) and Region 2 (920 mb). Answer: In Region 1, the higher pressure causes the balloon's volume to decrease. In Region 2, the lower pressure causes the volume to increase. Visuals show the balloon shrinking in Case 1 and expanding in Case 2. Satellites orbit the Earth and weather stations are distributed globally to collect data for these forecasts.",
+                                "Weather forecasting is probabilistic, not absolute, because the atmosphere is affected by many variables. The accuracy of forecasts decreases as the prediction period increases; for example, a two-day forecast is more accurate than a one-week forecast. A diagram shows a satellite orbiting the Earth and a weather station with various sensors like anemometers and rain gauges used for data collection."
+                            ],
+                            "questions": []
+                        },
+                        {
+                            "page": 243,
+                            "explanation": [
+                                "Weather forecasts are important for protecting lives and property by allowing preventive measures against floods and storms. They support economic activities by helping farmers time planting and harvesting, which increases productivity. They also ensure aviation safety by helping pilots avoid dangerous weather. Images show a car in a storm, a train in snow, and a plane in clouds to illustrate these benefits.",
+                                "Preventive awareness involves following forecasts to take precautions like wearing appropriate clothing. In Egypt, Khamaseen winds are sand and dust storms that blow every spring, negatively affecting respiratory health. These winds are loaded with sand and dust, as shown in an image of a dusty street. A text box defines Khamaseen winds as storms loaded with sand and dust that blow over Egypt in the spring season."
+                            ],
+                            "questions": []
+                        }
+                    ]
+                }
+            ]
+        }
+    ]
+}

@@ -1,0 +1,57 @@
+{
+    "units": [
+        {
+            "unit_num": 3,
+            "unit_name": "Reproduction in Living Organisms",
+            "lessons": [
+                {
+                    "lesson_num": 2,
+                    "lesson_name": "Floral Reproduction",
+                    "pages": [
+                        {
+                            "page": 180,
+                            "explanation": [
+                                "Pollination is the process of the transfer of pollen grains from the anthers of the stamens to the stigmas of the carpels (pistils).",
+                                "Types of pollination include self-pollination and cross-pollination. Self-pollination is the transfer of pollen grains from the anther of a flower to the stigma of the same flower or another flower in the same plant. Cross-pollination is the transfer of pollen grains from the anther of a flower in a plant to the stigma of another flower in another plant of the same species.",
+                                "An illustrative figure shows a bisexual flower undergoing self-pollination, and a male and female flower undergoing cross-pollination. Characteristics of flowers undergoing self-pollination include simultaneous maturity of stamens and pistil, anthers at the same level or higher than stigmas, and flowers remaining closed. Characteristics of cross-pollination include non-simultaneous maturity, anthers far from or lower than stigmas, and unisexual flowers."
+                            ]
+                        },
+                        {
+                            "page": 181,
+                            "explanation": [
+                                "Flowering plants undergoing cross-pollination depend on wind, insects, water, or humans for pollen transfer. Wind-pollinated flowers are small, dull-colored, scentless, and have long hanging anthers with light, dry, smooth pollen grains produced in large numbers, and feathery, exposed stigmas.",
+                                "Insect-pollinated flowers are large, bright-colored, have noticeable scents, and secrete nectar to attract insects. Their anthers are inside the flower, and they have sticky or rough pollen grains to stick to insect bodies, with sticky stigmas located inside the flower to pick up pollen."
+                            ]
+                        },
+                        {
+                            "page": 182,
+                            "explanation": [
+                                "Fertilization involves several steps. First, a pollen grain falls on the stigma, which secretes a sugary solution. Second, the pollen grain germinates to form a pollen tube, and the generative nucleus divides into two male nuclei. Third, the pollen tube grows down through the style to the ovule via the micropyle. Fourth, the tube tip disintegrates, and one male nucleus fuses with the ovule nucleus to form a diploid zygote.",
+                                "The fifth step shows the diploid zygote dividing mitotically to form an embryo, which develops into a seed that can germinate into a new plant."
+                            ]
+                        },
+                        {
+                            "page": 183,
+                            "explanation": [
+                                "Fertilization is the fusion of the male cell nucleus (pollen grain) with the female cell nucleus (ovule) to form the zygote. The zygote is the cell resulting from this fusion. A diagram shows the process from pollen grain and ovule nuclei (n) to zygote (2n), then embryo, and finally a new plant.",
+                                "After fertilization, the ovary develops into a fruit, and ovules turn into seeds. While parts like the calyx, corolla, stamen, style, and stigma wither, some parts persist in certain fruits, such as the calyx in tomato and eggplant, the corolla in cucumber and zucchini, and stamens and sepals in pomegranate."
+                            ]
+                        },
+                        {
+                            "page": 184,
+                            "explanation": [
+                                "Fruits differ based on the ovary nature. An ovary with one ovule results in a fruit with one seed, like a peach. An ovary with many ovules results in a fruit with many seeds, like a pea. The page concludes with a review section."
+                            ]
+                        },
+                        {
+                            "page": 185,
+                            "explanation": [
+                                "The life cycle of flowering plants consists of four stages: germination (seed to seedling), vegetative growth (roots, stem, leaves), reproduction (flowers, fruits, seeds), and seed dispersal (spreading seeds to new locations). Reproduction by seeds is crucial for the wide spread of flowering plants."
+                            ]
+                        }
+                    ]
+                }
+            ]
+        }
+    ]
+}

@@ -1,0 +1,128 @@
+{
+    "units": [
+        {
+            "unit_num": 3,
+            "unit_name": "Reproduction in Living Organisms",
+            "lessons": [
+                {
+                    "lesson_num": 1,
+                    "lesson_name": "Cell Division",
+                    "pages": [
+                        {
+                            "page": 145,
+                            "explanation": [
+                                "All living organisms share key characteristics, such as: 1. Nutrition, 2. Respiration, 3. Sensation, 4. Movement, 5. Reproduction. [Image: A central photo of a lion family with cubs, surrounded by numbered bubbles for each characteristic.]",
+                                "Reproduction: It is a vital process through which the living organism produces new individuals of the same species, ensuring the continuity of life and protecting the species from extinction. In the reproduction, the genetic traits are transmitted from parents to offspring, as will be explained later.",
+                                "To understand how reproduction occurs in living organisms, the following will be explored: 1. Types of living cells, 2. Types of cell divisions, 3. Types of reproduction in living organisms. Living cells: The cell is the unit of structure and function in living organisms.",
+                                "Cells in living organisms are classified into two types, which are: 1. Somatic cells and 2. Reproductive cells. [Image: Icons representing a cluster of somatic cells and a group of reproductive cells/gametes.]"
+                            ],
+                            "questions": []
+                        },
+                        {
+                            "page": 146,
+                            "explanation": [
+                                "1. Somatic cells: They include all the cells of the living organism, except the reproductive cells. Examples of the somatic cells in plants: The cells of the parenchyma tissue and the cells of the collenchyma tissue. (They are found in the stem and the leaves of the plants). [Image: Microscopic views of parenchymal and collenchymal cells.]",
+                                "Examples of the somatic cells in animals and human: Intestinal cells and Cardiac (heart) muscle cells. [Image: Illustrations of intestinal tissue and cardiac muscle fibers.]",
+                                "2. Reproductive cells: The gonads (male and female reproductive organs) produce reproductive cells known as gametes. Gametes: The specialized cells that are responsible for sexual reproduction in living organisms.",
+                                "Gonads in plants: are Ovary (produce Ovules/Female gametes) and Anther (produce Pollen grains/Male gametes). [Image: Diagrams of an ovule and a pollen grain.]",
+                                "Gonads in animals and human: are Ovary (produce Ova/Singular: Ovum/Female gametes) and Testes (Singular: Testis/produce Sperms/Male gametes). [Image: Diagrams of an ovum and a sperm cell.]"
+                            ],
+                            "questions": []
+                        },
+                        {
+                            "page": 147,
+                            "explanation": [
+                                "Remember that! Chromosomes are thread-like bodies that represent the genetic material of the living organism. Each chromosome consists of two chromatids connected at the centromere. Chromosomes are found in the cell nucleus in the eukaryotes. [Image: A diagram of a chromosome showing two chromatids joined at a centromere inside a cell nucleus.]",
+                                "The number of chromosomes is always the same in the individuals of the same species. The number of chromosomes in somatic cells and gonads differs from their number in gametes. As the following:",
+                                "Somatic cells and gonads: Each cell contains the complete number of chromosomes (diploid cell) in the form of homologous pairs. Therefore, it is symbolized by 2n.",
+                                "Gametes: Each cell contains half the number of chromosomes which is found in the somatic cell (haploid cell). Therefore, it is symbolized by n."
+                            ],
+                            "questions": []
+                        },
+                        {
+                            "page": 148,
+                            "explanation": [
+                                "The following table shows the number of chromosomes in the somatic cells of some living organisms: Potato (48), Chimpanzee (48), Elephant (56), Crow (80). [Image: Photos of a potato, a chimpanzee, an elephant, and a crow.]",
+                                "From this table, it is clear that: 1. The similar chromosome count (number of chromosomes) in the somatic cells of the different species of the living organisms does not mean that they are genetically similar. This is evident in the difference between the potato plant and the chimpanzee, although the somatic cells of each of them contain 48 chromosomes (24 pairs).",
+                                "2. The chromosome count in the cell is not related to the size of the living organism, where: The number of chromosomes in the somatic cell of the elephant (larger in size) is 56 chromosomes, while the number of chromosomes in the somatic cell of the crow (smaller in size) is 80 chromosomes.",
+                                "G.R. The potato plant and the chimpanzee are not genetically similar although they have the same number of chromosomes in the somatic cells of each of them. Answer: Because they carry different genetic information.",
+                                "Mention the evidence: There is no relation between the size of the living organism and the chromosome count in its somatic cells. Answer: As the somatic cell of the elephant (larger in size) contains fewer number of chromosomes than that found in the somatic cell of the crow (smaller in size)."
+                            ],
+                            "questions": []
+                        },
+                        {
+                            "page": 149,
+                            "explanation": [
+                                "Cell Divisions: The occurrence of reproduction in living organisms depends on the ability of cells to divide, and there are two types of division: 1. Mitosis (Mitotic division/Equational division) and 2. Meiosis (Meiotic division/Reductional division).",
+                                "Mitosis (Equational division) occurs in the somatic cells. Each diploid somatic cell (2n) divides into two new diploid daughter cells (2n) identical to the parent cell, this is why this division is called equational division. [Image: Diagram showing a parent cell (2n) dividing into two identical daughter cells (2n).]",
+                                "Meiosis (Reductional division) occurs in the gonad cells. Each gonad cell divides in two stages, which are: (A) First meiotic division (Meiosis I): The diploid parent cell (2n) divides into two haploid cells (n) each containing half the original number of chromosomes, this is why this division is called reductional division.",
+                                "(B) Second meiotic division (Meiosis II): (which is similar to mitosis) each cell (n) resulting from meiosis (I) divides into two haploid cells (n). Hence, four haploid daughter cells (n) are produced, each containing half the original number of chromosomes, and each cell develops into: Sperm or Ovum or Pollen grain or Ovule. [Image: Diagram showing a parent cell (2n) dividing into four gametes (n).]"
+                            ],
+                            "questions": []
+                        },
+                        {
+                            "page": 150,
+                            "explanation": [
+                                "Comparison of daughter cells: Mitosis results in two identical somatic cells with the complete number of chromosomes (2n) and identical genetic information. Meiosis results in four genetically different cells (gametes) with half the number of chromosomes (n) due to the occurrence of the crossing-over phenomenon between the homologous chromosomes during meiosis (I).",
+                                "The purpose of its occurrence in human body: Mitosis is for 1. Growth of the body of living organism. 2. Repairing dead and damaged tissues (tissue regeneration), such as in wound healing, repairing blood vessels, muscles and bone fractures. Meiosis is for 1. Production of gametes in the gonads. 2. Reduction of chromosome number to half in the gamete, to ensure restoring the original number of chromosomes after mating.",
+                                "The crossing-over phenomenon occurs during meiosis I, as follows: Each pair of homologous chromosomes comes close to each other. The ends of non-sister chromatids twist around each other. Genetic material exchange occurs between the twisted ends of the chromatids. [Image: Diagram showing the stages of crossing-over between homologous chromosomes.]",
+                                "Its importance: The crossing-over phenomenon leads to diversity (variation) of genetic traits in the individuals of the same species. G.R. Because genetic material exchange occurs between the non-sister chromatids of two homologous chromosomes, which are randomly distributed in the gametes responsible for sexual reproduction in living organisms."
+                            ],
+                            "questions": []
+                        },
+                        {
+                            "page": 151,
+                            "explanation": [
+                                "Mathematical understanding: The number of daughter cells (N) formed after a given number of mitotic divisions (n), Can be calculated from the mathematical relationship: N = 2^n.",
+                                "Question: Calculate the number of daughter cells resulting from the division of a single somatic cell through 3 successive mitotic divisions. Answer: N = 2^n; n = 3; N = 2^3 = 8. Therefore, Number of daughter cells = 8 cells. [Image: A diagram illustrating three successive cell divisions resulting in 8 cells.]",
+                                "Integration with medicine: The cancerous (malignant) tumor: It is an abnormal cell growth formed when a somatic cell undergoes uncontrolled mitotic division repeatedly and abnormally. [Image: A comparison figure showing normal cell growth vs. abnormal growth leading to a cancerous tumor.]"
+                            ],
+                            "questions": []
+                        },
+                        {
+                            "page": 152,
+                            "explanation": [
+                                "Q1: Compare between somatic cells and gametes. Answer: Somatic cells: All cells of the living organism, except the reproductive cells; Produced by mitosis of somatic cells; Contains the complete chromosome count (2n) in the form of homologous pairs; Symbolized by (2n). Examples: Parenchymal cells, intestinal cells. Gametes: Specialized cells responsible for sexual reproduction; Produced by meiosis of gonad cells; Contains half the chromosome count (n) present in somatic cells; Symbolized by (n). Examples: Ovules, pollen grains, ova, sperms.",
+                                "Q2: Give reason: Mitosis called equational division, while meiosis called reductional division. Answer: Because mitosis involves the distribution of a complete and identical set of the genetic information of the parent cell to each of the two new daughter cells, while in meiosis, the single cell divides into four daughter cells, each containing half the number of chromosomes (n) present in the parent cell (2n).",
+                                "Reproduction in living organisms: Living organisms reproduce by one of the two types of reproduction, which are: 1. Asexual reproduction and 2. Sexual reproduction. 1. Asexual reproduction characteristics: 1. It occurs through a single parent individual. 2. It depends on the mitotic division (mitosis), which leads to the formation of identical copy of the parental individual.",
+                                "The asexual reproduction can be defined, as follows: Asexual reproduction: A vital process in which the parental individual produces new individuals that are completely identical in genetic traits. Asexual reproduction occurs in several forms, including vegetative reproduction as in the potato plant (occurring through its tubers)."
+                            ],
+                            "questions": []
+                        },
+                        {
+                            "page": 153,
+                            "explanation": [
+                                "Steps of vegetative reproduction in the potato plant: Step 1: Potato tubers which contain buds (eyes) are placed in suitable environmental conditions (humid medium) until the buds sprout. Step 2: The bud becomes active and develops into a young stem which grows upward carrying the growing leaves, at the same time another cells in the bud differentiate to form primary roots that extend downward in the soil.",
+                                "Step 3: When roots are able to absorb water and mineral salts from the soil, and also the stem and leaves rise towards the light, so the tuber becomes a new plant that can make photosynthesis process. [Image: Illustration showing the growth of a potato plant from a tuber in the soil.]",
+                                "Take care: During the early stages of growth, the tuber functions as a storage organ and energy reservoir to supply the developing stem and roots with the necessary nutrients and energy. It can be determined that the potato plant is ready for harvest from turning the colour of its leaves into yellow.",
+                                "G.R. Vegetative reproduction in the potato plant is a form of asexual reproduction. Answer: Because it occurs through a single parental individual, as a single piece of potato tuber containing one bud can become a new plant completely identical to the parental individual."
+                            ],
+                            "questions": []
+                        },
+                        {
+                            "page": 154,
+                            "explanation": [
+                                "2. Sexual reproduction characteristics: 1. It involves two parental individuals of the same species, one is male and the other is female. 2. It depends on the occurrence of meiosis, which ensures diversity in the genetic traits of the resulting individuals. [Image: A photo of a family showing genetic diversity.]",
+                                "Sexual reproduction can be defined, as follows: Sexual reproduction: A vital process in which two parental individuals of the same species, one is male and the other is female, participate to produce new individuals that carry a combination of genetic traits of both parents.",
+                                "Stages of sexual reproduction: The fusion of a haploid male gamete (n) with a haploid female gamete (n) forms a zygote carrying complete chromosome count of the species (diploid 2n), this process is known as fertilization. Zygote undergoes mitotic division to form the embryo that carries a combination of the traits of both parents.",
+                                "Fertilization: Fusion of the nucleus of a male gamete (n) with the nucleus of a female gamete (n) to form a zygote (2n). Zygote: The cell resulting from the fertilization process, which contains the complete chromosome count of the species. [Image: A photo of a baby.]"
+                            ],
+                            "questions": []
+                        },
+                        {
+                            "page": 155,
+                            "explanation": [
+                                "Example: Sexual reproduction in the frog. Male (2n) produces sperm (n) via meiosis in the testis. Female (2n) produces ovum (n) via meiosis in the ovary. Fertilization forms a zygote (2n), which undergoes mitosis to become a tadpole (2n) and then an adult frog. [Image: A life cycle diagram of a frog showing meiosis, fertilization, and mitosis stages.]",
+                                "Take care: The female frog is larger in size than the male frog.",
+                                "Q1: Explain: The distinctive features of each type of cell division enables it to perform a specific function. Answer: Because mitosis achieves asexual reproduction and growth, while meiosis leads to the production of gametes necessary for the sexual reproduction.",
+                                "Q2: Does meiosis occur in unicellular organisms such as Amoeba? Explain. Answer: No / Because Amoeba is a unicellular organism that does not have gonads that produce gametes, so it reproduces asexually through mitosis.",
+                                "Q3: Compare between asexual reproduction and sexual reproduction. Answer: Asexual reproduction: It depends on a single parental individual; Its occurrence depends on mitosis; It results in individuals that are identical to their parental individuals genetically; It ensures the formation of an exact genetic copy of the single parental individual. Sexual reproduction: It involves two parental individuals; Its occurrence depends on meiosis; It results in individuals that carry different genetic traits from the two parental individuals; It ensures the occurrence of diversity in the genetic traits of the resulting individuals."
+                            ],
+                            "questions": []
+                        }
+                    ]
+                }
+            ]
+        }
+    ]
+}

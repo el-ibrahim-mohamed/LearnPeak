@@ -1,0 +1,668 @@
+{
+    "units": [
+        {
+            "unit_num": 2,
+            "unit_name": "Forces and Motion",
+            "lessons": [
+                {
+                    "lesson_num": 2,
+                    "lesson_name": "Levers",
+                    "pages": [
+                        {
+                            "page": 134,
+                            "questions": [
+                                {
+                                    "ex_title": "Write the scientific term of each of the following statements",
+                                    "type": "text",
+                                    "q_txt": "A lever whose fulcrum is located between the effort and the load.",
+                                    "a_txt": "First class lever.",
+                                    "mcq_choices": null
+                                },
+                                {
+                                    "ex_title": "Write the scientific term of each of the following statements",
+                                    "type": "text",
+                                    "q_txt": "A lever in which the load is located between the fulcrum and the effort.",
+                                    "a_txt": "Second class lever.",
+                                    "mcq_choices": null
+                                },
+                                {
+                                    "ex_title": "Write the scientific term of each of the following statements",
+                                    "type": "text",
+                                    "q_txt": "A lever in which the effort is located between the fulcrum and the load.",
+                                    "a_txt": "Third class lever.",
+                                    "mcq_choices": null
+                                },
+                                {
+                                    "ex_title": "Write the scientific term of each of the following statements",
+                                    "type": "text",
+                                    "q_txt": "The ratio between the effort arm length to the load arm length.",
+                                    "a_txt": "Mechanical advantage.",
+                                    "mcq_choices": null
+                                }
+                            ]
+                        },
+                        {
+                            "page": 135,
+                            "questions": [
+                                {
+                                    "ex_title": "Complete the following statements",
+                                    "type": "complete",
+                                    "q_txt": "In second class levers, the _____ is located between the effort and _____.",
+                                    "a_txt": [
+                                        "load",
+                                        "the fulcrum (pivot point)"
+                                    ],
+                                    "mcq_choices": null
+                                },
+                                {
+                                    "ex_title": "Complete the following statements",
+                                    "type": "complete",
+                                    "q_txt": "The seesaw is a _____ lever, while the tennis racket is a _____ lever.",
+                                    "a_txt": [
+                                        "first class",
+                                        "third class"
+                                    ],
+                                    "mcq_choices": null
+                                },
+                                {
+                                    "ex_title": "Complete the following statements",
+                                    "type": "complete",
+                                    "q_txt": "First class levers do not save effort when their mechanical advantage is _____ or _____ 1.",
+                                    "a_txt": [
+                                        "less than",
+                                        "equal to"
+                                    ],
+                                    "mcq_choices": null
+                                },
+                                {
+                                    "ex_title": "Complete the following statements",
+                                    "type": "complete",
+                                    "q_txt": "All the _____ levers have mechanical advantage greater than 1, while all the _____ levers do not have mechanical advantage greater than 1.",
+                                    "a_txt": [
+                                        "second class",
+                                        "third class"
+                                    ],
+                                    "mcq_choices": null
+                                },
+                                {
+                                    "ex_title": "Complete the following statements",
+                                    "type": "complete",
+                                    "q_txt": "In a wheelbarrow, the _____ arm is longer than the _____ arm, so it always _____ effort.",
+                                    "a_txt": [
+                                        "effort",
+                                        "load",
+                                        "saving"
+                                    ],
+                                    "mcq_choices": null
+                                },
+                                {
+                                    "ex_title": "Complete the following statements",
+                                    "type": "complete",
+                                    "q_txt": "In levers, as the effort arm increases, the required effort _____ and hence the mechanical advantage _____.",
+                                    "a_txt": [
+                                        "decreases",
+                                        "increases"
+                                    ],
+                                    "mcq_choices": null
+                                },
+                                {
+                                    "ex_title": "Complete the following statements",
+                                    "type": "complete",
+                                    "q_txt": "In the human body, the head represents a _____ class lever, while the forearm represents a _____ class lever.",
+                                    "a_txt": [
+                                        "first",
+                                        "third"
+                                    ],
+                                    "mcq_choices": null
+                                },
+                                {
+                                    "ex_title": "Complete the following statements",
+                                    "type": "complete",
+                                    "q_txt": "While standing on the tiptoes, the foot represents a _____ class lever and the load in it is _____.",
+                                    "a_txt": [
+                                        "second",
+                                        "body weight"
+                                    ],
+                                    "mcq_choices": null
+                                },
+                                {
+                                    "ex_title": "Mark (T) or (x) for each statement, with correction if needed",
+                                    "type": "true_false_with_correction",
+                                    "q_txt": "There are only two types of levers.",
+                                    "a_txt": [
+                                        "False",
+                                        {
+                                            "mistake": "only two types",
+                                            "correction": "three types"
+                                        }
+                                    ],
+                                    "mcq_choices": null
+                                },
+                                {
+                                    "ex_title": "Mark (T) or (x) for each statement, with correction if needed",
+                                    "type": "true_false_with_correction",
+                                    "q_txt": "The type of lever is determined according to the position of the fulcrum, the effort and the load relative to each other.",
+                                    "a_txt": [
+                                        "True",
+                                        null
+                                    ],
+                                    "mcq_choices": null
+                                },
+                                {
+                                    "ex_title": "Mark (T) or (x) for each statement, with correction if needed",
+                                    "type": "true_false_with_correction",
+                                    "q_txt": "In first class lever, the fulcrum is located between the effort and the load.",
+                                    "a_txt": [
+                                        "True",
+                                        null
+                                    ],
+                                    "mcq_choices": null
+                                },
+                                {
+                                    "ex_title": "Mark (T) or (x) for each statement, with correction if needed",
+                                    "type": "true_false_with_correction",
+                                    "q_txt": "The mechanical advantage of a lever determines how much it saves effort.",
+                                    "a_txt": [
+                                        "True",
+                                        null
+                                    ],
+                                    "mcq_choices": null
+                                },
+                                {
+                                    "ex_title": "Mark (T) or (x) for each statement, with correction if needed",
+                                    "type": "true_false_with_correction",
+                                    "q_txt": "Third class levers always save effort.",
+                                    "a_txt": [
+                                        "False",
+                                        {
+                                            "mistake": "Third class levers",
+                                            "correction": "Second class levers"
+                                        }
+                                    ],
+                                    "mcq_choices": null
+                                },
+                                {
+                                    "ex_title": "Mark (T) or (x) for each statement, with correction if needed",
+                                    "type": "true_false_with_correction",
+                                    "q_txt": "Scissors are first class lever and can save effort.",
+                                    "a_txt": [
+                                        "False",
+                                        {
+                                            "mistake": "Scissors",
+                                            "correction": "Pliers"
+                                        }
+                                    ],
+                                    "mcq_choices": null
+                                },
+                                {
+                                    "ex_title": "Mark (T) or (x) for each statement, with correction if needed",
+                                    "type": "true_false_with_correction",
+                                    "q_txt": "Second class levers are used in the precise and dangerous tasks.",
+                                    "a_txt": [
+                                        "False",
+                                        {
+                                            "mistake": "Second class levers",
+                                            "correction": "Third class levers"
+                                        }
+                                    ],
+                                    "mcq_choices": null
+                                },
+                                {
+                                    "ex_title": "Mark (T) or (x) for each statement, with correction if needed",
+                                    "type": "true_false_with_correction",
+                                    "q_txt": "Pliers do not save effort.",
+                                    "a_txt": [
+                                        "False",
+                                        {
+                                            "mistake": "do not save effort",
+                                            "correction": "saves effort"
+                                        }
+                                    ],
+                                    "mcq_choices": null
+                                },
+                                {
+                                    "ex_title": "Mark (T) or (x) for each statement, with correction if needed",
+                                    "type": "true_false_with_correction",
+                                    "q_txt": "While standing on the tiptoes, the calf muscles represent the fulcrum.",
+                                    "a_txt": [
+                                        "False",
+                                        {
+                                            "mistake": "the calf muscles represent the fulcrum",
+                                            "correction": "the effort"
+                                        }
+                                    ],
+                                    "mcq_choices": null
+                                },
+                                {
+                                    "ex_title": "Mark (T) or (x) for each statement, with correction if needed",
+                                    "type": "true_false_with_correction",
+                                    "q_txt": "The biceps muscle represents the load in the human body during carrying objects in the palm.",
+                                    "a_txt": [
+                                        "False",
+                                        {
+                                            "mistake": "represents the load",
+                                            "correction": "represents the effort"
+                                        }
+                                    ],
+                                    "mcq_choices": null
+                                },
+                                {
+                                    "ex_title": "Choose the correct answer",
+                                    "type": "mcq",
+                                    "q_txt": "All the following are levers whose fulcrums are located between the efforts and the loads, except _____",
+                                    "a_txt": 2,
+                                    "mcq_choices": [
+                                        "crowbar.",
+                                        "scissors.",
+                                        "tweezers.",
+                                        "pliers."
+                                    ]
+                                }
+                            ]
+                        },
+                        {
+                            "page": 136,
+                            "questions": [
+                                {
+                                    "ex_title": "Choose the correct answer",
+                                    "type": "mcq",
+                                    "q_txt": "Which of the following relationships is used to calculate the mechanical advantage of the lever?",
+                                    "a_txt": 2,
+                                    "mcq_choices": [
+                                        "Effort x Load",
+                                        "Effort arm x Load arm",
+                                        "Load / Effort",
+                                        "Load arm / Effort arm"
+                                    ]
+                                },
+                                {
+                                    "ex_title": "Choose the correct answer",
+                                    "type": "mcq",
+                                    "q_txt": "A lever lifts a load weighing 400 N with an effort of 100 N. What is the mechanical advantage of this lever?",
+                                    "a_txt": 2,
+                                    "mcq_choices": [
+                                        "0.25",
+                                        "2",
+                                        "4",
+                                        "8"
+                                    ]
+                                },
+                                {
+                                    "ex_title": "Choose the correct answer",
+                                    "type": "mcq",
+                                    "q_txt": "If the mechanical advantage of a lever equals 5. What is the effort required to lift a load its weight is 500 N by using this lever?",
+                                    "a_txt": 1,
+                                    "mcq_choices": [
+                                        "50 N",
+                                        "100 N",
+                                        "500 N",
+                                        "2500 N"
+                                    ]
+                                },
+                                {
+                                    "ex_title": "Choose the correct answer",
+                                    "type": "mcq",
+                                    "q_txt": "Which of the following levers always has a mechanical advantage greater than 1?",
+                                    "a_txt": 1,
+                                    "mcq_choices": [
+                                        "Tweezers.",
+                                        "Wheelbarrow.",
+                                        "Seesaw.",
+                                        "Tennis racket."
+                                    ]
+                                },
+                                {
+                                    "ex_title": "Choose the correct answer",
+                                    "type": "mcq",
+                                    "q_txt": "All the following are levers that save effort, except _____",
+                                    "a_txt": 0,
+                                    "mcq_choices": [
+                                        "hand broom.",
+                                        "pliers.",
+                                        "lemon squeezer.",
+                                        "nutcracker."
+                                    ]
+                                },
+                                {
+                                    "ex_title": "Choose the correct answer",
+                                    "type": "mcq",
+                                    "q_txt": "In the following figures: If the mass of each triangle is proportional to its volume. Which figure represents correctly a balanced seesaw? (The figure shows four seesaws with different arrangements of blue and red triangles).",
+                                    "a_txt": 3,
+                                    "mcq_choices": [
+                                        "Figure a",
+                                        "Figure b",
+                                        "Figure c",
+                                        "Figure d"
+                                    ]
+                                },
+                                {
+                                    "ex_title": "Identify the odd item in each list, then mention the connection between the others",
+                                    "type": "text",
+                                    "q_txt": "Scissors / Nutcracker / Seesaw / Pliers.",
+                                    "a_txt": "Odd item: Nutcracker. Connection: First class levers.",
+                                    "mcq_choices": null
+                                },
+                                {
+                                    "ex_title": "Identify the odd item in each list, then mention the connection between the others",
+                                    "type": "text",
+                                    "q_txt": "Wheelbarrow / Lemon squeezer / Coal tongs / Nutcracker.",
+                                    "a_txt": "Odd item: Coal tongs. Connection: Second class levers.",
+                                    "mcq_choices": null
+                                },
+                                {
+                                    "ex_title": "Identify the odd item in each list, then mention the connection between the others",
+                                    "type": "text",
+                                    "q_txt": "Coal tongs / Tweezers / Scissors / Broom.",
+                                    "a_txt": "Odd item: Scissors. Connection: Third class levers.",
+                                    "mcq_choices": null
+                                },
+                                {
+                                    "ex_title": "Identify the odd item in each list, then mention the connection between the others",
+                                    "type": "text",
+                                    "q_txt": "Scissors / Seesaw / Lemon squeezer / Tennis racket.",
+                                    "a_txt": "Odd item: Lemon squeezer. Connection: Levers that do not save effort.",
+                                    "mcq_choices": null
+                                },
+                                {
+                                    "ex_title": "Mention one example for each of the following",
+                                    "type": "text",
+                                    "q_txt": "First class lever.",
+                                    "a_txt": "Seesaw.",
+                                    "mcq_choices": null
+                                },
+                                {
+                                    "ex_title": "Mention one example for each of the following",
+                                    "type": "text",
+                                    "q_txt": "Second class lever.",
+                                    "a_txt": "Wheelbarrow.",
+                                    "mcq_choices": null
+                                },
+                                {
+                                    "ex_title": "Mention one example for each of the following",
+                                    "type": "text",
+                                    "q_txt": "Third class lever.",
+                                    "a_txt": "Tennis racket.",
+                                    "mcq_choices": null
+                                },
+                                {
+                                    "ex_title": "Mention one example for each of the following",
+                                    "type": "text",
+                                    "q_txt": "First class lever that saves effort.",
+                                    "a_txt": "Pliers.",
+                                    "mcq_choices": null
+                                },
+                                {
+                                    "ex_title": "Mention one example for each of the following",
+                                    "type": "text",
+                                    "q_txt": "First class lever that does not save effort.",
+                                    "a_txt": "Seesaw.",
+                                    "mcq_choices": null
+                                }
+                            ]
+                        },
+                        {
+                            "page": 137,
+                            "questions": [
+                                {
+                                    "ex_title": "Mention the use of each of the following",
+                                    "type": "text",
+                                    "q_txt": "Claw hammer.",
+                                    "a_txt": "It is used in multiplying the force during removing a nail fixed in a wooden board.",
+                                    "mcq_choices": null
+                                },
+                                {
+                                    "ex_title": "Mention the use of each of the following",
+                                    "type": "text",
+                                    "q_txt": "Forceps.",
+                                    "a_txt": "They are used in precise tasks.",
+                                    "mcq_choices": null
+                                },
+                                {
+                                    "ex_title": "Mention the use of each of the following",
+                                    "type": "text",
+                                    "q_txt": "Coal tongs.",
+                                    "a_txt": "They are used to avoid the risk of burns.",
+                                    "mcq_choices": null
+                                },
+                                {
+                                    "ex_title": "Give reasons for the following",
+                                    "type": "text",
+                                    "q_txt": "Scissors is a first class lever.",
+                                    "a_txt": "Because the fulcrum (pivot point) is located between the effort and the load.",
+                                    "mcq_choices": null
+                                },
+                                {
+                                    "ex_title": "Give reasons for the following",
+                                    "type": "text",
+                                    "q_txt": "Nutcracker is a second class lever.",
+                                    "a_txt": "Because the load is located between the fulcrum (pivot point) and the effort.",
+                                    "mcq_choices": null
+                                },
+                                {
+                                    "ex_title": "Give reasons for the following",
+                                    "type": "text",
+                                    "q_txt": "The mechanical advantage of second class levers is always greater than 1.",
+                                    "a_txt": "Because the effort arm is always greater than the load arm.",
+                                    "mcq_choices": null
+                                },
+                                {
+                                    "ex_title": "Give reasons for the following",
+                                    "type": "text",
+                                    "q_txt": "Pliers are first class lever that saves effort.",
+                                    "a_txt": "It is a first class lever because the fulcrum (pivot point) is located between the effort and the load and it saves effort because the effort arm is greater than the load arm (its mechanical advantage is greater than 1).",
+                                    "mcq_choices": null
+                                },
+                                {
+                                    "ex_title": "Give reasons for the following",
+                                    "type": "text",
+                                    "q_txt": "Seesaw does not save effort.",
+                                    "a_txt": "Because the effort arm equals the load arm (its mechanical advantage equals 1).",
+                                    "mcq_choices": null
+                                },
+                                {
+                                    "ex_title": "Give reasons for the following",
+                                    "type": "text",
+                                    "q_txt": "Coal tongs does not save effort.",
+                                    "a_txt": "Because the effort arm is less than the load arm (its mechanical advantage is less than 1).",
+                                    "mcq_choices": null
+                                },
+                                {
+                                    "ex_title": "Give reasons for the following",
+                                    "type": "text",
+                                    "q_txt": "Third class levers do not save effort.",
+                                    "a_txt": "Because the effort arm is always less than the load arm (its mechanical advantage is less than 1).",
+                                    "mcq_choices": null
+                                },
+                                {
+                                    "ex_title": "Give reasons for the following",
+                                    "type": "text",
+                                    "q_txt": "Broom does not save effort.",
+                                    "a_txt": "Because the effort arm is less than the load arm.",
+                                    "mcq_choices": null
+                                },
+                                {
+                                    "ex_title": "Give reasons for the following",
+                                    "type": "text",
+                                    "q_txt": "Using third class levers although they do not save effort.",
+                                    "a_txt": "Because it is used for precise and dangerous tasks.",
+                                    "mcq_choices": null
+                                },
+                                {
+                                    "ex_title": "Give reasons for the following",
+                                    "type": "text",
+                                    "q_txt": "Standing on tiptoes represents a second class lever.",
+                                    "a_txt": "Because the load (body weight) is located between the effort (the calf muscles) and the fulcrum (pivot point) (the tips of the toes).",
+                                    "mcq_choices": null
+                                },
+                                {
+                                    "ex_title": "Give reasons for the following",
+                                    "type": "text",
+                                    "q_txt": "Human arm from the elbow joint to the palm is considered a third class lever.",
+                                    "a_txt": "Because the effort (the biceps muscle) is located between the fulcrum (pivot point) (elbow joint) and the load (the object held in the palm).",
+                                    "mcq_choices": null
+                                },
+                                {
+                                    "ex_title": "What are the results of each of the following",
+                                    "type": "text",
+                                    "q_txt": "The mechanical advantage of a simple machine is: 1- Greater than 1, 2- Equal 1, 3- Less than 1.",
+                                    "a_txt": "1- This machine saves effort. 2, 3- This machine does not save effort.",
+                                    "mcq_choices": null
+                                },
+                                {
+                                    "ex_title": "What are the results of each of the following",
+                                    "type": "text",
+                                    "q_txt": "The effort arm increases in a second class lever.",
+                                    "a_txt": "The required effort decreases and the mechanical advantage of this lever increases, thus it saves more effort.",
+                                    "mcq_choices": null
+                                },
+                                {
+                                    "ex_title": "What are the results of each of the following",
+                                    "type": "text",
+                                    "q_txt": "The effort arm is greater than the load arm in a first class lever.",
+                                    "a_txt": "The mechanical advantage of this lever is greater than 1 and thus it saves effort.",
+                                    "mcq_choices": null
+                                },
+                                {
+                                    "ex_title": "What are the results of each of the following",
+                                    "type": "text",
+                                    "q_txt": "The effort arm equals the load arm in a first class lever.",
+                                    "a_txt": "The mechanical advantage of this lever equals 1 and thus it does not save effort.",
+                                    "mcq_choices": null
+                                },
+                                {
+                                    "ex_title": "What are the results of each of the following",
+                                    "type": "text",
+                                    "q_txt": "The effort arm is less than the load arm in a first class lever.",
+                                    "a_txt": "The mechanical advantage of this lever is less than 1 and thus it does not save effort.",
+                                    "mcq_choices": null
+                                },
+                                {
+                                    "ex_title": "Variant problems",
+                                    "type": "text",
+                                    "q_txt": "Calculate the mechanical advantage of a lever that lifts a car with weight equals 9900 N using an effort equals 150 N.",
+                                    "a_txt": "Mechanical advantage of the lever = Load / Effort = 9900 / 150 = 66.",
+                                    "mcq_choices": null
+                                },
+                                {
+                                    "ex_title": "Variant problems",
+                                    "type": "text",
+                                    "q_txt": "Calculate the mechanical advantage of the nutcracker whose effort arm equals 25 cm and the load arm equals 5 cm.",
+                                    "a_txt": "Mechanical advantage of the lever = Effort arm / Load arm = 25 / 5 = 5.",
+                                    "mcq_choices": null
+                                },
+                                {
+                                    "ex_title": "Variant problems",
+                                    "type": "text",
+                                    "q_txt": "If the mechanical advantage of a simple machine is 2.5 and the effort arm is 1 m. Calculate the load arm.",
+                                    "a_txt": "Load arm = Effort arm / Mechanical advantage = 1 / 2.5 = 0.4 m.",
+                                    "mcq_choices": null
+                                },
+                                {
+                                    "ex_title": "Variant problems",
+                                    "type": "text",
+                                    "q_txt": "Two first class levers (A) and (B), the effort arm in each of them equals 60 cm, the mechanical advantage of lever (A) equals 3 and that of lever (B) equals 1. Determine with mathematical calculations which is longer, the load arm in lever (A) or that in lever (B).",
+                                    "a_txt": "Load arm = Effort arm / Mechanical advantage. In lever (A): The load arm = 60 / 3 = 20 cm. In lever (B): The load arm = 60 / 1 = 60 cm. The load arm in lever (B) is longer than the load arm in lever (A).",
+                                    "mcq_choices": null
+                                },
+                                {
+                                    "ex_title": "Variant problems",
+                                    "type": "text",
+                                    "q_txt": "A worker uses a first class lever with a mechanical advantage of 5 to lift a box weighing 250 N. Calculate the effort exerted by the worker.",
+                                    "a_txt": "Effort = Load / Mechanical advantage = 250 / 5 = 50 N.",
+                                    "mcq_choices": null
+                                }
+                            ]
+                        },
+                        {
+                            "page": 138,
+                            "questions": [
+                                {
+                                    "ex_title": "Variant problems",
+                                    "type": "text",
+                                    "q_txt": "Crowbar (A) with an effort arm of 50 cm and a load arm of 5 cm and another crowbar (B) with a mechanical advantage of 7.5. Show with mathematical calculations which of them saves more effort.",
+                                    "a_txt": "Mechanical advantage of the lever (A) = Effort arm / Load arm = 50 / 5 = 10. The mechanical advantage of lever (A) is greater than that of lever (B). The lever (A) saves more effort.",
+                                    "mcq_choices": null
+                                },
+                                {
+                                    "ex_title": "Variant problems",
+                                    "type": "text",
+                                    "q_txt": "In the opposite figure: Calculate the muscular effort that achieves equilibrium in this case. (The figure shows a human arm holding a 9.9 N weight. The effort arm is 7 cm and the load arm is 35 cm).",
+                                    "a_txt": "Effort x Effort arm = Load x Load arm. Effort x 7 = 9.9 x 35. Muscular effort = (35 x 9.9) / 7 = 49.5 N.",
+                                    "mcq_choices": null
+                                },
+                                {
+                                    "ex_title": "Variant questions",
+                                    "type": "text",
+                                    "q_txt": "Compare between the three types of levers \u00abin terms of: Positions of their three elements - Mechanical advantage - Example of each type\u00bb.",
+                                    "a_txt": "First class levers: Fulcrum between effort and load; Mechanical advantage can be >1, =1, or <1; Example: Seesaw. Second class levers: Load between fulcrum and effort; Mechanical advantage always >1; Example: Wheelbarrow. Third class levers: Effort between fulcrum and load; Mechanical advantage always <1; Example: Tennis racket.",
+                                    "mcq_choices": null
+                                },
+                                {
+                                    "ex_title": "Variant questions",
+                                    "type": "text",
+                                    "q_txt": "Explain how the position of the fulcrum in a first class lever affects the effort required to lift a heavy load.",
+                                    "a_txt": "The closer the fulcrum (pivot point) is to the load (resistance), the longer the effort arm in the lever, and the less effort is required to move this load. Thus, the mechanical advantage of the lever increases, and consequently, more effort is saved.",
+                                    "mcq_choices": null
+                                },
+                                {
+                                    "ex_title": "Variant questions",
+                                    "type": "text",
+                                    "q_txt": "In an experiment to deduce the law of levers, the following results were recorded: Load arm = 20 cm, Load = 100 N, Effort = 50 N. (1) Calculate the effort arm. (2) Does this lever save effort? Why?",
+                                    "a_txt": "(1) Effort x Effort arm = Load x Load arm. 50 x Effort arm = 100 x 20. Effort arm = (100 x 20) / 50 = 40 cm. (2) The lever saves effort / Because its mechanical advantage is greater than 1.",
+                                    "mcq_choices": null
+                                },
+                                {
+                                    "ex_title": "Variant questions",
+                                    "type": "text",
+                                    "q_txt": "(The bones that make up the skeletal system are levers). Explain this, with giving examples of the three types of levers in the human body.",
+                                    "a_txt": "The bones that make up the skeletal system are levers that include their three elements, as follows: - The joints around which the bones move represent the fulcrum (pivot points). - The forces of muscle contraction represent the effort. - The forces to be overcome represent the load. Examples: The head is a first class lever. The foot when standing on tiptoes is a second class lever. The arm is a third class lever.",
+                                    "mcq_choices": null
+                                },
+                                {
+                                    "ex_title": "Study the following figures, then answer",
+                                    "type": "text",
+                                    "q_txt": "In the following figures: Replace the numbers 1, 2 and 3 with the corresponding elements of the lever, then determine the type of lever represented by each figure. (The figure shows 6 sub-figures: 1. Fishing rod, 2. Tweezers, 3. Nutcracker, 4. Scissors, 5. Broom, 6. Pliers).",
+                                    "a_txt": "(1) 1: Fulcrum, 2: Effort, 3: Load. Type: Third class lever. (2) 1: Load, 2: Effort, 3: Fulcrum. Type: Third class lever. (3) 1: Fulcrum, 2: Load, 3: Effort. Type: Second class lever. (4) 1: Load, 2: Fulcrum, 3: Effort. Type: First class lever. (5) 1: Fulcrum, 2: Effort, 3: Load. Type: Third class lever. (6) 1: Load, 2: Fulcrum, 3: Effort. Type: First class lever.",
+                                    "mcq_choices": null
+                                }
+                            ]
+                        },
+                        {
+                            "page": 139,
+                            "questions": [
+                                {
+                                    "ex_title": "Study the following figures, then answer",
+                                    "type": "text",
+                                    "q_txt": "Based on the two figures: (1) What type of lever does each figure represents? (2) Which of the two figures represents the lever that achieves a greater mechanical advantage? Calculate it. (Figure 1 shows a seesaw with 300N load and 150N effort. Figure 2 shows a seesaw with 500N load and 125N effort).",
+                                    "a_txt": "(1) (1): Second class lever. (2): First class lever. (2) Figure (2) / Mechanical advantage = Load / Effort = 500 / 125 = 4.",
+                                    "mcq_choices": null
+                                },
+                                {
+                                    "ex_title": "Study the following figures, then answer",
+                                    "type": "text",
+                                    "q_txt": "From the opposite two figures: In which of the two figures (1) and (2) can a person lift the boy who is sitting on the seesaw more easily? Explain. (Figure 1 shows a person pushing down on a seesaw with the fulcrum far from the boy. Figure 2 shows the fulcrum closer to the boy).",
+                                    "a_txt": "In case (2) / Because the effort arm in case (2) is greater than the effort arm in case (1) and the longer the effort arm, the less effort is required and the greater the mechanical advantage, thus the lever saves more effort.",
+                                    "mcq_choices": null
+                                },
+                                {
+                                    "ex_title": "Study the following figures, then answer",
+                                    "type": "text",
+                                    "q_txt": "The following figures represent several levers used in daily life: (1) Pliers, (2) Tweezers, (3) Hoe, (4) Wheelbarrow. Classify these levers (with explanation) into: (1) Levers that save effort. (2) Levers that do not save effort.",
+                                    "a_txt": "(1) Levers number (1) and (4) save effort. Because the effort arm in it is longer than the load arm (its mechanical advantage is greater than 1). (2) Levers number (2) and (3) do not save effort. Because the effort arm in it is shorter than the load arm (its mechanical advantage is less than 1).",
+                                    "mcq_choices": null
+                                },
+                                {
+                                    "ex_title": "Study the following figures, then answer",
+                                    "type": "text",
+                                    "q_txt": "The tool shown in the opposite figure was used to remove a nail fixed to a wooden board: (1) What is the name of this tool? And to which type of simple machines does it belong? (2) Does this tool save effort? Explain. (The figure shows a claw hammer pulling a nail).",
+                                    "a_txt": "(1) The claw hammer / Levers. (2) Yes / Because the effort arm in it is longer than the load arm (its mechanical advantage is greater than 1).",
+                                    "mcq_choices": null
+                                }
+                            ]
+                        }
+                    ]
+                }
+            ]
+        }
+    ]
+}

@@ -1,0 +1,632 @@
+{
+    "units": [
+        {
+            "unit_num": 4,
+            "unit_name": "Physical Changes in the Atmosphere",
+            "lessons": [
+                {
+                    "lesson_num": 2,
+                    "lesson_name": "Winds and Weather Forecasts",
+                    "pages": [
+                        {
+                            "page": 252,
+                            "explanation": [],
+                            "questions": [
+                                {
+                                    "ex_title": "Write the scientific term of each of the following statements",
+                                    "type": "text",
+                                    "q_txt": "It is the process of predicting the future weather conditions for a certain location.",
+                                    "a_txt": "Weather forecasting.",
+                                    "mcq_choices": null
+                                },
+                                {
+                                    "ex_title": "Write the scientific term of each of the following statements",
+                                    "type": "text",
+                                    "q_txt": "Weather station shelter.",
+                                    "a_txt": "Stevenson screen.",
+                                    "mcq_choices": null
+                                },
+                                {
+                                    "ex_title": "Write the scientific term of each of the following statements",
+                                    "type": "text",
+                                    "q_txt": "The technology used in oceans to collect weather data.",
+                                    "a_txt": "Weather buoys.",
+                                    "mcq_choices": null
+                                },
+                                {
+                                    "ex_title": "Write the scientific term of each of the following statements",
+                                    "type": "text",
+                                    "q_txt": "The technology for collecting weather data that is launched into the air carried by a balloon.",
+                                    "a_txt": "Radiosonde (radio probe).",
+                                    "mcq_choices": null
+                                },
+                                {
+                                    "ex_title": "Write the scientific term of each of the following statements",
+                                    "type": "text",
+                                    "q_txt": "Stations for collecting and recording weather data.",
+                                    "a_txt": "Weather stations.",
+                                    "mcq_choices": null
+                                },
+                                {
+                                    "ex_title": "Write the scientific term of each of the following statements",
+                                    "type": "text",
+                                    "q_txt": "A technique that orbit the Earth to collect weather data.",
+                                    "a_txt": "Satellites.",
+                                    "mcq_choices": null
+                                },
+                                {
+                                    "ex_title": "Write the scientific term of each of the following statements",
+                                    "type": "text",
+                                    "q_txt": "Storms are loaded with sand and dust blow over Egypt in the spring season.",
+                                    "a_txt": "Khamaseen winds.",
+                                    "mcq_choices": null
+                                },
+                                {
+                                    "ex_title": "Complete the following sentences",
+                                    "type": "complete",
+                                    "q_txt": "Weather forecasting is achieved by collecting, recording, and analyzing data related to temperature and _____ speed and the _____ tracks.",
+                                    "a_txt": [
+                                        "winds / storms",
+                                        "storm"
+                                    ],
+                                    "mcq_choices": null
+                                },
+                                {
+                                    "ex_title": "Complete the following sentences",
+                                    "type": "complete",
+                                    "q_txt": "Weather _____ is used in oceans and balloons carrying _____ in the air, as modern techniques for collecting data about the weather.",
+                                    "a_txt": [
+                                        "buoys",
+                                        "radiosonde"
+                                    ],
+                                    "mcq_choices": null
+                                },
+                                {
+                                    "ex_title": "Complete the following sentences",
+                                    "type": "complete",
+                                    "q_txt": "The radiosonde is launched twice a day, once at _____ and once at _____.",
+                                    "a_txt": [
+                                        "noon",
+                                        "midnight"
+                                    ],
+                                    "mcq_choices": null
+                                },
+                                {
+                                    "ex_title": "Complete the following sentences",
+                                    "type": "complete",
+                                    "q_txt": "The _____ sensors transmit weather data to ground stations via _____ waves.",
+                                    "a_txt": [
+                                        "radiosonde",
+                                        "radio"
+                                    ],
+                                    "mcq_choices": null
+                                },
+                                {
+                                    "ex_title": "Correct the underlined parts",
+                                    "type": "correct_underlined",
+                                    "q_txt": "The sensors in the radiosonde used in the oceans send the data to observation centers.",
+                                    "a_txt": {
+                                        "mistake": "radiosonde",
+                                        "correction": "Weather buoys"
+                                    },
+                                    "mcq_choices": null
+                                },
+                                {
+                                    "ex_title": "Correct the underlined parts",
+                                    "type": "correct_underlined",
+                                    "q_txt": "The structure of the Stevenson screen is painted green.",
+                                    "a_txt": {
+                                        "mistake": "green",
+                                        "correction": "white"
+                                    },
+                                    "mcq_choices": null
+                                },
+                                {
+                                    "ex_title": "Correct the underlined parts",
+                                    "type": "correct_underlined",
+                                    "q_txt": "The radiosonde is known as the electronic probe.",
+                                    "a_txt": {
+                                        "mistake": "electronic",
+                                        "correction": "radio"
+                                    },
+                                    "mcq_choices": null
+                                },
+                                {
+                                    "ex_title": "Correct the underlined parts",
+                                    "type": "correct_underlined",
+                                    "q_txt": "Balloons carrying the radiosonde are launched once every day.",
+                                    "a_txt": {
+                                        "mistake": "once",
+                                        "correction": "twice"
+                                    },
+                                    "mcq_choices": null
+                                },
+                                {
+                                    "ex_title": "Correct the underlined parts",
+                                    "type": "correct_underlined",
+                                    "q_txt": "The balloon carrying the radiosonde bursts due to decreasing of humidity.",
+                                    "a_txt": {
+                                        "mistake": "humidity",
+                                        "correction": "atmospheric pressure"
+                                    },
+                                    "mcq_choices": null
+                                },
+                                {
+                                    "ex_title": "Correct the underlined parts",
+                                    "type": "correct_underlined",
+                                    "q_txt": "Weather forecasting is absolute facts.",
+                                    "a_txt": {
+                                        "mistake": "absolute facts",
+                                        "correction": "probabilistic predictions"
+                                    },
+                                    "mcq_choices": null
+                                },
+                                {
+                                    "ex_title": "Correct the underlined parts",
+                                    "type": "correct_underlined",
+                                    "q_txt": "Khamaseen winds blow in the autumn season.",
+                                    "a_txt": {
+                                        "mistake": "autumn",
+                                        "correction": "spring"
+                                    },
+                                    "mcq_choices": null
+                                },
+                                {
+                                    "ex_title": "Mark (T) or (X) for each statement, with correction",
+                                    "type": "true_false_with_correction",
+                                    "q_txt": "Satellites are used in weather forecasts.",
+                                    "a_txt": [
+                                        "True",
+                                        null
+                                    ],
+                                    "mcq_choices": null
+                                },
+                                {
+                                    "ex_title": "Mark (T) or (X) for each statement, with correction",
+                                    "type": "true_false_with_correction",
+                                    "q_txt": "Storm tracks can be predicted by satellites.",
+                                    "a_txt": [
+                                        "True",
+                                        null
+                                    ],
+                                    "mcq_choices": null
+                                },
+                                {
+                                    "ex_title": "Mark (T) or (X) for each statement, with correction",
+                                    "type": "true_false_with_correction",
+                                    "q_txt": "The balloon carrying the radiosonde is filled with oxygen gas.",
+                                    "a_txt": [
+                                        "False",
+                                        {
+                                            "mistake": "oxygen gas",
+                                            "correction": "hydrogen (or helium)"
+                                        }
+                                    ],
+                                    "mcq_choices": null
+                                },
+                                {
+                                    "ex_title": "Mark (T) or (X) for each statement, with correction",
+                                    "type": "true_false_with_correction",
+                                    "q_txt": "The size of the balloon carrying the radiosonde decreases as it rises upward.",
+                                    "a_txt": [
+                                        "False",
+                                        {
+                                            "mistake": "decreases",
+                                            "correction": "increases"
+                                        }
+                                    ],
+                                    "mcq_choices": null
+                                },
+                                {
+                                    "ex_title": "Mark (T) or (X) for each statement, with correction",
+                                    "type": "true_false_with_correction",
+                                    "q_txt": "The radiosonde falls by a parachute after the balloon carrying it bursts.",
+                                    "a_txt": [
+                                        "True",
+                                        null
+                                    ],
+                                    "mcq_choices": null
+                                },
+                                {
+                                    "ex_title": "Mark (T) or (X) for each statement, with correction",
+                                    "type": "true_false_with_correction",
+                                    "q_txt": "The summer season in Egypt has weather disturbance that lead to the formation of sandstorms.",
+                                    "a_txt": [
+                                        "False",
+                                        {
+                                            "mistake": "The summer season",
+                                            "correction": "The spring season"
+                                        }
+                                    ],
+                                    "mcq_choices": null
+                                }
+                            ]
+                        },
+                        {
+                            "page": 253,
+                            "explanation": [],
+                            "questions": [
+                                {
+                                    "ex_title": "Choose the correct answer",
+                                    "type": "mcq",
+                                    "q_txt": "Among the weather forecasting on the ground techniques are _____",
+                                    "a_txt": 3,
+                                    "mcq_choices": [
+                                        "weather buoys and satellites.",
+                                        "Stevenson screen and radiosonde.",
+                                        "weather buoys and radiosonde.",
+                                        "Stevenson screen and weather stations."
+                                    ]
+                                },
+                                {
+                                    "ex_title": "Choose the correct answer",
+                                    "type": "mcq",
+                                    "q_txt": "The Stevenson screen is _____",
+                                    "a_txt": 0,
+                                    "mcq_choices": [
+                                        "painted white.",
+                                        "placed among the trees.",
+                                        "made of metal.",
+                                        "empty from the inside."
+                                    ]
+                                },
+                                {
+                                    "ex_title": "Choose the correct answer",
+                                    "type": "mcq",
+                                    "q_txt": "The radiosonde carries instruments to measure all of the following, except _____",
+                                    "a_txt": 1,
+                                    "mcq_choices": [
+                                        "temperature.",
+                                        "hurricanes direction.",
+                                        "wind speed.",
+                                        "atmospheric pressure."
+                                    ]
+                                },
+                                {
+                                    "ex_title": "Choose the correct answer",
+                                    "type": "mcq",
+                                    "q_txt": "Which of the following describes the radiosonde?",
+                                    "a_txt": 2,
+                                    "mcq_choices": [
+                                        "Reaches an altitude of 50 km",
+                                        "Rises upward by an air buoy.",
+                                        "Falls by parachute.",
+                                        "Is reused several times."
+                                    ]
+                                },
+                                {
+                                    "ex_title": "Choose the correct answer",
+                                    "type": "mcq",
+                                    "q_txt": "The data received by the radiosonde sensors is transmitted via _____",
+                                    "a_txt": 0,
+                                    "mcq_choices": [
+                                        "radio waves to ground stations.",
+                                        "visible light to weather stations.",
+                                        "radio waves to Stevenson screen.",
+                                        "visible light to Stevenson screen."
+                                    ]
+                                },
+                                {
+                                    "ex_title": "Choose the correct answer",
+                                    "type": "mcq",
+                                    "q_txt": "All of the following are fields of benefit from weather forecasts, except _____",
+                                    "a_txt": 1,
+                                    "mcq_choices": [
+                                        "aviation safety.",
+                                        "prevention of thunderstorms.",
+                                        "supporting economic activities.",
+                                        "protection of property and lives."
+                                    ]
+                                },
+                                {
+                                    "ex_title": "Give reasons for the following",
+                                    "type": "text",
+                                    "q_txt": "Painting the wood of the Stevenson screen white.",
+                                    "a_txt": "To reflect the sunlight.",
+                                    "mcq_choices": null
+                                },
+                                {
+                                    "ex_title": "Give reasons for the following",
+                                    "type": "text",
+                                    "q_txt": "The presence of slanted openings in the weather station shelter.",
+                                    "a_txt": "To allow the entry of air.",
+                                    "mcq_choices": null
+                                },
+                                {
+                                    "ex_title": "Give reasons for the following",
+                                    "type": "text",
+                                    "q_txt": "Placing Stevenson screen above the ground level.",
+                                    "a_txt": "To protect the measuring instruments inside it from the heat radiated by the Earth's surface.",
+                                    "mcq_choices": null
+                                },
+                                {
+                                    "ex_title": "Give reasons for the following",
+                                    "type": "text",
+                                    "q_txt": "Placing the Stevenson screen away from trees and buildings.",
+                                    "a_txt": "To avoid any obstacles that may affect the measurements.",
+                                    "mcq_choices": null
+                                },
+                                {
+                                    "ex_title": "Give reasons for the following",
+                                    "type": "text",
+                                    "q_txt": "The radiosonde balloon is filled with helium gas or hydrogen gas.",
+                                    "a_txt": "Because they are among the lightest gases due to their low densities.",
+                                    "mcq_choices": null
+                                },
+                                {
+                                    "ex_title": "Give reasons for the following",
+                                    "type": "text",
+                                    "q_txt": "The radiosonde is known as the radio probe.",
+                                    "a_txt": "Because it sends the data received by the radiosonde sensors via radio waves to ground stations.",
+                                    "mcq_choices": null
+                                },
+                                {
+                                    "ex_title": "Give reasons for the following",
+                                    "type": "text",
+                                    "q_txt": "The radiosonde balloon bursts after it is launched into the air.",
+                                    "a_txt": "As a result of its continuous expansion due to the decrease in atmospheric pressure as altitude increases.",
+                                    "mcq_choices": null
+                                },
+                                {
+                                    "ex_title": "Give reasons for the following",
+                                    "type": "text",
+                                    "q_txt": "Weather forecasting is not absolute facts, but rather probabilistic predictions.",
+                                    "a_txt": "Because the atmosphere is affected by a large number of variables.",
+                                    "mcq_choices": null
+                                },
+                                {
+                                    "ex_title": "Give reasons for the following",
+                                    "type": "text",
+                                    "q_txt": "Khamaseen winds negatively affect the health of the respiratory system.",
+                                    "a_txt": "Because these winds are loaded with sand and dust.",
+                                    "mcq_choices": null
+                                },
+                                {
+                                    "ex_title": "Mention the importance of each of the following",
+                                    "type": "text",
+                                    "q_txt": "Stevenson screen (weather station shelter).",
+                                    "a_txt": "Measuring temperature, atmospheric pressure and humidity in the place where it is placed.",
+                                    "mcq_choices": null
+                                },
+                                {
+                                    "ex_title": "Mention the importance of each of the following",
+                                    "type": "text",
+                                    "q_txt": "Weather buoys.",
+                                    "a_txt": "Collecting the data received in the oceans from the sensors to organize and process it, then sending it via satellites to observation centers around the world.",
+                                    "mcq_choices": null
+                                },
+                                {
+                                    "ex_title": "Mention the importance of each of the following",
+                                    "type": "text",
+                                    "q_txt": "Helium gas (or hydrogen gas) for the radiosonde balloon.",
+                                    "a_txt": "Carrying radiosonde balloons upward.",
+                                    "mcq_choices": null
+                                }
+                            ]
+                        },
+                        {
+                            "page": 254,
+                            "explanation": [],
+                            "questions": [
+                                {
+                                    "ex_title": "Mention the importance of each of the following",
+                                    "type": "text",
+                                    "q_txt": "Radio waves for the radiosonde.",
+                                    "a_txt": "Sending the data received by the radiosonde sensors to ground stations.",
+                                    "mcq_choices": null
+                                },
+                                {
+                                    "ex_title": "Mention the importance of each of the following",
+                                    "type": "text",
+                                    "q_txt": "The parachute for the radiosonde.",
+                                    "a_txt": "Landing of the radiosonde device to Earth after the balloon bursts.",
+                                    "mcq_choices": null
+                                },
+                                {
+                                    "ex_title": "Mention the importance of each of the following",
+                                    "type": "text",
+                                    "q_txt": "Weather forecasts in the protection of lives and property.",
+                                    "a_txt": "Taking appropriate preventive measures when there is a probability of the occurrence of hot or cold waves, or the occurrence of floods or thunderstorms.",
+                                    "mcq_choices": null
+                                },
+                                {
+                                    "ex_title": "Mention the importance of each of the following",
+                                    "type": "text",
+                                    "q_txt": "Weather forecasts in supporting economic activities.",
+                                    "a_txt": "Helping farmers determine the timing of planting, irrigation, harvesting crops and pest control, which increases agricultural productivity and reduces losses.",
+                                    "mcq_choices": null
+                                },
+                                {
+                                    "ex_title": "Mention the importance of each of the following",
+                                    "type": "text",
+                                    "q_txt": "Weather forecasts in aviation safety.",
+                                    "a_txt": "Avoiding weather conditions that may threaten air navigation traffic.",
+                                    "mcq_choices": null
+                                },
+                                {
+                                    "ex_title": "Study the following figures, then answer the questions",
+                                    "type": "text",
+                                    "q_txt": "The opposite figure shows a single balloon capable of flying upward, at sea level and at a mountain peak: How do you explain the difference in the size of the balloon in the two cases? (A diagram shows a red balloon at the base of a mountain and a larger red balloon at the peak).",
+                                    "a_txt": "Due to the difference in atmospheric pressure, the atmospheric pressure at the mountain peak is lower than the atmospheric pressure at the mountain base.",
+                                    "mcq_choices": null
+                                },
+                                {
+                                    "ex_title": "Study the following figures, then answer the questions",
+                                    "type": "text",
+                                    "q_txt": "The opposite figure shows a single balloon capable of flying upward, at sea level and at a mountain peak: What are the two gases that can be used to fill the balloon to make it capable of flying upward? With explanation.",
+                                    "a_txt": "Hydrogen and helium gases, because they are among the lightest gases due to their low densities.",
+                                    "mcq_choices": null
+                                },
+                                {
+                                    "ex_title": "Study the following figures, then answer the questions",
+                                    "type": "text",
+                                    "q_txt": "The opposite figure shows one of the techniques used in weather forecasting: What is the name of this technique? (A diagram shows a blue wooden box with slanted openings on a stand).",
+                                    "a_txt": "Stevenson screen (weather station shelter).",
+                                    "mcq_choices": null
+                                },
+                                {
+                                    "ex_title": "Study the following figures, then answer the questions",
+                                    "type": "text",
+                                    "q_txt": "The opposite figure shows one of the techniques used in weather forecasting: What is the material from which this box is made, and what colour is used to paint it? With explanation.",
+                                    "a_txt": "Wood painted white, to reflect the sunlight.",
+                                    "mcq_choices": null
+                                },
+                                {
+                                    "ex_title": "Study the following figures, then answer the questions",
+                                    "type": "text",
+                                    "q_txt": "The opposite figure shows one of the techniques used in weather forecasting: What is the value of the height X? And why it is placed at this height from ground level.",
+                                    "a_txt": "120 cm, to protect the measuring instruments inside it from the heat radiated by the Earth's surface.",
+                                    "mcq_choices": null
+                                },
+                                {
+                                    "ex_title": "Study the following figures, then answer the questions",
+                                    "type": "text",
+                                    "q_txt": "The opposite figure shows one of the techniques used in weather forecasting: What are the devices that placed inside the box?",
+                                    "a_txt": "Devices that measure temperature, atmospheric pressure and humidity.",
+                                    "mcq_choices": null
+                                },
+                                {
+                                    "ex_title": "Study the following figures, then answer the questions",
+                                    "type": "text",
+                                    "q_txt": "The opposite figure shows one of the weather forecasting techniques (3) that is carried by the part (1) until it bursts at a certain altitude from the Earth's surface and lands by the tool (2): Replace the data (1), (2), (3) with what is appropriate. (A diagram shows a balloon (1) connected to a parachute (2) which is connected to a device box (3)).",
+                                    "a_txt": "(1): Balloon. (2): Parachute. (3): Device of radiosonde.",
+                                    "mcq_choices": null
+                                },
+                                {
+                                    "ex_title": "Study the following figures, then answer the questions",
+                                    "type": "text",
+                                    "q_txt": "The opposite figure shows one of the weather forecasting techniques (3) that is carried by the part (1) until it bursts at a certain altitude from the Earth's surface and lands by the tool (2): Why is part (1) filled with helium gas?",
+                                    "a_txt": "Because it is a light gas due to its low density.",
+                                    "mcq_choices": null
+                                },
+                                {
+                                    "ex_title": "Study the following figures, then answer the questions",
+                                    "type": "text",
+                                    "q_txt": "The opposite figure shows one of the weather forecasting techniques (3) that is carried by the part (1) until it bursts at a certain altitude from the Earth's surface and lands by the tool (2): How do the sensors of part (3) send the data to the ground stations?",
+                                    "a_txt": "Sends it via radio waves.",
+                                    "mcq_choices": null
+                                }
+                            ]
+                        },
+                        {
+                            "page": 255,
+                            "explanation": [],
+                            "questions": [
+                                {
+                                    "ex_title": "Variant questions",
+                                    "type": "text",
+                                    "q_txt": "What is meant by weather forecasting?",
+                                    "a_txt": "It is the process of predicting the future weather conditions for a certain location.",
+                                    "mcq_choices": null
+                                },
+                                {
+                                    "ex_title": "Variant questions",
+                                    "type": "text",
+                                    "q_txt": "Compare between weather buoys and radiosonde \u00abIn terms of: Their location - Weather data sent\u00bb.",
+                                    "a_txt": "Weather buoys: Location: They float on the surface of oceans water. Weather data sent: The data received from the sensors is sent, after being organized and processed, to observation centers around the world via satellites. Radiosonde: Location: It is released into the air carried by a balloon filled with hydrogen or helium gas. Weather data sent: The data received from the sensors is sent via radio waves to ground stations.",
+                                    "mcq_choices": null
+                                },
+                                {
+                                    "ex_title": "Variant questions",
+                                    "type": "text",
+                                    "q_txt": "Explain the cause and effect in the relationship between the size of the radiosonde balloon and atmospheric pressure.",
+                                    "a_txt": "Cause: atmospheric pressure decreases with altitude above sea level. Effect: the size of the radiosonde balloon increases until it bursts.",
+                                    "mcq_choices": null
+                                },
+                                {
+                                    "ex_title": "Variant questions",
+                                    "type": "text",
+                                    "q_txt": "Explain the cause and effect in the relationship between Khamaseen winds and respiratory system health.",
+                                    "a_txt": "Cause: the blowing of Khamaseen winds loaded with dust and sand in the spring season. Effect: negatively affects the health of the respiratory system.",
+                                    "mcq_choices": null
+                                },
+                                {
+                                    "ex_title": "Variant questions",
+                                    "type": "text",
+                                    "q_txt": "Mention the techniques used in collecting probabilistic weather data.",
+                                    "a_txt": "Stevenson screen (weather station shelter), Weather buoys, Radiosonde (radio probe), Satellites, Weather stations.",
+                                    "mcq_choices": null
+                                },
+                                {
+                                    "ex_title": "Variant questions",
+                                    "type": "text",
+                                    "q_txt": "What is the other name given to each of the following: (1) Weather station shelter. (2) Radiosonde.",
+                                    "a_txt": "(1) Stevenson screen. (2) Radio probe.",
+                                    "mcq_choices": null
+                                },
+                                {
+                                    "ex_title": "Variant questions",
+                                    "type": "text",
+                                    "q_txt": "The Stevenson screen is considered one of the weather forecasting techniques: (1) What is the height of the shelter box? And what is the height of the box above the ground level?",
+                                    "a_txt": "Height of the shelter box: 65 cm. Height of the box above the ground level: 120 cm.",
+                                    "mcq_choices": null
+                                },
+                                {
+                                    "ex_title": "Variant questions",
+                                    "type": "text",
+                                    "q_txt": "The Stevenson screen is considered one of the weather forecasting techniques: (2) Mention one similarity and one difference between the Stevenson screen and the radiosonde.",
+                                    "a_txt": "Similarity: both measure temperature, atmospheric pressure and humidity. Difference: the Stevenson screen is fixed near the ground level, while the radiosonde is launched into the air.",
+                                    "mcq_choices": null
+                                },
+                                {
+                                    "ex_title": "Variant questions",
+                                    "type": "text",
+                                    "q_txt": "Give a brief summary about each of the following: (1) Weather buoys.",
+                                    "a_txt": "They are used in the oceans, collecting the data received from the sensors to organize and process it, then send it via satellites to observation centers around the world.",
+                                    "mcq_choices": null
+                                },
+                                {
+                                    "ex_title": "Variant questions",
+                                    "type": "text",
+                                    "q_txt": "Give a brief summary about each of the following: (2) Weather stations.",
+                                    "a_txt": "A technique used for weather forecasting, distributed in different regions in all countries of the world.",
+                                    "mcq_choices": null
+                                },
+                                {
+                                    "ex_title": "Variant questions",
+                                    "type": "text",
+                                    "q_txt": "The radiosonde is one of the techniques for collecting weather forecasting data: (1) How does the radiosonde ascend? And how does it falls?",
+                                    "a_txt": "The radiosonde ascends by balloons filled with hydrogen or helium gas and descends after the balloon bursts by parachute.",
+                                    "mcq_choices": null
+                                },
+                                {
+                                    "ex_title": "Variant questions",
+                                    "type": "text",
+                                    "q_txt": "The radiosonde is one of the techniques for collecting weather forecasting data: (2) When does the radiosonde launch during the day?",
+                                    "a_txt": "Twice, once at noon and the other at midnight.",
+                                    "mcq_choices": null
+                                },
+                                {
+                                    "ex_title": "Variant questions",
+                                    "type": "text",
+                                    "q_txt": "The radiosonde is one of the techniques for collecting weather forecasting data: (3) Why does the radiosonde balloon burst at an altitude of about 30 km?",
+                                    "a_txt": "Because of its continuous expansion due to the decrease in atmospheric pressure with altitude above sea level.",
+                                    "mcq_choices": null
+                                },
+                                {
+                                    "ex_title": "Variant questions",
+                                    "type": "text",
+                                    "q_txt": "Explain the importance of following weather forecasts during weather instability. \u00abMention only two points\u00bb.",
+                                    "a_txt": "Wearing suitable clothing during weather fluctuations. Avoiding crowded places. Making the right decision about travel by land or sea.",
+                                    "mcq_choices": null
+                                },
+                                {
+                                    "ex_title": "Higher-order Questions: Choose the correct answer",
+                                    "type": "mcq",
+                                    "q_txt": "From the opposite diagram: Which of the following arrows shows the Coriolis Effect on wind direction? (A diagram shows Earth with latitude lines and arrows A, B, C, D representing wind directions).",
+                                    "a_txt": 1,
+                                    "mcq_choices": [
+                                        "(A).",
+                                        "(B).",
+                                        "(C).",
+                                        "(D)."
+                                    ]
+                                }
+                            ]
+                        }
+                    ]
+                }
+            ]
+        }
+    ]
+}

@@ -1,0 +1,618 @@
+{
+    "units": [
+        {
+            "unit_num": 3,
+            "unit_name": "Reproduction in Living Organisms",
+            "lessons": [
+                {
+                    "lesson_num": 1,
+                    "lesson_name": "Cell Division",
+                    "pages": [
+                        {
+                            "page": 161,
+                            "questions": [
+                                {
+                                    "ex_title": "Mention the number which indicate each of the following",
+                                    "type": "text",
+                                    "q_txt": "Number of daughter cells resulting from mitosis of a liver cell.",
+                                    "a_txt": "2 cells.",
+                                    "mcq_choices": null
+                                },
+                                {
+                                    "ex_title": "Mention the number which indicate each of the following",
+                                    "type": "text",
+                                    "q_txt": "Number of chromosomes in a cell resulting from the division of a spinach leaf cell containing 12 chromosomes.",
+                                    "a_txt": "12 chromosomes.",
+                                    "mcq_choices": null
+                                },
+                                {
+                                    "ex_title": "Mention the number which indicate each of the following",
+                                    "type": "text",
+                                    "q_txt": "Number of chromosomes in a sperm of a kangaroo whose testes cell contains 16 chromosomes.",
+                                    "a_txt": "8 chromosomes.",
+                                    "mcq_choices": null
+                                }
+                            ]
+                        },
+                        {
+                            "page": 162,
+                            "questions": [
+                                {
+                                    "ex_title": "Mention the number which indicate each of the following",
+                                    "type": "text",
+                                    "q_txt": "Number of daughter cells resulting from meiosis of a gonad cell.",
+                                    "a_txt": "4 cells.",
+                                    "mcq_choices": null
+                                },
+                                {
+                                    "ex_title": "Mention the number which indicate each of the following",
+                                    "type": "text",
+                                    "q_txt": "Number of daughter cells resulting from meiosis (I) stage of a gonad cell.",
+                                    "a_txt": "2 cells.",
+                                    "mcq_choices": null
+                                },
+                                {
+                                    "ex_title": "Mention the number which indicate each of the following",
+                                    "type": "text",
+                                    "q_txt": "Number of daughter cells resulting from the division of a cell in the stem of a plant after 4 successive mitotic divisions.",
+                                    "a_txt": "16 cells.",
+                                    "mcq_choices": null
+                                },
+                                {
+                                    "ex_title": "Mention one example for each of the following",
+                                    "type": "text",
+                                    "q_txt": "Somatic cells in a plant.",
+                                    "a_txt": "Parenchymal cell.",
+                                    "mcq_choices": null
+                                },
+                                {
+                                    "ex_title": "Mention one example for each of the following",
+                                    "type": "text",
+                                    "q_txt": "Somatic cells in a human.",
+                                    "a_txt": "Intestinal cell.",
+                                    "mcq_choices": null
+                                },
+                                {
+                                    "ex_title": "Mention one example for each of the following",
+                                    "type": "text",
+                                    "q_txt": "Male gamete in a plant.",
+                                    "a_txt": "Pollen grain.",
+                                    "mcq_choices": null
+                                },
+                                {
+                                    "ex_title": "Mention one example for each of the following",
+                                    "type": "text",
+                                    "q_txt": "Female gamete in a plant.",
+                                    "a_txt": "Ovule.",
+                                    "mcq_choices": null
+                                },
+                                {
+                                    "ex_title": "Mention one example for each of the following",
+                                    "type": "text",
+                                    "q_txt": "Male gamete in a human.",
+                                    "a_txt": "Sperm.",
+                                    "mcq_choices": null
+                                },
+                                {
+                                    "ex_title": "Mention one example for each of the following",
+                                    "type": "text",
+                                    "q_txt": "Female gamete in a human.",
+                                    "a_txt": "Ovum.",
+                                    "mcq_choices": null
+                                },
+                                {
+                                    "ex_title": "Mention one example for each of the following",
+                                    "type": "text",
+                                    "q_txt": "Asexual reproduction in a plant.",
+                                    "a_txt": "Vegetative reproduction.",
+                                    "mcq_choices": null
+                                },
+                                {
+                                    "ex_title": "Identify the odd item in each list, then mention the connection between the others",
+                                    "type": "text",
+                                    "q_txt": "Liver cell / Intestinal cell / Muscle cell / Pollen grain",
+                                    "a_txt": "Odd item: Pollen grain. Connection: Somatic cells.",
+                                    "mcq_choices": null
+                                },
+                                {
+                                    "ex_title": "Identify the odd item in each list, then mention the connection between the others",
+                                    "type": "text",
+                                    "q_txt": "Testis / Ovum / Anther / Ovary",
+                                    "a_txt": "Odd item: Ovum. Connection: Gonads cells.",
+                                    "mcq_choices": null
+                                },
+                                {
+                                    "ex_title": "Identify the odd item in each list, then mention the connection between the others",
+                                    "type": "text",
+                                    "q_txt": "Gonad cells / Gametes cells / Intestinal cells / Cardiac muscle cells",
+                                    "a_txt": "Odd item: Gametes cells. Connection: Cells containing the full number of chromosomes 2n.",
+                                    "mcq_choices": null
+                                },
+                                {
+                                    "ex_title": "Identify the odd item in each list, then mention the connection between the others",
+                                    "type": "text",
+                                    "q_txt": "Production of ova / Repairing the damaged tissues / Production of cells identical to the parental cell / Body growth",
+                                    "a_txt": "Odd item: Production of ova. Connection: The purpose of mitosis.",
+                                    "mcq_choices": null
+                                },
+                                {
+                                    "ex_title": "What is meant by each of the following",
+                                    "type": "text",
+                                    "q_txt": "Reproduction.",
+                                    "a_txt": "It is a vital process in which the living organism produces new individuals of the same species, to ensuring its continuity and protection from extinction.",
+                                    "mcq_choices": null
+                                },
+                                {
+                                    "ex_title": "What is meant by each of the following",
+                                    "type": "text",
+                                    "q_txt": "The cell.",
+                                    "a_txt": "It is the unit of structure and function in living organisms.",
+                                    "mcq_choices": null
+                                },
+                                {
+                                    "ex_title": "What is meant by each of the following",
+                                    "type": "text",
+                                    "q_txt": "Somatic cells.",
+                                    "a_txt": "They are all cells of the living organism except reproductive cells.",
+                                    "mcq_choices": null
+                                },
+                                {
+                                    "ex_title": "What is meant by each of the following",
+                                    "type": "text",
+                                    "q_txt": "Reproductive cells (gametes).",
+                                    "a_txt": "The specialized cells responsible for sexual reproduction in living organisms.",
+                                    "mcq_choices": null
+                                },
+                                {
+                                    "ex_title": "What is meant by each of the following",
+                                    "type": "text",
+                                    "q_txt": "Cancerous tumor.",
+                                    "a_txt": "Activation of a somatic cell and its mitotic division several times continuously and abnormally.",
+                                    "mcq_choices": null
+                                },
+                                {
+                                    "ex_title": "What is meant by each of the following",
+                                    "type": "text",
+                                    "q_txt": "Asexual reproduction.",
+                                    "a_txt": "A vital process in which the parental individual produces new individuals that are completely identical to it in its genetic traits.",
+                                    "mcq_choices": null
+                                },
+                                {
+                                    "ex_title": "What is meant by each of the following",
+                                    "type": "text",
+                                    "q_txt": "Sexual reproduction.",
+                                    "a_txt": "A vital process in which two parental individuals of the same species, one male and the other female, participate to produce new individuals that carry a combination of genetic traits between the both parents.",
+                                    "mcq_choices": null
+                                },
+                                {
+                                    "ex_title": "What is meant by each of the following",
+                                    "type": "text",
+                                    "q_txt": "Fertilization.",
+                                    "a_txt": "Fusion of the nucleus of a male gamete (n) with the nucleus of a female gamete (n) to form a zygote (2n).",
+                                    "mcq_choices": null
+                                },
+                                {
+                                    "ex_title": "What is meant by each of the following",
+                                    "type": "text",
+                                    "q_txt": "Zygote.",
+                                    "a_txt": "The cell resulting from the process of fertilization, which contains the complete number of chromosomes of the somatic cell of the parental individual.",
+                                    "mcq_choices": null
+                                },
+                                {
+                                    "ex_title": "Mention the importance of each of the following",
+                                    "type": "text",
+                                    "q_txt": "Gametes cells.",
+                                    "a_txt": "They are responsible for sexual reproduction in living organisms.",
+                                    "mcq_choices": null
+                                },
+                                {
+                                    "ex_title": "Mention the importance of each of the following",
+                                    "type": "text",
+                                    "q_txt": "Mitosis in human.",
+                                    "a_txt": "Growth of the body of living organism. Replacing dead and damaged tissues, such as wound healing, repairing blood vessels, muscles and bone fractures.",
+                                    "mcq_choices": null
+                                },
+                                {
+                                    "ex_title": "Mention the importance of each of the following",
+                                    "type": "text",
+                                    "q_txt": "Meiosis in human.",
+                                    "a_txt": "Production of gametes in the gonads. Reduction of chromosomes number to half in the gamete, to ensure restoring the original number of the chromosomes of the species after mating, so the chromosome count remains constant across the successive generations.",
+                                    "mcq_choices": null
+                                },
+                                {
+                                    "ex_title": "Mention the importance of each of the following",
+                                    "type": "text",
+                                    "q_txt": "Crossing-over phenomenon.",
+                                    "a_txt": "Variation of genetic traits in individuals of the same species.",
+                                    "mcq_choices": null
+                                },
+                                {
+                                    "ex_title": "Mention the importance of each of the following",
+                                    "type": "text",
+                                    "q_txt": "Fertilization in sexual reproduction.",
+                                    "a_txt": "Formation of zygote that contains the full number of chromosomes (2n).",
+                                    "mcq_choices": null
+                                },
+                                {
+                                    "ex_title": "Give reasons for the following",
+                                    "type": "text",
+                                    "q_txt": "The somatic cell is symbolized by the symbol (2n).",
+                                    "a_txt": "Because it contains the full number of chromosomes in the form of homologous pairs.",
+                                    "mcq_choices": null
+                                },
+                                {
+                                    "ex_title": "Give reasons for the following",
+                                    "type": "text",
+                                    "q_txt": "The gamete is symbolized by the symbol (n).",
+                                    "a_txt": "Because it contains half the number of chromosomes found in somatic cells.",
+                                    "mcq_choices": null
+                                },
+                                {
+                                    "ex_title": "Give reasons for the following",
+                                    "type": "text",
+                                    "q_txt": "The potato plant and the chimpanzee are not genetically similar although they have the same chromosome count.",
+                                    "a_txt": "Because they carry different genetic information.",
+                                    "mcq_choices": null
+                                },
+                                {
+                                    "ex_title": "Give reasons for the following",
+                                    "type": "text",
+                                    "q_txt": "Mitosis is called equational division.",
+                                    "a_txt": "Because it involves the distribution of a complete and identical copy of the genetic information of the parent cell to the two new daughter cells.",
+                                    "mcq_choices": null
+                                }
+                            ]
+                        },
+                        {
+                            "page": 163,
+                            "questions": [
+                                {
+                                    "ex_title": "Give reasons for the following",
+                                    "type": "text",
+                                    "q_txt": "Meiosis is called reductional division.",
+                                    "a_txt": "Because in it, a single cell divides into four daughter cells, each containing half the number of chromosomes (n) present in the parent cell (2n).",
+                                    "mcq_choices": null
+                                },
+                                {
+                                    "ex_title": "Give reasons for the following",
+                                    "type": "text",
+                                    "q_txt": "Meiosis produces genetically different cells.",
+                                    "a_txt": "Due to the occurrence of crossing-over phenomenon between homologous chromosomes during the first meiotic division.",
+                                    "mcq_choices": null
+                                },
+                                {
+                                    "ex_title": "Give reasons for the following",
+                                    "type": "text",
+                                    "q_txt": "The crossing-over phenomenon is an important factor in the diversity of genetic traits among individuals of the same species.",
+                                    "a_txt": "Because it involves genetic material exchange between non-sister chromatids of two homologous chromosomes, which are randomly distributed in the gametes responsible for sexual reproduction in living organisms.",
+                                    "mcq_choices": null
+                                },
+                                {
+                                    "ex_title": "Give reasons for the following",
+                                    "type": "text",
+                                    "q_txt": "Mitosis is important for the child's body, unlike meiosis.",
+                                    "a_txt": "Because mitotic division leads to the growth needed by the child's body and the replacing dead and damaged tissues, such as the wound healing, repairing blood vessels, muscles and bone fractures.",
+                                    "mcq_choices": null
+                                },
+                                {
+                                    "ex_title": "Give reasons for the following",
+                                    "type": "text",
+                                    "q_txt": "Vegetative reproduction in the potato plant is a form of asexual reproduction.",
+                                    "a_txt": "Because it occurs through a single parent, just one piece of a potato tuber containing a single bud can become a new plant completely identical to the parental individual.",
+                                    "mcq_choices": null
+                                },
+                                {
+                                    "ex_title": "Give reasons for the following",
+                                    "type": "text",
+                                    "q_txt": "Asexual reproduction maintains the genetic structure of the living organism.",
+                                    "a_txt": "Because asexual reproduction depends on the occurrence of mitosis, which ensures the formation of an exact copy of the parental individual.",
+                                    "mcq_choices": null
+                                },
+                                {
+                                    "ex_title": "Give reasons for the following",
+                                    "type": "text",
+                                    "q_txt": "Asexual reproduction depends on mitosis.",
+                                    "a_txt": "To ensure that the individuals produced by asexual reproduction obtain an exact copy of the parental individual.",
+                                    "mcq_choices": null
+                                },
+                                {
+                                    "ex_title": "Give reasons for the following",
+                                    "type": "text",
+                                    "q_txt": "The difference in genetic traits among the individuals of the same species in sexual reproduction.",
+                                    "a_txt": "Due to the occurrence of crossing-over phenomenon during the first meiotic division.",
+                                    "mcq_choices": null
+                                },
+                                {
+                                    "ex_title": "Give reasons for the following",
+                                    "type": "text",
+                                    "q_txt": "Sexual reproduction is the source of diversity among the species individuals.",
+                                    "a_txt": "Due to the occurrence of crossing-over phenomenon during the first meiotic division.",
+                                    "mcq_choices": null
+                                },
+                                {
+                                    "ex_title": "Give reasons for the following",
+                                    "type": "text",
+                                    "q_txt": "The distinctive features of each type of cell division enables it to perform a specific function.",
+                                    "a_txt": "Because mitosis achieves asexual reproduction and growth, while meiosis leads to production of gametes necessary for sexual reproduction.",
+                                    "mcq_choices": null
+                                },
+                                {
+                                    "ex_title": "What are the results of each of the following",
+                                    "type": "text",
+                                    "q_txt": "The division of a somatic cell in human by mitosis.",
+                                    "a_txt": "Two new cells (2n) are produced, identical to the parent cell.",
+                                    "mcq_choices": null
+                                },
+                                {
+                                    "ex_title": "What are the results of each of the following",
+                                    "type": "text",
+                                    "q_txt": "The division of an intestinal cell in human through three successive mitotic divisions.",
+                                    "a_txt": "8 new intestinal cells are produced, genetically identical to the original intestinal cell.",
+                                    "mcq_choices": null
+                                },
+                                {
+                                    "ex_title": "What are the results of each of the following",
+                                    "type": "text",
+                                    "q_txt": "The division of a gonad cell of a human male by meiosis.",
+                                    "a_txt": "4 cells (sperm) (n) are produced, each containing half the number of chromosomes of the parent cell.",
+                                    "mcq_choices": null
+                                },
+                                {
+                                    "ex_title": "What are the results of each of the following",
+                                    "type": "text",
+                                    "q_txt": "The exchange of twisted ends between non-sister chromatids of homologous chromosomes during meiosis (I) stage.",
+                                    "a_txt": "The occurrence of crossing-over phenomenon, which leads to the diversity of genetic traits within individuals of the same species.",
+                                    "mcq_choices": null
+                                },
+                                {
+                                    "ex_title": "What are the results of each of the following",
+                                    "type": "text",
+                                    "q_txt": "The occurrence of the crossing-over phenomenon during meiosis.",
+                                    "a_txt": "Diversity of genetic traits within individuals of the same species.",
+                                    "mcq_choices": null
+                                },
+                                {
+                                    "ex_title": "What are the results of each of the following",
+                                    "type": "text",
+                                    "q_txt": "Reduction of the chromosome count to half during meiosis.",
+                                    "a_txt": "Ensuring the maintenance of a constant chromosome number after mating for the same species across generations.",
+                                    "mcq_choices": null
+                                },
+                                {
+                                    "ex_title": "What are the results of each of the following",
+                                    "type": "text",
+                                    "q_txt": "The abnormal repeated mitotic divisions of a somatic cell.",
+                                    "a_txt": "A cancerous tumor forms.",
+                                    "mcq_choices": null
+                                },
+                                {
+                                    "ex_title": "What are the results of each of the following",
+                                    "type": "text",
+                                    "q_txt": "Placing a piece of potato tuber in suitable environmental conditions.",
+                                    "a_txt": "The buds germinate, forming a small stem that grows upward carrying the growing leaves, while at the same time other cells in the buds begin to form primary roots that extend into the soil.",
+                                    "mcq_choices": null
+                                },
+                                {
+                                    "ex_title": "What are the results of each of the following",
+                                    "type": "text",
+                                    "q_txt": "The fusion of the nucleus of a male human gamete with the nucleus of a female gamete.",
+                                    "a_txt": "The zygote (2n) is formed, which carries the full number of chromosomes.",
+                                    "mcq_choices": null
+                                },
+                                {
+                                    "ex_title": "Mention the evidence which proves each correctness of the following statements",
+                                    "type": "text",
+                                    "q_txt": "Human cardiac muscle cells are somatic cells.",
+                                    "a_txt": "Each contains the full number of chromosomes (2n) in the form of homologous pairs.",
+                                    "mcq_choices": null
+                                },
+                                {
+                                    "ex_title": "Mention the evidence which proves each correctness of the following statements",
+                                    "type": "text",
+                                    "q_txt": "Sperms are gamete cells in human.",
+                                    "a_txt": "Each contains half the number of chromosomes (n) present in the somatic cells.",
+                                    "mcq_choices": null
+                                },
+                                {
+                                    "ex_title": "Mention the evidence which proves each correctness of the following statements",
+                                    "type": "text",
+                                    "q_txt": "The similar chromosome count in the somatic cells of different species of living organisms does not mean that they are genetically similar.",
+                                    "a_txt": "The potato plant and the chimpanzee are not genetically similar, even though the somatic cells of each contain 48 chromosomes (24 pairs).",
+                                    "mcq_choices": null
+                                },
+                                {
+                                    "ex_title": "Mention the evidence which proves each correctness of the following statements",
+                                    "type": "text",
+                                    "q_txt": "There is no relation between the size of the organism and the chromosome count in its somatic cells.",
+                                    "a_txt": "Each somatic cell in the body of the elephant (the larger in size) contains fewer chromosomes than each somatic cell in the body of the crow (the smaller in size).",
+                                    "mcq_choices": null
+                                },
+                                {
+                                    "ex_title": "Compare between each of the following",
+                                    "type": "text",
+                                    "q_txt": "Collenchymal cells and pollen grains in the plant.",
+                                    "a_txt": "Collenchymal cells: Each contains the full number of chromosomes (2n) in the form of homologous pairs. Pollen grains: Each contains half the number of chromosomes (n) present in the somatic cells.",
+                                    "mcq_choices": null
+                                },
+                                {
+                                    "ex_title": "Compare between each of the following",
+                                    "type": "text",
+                                    "q_txt": "Somatic cells and gonad cells (In terms of : Number of chromosomes - Type of division - Number of daughter cells - Example in plant and animal).",
+                                    "a_txt": "Refer to the notebook, page (72).",
+                                    "mcq_choices": null
+                                }
+                            ]
+                        },
+                        {
+                            "page": 164,
+                            "questions": [
+                                {
+                                    "ex_title": "Compare between each of the following",
+                                    "type": "text",
+                                    "q_txt": "The somatic cell and the gamete cell (In terms of : Number of chromosomes).",
+                                    "a_txt": "Somatic cell: Contains the full number of chromosomes in the form of homologous pairs (2n). Gamete: Contains half the number of chromosomes present in the somatic cells, so it is symbolized by the symbol (n).",
+                                    "mcq_choices": null
+                                },
+                                {
+                                    "ex_title": "Compare between each of the following",
+                                    "type": "text",
+                                    "q_txt": "Mitosis and meiosis (In terms of : Type of cells in which the division occurs - Number of resulting cells - Number of chromosomes in the resulting cells - Genetic information of the resulting cells - Purpose of the division).",
+                                    "a_txt": "Refer to the notebook, page (72).",
+                                    "mcq_choices": null
+                                },
+                                {
+                                    "ex_title": "Compare between each of the following",
+                                    "type": "text",
+                                    "q_txt": "Sexual reproduction and asexual reproduction (In terms of : Number of individuals involved in reproduction - The genetic traits of the resulting offspring - The type of division it depends on - The importance).",
+                                    "a_txt": "Refer to the notebook, page (73).",
+                                    "mcq_choices": null
+                                },
+                                {
+                                    "ex_title": "Study the following figures, then answer",
+                                    "type": "text",
+                                    "q_txt": "The two opposite figures illustrate the division of two cells in two different ways: (1) Mention the type of the division in each of the two figures (1), (2) and where it occurs? (The figure shows two diagrams of cell division. Diagram (1) shows a cell with 2n chromosomes dividing into two identical cells with 2n chromosomes. Diagram (2) shows a cell with 2n chromosomes dividing into four cells with n chromosomes.)",
+                                    "a_txt": "(1): Mitosis / Occurs in somatic cells. (2): Meiosis / Occurs in gonads.",
+                                    "mcq_choices": null
+                                },
+                                {
+                                    "ex_title": "Study the following figures, then answer",
+                                    "type": "text",
+                                    "q_txt": "Mention the cell in which division (2) occurs in each of the following: 1- Human. 2- Plant.",
+                                    "a_txt": "1- The testis and ovary. 2- The anther and ovary.",
+                                    "mcq_choices": null
+                                },
+                                {
+                                    "ex_title": "Study the following figures, then answer",
+                                    "type": "text",
+                                    "q_txt": "What is the importance of division (1)?",
+                                    "a_txt": "Refer to the notebook, page (68).",
+                                    "mcq_choices": null
+                                },
+                                {
+                                    "ex_title": "Study the following figures, then answer",
+                                    "type": "complete",
+                                    "q_txt": "The division in figure (2) occur in two stages, which are _____ and _____.",
+                                    "a_txt": [
+                                        "First meiotic division",
+                                        "Second meiotic division"
+                                    ],
+                                    "mcq_choices": null
+                                },
+                                {
+                                    "ex_title": "Study the following figures, then answer",
+                                    "type": "text",
+                                    "q_txt": "The following figure represents a vital phenomenon: (1) What is the name of this phenomenon? (The figure shows three stages of the crossing-over phenomenon where two homologous chromosomes exchange genetic material between their non-sister chromatids.)",
+                                    "a_txt": "Crossing-over phenomenon.",
+                                    "mcq_choices": null
+                                },
+                                {
+                                    "ex_title": "Study the following figures, then answer",
+                                    "type": "text",
+                                    "q_txt": "In which type of division does this phenomenon occur?",
+                                    "a_txt": "In the first meiotic division.",
+                                    "mcq_choices": null
+                                },
+                                {
+                                    "ex_title": "Study the following figures, then answer",
+                                    "type": "text",
+                                    "q_txt": "What are the consequences if this phenomenon does not occur?",
+                                    "a_txt": "Lack of diversity in genetic traits within individuals of the same species.",
+                                    "mcq_choices": null
+                                },
+                                {
+                                    "ex_title": "Study the following figures, then answer",
+                                    "type": "text",
+                                    "q_txt": "The opposite figure represents one of the processes necessary to complete reproduction: (1) What is the process indicated by number (3)? What is the name of the cell resulting from it? (The figure shows the process of fertilization where a sperm (1) and an ovum (2) fuse to form a zygote (3), which then divides to form an embryo (4).)",
+                                    "a_txt": "Fertilization process / Zygote.",
+                                    "mcq_choices": null
+                                },
+                                {
+                                    "ex_title": "Study the following figures, then answer",
+                                    "type": "text",
+                                    "q_txt": "What is the type of division resulting in formation of: 1- Cell number (2). 2- Part number (4).",
+                                    "a_txt": "1- Meiosis. 2- Mitosis.",
+                                    "mcq_choices": null
+                                },
+                                {
+                                    "ex_title": "Study the following figures, then answer",
+                                    "type": "text",
+                                    "q_txt": "What is the symbol which represents the number of chromosomes in each of the two cells (1), (2) and the cell resulting from process number (3)?",
+                                    "a_txt": "(1), (2): (n). (3): (2n).",
+                                    "mcq_choices": null
+                                }
+                            ]
+                        },
+                        {
+                            "page": 165,
+                            "questions": [
+                                {
+                                    "ex_title": "Variant questions",
+                                    "type": "text",
+                                    "q_txt": "If the number of chromosomes in a liver cell of an organism is 24 chromosomes. What is the count chromosomes in one of its reproductive cells?",
+                                    "a_txt": "12 chromosomes.",
+                                    "mcq_choices": null
+                                },
+                                {
+                                    "ex_title": "Variant questions",
+                                    "type": "text",
+                                    "q_txt": "If the number of chromosomes in a human pancreatic cell is 23 pairs of chromosomes. What is the number of chromosomes in the following cells: (1) Sperm. (2) Muscle cell. (3) Cardiac muscle cell.",
+                                    "a_txt": "(1) 23 chromosomes. (2), (3) 46 chromosomes.",
+                                    "mcq_choices": null
+                                },
+                                {
+                                    "ex_title": "Variant questions",
+                                    "type": "text",
+                                    "q_txt": "If the number of chromosomes in the ovum of a female animal is 16 chromosomes. What is the number of chromosomes in the following cells: (1) Liver cell of this animal. (2) Sperm of the male of this animal.",
+                                    "a_txt": "(1) 32 chromosomes (16 pairs). (2) 16 chromosomes.",
+                                    "mcq_choices": null
+                                },
+                                {
+                                    "ex_title": "Variant questions",
+                                    "type": "text",
+                                    "q_txt": "Calculate the number of cells resulting from the division of a skin cell through 6 successive mitotic divisions.",
+                                    "a_txt": "N = 2^n, N = 2^6 = 64.",
+                                    "mcq_choices": null
+                                },
+                                {
+                                    "ex_title": "Variant questions",
+                                    "type": "text",
+                                    "q_txt": "Two cells are divided, one in the stem of a plant and the other in its ovary. If the number of chromosomes in each of them is 8 pairs, Mention: (1) The type of division occurring in each of the two cells. (2) The number of chromosomes in each cell resulting from each division.",
+                                    "a_txt": "(1) In stem cells: Mitosis occurs. In ovary cells: Meiosis occurs. (2) In stem cell: 8 pairs (16 chromosomes). In an ovary cell: 8 chromosomes.",
+                                    "mcq_choices": null
+                                },
+                                {
+                                    "ex_title": "Variant questions",
+                                    "type": "text",
+                                    "q_txt": "Meiosis in human passes through two stages: (1) Mention the name of these two stages. (2) Mention the difference between each of the two stages.",
+                                    "a_txt": "(1) The first meiotic division and the second meiotic division. (2) Answer by yourself.",
+                                    "mcq_choices": null
+                                },
+                                {
+                                    "ex_title": "Variant questions",
+                                    "type": "text",
+                                    "q_txt": "Mention the steps of the vegetative reproduction in the potato plant.",
+                                    "a_txt": "Potato tubers with buds (eyes) are placed in suitable conditions (humid medium) until the buds sprout. The bud is activated and develops into a young stem that grows upward carrying the growing leaves, at the same time other cells differentiated to form primary roots that extend downward in the soil. When roots are able to absorb water and mineral salts from the soil and also the stem and leaves rise toward the light, the tuber becomes a new plant that can make photosynthesis.",
+                                    "mcq_choices": null
+                                },
+                                {
+                                    "ex_title": "Variant questions",
+                                    "type": "text",
+                                    "q_txt": "Mention the steps of the sexual reproduction in the frog.",
+                                    "a_txt": "The nucleus of the male gamete (sperm) fuses with the nucleus of the female gamete (ovum) to form a zygote carrying the full number of chromosomes of the species (2n), then the zygote divides mitotically to form the tadpole stage, which divides mitotically to form an adult frog that combines the traits of both parents.",
+                                    "mcq_choices": null
+                                },
+                                {
+                                    "ex_title": "Variant questions",
+                                    "type": "text",
+                                    "q_txt": "Explain the relationship between the genetic structure of both the offspring and the parents in the following cases, with clarifying the reason in each case: (1) Asexual reproduction. (2) Vegetative reproduction in the potato plant. (3) Sexual reproduction.",
+                                    "a_txt": "(1), (2) The genetic structure of the resulting offspring is genetically identical to the parental individual because this type of reproduction depends on mitosis. (3) The genetic structure of the resulting offspring differs genetically from the parents because this type of reproduction depends on meiosis, during which the crossing-over phenomenon occurs, allowing for diversity of genetic traits within individuals of the same species.",
+                                    "mcq_choices": null
+                                }
+                            ]
+                        }
+                    ]
+                }
+            ]
+        }
+    ]
+}

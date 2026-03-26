@@ -1,0 +1,16 @@
+streamlit
+streamlit-js-eval
+streamlit-extras
+streamlit-cookies-manager-ext
+streamlit-shortcuts
+st-theme
+firebase-admin
+bcrypt
+requests
+google-genai
+sentence-transformers
+qdrant-client
+Pillow
+pytesseract
+PyMuPDF
+user-agents

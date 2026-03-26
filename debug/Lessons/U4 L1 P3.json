@@ -1,0 +1,462 @@
+{
+    "units": [
+        {
+            "unit_num": 4,
+            "unit_name": "Physical Changes in the Atmosphere",
+            "lessons": [
+                {
+                    "lesson_num": 1,
+                    "lesson_name": "Effect of Temperature and Pressure on Climate",
+                    "pages": [
+                        {
+                            "page": 224,
+                            "questions": [
+                                {
+                                    "ex_title": "Write the scientific term of each of the following statements",
+                                    "type": "text",
+                                    "q_txt": "The weight of a column of air with a cross-sectional area of 1 m\u00b2 and a height extending to the top of the atmosphere.",
+                                    "a_txt": "Atmospheric pressure.",
+                                    "mcq_choices": null
+                                },
+                                {
+                                    "ex_title": "Write the scientific term of each of the following statements",
+                                    "type": "text",
+                                    "q_txt": "A device used to measure atmospheric pressure.",
+                                    "a_txt": "Mercury barometer.",
+                                    "mcq_choices": null
+                                },
+                                {
+                                    "ex_title": "Write the scientific term of each of the following statements",
+                                    "type": "text",
+                                    "q_txt": "Atmospheric pressure at sea level.",
+                                    "a_txt": "Normal atmospheric pressure.",
+                                    "mcq_choices": null
+                                },
+                                {
+                                    "ex_title": "Write the scientific term of each of the following statements",
+                                    "type": "text",
+                                    "q_txt": "The amount of water vapour present in atmospheric air.",
+                                    "a_txt": "Humidity.",
+                                    "mcq_choices": null
+                                },
+                                {
+                                    "ex_title": "Write the scientific term of each of the following statements",
+                                    "type": "text",
+                                    "q_txt": "The actual mass of water vapour present in a certain volume of atmospheric air.",
+                                    "a_txt": "Absolute humidity.",
+                                    "mcq_choices": null
+                                },
+                                {
+                                    "ex_title": "Write the scientific term of each of the following statements",
+                                    "type": "text",
+                                    "q_txt": "The percentage of absolute humidity to the maximum capacity at the same temperature.",
+                                    "a_txt": "Relative humidity.",
+                                    "mcq_choices": null
+                                },
+                                {
+                                    "ex_title": "Complete the following sentences",
+                                    "type": "complete",
+                                    "q_txt": "Atmospheric pressure is measured by the _____ device and is measured in _____ units.",
+                                    "a_txt": [
+                                        "mercury barometer",
+                                        "millibar"
+                                    ],
+                                    "mcq_choices": null
+                                },
+                                {
+                                    "ex_title": "Complete the following sentences",
+                                    "type": "complete",
+                                    "q_txt": "Normal atmospheric pressure equals the weight of a column of _____ 76 cm high acting on _____.",
+                                    "a_txt": [
+                                        "mercury",
+                                        "a unit area"
+                                    ],
+                                    "mcq_choices": null
+                                },
+                                {
+                                    "ex_title": "Complete the following sentences",
+                                    "type": "complete",
+                                    "q_txt": "Among the factors affecting atmospheric pressure are altitude above sea level, _____ and _____.",
+                                    "a_txt": [
+                                        "temperature",
+                                        "humidity"
+                                    ],
+                                    "mcq_choices": null
+                                },
+                                {
+                                    "ex_title": "Complete the following sentences",
+                                    "type": "complete",
+                                    "q_txt": "The _____ is the amount of water vapour present in the air and its value varies from place to another and from _____ to another.",
+                                    "a_txt": [
+                                        "humidity",
+                                        "one time"
+                                    ],
+                                    "mcq_choices": null
+                                },
+                                {
+                                    "ex_title": "Complete the following sentences",
+                                    "type": "complete",
+                                    "q_txt": "Atmospheric pressure decreases as _____ and _____ increase.",
+                                    "a_txt": [
+                                        "temperature",
+                                        "humidity"
+                                    ],
+                                    "mcq_choices": null
+                                },
+                                {
+                                    "ex_title": "Complete the following sentences",
+                                    "type": "complete",
+                                    "q_txt": "The dryness of the _____ membranes lining the nose and respiratory tract leads to _____ the ability to resist the influenza virus.",
+                                    "a_txt": [
+                                        "mucous",
+                                        "weakness"
+                                    ],
+                                    "mcq_choices": null
+                                },
+                                {
+                                    "ex_title": "Correct the underlined parts",
+                                    "type": "correct_underlined",
+                                    "q_txt": "The air pressure inside closed containers increases with increasing temperature as a result of increasing volume.",
+                                    "a_txt": {
+                                        "mistake": "increasing volume",
+                                        "correction": "Constant"
+                                    },
+                                    "mcq_choices": null
+                                },
+                                {
+                                    "ex_title": "Correct the underlined parts",
+                                    "type": "correct_underlined",
+                                    "q_txt": "Atmospheric pressure decreases slightly as temperature increases.",
+                                    "a_txt": {
+                                        "mistake": "temperature increases",
+                                        "correction": "humidity"
+                                    },
+                                    "mcq_choices": null
+                                },
+                                {
+                                    "ex_title": "Correct the underlined parts",
+                                    "type": "correct_underlined",
+                                    "q_txt": "The density of dry air equals the density of humid air.",
+                                    "a_txt": {
+                                        "mistake": "equals",
+                                        "correction": "greater than"
+                                    },
+                                    "mcq_choices": null
+                                },
+                                {
+                                    "ex_title": "Mark (T) or (X) for each statement, with correction",
+                                    "type": "true_false",
+                                    "q_txt": "Atmospheric air has weight and pressure.",
+                                    "a_txt": "True",
+                                    "mcq_choices": null
+                                },
+                                {
+                                    "ex_title": "Mark (T) or (X) for each statement, with correction",
+                                    "type": "true_false",
+                                    "q_txt": "The dryness of the mucous membranes increases the chances of infecting by influenza.",
+                                    "a_txt": "True",
+                                    "mcq_choices": null
+                                },
+                                {
+                                    "ex_title": "Choose the correct answer",
+                                    "type": "mcq",
+                                    "q_txt": "The barometer is used to measure _____.",
+                                    "a_txt": 2,
+                                    "mcq_choices": [
+                                        "wind speed.",
+                                        "relative humidity.",
+                                        "atmospheric pressure.",
+                                        "temperature."
+                                    ]
+                                }
+                            ]
+                        },
+                        {
+                            "page": 225,
+                            "questions": [
+                                {
+                                    "ex_title": "Choose the correct answer",
+                                    "type": "mcq",
+                                    "q_txt": "Which pairs of these values represent the normal atmospheric pressure at sea level?",
+                                    "a_txt": 3,
+                                    "mcq_choices": [
+                                        "1000 mb, 76 cm.Hg",
+                                        "1013.25 mb, 760 cm.Hg",
+                                        "1000 mb, 760 cm.Hg",
+                                        "1013.25 mb, 76 cm.Hg"
+                                    ]
+                                },
+                                {
+                                    "ex_title": "Choose the correct answer",
+                                    "type": "mcq",
+                                    "q_txt": "Each 1 mb equals _____.",
+                                    "a_txt": 3,
+                                    "mcq_choices": [
+                                        "0.75 cm.Hg",
+                                        "76 mm.Hg",
+                                        "76 cm.Hg",
+                                        "0.75 mm.Hg"
+                                    ]
+                                },
+                                {
+                                    "ex_title": "Choose the correct answer",
+                                    "type": "mcq",
+                                    "q_txt": "If the height of the mercury column in the mercury barometer at one of the highlands is 639 mm. What is the value of atmospheric pressure in millibar at this highland?",
+                                    "a_txt": 1,
+                                    "mcq_choices": [
+                                        "763 mb",
+                                        "852 mb",
+                                        "940 mb",
+                                        "1010 mb"
+                                    ]
+                                },
+                                {
+                                    "ex_title": "Choose the correct answer",
+                                    "type": "mcq",
+                                    "q_txt": "The density of water vapour is _____.",
+                                    "a_txt": 1,
+                                    "mcq_choices": [
+                                        "twice the density of dry air.",
+                                        "less than the density of dry air.",
+                                        "half the density of dry air.",
+                                        "greater than the density of dry air."
+                                    ]
+                                },
+                                {
+                                    "ex_title": "Choose the correct answer",
+                                    "type": "mcq",
+                                    "q_txt": "When air is heated inside closed rooms _____.",
+                                    "a_txt": 0,
+                                    "mcq_choices": [
+                                        "absolute humidity remains constant and relative humidity decreases.",
+                                        "relative humidity remains constant and absolute humidity decreases.",
+                                        "absolute humidity and relative humidity decrease.",
+                                        "absolute humidity and relative humidity increase."
+                                    ]
+                                },
+                                {
+                                    "ex_title": "Choose the correct answer",
+                                    "type": "mcq",
+                                    "q_txt": "Atmospheric pressure decreases slightly by _____.",
+                                    "a_txt": 3,
+                                    "mcq_choices": [
+                                        "moving higher above sea level.",
+                                        "increasing of the temperature.",
+                                        "decreasing of the temperature.",
+                                        "increasing in humidity."
+                                    ]
+                                },
+                                {
+                                    "ex_title": "What is meant by each of the following",
+                                    "type": "text",
+                                    "q_txt": "Atmospheric pressure.",
+                                    "a_txt": "Refer to the notebook, page (89).",
+                                    "mcq_choices": null
+                                },
+                                {
+                                    "ex_title": "What is meant by each of the following",
+                                    "type": "text",
+                                    "q_txt": "Humidity.",
+                                    "a_txt": "Refer to the notebook, page (89).",
+                                    "mcq_choices": null
+                                },
+                                {
+                                    "ex_title": "What is meant by each of the following",
+                                    "type": "text",
+                                    "q_txt": "Absolute humidity.",
+                                    "a_txt": "Refer to the notebook, page (89).",
+                                    "mcq_choices": null
+                                },
+                                {
+                                    "ex_title": "What is meant by each of the following",
+                                    "type": "text",
+                                    "q_txt": "Relative humidity.",
+                                    "a_txt": "Refer to the notebook, page (89).",
+                                    "mcq_choices": null
+                                },
+                                {
+                                    "ex_title": "Give reasons for the following",
+                                    "type": "text",
+                                    "q_txt": "Decreasing of atmospheric pressure by moving higher above sea level.",
+                                    "a_txt": "Due to the decrease in the weight of the air column acting on the unit area.",
+                                    "mcq_choices": null
+                                },
+                                {
+                                    "ex_title": "Give reasons for the following",
+                                    "type": "text",
+                                    "q_txt": "Decreasing of atmospheric pressure when the temperature of the air increases.",
+                                    "a_txt": "Due to the expansion of air and the decrease in its density.",
+                                    "mcq_choices": null
+                                },
+                                {
+                                    "ex_title": "Give reasons for the following",
+                                    "type": "text",
+                                    "q_txt": "Atmospheric pressure decreases slightly as humidity increases.",
+                                    "a_txt": "Because the density of water vapour is less than the density of dry air.",
+                                    "mcq_choices": null
+                                },
+                                {
+                                    "ex_title": "What are the results of each of the following",
+                                    "type": "text",
+                                    "q_txt": "Burning a piece of paper inside a closed empty container, then the flame is put out.",
+                                    "a_txt": "The temperature of the trapped air inside the closed space rises, so its pressure increases and after the flame goes out, the trapped air cools quickly, so its volume decreases, which leads to a decrease in its pressure compare to the atmospheric pressure outside the container.",
+                                    "mcq_choices": null
+                                },
+                                {
+                                    "ex_title": "What are the results of each of the following",
+                                    "type": "text",
+                                    "q_txt": "Increasing atmospheric pressure according to the height of the Torricelli's vacuum in the mercury barometer.",
+                                    "a_txt": "The length of the Torricelli's vacuum decreases as a result of the increase in the length of the mercury column.",
+                                    "mcq_choices": null
+                                }
+                            ]
+                        },
+                        {
+                            "page": 226,
+                            "questions": [
+                                {
+                                    "ex_title": "What are the results of each of the following",
+                                    "type": "text",
+                                    "q_txt": "Moving higher above sea level according to atmospheric pressure.",
+                                    "a_txt": "Atmospheric pressure decreases.",
+                                    "mcq_choices": null
+                                },
+                                {
+                                    "ex_title": "What are the results of each of the following",
+                                    "type": "text",
+                                    "q_txt": "Increase in humidity in a certain place according to atmospheric pressure.",
+                                    "a_txt": "Atmospheric pressure decreases slightly.",
+                                    "mcq_choices": null
+                                },
+                                {
+                                    "ex_title": "What are the results of each of the following",
+                                    "type": "text",
+                                    "q_txt": "Heating the air inside buildings while absolute humidity remains constant.",
+                                    "a_txt": "The relative humidity decreases sharply.",
+                                    "mcq_choices": null
+                                },
+                                {
+                                    "ex_title": "Compare between each of the following",
+                                    "type": "text",
+                                    "q_txt": "Mountain base and mountain summit (In terms of: Atmospheric pressure - Temperature).",
+                                    "a_txt": "Mountain base: Atmospheric pressure is high, Temperature is high. Mountain summit: Atmospheric pressure is low, Temperature is low.",
+                                    "mcq_choices": null
+                                },
+                                {
+                                    "ex_title": "Compare between each of the following",
+                                    "type": "text",
+                                    "q_txt": "The equatorial zone and polar zone (In terms of: Temperature - Humidity - Atmospheric pressure).",
+                                    "a_txt": "Equatorial Zone: Temperature high, Humidity high, Atmospheric pressure low. Polar Zone: Temperature low, Humidity low, Atmospheric pressure high.",
+                                    "mcq_choices": null
+                                },
+                                {
+                                    "ex_title": "Explain the relationship between each of the following",
+                                    "type": "text",
+                                    "q_txt": "Moving higher above sea level and atmospheric pressure.",
+                                    "a_txt": "Atmospheric pressure decreases with altitude above sea level.",
+                                    "mcq_choices": null
+                                },
+                                {
+                                    "ex_title": "Explain the relationship between each of the following",
+                                    "type": "text",
+                                    "q_txt": "Air density and its atmospheric pressure.",
+                                    "a_txt": "Atmospheric pressure decreases as air density decreases and vice versa.",
+                                    "mcq_choices": null
+                                },
+                                {
+                                    "ex_title": "Explain the relationship between each of the following",
+                                    "type": "text",
+                                    "q_txt": "Air temperature and its pressure in closed containers.",
+                                    "a_txt": "The air pressure increases when its temperature rises in closed containers, and vice versa.",
+                                    "mcq_choices": null
+                                },
+                                {
+                                    "ex_title": "Explain the relationship between each of the following",
+                                    "type": "text",
+                                    "q_txt": "Atmospheric pressure and the length of the mercury column in the barometer.",
+                                    "a_txt": "The length of the mercury column in the barometer decreases with a decrease in atmospheric pressure, and vice versa.",
+                                    "mcq_choices": null
+                                },
+                                {
+                                    "ex_title": "Explain the relationship between each of the following",
+                                    "type": "text",
+                                    "q_txt": "Absolute humidity and relative humidity in a certain place.",
+                                    "a_txt": "Relative humidity increases with an increase in absolute humidity in a certain place and vice versa.",
+                                    "mcq_choices": null
+                                },
+                                {
+                                    "ex_title": "Explain the relationship between each of the following",
+                                    "type": "text",
+                                    "q_txt": "The temperature and relative humidity \u00abwhen absolute humidity remains constant\u00bb.",
+                                    "a_txt": "When temperature increases with constant absolute humidity, the relative humidity decreases.",
+                                    "mcq_choices": null
+                                },
+                                {
+                                    "ex_title": "Explain the relationship between each of the following",
+                                    "type": "text",
+                                    "q_txt": "Influenza and temperature and atmospheric humidity.",
+                                    "a_txt": "The chances of infection with influenza increase when both temperature and humidity decrease.",
+                                    "mcq_choices": null
+                                },
+                                {
+                                    "ex_title": "Study the following figures, then answer the questions",
+                                    "type": "text",
+                                    "q_txt": "The opposite figure shows a balanced first-class lever with two balloons: What happens when one of the two balloons is pierced with a sharp pin? And what do we conclude from that?",
+                                    "a_txt": "The balance of the lever is disturbed / We conclude that the atmospheric air has weight.",
+                                    "mcq_choices": null
+                                },
+                                {
+                                    "ex_title": "Study the following figures, then answer the questions",
+                                    "type": "text",
+                                    "q_txt": "The opposite figure shows one of the atmospheric pressure experiments (egg in bottle): (1) What is the purpose of doing this experiment? (2) What happens to the air pressure inside the bottle in case (1)? With explanation. (3) What happens to the air pressure inside the bottle in case (2) after the flame goes out? With explanation. (4) What is the reason for the egg being pushed into the bottle in case (3)?",
+                                    "a_txt": "(1) Proof that the atmospheric air has pressure. (2) Its pressure increases as a result of the rise in temperature of the trapped air inside the closed space while the volume of the bottle remains constant. (3) Decrease in air pressure compared to the atmospheric pressure outside the bottle as a result of the trapped air cooling quickly and its volume decreasing. (4) The pressure of the trapped air is lower than the normal atmospheric pressure.",
+                                    "mcq_choices": null
+                                }
+                            ]
+                        },
+                        {
+                            "page": 227,
+                            "questions": [
+                                {
+                                    "ex_title": "Study the following figures, then answer the questions",
+                                    "type": "text",
+                                    "q_txt": "The opposite figure shows a device used to measure an element of the weather (Mercury Barometer): (1) What is the name of this device? And what is it used for? (2) What is part (1) called? And does it increase or decrease with increasing altitude above sea level? With explanation. (3) What is the name of the substance (2)?",
+                                    "a_txt": "(1) The mercury barometer, it is used to measure atmospheric pressure. (2) Torricelli's vacuum, it increases due to the decrease in the length of the mercury column when atmospheric pressure decreases. (3) Mercury.",
+                                    "mcq_choices": null
+                                },
+                                {
+                                    "ex_title": "Variant problems",
+                                    "type": "text",
+                                    "q_txt": "If the atmospheric pressure in one area is 740 mm.Hg, calculate its value in mb.",
+                                    "a_txt": "Atmospheric pressure (mb) = Atmospheric pressure (mm.Hg) / 0.75 = 740 / 0.75 = 986.67 mb.",
+                                    "mcq_choices": null
+                                },
+                                {
+                                    "ex_title": "Variant problems",
+                                    "type": "text",
+                                    "q_txt": "An amount of air with a volume of 20 m\u00b3 contains an amount of water vapour with a mass of 120 g and the maximum mass of water vapour that can be present in 1 m\u00b3 of air is 10.5 g. Calculate: (1) Absolute humidity. (2) Relative humidity.",
+                                    "a_txt": "(1) Absolute humidity = The mass of water vapour / The volume of air = 120 / 20 = 6 g/m\u00b3. (2) Relative humidity = (Absolute humidity / Maximum capacity) x 100% = (6 / 10.5) x 100% = 57.14%.",
+                                    "mcq_choices": null
+                                },
+                                {
+                                    "ex_title": "Variant questions",
+                                    "type": "text",
+                                    "q_txt": "Mention the factors affecting atmospheric pressure.",
+                                    "a_txt": "(1) Altitude (height) above sea level. (2) Temperature. (3) Humidity.",
+                                    "mcq_choices": null
+                                },
+                                {
+                                    "ex_title": "Variant questions",
+                                    "type": "text",
+                                    "q_txt": "Atmospheric pressure is one of the elements of climate: (1) What is the device used to measure atmospheric pressure? (2) What is the value of atmospheric pressure in millibar at the sea level?",
+                                    "a_txt": "(1) Mercury barometer. (2) 1013.25 mb.",
+                                    "mcq_choices": null
+                                }
+                            ]
+                        }
+                    ]
+                }
+            ]
+        }
+    ]
+}

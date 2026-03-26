@@ -1,0 +1,96 @@
+{
+    "units": [
+        {
+            "unit_num": 2,
+            "unit_name": "Forces and Motion",
+            "lessons": [
+                {
+                    "lesson_num": 2,
+                    "lesson_name": "Levers",
+                    "pages": [
+                        {
+                            "page": 117,
+                            "explanation": [
+                                "Technological advancement resulted in human utilization of machines to perform most tasks, although this does not eliminate the importance of the human element, especially in simple manual work. The machine is a means used by man to save time, effort, or both while performing tasks. A tower crane (Winch) is an example of complex machines that consist of many simple machines. The image shows a large orange tower crane lifting a heavy load at a construction site.",
+                                "Simple machines: The following table shows the types of simple machines and the purposes of their uses. 1. Pulley: It is used in changing the direction of the force during lifting or lowering weights. The illustrative figure shows a person pulling a rope over a pulley to lift a wooden crate. 2. The inclined plane (Ramp): It is used to save effort. The illustrative figure shows a person in a wheelchair being pushed up a ramp into the back of a van."
+                            ]
+                        },
+                        {
+                            "page": 118,
+                            "explanation": [
+                                "Simple machines continued: 3. The wheel and axle: They are used together in multiplying the exerted force or increasing the speed. The figure shows a wooden bucket being raised from a well using a wheel and axle mechanism. 4. Wedge: It is used in changing the direction of the applied force. The figure shows a hammer hitting a wedge to split a block of wood, with arrows indicating the downward applied force and the outward resulting force.",
+                                "Simple machines continued: 5. Gears and belts: They are used in transferring the motion and changing the speed as in bicycles. The figure shows the chain and gear system of a bicycle wheel. 6. Levers: They will be discussed in this lesson as an example of simple machines."
+                            ]
+                        },
+                        {
+                            "page": 119,
+                            "explanation": [
+                                "The lever: It is a rigid rod, either straight or curved, that is pivoted on (can move around) a fixed point called fulcrum F (pivot point), during its use it is acted upon by two forces which are the effort E (force) and the load L (resistance). The image shows a wooden plank acting as a lever with a stone (load), a pivot (fulcrum), and a hand pressing down (effort).",
+                                "Elements of the lever: 1. Effort E (Force): The effort that moves the load. 2. Fulcrum F (Pivot point): The point around which the lever moves. 3. Load L (Resistance): The load that is moved by the effect of the effort. The effort arm is the distance between the applied effort and the fulcrum. The load arm is the distance between the load and the fulcrum. A diagram shows a person using a lever to lift a rock, labeling the effort arm and load arm.",
+                                "Law of levers: The levers shown in the opposite figures are described as being at equilibrium (in balance) because they verify the law of levers. Law of levers: The product of multiplying the effort by its arm equals the product of multiplying the load by its arm. The product of multiplying the effort by its arm is called moment (torque) of effort, and the product of multiplying the load by its arm is called moment (torque) of load. i.e. The lever is at equilibrium (balanced) when moment of effort equals moment of load."
+                            ]
+                        },
+                        {
+                            "page": 120,
+                            "explanation": [
+                                "The law of levers is expressed mathematically as follows: Effort \u00d7 Effort arm = Load \u00d7 Load arm. Remember that: The weight of the body is the force of Earth's gravity acting on it. Weight is measured in newton (N). Weight (w) = Mass (m) \u00d7 Gravitational acceleration (g). Gravitational acceleration equals 10 m/s\u00b2.",
+                                "Question & Answer: From the opposite figure: If the mass of the adult man's body is 60 kg, what is the mass of the boy's body when the seesaw is at equilibrium? [Knowing that the gravitational acceleration = 10 m/s\u00b2]. The figure shows a man (E) at 1.5m from the fulcrum and a boy (L) at 2m from the fulcrum. Answer: Mass of adult = 60 kg, Effort arm = 1.5 m, Load arm = 2 m. Weight of adult = 60 x 10 = 600 N. Effort x Effort arm = Load x Load arm. 600 x 1.5 = Load x 2. Load = 900 / 2 = 450 N. Mass of boy = 450 / 10 = 45 kg."
+                            ]
+                        },
+                        {
+                            "page": 123,
+                            "explanation": [
+                                "Types of levers: There are three types of levers, the type and importance of each of them is determined by the position of the point of action of the effort (E), the point of action of the load (L), and the fulcrum (F) relative to each other.",
+                                "First class levers: In which the fulcrum (F) is located between the effort (E) and the load (L) (E-F-L). Examples: 1. Seesaw (Image shows two children on a seesaw). 2. Crowbar (Image shows a person using a crowbar to lift a log).",
+                                "Second class levers: In which the load (L) is located between the fulcrum (F) and the effort (E) (E-L-F). Examples: 1. Wheelbarrow (Image shows a person pushing a wheelbarrow). 2. Nutcracker (Image shows a nutcracker with a nut inside).",
+                                "Third class levers: In which the effort (E) is located between the fulcrum (F) and the load (L) (F-E-L). Examples: 1. Tennis racket (Image shows a person holding a tennis racket). 2. Tweezers (Forceps) (Image shows a pair of tweezers)."
+                            ]
+                        },
+                        {
+                            "page": 124,
+                            "explanation": [
+                                "More examples of levers: First class: 3. Pliers. 4. Scissors. Second class: 3. Lemon squeezer. 4. Bottle opener. Third class: 3. Coal tongs. 4. Broom. Images are provided for each example showing the positions of E, F, and L.",
+                                "Mechanical advantage of the lever: The mechanical advantage of a lever determines how much it saves effort. Which is calculated by the following relation: Mechanical advantage of the lever = Load / Effort = Effort arm / Load arm. N.B: The lever saves effort when its mechanical advantage is greater than 1.",
+                                "Application: In the opposite figure: An effort of 1000 N was applied to a car its weight equals 15000 N through using a lever to lift it up from the sand, therefore: The mechanical advantage of this lever = Load / Effort = 15000 / 1000 = 15. This means that the effort increased to 15 times its value by using this lever. The image shows a person using a long wooden beam as a lever to lift a blue car."
+                            ]
+                        },
+                        {
+                            "page": 125,
+                            "explanation": [
+                                "Classification of levers according to the mechanical advantage: Levers are classified according to the mechanical advantage and how much they save effort into: 1. Levers with mechanical advantage Greater than 1 (save effort): All second class levers and some first class levers (where effort arm > load arm). 2. Levers with mechanical advantage Equal to 1 (Do not save effort): Some first class levers (where effort arm = load arm). 3. Levers with mechanical advantage Less than 1 (Do not save effort): All third class levers and some first class levers (where effort arm < load arm).",
+                                "Take care: In levers, as the effort arm increases, the effort required to move the same weight decreases, and hence the mechanical advantage of this lever increases (saves effort)."
+                            ]
+                        },
+                        {
+                            "page": 126,
+                            "explanation": [
+                                "G.R. All second class levers save effort. Because in all second class levers, the effort arm is usually greater than the load arm.",
+                                "Take care: The claw hammer: It is used to multiply the force during removing a nail fixed in a wooden board, and it is a first class lever. All first class levers: Change the direction of motion, because the direction of the load (resistance effect) is opposite to the direction of the effort (force effect).",
+                                "All third class levers: Do not save effort, but they are used in the precise and dangerous tasks. Example: (1) The forceps are used in precise tasks. (2) Barbecue tongs are used to avoid the risk of burns."
+                            ]
+                        },
+                        {
+                            "page": 128,
+                            "explanation": [
+                                "It can be concluded from the previous that: First class levers do not save effort except when their mechanical advantage is greater than 1 (Effort arm > Load arm)."
+                            ]
+                        },
+                        {
+                            "page": 129,
+                            "explanation": [
+                                "Integration with biology: Cumulative knowledge for clarification only. The human skeletal system includes all the bones in the body. The place where two or more bones meet is known as a joint, such as: Shoulder joint, Elbow joint, Knee joint. The movement of the body's bones, such as the movement of the arms, legs, and finger bones, depends on the movement of the skeletal muscles, through the contraction and relaxation processes.",
+                                "The bones that make up the skeletal system are levers that include their three elements, as shown below: The forces of muscle contraction represent Efforts. The joints around which the bones move represent Fulcrums. The forces to be overcome represent Loads. The image shows the skeletal system and a diagram of skeletal muscles in the upper arm (biceps and triceps)."
+                            ]
+                        },
+                        {
+                            "page": 130,
+                            "explanation": [
+                                "Application of levers in the human body: 1. The head: First class lever. Fulcrum (F) is the point of connection of the skull with the spine. Load (L) is the weight of the head which needs to be balanced forward. Effort (E) is the neck muscles that pull the head downwards to be balanced. 2. The foot (when standing on the tiptoes): Second class lever. Fulcrum (F) is the foot while standing on the tiptoes. Load (L) is the body weight. Effort (E) is the calf muscles. 3. The arm: Third class lever. Fulcrum (F) is the forearm (elbow joint). Load (L) is the object held in the palm. Effort (E) is the pull of the biceps muscle."
+                            ]
+                        }
+                    ]
+                }
+            ]
+        }
+    ]
+}

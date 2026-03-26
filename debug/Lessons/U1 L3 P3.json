@@ -1,0 +1,542 @@
+{
+    "units": [
+        {
+            "unit_num": 1,
+            "unit_name": "Thermal Energy and Changes of Matter",
+            "lessons": [
+                {
+                    "lesson_num": 3,
+                    "lesson_name": "Combustion, Oxidation and Reduction",
+                    "pages": [
+                        {
+                            "page": 71,
+                            "questions": [
+                                {
+                                    "ex_title": "Write the scientific term of each of the following statements",
+                                    "type": "text",
+                                    "q_txt": "Ignition of materials without the presence of an external source of heat",
+                                    "a_txt": "Spontaneous combustion."
+                                },
+                                {
+                                    "ex_title": "Write the scientific term of each of the following statements",
+                                    "type": "text",
+                                    "q_txt": "A chemical process in which the percentage of oxygen increases in the substance or the percentage of hydrogen decreases in it.",
+                                    "a_txt": "Oxidation process."
+                                },
+                                {
+                                    "ex_title": "Write the scientific term of each of the following statements",
+                                    "type": "text",
+                                    "q_txt": "A chemical process in which the percentage of oxygen decreases in the substance or the percentage of hydrogen increases in it.",
+                                    "a_txt": "Reduction process."
+                                },
+                                {
+                                    "ex_title": "Write the scientific term of each of the following statements",
+                                    "type": "text",
+                                    "q_txt": "The substance that takes away oxygen or gives hydrogen during the chemical reaction.",
+                                    "a_txt": "Reducing agent."
+                                },
+                                {
+                                    "ex_title": "Write the scientific term of each of the following statements",
+                                    "type": "text",
+                                    "q_txt": "The substance that gives oxygen or takes away hydrogen during the chemical reaction.",
+                                    "a_txt": "Oxidizing agent."
+                                },
+                                {
+                                    "ex_title": "Complete the following sentences",
+                                    "type": "complete",
+                                    "q_txt": "The reaction of glycerin with potassium permanganate powder is _____ reaction and produces a flame of _____ colour.",
+                                    "a_txt": [
+                                        "exothermic",
+                                        "purple"
+                                    ]
+                                },
+                                {
+                                    "ex_title": "Complete the following sentences",
+                                    "type": "complete",
+                                    "q_txt": "In atmospheric air, _____ gas neither burns nor supports combustion, while _____ gas supports combustion.",
+                                    "a_txt": [
+                                        "carbon dioxide",
+                                        "oxygen"
+                                    ]
+                                },
+                                {
+                                    "ex_title": "Complete the following sentences",
+                                    "type": "complete",
+                                    "q_txt": "_____ principle is used for extinguishing sodium fires, while _____ principle is used for extinguishing fire resulting from natural gas leakage.",
+                                    "a_txt": [
+                                        "isolating of oxygen (smothering)",
+                                        "fuel removal"
+                                    ]
+                                }
+                            ]
+                        },
+                        {
+                            "page": 72,
+                            "questions": [
+                                {
+                                    "ex_title": "Complete the following sentences",
+                                    "type": "complete",
+                                    "q_txt": "When hydrogen gas is passed over hot copper oxide, copper oxide turns into _____ whose colour is _____.",
+                                    "a_txt": [
+                                        "copper",
+                                        "reddish brown"
+                                    ]
+                                },
+                                {
+                                    "ex_title": "Complete the following sentences",
+                                    "type": "complete",
+                                    "q_txt": "In the reaction: H2 + CuO -> Cu + H2O Hydrogen gas undergoes _____ process, and copper oxide undergoes _____ process.",
+                                    "a_txt": [
+                                        "oxidation",
+                                        "reduction"
+                                    ]
+                                },
+                                {
+                                    "ex_title": "Complete the following sentences",
+                                    "type": "complete",
+                                    "q_txt": "The oxidizing agent undergoes _____ process, while the reducing agent undergoes _____ process.",
+                                    "a_txt": [
+                                        "reduction",
+                                        "oxidation"
+                                    ]
+                                },
+                                {
+                                    "ex_title": "Complete the following sentences",
+                                    "type": "complete",
+                                    "q_txt": "In the reaction: 2Mg + CO2 -> 2MgO + C Magnesium undergoes _____ process, so it is the _____ agent.",
+                                    "a_txt": [
+                                        "oxidation",
+                                        "reducing"
+                                    ]
+                                },
+                                {
+                                    "ex_title": "Correct the underlined parts",
+                                    "type": "text",
+                                    "q_txt": "Water is used in extinguishing magnesium fires.",
+                                    "a_txt": "Sand."
+                                },
+                                {
+                                    "ex_title": "Correct the underlined parts",
+                                    "type": "text",
+                                    "q_txt": "Hydrogen gas is used in fire extinguishers to isolate fires from air.",
+                                    "a_txt": "Carbon dioxide."
+                                },
+                                {
+                                    "ex_title": "Correct the underlined parts",
+                                    "type": "text",
+                                    "q_txt": "In the reaction: H2 + CuO -> Cu + H2O, hydrogen acts as the oxidizing agent.",
+                                    "a_txt": "Copper oxide."
+                                },
+                                {
+                                    "ex_title": "Mark (T) or (X) for each statement, with correction if needed",
+                                    "type": "true_false_with_correction",
+                                    "q_txt": "Hay burns in some villages by non-spontaneous combustion due to the activity of bacterial decomposition.",
+                                    "a_txt": [
+                                        "False",
+                                        {
+                                            "mistake": "non-spontaneous",
+                                            "correction": "spontaneous"
+                                        }
+                                    ]
+                                },
+                                {
+                                    "ex_title": "Mark (T) or (X) for each statement, with correction if needed",
+                                    "type": "true_false_with_correction",
+                                    "q_txt": "Gas valves are closed during fires to isolate oxygen.",
+                                    "a_txt": [
+                                        "False",
+                                        {
+                                            "mistake": "isolate oxygen",
+                                            "correction": "to remove the fuel"
+                                        }
+                                    ]
+                                },
+                                {
+                                    "ex_title": "Mark (T) or (X) for each statement, with correction if needed",
+                                    "type": "true_false_with_correction",
+                                    "q_txt": "Water is characterized by its low specific heat.",
+                                    "a_txt": [
+                                        "False",
+                                        {
+                                            "mistake": "low",
+                                            "correction": "high"
+                                        }
+                                    ]
+                                },
+                                {
+                                    "ex_title": "Mark (T) or (X) for each statement, with correction if needed",
+                                    "type": "true_false_with_correction",
+                                    "q_txt": "The density of petroleum oil is greater than the density of water.",
+                                    "a_txt": [
+                                        "False",
+                                        {
+                                            "mistake": "greater than",
+                                            "correction": "less than"
+                                        }
+                                    ]
+                                },
+                                {
+                                    "ex_title": "Mark (T) or (X) for each statement, with correction if needed",
+                                    "type": "true_false_with_correction",
+                                    "q_txt": "Oxidation and reduction processes are two separate processes that do not occur together at the same time in the chemical reaction.",
+                                    "a_txt": [
+                                        "False",
+                                        {
+                                            "mistake": "two separate processes that do not occur together",
+                                            "correction": "two simultaneous processes that occur together"
+                                        }
+                                    ]
+                                },
+                                {
+                                    "ex_title": "Mark (T) or (X) for each statement, with correction if needed",
+                                    "type": "true_false_with_correction",
+                                    "q_txt": "Redox reactions cause spoiling of food.",
+                                    "a_txt": [
+                                        "True",
+                                        null
+                                    ]
+                                },
+                                {
+                                    "ex_title": "Choose the correct answer",
+                                    "type": "mcq",
+                                    "q_txt": "Ignition of glycerin using potassium permanganate .............",
+                                    "a_txt": 0,
+                                    "mcq_choices": [
+                                        "occurs due to the activity of bacterial decomposition.",
+                                        "is accompanied by the formation of a purple-coloured flame.",
+                                        "is spontaneous and endothermic.",
+                                        "requires the presence of an ignition source."
+                                    ]
+                                },
+                                {
+                                    "ex_title": "Choose the correct answer",
+                                    "type": "mcq",
+                                    "q_txt": "All the following are principles of extinguishing, except .............",
+                                    "a_txt": 2,
+                                    "mcq_choices": [
+                                        "removing fuel.",
+                                        "smothering.",
+                                        "isolating of carbon dioxide.",
+                                        "cooling."
+                                    ]
+                                }
+                            ]
+                        },
+                        {
+                            "page": 73,
+                            "questions": [
+                                {
+                                    "ex_title": "Choose the correct answer",
+                                    "type": "mcq",
+                                    "q_txt": "Covering frying pan fires with a metal lid extinguishes the fire because .............",
+                                    "a_txt": 1,
+                                    "mcq_choices": [
+                                        "the lid absorbs the heat of the flame.",
+                                        "the lid prevents air from reaching the fire.",
+                                        "the lid is non-flammable.",
+                                        "the lid lowers the temperature of the fire."
+                                    ]
+                                },
+                                {
+                                    "ex_title": "Choose the correct answer",
+                                    "type": "mcq",
+                                    "q_txt": "The gas that neither burns nor supports combustion is .............",
+                                    "a_txt": 3,
+                                    "mcq_choices": [
+                                        "O2",
+                                        "N2",
+                                        "H2",
+                                        "CO2"
+                                    ]
+                                },
+                                {
+                                    "ex_title": "Choose the correct answer",
+                                    "type": "mcq",
+                                    "q_txt": "Extinguishing forest fires with water achieves one of the main principles of fire extinguishing, which is .............",
+                                    "a_txt": 2,
+                                    "mcq_choices": [
+                                        "removing fuel.",
+                                        "smothering.",
+                                        "cooling.",
+                                        "isolating of carbon dioxide."
+                                    ]
+                                },
+                                {
+                                    "ex_title": "Choose the correct answer",
+                                    "type": "mcq",
+                                    "q_txt": "The equation: Mg + CuO -> MgO + Cu represents ............. reaction.",
+                                    "a_txt": 3,
+                                    "mcq_choices": [
+                                        "combustion",
+                                        "thermal decomposition",
+                                        "acid with alkali",
+                                        "redox"
+                                    ]
+                                },
+                                {
+                                    "ex_title": "Choose the correct answer",
+                                    "type": "mcq",
+                                    "q_txt": "From the reaction: 2Mg + CO2 -> 2MgO + C Which of the following is correct?",
+                                    "a_txt": 2,
+                                    "mcq_choices": [
+                                        "Both magnesium and carbon dioxide are oxidized.",
+                                        "Carbon dioxide is oxidized and magnesium is reduced.",
+                                        "Magnesium is oxidized and carbon dioxide is reduced.",
+                                        "Both magnesium and carbon dioxide are reduced."
+                                    ]
+                                },
+                                {
+                                    "ex_title": "Choose the correct answer",
+                                    "type": "mcq",
+                                    "q_txt": "In the reaction: Mg + ZnO -> MgO + Zn Which substance undergoes oxidation?",
+                                    "a_txt": 2,
+                                    "mcq_choices": [
+                                        "Zinc oxide.",
+                                        "Magnesium oxide.",
+                                        "Magnesium.",
+                                        "Zinc."
+                                    ]
+                                },
+                                {
+                                    "ex_title": "Choose the correct answer",
+                                    "type": "mcq",
+                                    "q_txt": "What is the oxidizing agent in this reaction: PbO2 + 2H2 -> Pb + 2H2O?",
+                                    "a_txt": 0,
+                                    "mcq_choices": [
+                                        "PbO2",
+                                        "H2",
+                                        "Pb",
+                                        "H2O"
+                                    ]
+                                },
+                                {
+                                    "ex_title": "Choose the correct answer",
+                                    "type": "mcq",
+                                    "q_txt": "The following equation: CH4 + 2O2 -> CO2 + 2H2O represents .............",
+                                    "a_txt": 3,
+                                    "mcq_choices": [
+                                        "an oxidation reaction only.",
+                                        "a reduction reaction only.",
+                                        "a combustion reaction only.",
+                                        "a combustion and a redox reactions."
+                                    ]
+                                }
+                            ]
+                        },
+                        {
+                            "page": 74,
+                            "questions": [
+                                {
+                                    "ex_title": "What is meant by each of the following",
+                                    "type": "text",
+                                    "q_txt": "Spontaneous combustion.",
+                                    "a_txt": "It is the ignition of materials without the presence of an external source of heat."
+                                },
+                                {
+                                    "ex_title": "What is meant by each of the following",
+                                    "type": "text",
+                                    "q_txt": "Oxidation process.",
+                                    "a_txt": "It is the process of the combination of fuel with oxygen which is usually accompanied by the emission of light, heat or both."
+                                },
+                                {
+                                    "ex_title": "What is meant by each of the following",
+                                    "type": "text",
+                                    "q_txt": "Reduction process.",
+                                    "a_txt": "It is the process of the combination of fuel with oxygen which is usually accompanied by the emission of light, heat or both."
+                                },
+                                {
+                                    "ex_title": "What is meant by each of the following",
+                                    "type": "text",
+                                    "q_txt": "Oxidizing agent.",
+                                    "a_txt": "It is the substance that gives (donates) oxygen to, or takes hydrogen away from another substance during the chemical reaction."
+                                },
+                                {
+                                    "ex_title": "What is meant by each of the following",
+                                    "type": "text",
+                                    "q_txt": "Reducing agent.",
+                                    "a_txt": "It is the substance that gives (donates) hydrogen to, or takes oxygen away from another substance during the chemical reaction."
+                                },
+                                {
+                                    "ex_title": "Mention the importance (or use) of each of the following",
+                                    "type": "text",
+                                    "q_txt": "Fire extinguishers.",
+                                    "a_txt": "Used to isolate fires from oxygen of atmospheric air."
+                                },
+                                {
+                                    "ex_title": "Mention the importance (or use) of each of the following",
+                                    "type": "text",
+                                    "q_txt": "Sand in chemical laboratories.",
+                                    "a_txt": "Used to extinguish fires of some metals such as sodium and magnesium."
+                                },
+                                {
+                                    "ex_title": "Mention the importance (or use) of each of the following",
+                                    "type": "text",
+                                    "q_txt": "Closing gas valves in case of fires.",
+                                    "a_txt": "Removal of fuel."
+                                },
+                                {
+                                    "ex_title": "Give reasons for the following",
+                                    "type": "text",
+                                    "q_txt": "The car engine cannot operate without fuel.",
+                                    "a_txt": "Because it is a source of energy."
+                                },
+                                {
+                                    "ex_title": "Give reasons for the following",
+                                    "type": "text",
+                                    "q_txt": "Frying pan fires are extinguished by covering them with a metal lid.",
+                                    "a_txt": "To isolate oxygen and thus the fire triangle is incomplete and the fire is extinguished."
+                                },
+                                {
+                                    "ex_title": "Give reasons for the following",
+                                    "type": "text",
+                                    "q_txt": "The presence of a bucket filled with sand in school laboratories.",
+                                    "a_txt": "To extinguish fires of some metals such as sodium and magnesium by isolating them from oxygen."
+                                },
+                                {
+                                    "ex_title": "Give reasons for the following",
+                                    "type": "text",
+                                    "q_txt": "It is strictly forbidden to extinguish sodium or potassium fires with water.",
+                                    "a_txt": "Because water increases the intensity of the fire instead of extinguishing it as a result of its reaction with these metals in an exothermic reaction accompanied by the ignition of the released hydrogen."
+                                },
+                                {
+                                    "ex_title": "Give reasons for the following",
+                                    "type": "text",
+                                    "q_txt": "Carbon dioxide gas is used in extinguishing fires.",
+                                    "a_txt": "Because it is a gas that does not burn and does not support burning."
+                                },
+                                {
+                                    "ex_title": "Give reasons for the following",
+                                    "type": "text",
+                                    "q_txt": "Water is used in extinguishing paper and wood fires.",
+                                    "a_txt": "Because of the high specific heat of water, which makes it absorbs a large amount of thermal energy and thus the temperature of the burning materials decreases."
+                                },
+                                {
+                                    "ex_title": "Give reasons for the following",
+                                    "type": "text",
+                                    "q_txt": "Water is not used in extinguishing of petroleum oil fires.",
+                                    "a_txt": "Because petroleum oil floats on the surface of water due to its lower density compared to that of water, which leads to the spread of fires instead of extinguishing them."
+                                },
+                                {
+                                    "ex_title": "Give reasons for the following",
+                                    "type": "text",
+                                    "q_txt": "Air evacuation preserves food for a longer period of time.",
+                                    "a_txt": "Because this provides a low-oxygen environment, which reduces oxidation and reduction reactions that lead to spoiling of food."
+                                },
+                                {
+                                    "ex_title": "Give reasons for the following",
+                                    "type": "text",
+                                    "q_txt": "Oxidation and reduction processes are two simultaneous processes.",
+                                    "a_txt": "Because when a substance gains oxygen (is oxidized), another substance must lose this oxygen (is reduced), and when a substance loses hydrogen (is oxidized), another substance must gain this hydrogen (is reduced)."
+                                },
+                                {
+                                    "ex_title": "What happens when",
+                                    "type": "text",
+                                    "q_txt": "Drops of glycerin are added to potassium permanganate powder.",
+                                    "a_txt": "A spontaneous exothermic reaction occurs, leading to the emission of smoke with the formation of a purple-coloured flame."
+                                },
+                                {
+                                    "ex_title": "What happens when",
+                                    "type": "text",
+                                    "q_txt": "Water is used in extinguishing of petroleum oil fires.",
+                                    "a_txt": "Petroleum oil floats on the surface of water, which leads to the spread of fires instead of extinguishing them."
+                                },
+                                {
+                                    "ex_title": "What happens when",
+                                    "type": "text",
+                                    "q_txt": "A stream of air is passed over red-hot copper powder.",
+                                    "a_txt": "Copper combines with oxygen of atmospheric air forming black copper oxide compound."
+                                },
+                                {
+                                    "ex_title": "What happens when",
+                                    "type": "text",
+                                    "q_txt": "A stream of hydrogen gas is passed over black copper oxide with heating.",
+                                    "a_txt": "Reddish-brown copper is formed."
+                                },
+                                {
+                                    "ex_title": "Study the following figures, then answer",
+                                    "type": "text",
+                                    "q_txt": "How do you explain: the continuation burning of the candle (X)?",
+                                    "a_txt": "Due to the abundance of oxygen, which is the main element in the combustion process."
+                                },
+                                {
+                                    "ex_title": "Study the following figures, then answer",
+                                    "type": "text",
+                                    "q_txt": "What is the principle of extinguishing fire that was achieved in the case of the candle (Y)?",
+                                    "a_txt": "The principle of oxygen isolation."
+                                }
+                            ]
+                        },
+                        {
+                            "page": 75,
+                            "questions": [
+                                {
+                                    "ex_title": "Study the following figures, then answer",
+                                    "type": "text",
+                                    "q_txt": "What is the change that occurs to the colour of copper? Explain.",
+                                    "a_txt": "It turns from reddish-brown to black / Because copper combines with oxygen of atmospheric air, forming black copper oxide compound."
+                                },
+                                {
+                                    "ex_title": "Study the following figures, then answer",
+                                    "type": "text",
+                                    "q_txt": "Write the reaction equation, illustrating on which the oxidizing agent, the reducing agent, and the oxidation-reduction processes.",
+                                    "a_txt": "2Cu + O2 -> 2CuO (Oxidation process, Reduction process, Oxidizing agent, Reducing agent)"
+                                },
+                                {
+                                    "ex_title": "Variant questions",
+                                    "type": "text",
+                                    "q_txt": "Mention the main principles of extinguishing fire.",
+                                    "a_txt": "Fuel removal, Smothering, Cooling."
+                                },
+                                {
+                                    "ex_title": "Variant questions",
+                                    "type": "text",
+                                    "q_txt": "Mention an application for each principle, illustrating the element that is removed from the combustion triangle.",
+                                    "a_txt": "Fuel removal: Closing gas valves when fires occur. Smothering: Extinguishing frying pan fires by covering them with a metal lid. Cooling: Extinguishing forest fires with water."
+                                },
+                                {
+                                    "ex_title": "Variant questions",
+                                    "type": "text",
+                                    "q_txt": "Mention a technological application for the redox reactions.",
+                                    "a_txt": "Preserving food by air evacuation."
+                                },
+                                {
+                                    "ex_title": "Variant questions",
+                                    "type": "text",
+                                    "q_txt": "In the reaction: Hydrogen + copper oxide -> Water vapour + copper (1) What is the process which each of the following undergoes? 1- Black copper oxide. 2- Hydrogen gas.",
+                                    "a_txt": "1- Reduction process. 2- Oxidation process."
+                                },
+                                {
+                                    "ex_title": "Variant questions",
+                                    "type": "text",
+                                    "q_txt": "(2) Write the symbolic chemical equation which expresses the previous reaction.",
+                                    "a_txt": "CuO + H2 -> Cu + H2O"
+                                },
+                                {
+                                    "ex_title": "Variant questions",
+                                    "type": "text",
+                                    "q_txt": "(3) Why is copper oxide considered an oxidizing agent and hydrogen gas a reducing agent?",
+                                    "a_txt": "Because copper oxide gave oxygen to hydrogen, turning into copper, while at the same time hydrogen removed oxygen from copper oxide, turning into water vapour."
+                                },
+                                {
+                                    "ex_title": "Variant questions",
+                                    "type": "complete",
+                                    "q_txt": "The opposite equation represents a redox reaction: 2H2S + SO2 -> 3S + 2H2O (1) Complete: 1- The process (X) represents _____ process. 2- The process (Y) represents _____ process.",
+                                    "a_txt": [
+                                        "oxidation",
+                                        "reduction"
+                                    ]
+                                },
+                                {
+                                    "ex_title": "Variant questions",
+                                    "type": "text",
+                                    "q_txt": "(2) Identify the oxidizing agent and the reducing agent in this reaction.",
+                                    "a_txt": "Oxidizing agent: SO2, Reducing agent: H2S"
+                                }
+                            ]
+                        }
+                    ]
+                }
+            ]
+        }
+    ]
+}

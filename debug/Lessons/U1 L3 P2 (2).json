@@ -1,0 +1,265 @@
+{
+    "units": [
+        {
+            "unit_num": 1,
+            "unit_name": "Thermal Energy and Changes of Matter",
+            "lessons": [
+                {
+                    "lesson_num": 3,
+                    "lesson_name": "Combustion, Oxidation and Reduction",
+                    "pages": [
+                        {
+                            "page": 69,
+                            "questions": [
+                                {
+                                    "ex_title": "What is meant by each of the following:",
+                                    "type": "text",
+                                    "q_txt": "Fuel.",
+                                    "a_txt": "It is a flammable material used to produce thermal energy as a result of the occurrence of an exothermic reaction.",
+                                    "mcq_choices": null
+                                },
+                                {
+                                    "ex_title": "What is meant by each of the following:",
+                                    "type": "text",
+                                    "q_txt": "The calorific value of fuel.",
+                                    "a_txt": "It is the amount of energy produced from the burning of 1 g of fuel in excess of oxygen gas.",
+                                    "mcq_choices": null
+                                },
+                                {
+                                    "ex_title": "What is meant by each of the following:",
+                                    "type": "text",
+                                    "q_txt": "Combustion.",
+                                    "a_txt": "It is the process of the combination of fuel with oxygen which is usually accompanied by the emission of light, heat or both.",
+                                    "mcq_choices": null
+                                },
+                                {
+                                    "ex_title": "What is meant by each of the following:",
+                                    "type": "text",
+                                    "q_txt": "Ignition point.",
+                                    "a_txt": "It is the temperature at which the material begins to ignite.",
+                                    "mcq_choices": null
+                                },
+                                {
+                                    "ex_title": "Mention the importance (or use) of each of the following:",
+                                    "type": "text",
+                                    "q_txt": "Ethyl alcohol (ethanol).",
+                                    "a_txt": "It is used as a fuel for cars in some countries after being mixed with gasoline.",
+                                    "mcq_choices": null
+                                },
+                                {
+                                    "ex_title": "Mention the importance (or use) of each of the following:",
+                                    "type": "text",
+                                    "q_txt": "Natural gas.",
+                                    "a_txt": "It is mainly used as a fuel in households.",
+                                    "mcq_choices": null
+                                },
+                                {
+                                    "ex_title": "Mention the importance (or use) of each of the following:",
+                                    "type": "text",
+                                    "q_txt": "The fuel of the future.",
+                                    "a_txt": "It is used as a fuel for cars and trucks powered by fuel cells (hydrogen fuel cells).",
+                                    "mcq_choices": null
+                                },
+                                {
+                                    "ex_title": "Mention the importance (or use) of each of the following:",
+                                    "type": "text",
+                                    "q_txt": "Butagas.",
+                                    "a_txt": "It is mainly used as a fuel in households.",
+                                    "mcq_choices": null
+                                },
+                                {
+                                    "ex_title": "Mention the importance (or use) of each of the following:",
+                                    "type": "text",
+                                    "q_txt": "Ethanethiol.",
+                                    "a_txt": "It is added in a very small percentage to natural gas and butagas to take the appropriate safety measures in case of gas leaks.",
+                                    "mcq_choices": null
+                                },
+                                {
+                                    "ex_title": "Mention the importance (or use) of each of the following:",
+                                    "type": "text",
+                                    "q_txt": "Bunsen flame.",
+                                    "a_txt": "It is used as a source of heat in laboratories.",
+                                    "mcq_choices": null
+                                },
+                                {
+                                    "ex_title": "Mention the importance (or use) of each of the following:",
+                                    "type": "text",
+                                    "q_txt": "Spark plugs.",
+                                    "a_txt": "Spark plugs produce a spark used to ignite the mixture of gasoline and air in the combustion chamber of the car engine during starting.",
+                                    "mcq_choices": null
+                                },
+                                {
+                                    "ex_title": "Mention the importance (or use) of each of the following:",
+                                    "type": "text",
+                                    "q_txt": "Oxyacetylene flame.",
+                                    "a_txt": "It is used for cutting and welding metals such as steel (iron) and copper.",
+                                    "mcq_choices": null
+                                },
+                                {
+                                    "ex_title": "Give reasons for the following:",
+                                    "type": "text",
+                                    "q_txt": "Ethyl alcohol is considered a renewable energy resource.",
+                                    "a_txt": "Because it is prepared from plants rich in starch such as corn plant.",
+                                    "mcq_choices": null
+                                },
+                                {
+                                    "ex_title": "Give reasons for the following:",
+                                    "type": "text",
+                                    "q_txt": "The use of biofuel is preferred over fossil fuel.",
+                                    "a_txt": "Because biofuel is a renewable resource, while fossil fuel is a non-renewable resource.",
+                                    "mcq_choices": null
+                                },
+                                {
+                                    "ex_title": "Give reasons for the following:",
+                                    "type": "text",
+                                    "q_txt": "A very small amount of ethanethiol gas is added to both natural gas and butagas.",
+                                    "a_txt": "To take appropriate safety measures in case of gas leaks, as both are odourless and ethanethiol gas is characterized by a garlic smell.",
+                                    "mcq_choices": null
+                                },
+                                {
+                                    "ex_title": "Give reasons for the following:",
+                                    "type": "text",
+                                    "q_txt": "The flame of a paraffin candle placed under a bell jar goes out in minutes.",
+                                    "a_txt": "Due to the depletion of the amount of oxygen gas inside the glass bell jar.",
+                                    "mcq_choices": null
+                                }
+                            ]
+                        },
+                        {
+                            "page": 70,
+                            "questions": [
+                                {
+                                    "ex_title": "Give reasons for the following:",
+                                    "type": "text",
+                                    "q_txt": "The combustion of a piece of steel wool in a cylinder containing pure oxygen is faster than its combustion in atmospheric air.",
+                                    "a_txt": "To increase the concentration of pure oxygen in the cylinder compared to its concentration in the air, and the rate of combustion increases with the increase in the percentage of oxygen gas.",
+                                    "mcq_choices": null
+                                },
+                                {
+                                    "ex_title": "Give reasons for the following:",
+                                    "type": "text",
+                                    "q_txt": "Bunsen flame has different colours.",
+                                    "a_txt": "Due to the difference in the amount of oxygen mixed with the fuel, which may be limited so the flame turns yellow, or abundant so the flame turns blue.",
+                                    "mcq_choices": null
+                                },
+                                {
+                                    "ex_title": "Give reasons for the following:",
+                                    "type": "text",
+                                    "q_txt": "Ignition of a matchstick when it is struck against a rough surface.",
+                                    "a_txt": "Because friction generates the heat necessary to start an exothermic chemical reaction.",
+                                    "mcq_choices": null
+                                },
+                                {
+                                    "ex_title": "Give reasons for the following:",
+                                    "type": "text",
+                                    "q_txt": "The ignition point determines how dangerous the fuel is to use.",
+                                    "a_txt": "Because as the ignition point of the fuel is low, its flammability increases, so its danger increases, and vice versa.",
+                                    "mcq_choices": null
+                                },
+                                {
+                                    "ex_title": "Give reasons for the following:",
+                                    "type": "text",
+                                    "q_txt": "Using spark plugs in cars.",
+                                    "a_txt": "Because the spark plugs produce a spark that is used to ignite the mixture of gasoline and air in the combustion chamber of the car engine during starting.",
+                                    "mcq_choices": null
+                                },
+                                {
+                                    "ex_title": "Give reasons for the following:",
+                                    "type": "text",
+                                    "q_txt": "The oxyacetylene flame is used in cutting and welding metals.",
+                                    "a_txt": "Because the oxyacetylene flame reaches a temperature of 3000\u00b0C which is sufficient for that.",
+                                    "mcq_choices": null
+                                },
+                                {
+                                    "ex_title": "What happens when:",
+                                    "type": "text",
+                                    "q_txt": "A paraffin candle is lit and placed under a glass bell jar.",
+                                    "a_txt": "The candle goes out after a few minutes.",
+                                    "mcq_choices": null
+                                },
+                                {
+                                    "ex_title": "What happens when:",
+                                    "type": "text",
+                                    "q_txt": "A gaseous fuel ignites in a limited amount of oxygen gas in bunsen burner.",
+                                    "a_txt": "The fuel burns incompletely and the Bunsen flame turns yellow.",
+                                    "mcq_choices": null
+                                },
+                                {
+                                    "ex_title": "What happens when:",
+                                    "type": "text",
+                                    "q_txt": "Combustion of hydrocarbons in air.",
+                                    "a_txt": "Carbon dioxide and water vapour are formed through an exothermic reaction.",
+                                    "mcq_choices": null
+                                },
+                                {
+                                    "ex_title": "What happens when:",
+                                    "type": "text",
+                                    "q_txt": "Complete combustion of acetylene gas in the presence of excess oxygen gas.",
+                                    "a_txt": "The oxyacetylene flame is formed, which reaches a temperature of 3000\u00b0C.",
+                                    "mcq_choices": null
+                                },
+                                {
+                                    "ex_title": "Compare between each of the following:",
+                                    "type": "text",
+                                    "q_txt": "Fossil fuel, biofuel and synthetic fuel \u00abIn terms of: Examples - Usage\u00bb.",
+                                    "a_txt": "Fossil fuel: Examples (Petroleum oil, Natural gas, Coal), Usage (The most widely used in the world till now, even though it is a non-renewable resource). Biofuel: Examples (Ethyl alcohol (ethanol)), Usage (It is used as a fuel in some countries after being mixed with gasoline). Synthetic fuel: Examples (Hydrogen gas (fuel of the future)), Usage (It is used as a fuel for cars and trucks powered by fuel cells (hydrogen fuel cells)).",
+                                    "mcq_choices": null
+                                },
+                                {
+                                    "ex_title": "Compare between each of the following:",
+                                    "type": "text",
+                                    "q_txt": "Bunsen flame during complete combustion and during incomplete combustion \u00abIn terms of: Colour\u00bb.",
+                                    "a_txt": "Complete combustion: The Bunsen flame turns blue. Incomplete combustion: The Bunsen flame turns yellow.",
+                                    "mcq_choices": null
+                                },
+                                {
+                                    "ex_title": "Study the following figures, then answer:",
+                                    "type": "text",
+                                    "q_txt": "The opposite figure illustrates the combustion of two pieces of coal, one in atmospheric air and the other in excess oxygen. Determine in which of the two cases combustion is faster, with explanation.",
+                                    "a_txt": "In case (1) / To increase the concentration of pure oxygen compared to its concentration in the air, and the rate of combustion increases with the increase in the percentage of oxygen gas.",
+                                    "mcq_choices": null
+                                },
+                                {
+                                    "ex_title": "Study the following figures, then answer:",
+                                    "type": "text",
+                                    "q_txt": "This figure shows a burning candle fixed on a glass plate. What happens with explanation when we invert over it a cylinder containing: (1) Oxygen gas ? (2) Carbon dioxide gas ?",
+                                    "a_txt": "(1) The candle continues to burn/ Due to the abundance of oxygen gas which supports burning. (2) The candle flame goes out quickly / Because carbon dioxide gas does not burn and does not support burning.",
+                                    "mcq_choices": null
+                                }
+                            ]
+                        },
+                        {
+                            "page": 71,
+                            "questions":[
+                                {
+                                    "ex_title": "Variant questions",
+                                    "type": "text",
+                                    "q_txt": "The following two equations express the combustion reaction of acetylene gas under different conditions: (1) 2C2H2(g) + 3O2(g) -> 2CO2(g) + 2H2O(v) + 2C(s) (2) 2C2H2(g) + 5O2(g) -> 4CO2(g) + 2H2O(v) + heat (1) Which of the two equations illustrates the complete combustion process of acetylene? Explain.",
+                                    "a_txt": "Equation (2) / Due to the abundance of oxygen gas."
+                                },
+                                {
+                                    "ex_title": "Variant questions",
+                                    "type": "text",
+                                    "q_txt": "(2) What is the name of the flame produced by the complete combustion of acetylene? What is the range of its temperature?",
+                                    "a_txt": "Oxyacetylene flame / Its temperature reaches 3000\u00b0C"
+                                },
+                                {
+                                    "ex_title": "Variant questions",
+                                    "type": "text",
+                                    "q_txt": "The ignition point of substance (X) is 225\u00b0C, and the ignition point of substance (Y) is 38\u00b0C. Which substance ignites faster? Explain.",
+                                    "a_txt": "The substance (Y) / Because as the ignition point of the fuel is low, its flammability increases and it ignites faster."
+                                },
+                                {
+                                    "ex_title": "Variant questions",
+                                    "type": "text",
+                                    "q_txt": "Mention a technological application for the combustion reaction of hydrocarbons.",
+                                    "a_txt": "Oxyacetylene flame."
+                                }
+                            ]
+                        }
+                    ]
+                }
+            ]
+        }
+    ]
+}

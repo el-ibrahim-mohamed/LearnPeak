@@ -1,0 +1,337 @@
+{
+    "units": [
+        {
+            "unit_num": 2,
+            "unit_name": "Forces and Motion",
+            "lessons": [
+                {
+                    "lesson_num": 2,
+                    "lesson_name": "Levers",
+                    "pages": [
+                        {
+                            "page": 132,
+                            "questions": [
+                                {
+                                    "ex_title": "Write the scientific term of each of the following statements",
+                                    "type": "text",
+                                    "q_txt": "A means used by man to save time or effort or both while performing tasks.",
+                                    "a_txt": "The machine.",
+                                    "mcq_choices": null
+                                },
+                                {
+                                    "ex_title": "Write the scientific term of each of the following statements",
+                                    "type": "text",
+                                    "q_txt": "A rigid rod pivoted on a fulcrum and is acted upon by effort and load when used.",
+                                    "a_txt": "Levers.",
+                                    "mcq_choices": null
+                                },
+                                {
+                                    "ex_title": "Write the scientific term of each of the following statements",
+                                    "type": "text",
+                                    "q_txt": "The distance between the effort and the fulcrum.",
+                                    "a_txt": "Effort arm.",
+                                    "mcq_choices": null
+                                },
+                                {
+                                    "ex_title": "Write the scientific term of each of the following statements",
+                                    "type": "text",
+                                    "q_txt": "The distance between the load and the fulcrum.",
+                                    "a_txt": "Load arm.",
+                                    "mcq_choices": null
+                                },
+                                {
+                                    "ex_title": "Write the scientific term of each of the following statements",
+                                    "type": "text",
+                                    "q_txt": "The point around which the lever moves.",
+                                    "a_txt": "Fulcrum (Pivot point).",
+                                    "mcq_choices": null
+                                },
+                                {
+                                    "ex_title": "Write the scientific term of each of the following statements",
+                                    "type": "text",
+                                    "q_txt": "A law that explains the relation between effort and load at equilibrium of levers.",
+                                    "a_txt": "Law of levers.",
+                                    "mcq_choices": null
+                                },
+                                {
+                                    "ex_title": "Complete the following statements",
+                                    "type": "complete",
+                                    "q_txt": "The Winch is a _____ machine, while the wedge is a _____ machine.",
+                                    "a_txt": [
+                                        "complex",
+                                        "simple"
+                                    ],
+                                    "mcq_choices": null
+                                },
+                                {
+                                    "ex_title": "Complete the following statements",
+                                    "type": "complete",
+                                    "q_txt": "The wedge is used to _____ of the applied force, while the wheel and axle are used to _____ the force or increase the speed.",
+                                    "a_txt": [
+                                        "changing the direction",
+                                        "multiplying"
+                                    ],
+                                    "mcq_choices": null
+                                },
+                                {
+                                    "ex_title": "Complete the following statements",
+                                    "type": "complete",
+                                    "q_txt": "The law of levers states that the product of the effort x _____ equals the product of the load x _____.",
+                                    "a_txt": [
+                                        "effort arm",
+                                        "load arm"
+                                    ],
+                                    "mcq_choices": null
+                                },
+                                {
+                                    "ex_title": "Complete the following statements",
+                                    "type": "complete",
+                                    "q_txt": "The lever is at equilibrium when _____ equals _____.",
+                                    "a_txt": [
+                                        "moment of effort",
+                                        "moment of load"
+                                    ],
+                                    "mcq_choices": null
+                                },
+                                {
+                                    "ex_title": "Choose the correct answer",
+                                    "type": "mcq",
+                                    "q_txt": "All the following are simple machines, except _____",
+                                    "a_txt": 1,
+                                    "mcq_choices": [
+                                        "the wheel and the axle.",
+                                        "the tower crane.",
+                                        "the gears and the belts.",
+                                        "the inclined plane."
+                                    ]
+                                },
+                                {
+                                    "ex_title": "Choose the correct answer",
+                                    "type": "mcq",
+                                    "q_txt": "The direction of the force can be changed using _____",
+                                    "a_txt": 1,
+                                    "mcq_choices": [
+                                        "the levers and the inclined plane.",
+                                        "the pulley and the wedge.",
+                                        "the wheel and the axle.",
+                                        "the gears and the belts."
+                                    ]
+                                },
+                                {
+                                    "ex_title": "Choose the correct answer",
+                                    "type": "mcq",
+                                    "q_txt": "From the opposite figure: What is the mass of the rock placed on the left pan of the balance? (The figure shows a balanced scale with a rock on the left and a 23 N weight on the right).",
+                                    "a_txt": 1,
+                                    "mcq_choices": [
+                                        "0.023 kg",
+                                        "2.3 kg",
+                                        "23 kg",
+                                        "230 kg"
+                                    ]
+                                }
+                            ]
+                        },
+                        {
+                            "page": 133,
+                            "questions": [
+                                {
+                                    "ex_title": "Choose the correct answer",
+                                    "type": "mcq",
+                                    "q_txt": "The opposite figure represents a lever in balance. What is the mass of each pack of rice? (The figure shows a lever with 5 similar packs of rice on the left and a 10 kg weight on the right, with the fulcrum in the center).",
+                                    "a_txt": 1,
+                                    "mcq_choices": [
+                                        "5 kg",
+                                        "2 kg",
+                                        "10 kg",
+                                        "1 kg"
+                                    ]
+                                },
+                                {
+                                    "ex_title": "Choose the correct answer",
+                                    "type": "mcq",
+                                    "q_txt": "A load its weight is 60 N was placed at a distance of 1.5 m to the right of the fulcrum of a lever and another load of weight 180 N was placed on the other side of the lever at a distance of (X) to achieve equilibrium. Which of the following is the value of (X)?",
+                                    "a_txt": 0,
+                                    "mcq_choices": [
+                                        "0.5 m",
+                                        "1 m",
+                                        "1.5 m",
+                                        "3 m"
+                                    ]
+                                },
+                                {
+                                    "ex_title": "Choose the correct answer",
+                                    "type": "mcq",
+                                    "q_txt": "The opposite figure represents a lever at equilibrium. What is the weight of the object (X)? (The figure shows a lever with a 60 N force at one end, a fulcrum at the other end, and object X in between. The distance from the force to X is 20 cm, and from X to the fulcrum is 30 cm).",
+                                    "a_txt": 3,
+                                    "mcq_choices": [
+                                        "36 N",
+                                        "40 N",
+                                        "90 N",
+                                        "100 N"
+                                    ]
+                                },
+                                {
+                                    "ex_title": "Choose the correct answer",
+                                    "type": "mcq",
+                                    "q_txt": "A wheelbarrow carrying sand weighing 150 N, if the distance from the wheel to the center of gravity of the sand is 0.75 m, and the distance from the center of gravity of the sand to the handle of the wheelbarrow is 0.75 m. What is the effort (E) which is required to lift the wheelbarrow? (The figure shows a wheelbarrow with the load and effort distances marked).",
+                                    "a_txt": 3,
+                                    "mcq_choices": [
+                                        "300 N",
+                                        "225 N",
+                                        "150 N",
+                                        "75 N"
+                                    ]
+                                },
+                                {
+                                    "ex_title": "Mention one example for each of the following",
+                                    "type": "text",
+                                    "q_txt": "Complex machines.",
+                                    "a_txt": "Tower crane (Winch).",
+                                    "mcq_choices": null
+                                },
+                                {
+                                    "ex_title": "Mention one example for each of the following",
+                                    "type": "text",
+                                    "q_txt": "Simple machines.",
+                                    "a_txt": "Gears and belts.",
+                                    "mcq_choices": null
+                                },
+                                {
+                                    "ex_title": "What is meant by each of the following",
+                                    "type": "text",
+                                    "q_txt": "The machine.",
+                                    "a_txt": "It is a means used by man to save time, effort, or both while performing tasks.",
+                                    "mcq_choices": null
+                                },
+                                {
+                                    "ex_title": "What is meant by each of the following",
+                                    "type": "text",
+                                    "q_txt": "Levers.",
+                                    "a_txt": "It is a rigid rod, either straight or curved that moves around a fixed point called fulcrum F (pivot point) during its use it is affected by an effort E (force) and a load L (resistance).",
+                                    "mcq_choices": null
+                                },
+                                {
+                                    "ex_title": "What is meant by each of the following",
+                                    "type": "text",
+                                    "q_txt": "Fulcrum.",
+                                    "a_txt": "The point around which the lever moves.",
+                                    "mcq_choices": null
+                                },
+                                {
+                                    "ex_title": "What is meant by each of the following",
+                                    "type": "text",
+                                    "q_txt": "Effort arm.",
+                                    "a_txt": "The distance between the applied effort and the fulcrum.",
+                                    "mcq_choices": null
+                                },
+                                {
+                                    "ex_title": "What is meant by each of the following",
+                                    "type": "text",
+                                    "q_txt": "Load arm.",
+                                    "a_txt": "The distance between the load and the fulcrum.",
+                                    "mcq_choices": null
+                                },
+                                {
+                                    "ex_title": "What is meant by each of the following",
+                                    "type": "text",
+                                    "q_txt": "Law of levers.",
+                                    "a_txt": "The product of multiplying the effort by its arm equals the product of multiplying the load by its arm.",
+                                    "mcq_choices": null
+                                },
+                                {
+                                    "ex_title": "Mention the use of each of the following",
+                                    "type": "text",
+                                    "q_txt": "The tower crane.",
+                                    "a_txt": "It is used to lift concrete blocks used in the construction of large buildings.",
+                                    "mcq_choices": null
+                                },
+                                {
+                                    "ex_title": "Mention the use of each of the following",
+                                    "type": "text",
+                                    "q_txt": "The pulley.",
+                                    "a_txt": "It is used to change the direction of the force during lifting or lowering weights.",
+                                    "mcq_choices": null
+                                },
+                                {
+                                    "ex_title": "Mention the use of each of the following",
+                                    "type": "text",
+                                    "q_txt": "The inclined plane.",
+                                    "a_txt": "It is used to save effort.",
+                                    "mcq_choices": null
+                                },
+                                {
+                                    "ex_title": "Mention the use of each of the following",
+                                    "type": "text",
+                                    "q_txt": "The wheel and the axle.",
+                                    "a_txt": "They are used for multiplying the force or increasing speed.",
+                                    "mcq_choices": null
+                                },
+                                {
+                                    "ex_title": "Mention the use of each of the following",
+                                    "type": "text",
+                                    "q_txt": "The wedge.",
+                                    "a_txt": "It is used to change the direction of the applied force.",
+                                    "mcq_choices": null
+                                },
+                                {
+                                    "ex_title": "Mention the use of each of the following",
+                                    "type": "text",
+                                    "q_txt": "The gears and the belts.",
+                                    "a_txt": "They are used to transmit motion and change speed as in bicycles.",
+                                    "mcq_choices": null
+                                }
+                            ]
+                        },
+                        {
+                            "page": 134,
+                            "questions": [
+                                {
+                                    "ex_title": "Problems",
+                                    "type": "text",
+                                    "q_txt": "A first class lever at equilibrium, if the applied effort at one end is 100 N, the effort arm is 40 cm and the load arm is 160 cm. Calculate the value of the load.",
+                                    "a_txt": "Effort x Effort arm = Load x Load arm. 100 x 40 = Load x 160. Value of the load = (100 x 40) / 160 = 25 N.",
+                                    "mcq_choices": null
+                                },
+                                {
+                                    "ex_title": "Problems",
+                                    "type": "text",
+                                    "q_txt": "A graduated ruler, its length is 40 cm, is suspended from its middle by a strong thread, so it becomes balanced horizontally, then a weight of 50 N is hung at one of its ends. Find the value of the weight required to be hung at the other side at a distance of 20 cm from the fulcrum to keep the ruler balanced.",
+                                    "a_txt": "Effort x Effort arm = Load x Load arm. Effort x 20 = 50 x 20. The value of the weight required to be hung = (50 x 20) / 20 = 50 N.",
+                                    "mcq_choices": null
+                                },
+                                {
+                                    "ex_title": "Problems",
+                                    "type": "text",
+                                    "q_txt": "The opposite figure represents a seesaw its length is 4 m a child (X), his body weight equals 300 N, sits at its left end and a child (Y) sits at a distance of 0.5 m from its right end. What is the weight of the child (Y) that achieves equilibrium of the seesaw? (The figure shows a seesaw with child X at the end and child Y 0.5m from the other end. The fulcrum is in the middle).",
+                                    "a_txt": "Effort arm = 2 - 0.5 = 1.5 m. Effort x Effort arm = Load x Load arm. Effort x 1.5 = 300 x 2. Effort (weight of the child Y) = (300 x 2) / 1.5 = 400 N.",
+                                    "mcq_choices": null
+                                },
+                                {
+                                    "ex_title": "Variant questions",
+                                    "type": "text",
+                                    "q_txt": "Explain: The tower crane is an example of the complex machines.",
+                                    "a_txt": "Because it consists of many simple machines.",
+                                    "mcq_choices": null
+                                },
+                                {
+                                    "ex_title": "Variant questions",
+                                    "type": "text",
+                                    "q_txt": "What are the components of the lever?",
+                                    "a_txt": "Fulcrum F (pivot point), Effort E (force), Load L (resistance).",
+                                    "mcq_choices": null
+                                },
+                                {
+                                    "ex_title": "Variant questions",
+                                    "type": "text",
+                                    "q_txt": "The opposite figure represents a means used to move the wheelchair: (1) To which type of simple machines does this means belongs? (2) What is the importance of this type of machines? (The figure shows a wheelchair being pushed up an inclined ramp).",
+                                    "a_txt": "(1) Inclined plane. (2) It is used to save effort.",
+                                    "mcq_choices": null
+                                }
+                            ]
+                        }
+                    ]
+                }
+            ]
+        }
+    ]
+}

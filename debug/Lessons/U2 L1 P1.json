@@ -1,0 +1,79 @@
+{
+    "units": [
+        {
+            "unit_num": 2,
+            "unit_name": "Forces and Motion",
+            "lessons": [
+                {
+                    "lesson_num": 1,
+                    "lesson_name": "Newton's Laws of Motion",
+                    "pages": [
+                        {
+                            "page": 81,
+                            "explanation": [
+                                "Physical quantities are classified into scalar physical quantities, which are quantities that are fully defined only by magnitude, and vector physical quantities, which are quantities that are fully defined by both magnitude and direction. Mass and time are examples of scalar quantities, while force and acceleration are examples of vector quantities. Mass is a scalar physical quantity because it is fully defined by its magnitude only, while force is a vector physical quantity because it is fully defined by both its magnitude and direction.",
+                                "Force in kinematics is an external agent that acts on an object and changes or tries to change its state of rest or uniform motion. Force is measured in newtons (N). To understand the effect of forces on objects, it is necessary to know the magnitude of the force, the direction of the force, the point of action of the force, and the line of action of the force. The magnitude is the value of the force, such as 10 N. The direction indicates the force's effect. The point of action is the specific point on the object at which the force acts. The line of action is a straight line passing through the point of action of the force and extending in both directions along the arrow representing the direction of the force."
+                            ]
+                        },
+                        {
+                            "page": 82,
+                            "explanation": [
+                                "When two forces act on the same object, they may act on the same line of action or not act on the same line of action. The force is measured by a device called a newton meter or spring balance, which is shown in the figure. Exploring the relationship between force and motion dates back to ancient times. Aristotle believed that any object does not continue in motion unless a force continuously acts upon it. The scientist Galileo demonstrated the inaccuracy of Aristotle's belief with an experiment from which he concluded that objects tend to maintain their state of rest or motion unless affected by an external force. This property was later called inertia."
+                            ]
+                        },
+                        {
+                            "page": 83,
+                            "explanation": [
+                                "The scientist Isaac Newton was an English scientist considered one of the most influential scientists in physics and mathematics over ages and one of the icons of the scientific revolution. He formulated Newton's Laws of Motion and the universal law of gravitation, which dominated scientists' view of the material universe for three centuries until they were refined by the theory of relativity. He made important contributions in the field of optics, developed a theory of colours based on his observations when he used a prism to analyze white light into the colours of the visible spectrum, formulated an empirical law of cooling, and studied the speed of sound in air.",
+                                "Before studying Newton's Laws of Motion, it is necessary to understand some concepts related to force, such as net force. When a number of forces act on an object, the total resulting force in magnitude and direction is known as the net force. The net force is the total force in magnitude and direction resulting from the effect of a number of forces acting on an object. The net force acting on the object determines whether the object moves from rest, stops moving, or changes its speed or direction."
+                            ]
+                        },
+                        {
+                            "page": 84,
+                            "explanation": [
+                                "The forces acting on an object may be balanced forces or unbalanced forces. If two forces are equal in magnitude and opposite in direction along the same line of action, the net force is the difference between the two forces, which equals zero, and these are known as balanced forces. If several forces act along the same line of action, and they are in the same direction, the net force is the sum of these forces in their common direction. If they are not equal in magnitude and opposite in direction, the net force is the difference between these forces and in the direction of the greater force. In these cases, the net force does not equal zero, and they are known as unbalanced forces."
+                            ]
+                        },
+                        {
+                            "page": 85,
+                            "explanation": [
+                                "Net force determines the kinematic state of the object. When the net force equals zero (balanced forces), a stationary object remains at rest, and a moving object continues moving at the same constant velocity. When the net force does not equal zero (unbalanced forces), a stationary object moves in the direction of the net force. For a moving object, velocity increases if the direction of the net force is in the same direction of its motion, velocity decreases if the direction of the net force is opposite to the direction of its motion, and the direction of motion changes if the direction of the net force is at an angle to the direction of its motion."
+                            ]
+                        },
+                        {
+                            "page": 86,
+                            "explanation": [
+                                "Newton's Laws of Motion are the foundation for studying kinematics and are expressed in simple mathematical formulas, which are useful in studying the causes of motion. Newton established three laws to explain and interpret the motion of objects when acted upon by one force or a number of forces. Newton's first law clarifies that the resultant of the forces acting on an object is the reason for changing its state of rest or motion. When a box is placed on the top of a stationary car, it remains stationary unless acted upon by an external unbalanced force. When a box is placed on the top of a moving car, it moves at the same velocity of the car, but when the car stops suddenly, the box moves forward."
+                            ]
+                        },
+                        {
+                            "page": 87,
+                            "explanation": [
+                                "An object tends to keep its state of rest or motion for a certain period of time unless acted upon by external unbalanced forces that change its kinematic state, which is known as the inertia of objects or the law of inertia. Newton's First Law states that the object keeps its state of rest or motion at a constant velocity in a straight line, unless acted upon by external unbalanced forces that change its state. Examples of daily observations of inertia include passengers rushing forward when a bus stops suddenly because their inertia causes them to resist the change in their state of motion, and passengers rushing backward when a stationary bus moves suddenly because their inertia causes them to resist the sudden movement."
+                            ]
+                        },
+                        {
+                            "page": 88,
+                            "explanation": [
+                                "What happens when a tablecloth is quickly pulled from under a fruit plate placed on a table? The plate remains in its place, because the inertia of the plate causes it to resist the sudden movement of the tablecloth, to keep its state of rest. The inertia of a stationary or moving object depends on its mass, so as the mass of the object increases, its inertia increases. It is difficult for the object to move when it is at rest, and it is difficult for the object to stop when it is moving, which is indicated by the increased time of keeping its state of motion, causing the stopping time and stopping distance to increase.",
+                                "The stopping distance of the car (Y) is greater than the stopping distance of the car (X). Stopping time is the time taken for the moving object to stop, and stopping distance is the distance travelled by the moving object during the stopping time. In the graph, the vertical axis represents the velocity of three vehicles, and the horizontal axis represents the stopping distance of each of the three vehicles. From the data in the graph, it is clear that the stopping distances of the three vehicles are directly proportional to their masses. The greater the mass of a moving object, the greater its inertia."
+                            ]
+                        },
+                        {
+                            "page": 89,
+                            "explanation": [
+                                "The following figures illustrate four carts of different masses moving at different velocities. The inertia of objects increases only with their masses and not their velocity, while the kinetic energy of objects increases with either their masses, their velocity, or both, according to the law: Kinetic energy (KE) = 1/2 * Mass (m) * Square of velocity (v^2). Technological applications include cruise control, a device used to keep the velocity of cars constant on highways without any direct driver intervention, through using sensors. The sensors control pumping the fuel at a rate that makes the forces acting on the car balanced. Air hockey is a fun game in which two round paddles are used to push a light disc that slides on a smooth table with holes."
+                            ]
+                        },
+                        {
+                            "page": 90,
+                            "explanation": [
+                                "The idea of the working of air hockey is that a continuous stream of air is pushed through many small holes on the table surface to reduce the friction between the disc and the table, allowing the disc to maintain its state of motion for a longer period. The figure shows the air current coming from a blower through the table holes."
+                            ]
+                        }
+                    ]
+                }
+            ]
+        }
+    ]
+}

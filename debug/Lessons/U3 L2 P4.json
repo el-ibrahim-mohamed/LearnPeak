@@ -1,0 +1,959 @@
+{
+    "units": [
+        {
+            "unit_num": 3,
+            "unit_name": "Reproduction in Living Organisms",
+            "lessons": [
+                {
+                    "lesson_num": 2,
+                    "lesson_name": "Floral Reproduction",
+                    "pages": [
+                        {
+                            "page": 193,
+                            "questions": [
+                                {
+                                    "ex_title": "Write the scientific term of each of the following statements:",
+                                    "type": "text",
+                                    "q_txt": "The process of the transfer of pollen grains from the anthers of the stamens to the stigmas of the carpels.",
+                                    "a_txt": "Pollination.",
+                                    "mcq_choices": null
+                                },
+                                {
+                                    "ex_title": "Write the scientific term of each of the following statements:",
+                                    "type": "text",
+                                    "q_txt": "The process of the transfer of pollen grains from the anther of a flower to the stigma in the same flower or to the stigma in another flower in the same plant.",
+                                    "a_txt": "Self-pollination.",
+                                    "mcq_choices": null
+                                },
+                                {
+                                    "ex_title": "Write the scientific term of each of the following statements:",
+                                    "type": "text",
+                                    "q_txt": "The process of the transfer of pollen grains from the anther of a flower in a plant to the stigma in another flower in another plant of the same species.",
+                                    "a_txt": "Cross-pollination.",
+                                    "mcq_choices": null
+                                },
+                                {
+                                    "ex_title": "Write the scientific term of each of the following statements:",
+                                    "type": "text",
+                                    "q_txt": "An opening through which the nucleus of the pollen grain reaches to the nucleus of the ovule.",
+                                    "a_txt": "Micropyle opening.",
+                                    "mcq_choices": null
+                                },
+                                {
+                                    "ex_title": "Write the scientific term of each of the following statements:",
+                                    "type": "text",
+                                    "q_txt": "The process of fusion of the nucleus of the pollen grain with the nucleus of the ovule to form the zygote.",
+                                    "a_txt": "Fertilization in the flower.",
+                                    "mcq_choices": null
+                                },
+                                {
+                                    "ex_title": "Write the scientific term of each of the following statements:",
+                                    "type": "text",
+                                    "q_txt": "The cell resulting from the fusion of the nucleus of the pollen grain with the nucleus of the ovule.",
+                                    "a_txt": "Zygote.",
+                                    "mcq_choices": null
+                                },
+                                {
+                                    "ex_title": "Write the scientific term of each of the following statements:",
+                                    "type": "text",
+                                    "q_txt": "A stage in which the formation of the roots, stem and leaves begins in the life cycle of flowering plants.",
+                                    "a_txt": "Vegetative growth.",
+                                    "mcq_choices": null
+                                },
+                                {
+                                    "ex_title": "Complete the following sentences:",
+                                    "type": "complete",
+                                    "q_txt": "Self-pollinated flowers are characterized by the maturity of _____ and _____ simultaneously at the same time.",
+                                    "a_txt": [
+                                        "stamens",
+                                        "carpels"
+                                    ],
+                                    "mcq_choices": null
+                                }
+                            ]
+                        },
+                        {
+                            "page": 194,
+                            "questions": [
+                                {
+                                    "ex_title": "Complete the following sentences:",
+                                    "type": "complete",
+                                    "q_txt": "The sex of the flowers of maize (corn) is _____, so they are _____ pollinated.",
+                                    "a_txt": [
+                                        "unisexual",
+                                        "cross"
+                                    ],
+                                    "mcq_choices": null
+                                },
+                                {
+                                    "ex_title": "Complete the following sentences:",
+                                    "type": "complete",
+                                    "q_txt": "Wind-pollinated flowers are characterized by _____ anthers and _____ stigmas.",
+                                    "a_txt": [
+                                        "long, hanging outside",
+                                        "feathery, sticky"
+                                    ],
+                                    "mcq_choices": null
+                                },
+                                {
+                                    "ex_title": "Complete the following sentences:",
+                                    "type": "complete",
+                                    "q_txt": "Pollen grains in insect-pollinated flowers are characterized by being _____ or _____.",
+                                    "a_txt": [
+                                        "sticky",
+                                        "rough"
+                                    ],
+                                    "mcq_choices": null
+                                },
+                                {
+                                    "ex_title": "Complete the following sentences:",
+                                    "type": "complete",
+                                    "q_txt": "The stigmas of wind-pollinated flowers are located _____ the flower, while the stigmas of insect-pollinated flowers are located _____ the flower.",
+                                    "a_txt": [
+                                        "outside",
+                                        "inside"
+                                    ],
+                                    "mcq_choices": null
+                                },
+                                {
+                                    "ex_title": "Complete the following sentences:",
+                                    "type": "complete",
+                                    "q_txt": "The zygote in the plant results from the fusion of _____ with _____.",
+                                    "a_txt": [
+                                        "nucleus of the male cell (pollen grain)",
+                                        "nucleus of the female cell (ovule)"
+                                    ],
+                                    "mcq_choices": null
+                                },
+                                {
+                                    "ex_title": "Complete the following sentences:",
+                                    "type": "complete",
+                                    "q_txt": "After fertilization, _____ divides mitotically to form the _____.",
+                                    "a_txt": [
+                                        "zygote",
+                                        "embryo"
+                                    ],
+                                    "mcq_choices": null
+                                },
+                                {
+                                    "ex_title": "Complete the following sentences:",
+                                    "type": "complete",
+                                    "q_txt": "After fertilization, the ovary develops into _____ and the ovules inside the ovary develop into _____.",
+                                    "a_txt": [
+                                        "fruit",
+                                        "seeds"
+                                    ],
+                                    "mcq_choices": null
+                                },
+                                {
+                                    "ex_title": "Complete the following sentences:",
+                                    "type": "complete",
+                                    "q_txt": "After the formation of the fruit, corolla may remain as in _____ fruit, but in _____ fruit, stamens and sepals remain.",
+                                    "a_txt": [
+                                        "cucumber",
+                                        "pomegranate"
+                                    ],
+                                    "mcq_choices": null
+                                },
+                                {
+                                    "ex_title": "Complete the following sentences:",
+                                    "type": "complete",
+                                    "q_txt": "The life cycle of flowering plants passes through four stages: germination, _____, reproduction and _____.",
+                                    "a_txt": [
+                                        "vegetative growth",
+                                        "seed dispersal"
+                                    ],
+                                    "mcq_choices": null
+                                },
+                                {
+                                    "ex_title": "Complete the following sentences:",
+                                    "type": "complete",
+                                    "q_txt": "In the life cycle of flowering plants, the seed turns into a seedling in the _____ stage, while the mature plant begins to form flowers in the _____ stage.",
+                                    "a_txt": [
+                                        "germination",
+                                        "reproduction"
+                                    ],
+                                    "mcq_choices": null
+                                },
+                                {
+                                    "ex_title": "Choose the correct answer:",
+                                    "type": "mcq",
+                                    "q_txt": "In the opposite figure: Which of the following expresses the pollination process? (The figure shows two flowers, A and B are self-pollination within the same flower, C and D are cross-pollination between flowers).",
+                                    "a_txt": 2,
+                                    "mcq_choices": [
+                                        "(B) only.",
+                                        "(D) only.",
+                                        "(A), (B).",
+                                        "(C), (D)."
+                                    ]
+                                },
+                                {
+                                    "ex_title": "Choose the correct answer:",
+                                    "type": "mcq",
+                                    "q_txt": "Self-pollinated flowers are characterized by all of the following, except _____.",
+                                    "a_txt": 3,
+                                    "mcq_choices": [
+                                        "the simultaneous maturity of stamens and carpels.",
+                                        "the flowers do not bloom until pollination is completed.",
+                                        "the anthers are at a higher level than the stigmas.",
+                                        "all of them are unisexual."
+                                    ]
+                                },
+                                {
+                                    "ex_title": "Choose the correct answer:",
+                                    "type": "mcq",
+                                    "q_txt": "Characteristics of wind-pollinated flowers include _____.",
+                                    "a_txt": 1,
+                                    "mcq_choices": [
+                                        "anthers that are difficult to be opened.",
+                                        "sticky feathery stigmas.",
+                                        "rough pollen grains.",
+                                        "fragrant petals."
+                                    ]
+                                }
+                            ]
+                        },
+                        {
+                            "page": 195,
+                            "questions": [
+                                {
+                                    "ex_title": "Choose the correct answer:",
+                                    "type": "mcq",
+                                    "q_txt": "All the following are characteristics of pollen grains in wind-pollinated flowers, except that they are _____.",
+                                    "a_txt": 0,
+                                    "mcq_choices": [
+                                        "rough.",
+                                        "light.",
+                                        "dry.",
+                                        "smooth."
+                                    ]
+                                },
+                                {
+                                    "ex_title": "Choose the correct answer:",
+                                    "type": "mcq",
+                                    "q_txt": "In the opposite figure: This flower is cross-pollinated by _____ (The figure shows a bee visiting a flower).",
+                                    "a_txt": 1,
+                                    "mcq_choices": [
+                                        "water.",
+                                        "insects.",
+                                        "wind.",
+                                        "human."
+                                    ]
+                                },
+                                {
+                                    "ex_title": "Choose the correct answer:",
+                                    "type": "mcq",
+                                    "q_txt": "Pollination often occurs in large and colourful flowers by _____.",
+                                    "a_txt": 1,
+                                    "mcq_choices": [
+                                        "air.",
+                                        "insects.",
+                                        "water.",
+                                        "human."
+                                    ]
+                                },
+                                {
+                                    "ex_title": "Choose the correct answer:",
+                                    "type": "mcq",
+                                    "q_txt": "Which of the following shows the characteristics of insect-pollinated flowers?",
+                                    "a_txt": 0,
+                                    "mcq_choices": [
+                                        "Anthers: Inside the flower, Pollen grains: Sticky and rough, Stigma: Inside the flower",
+                                        "Anthers: Outside the flower, Pollen grains: Sticky and rough, Stigma: Inside the flower",
+                                        "Anthers: Inside the flower, Pollen grains: Dry and light, Stigma: Outside the flower",
+                                        "Anthers: Outside the flower, Pollen grains: Dry and light, Stigma: Outside the flower"
+                                    ]
+                                },
+                                {
+                                    "ex_title": "Choose the correct answer:",
+                                    "type": "mcq",
+                                    "q_txt": "In the opposite figure: The place of production of male and female gametes respectively is _____ (The figure shows a flower with P pointing to anther, Q to filament, R to ovary).",
+                                    "a_txt": 0,
+                                    "mcq_choices": [
+                                        "(P), (R).",
+                                        "(Q), (P).",
+                                        "(R), (P).",
+                                        "(R), (Q)."
+                                    ]
+                                },
+                                {
+                                    "ex_title": "Choose the correct answer:",
+                                    "type": "mcq",
+                                    "q_txt": "The fertilized ovule is called _____.",
+                                    "a_txt": 1,
+                                    "mcq_choices": [
+                                        "the seed.",
+                                        "the zygote.",
+                                        "the fruit.",
+                                        "the embryo."
+                                    ]
+                                },
+                                {
+                                    "ex_title": "Choose the correct answer:",
+                                    "type": "mcq",
+                                    "q_txt": "Fertilization occurs in plants at the moment of the formation of _____.",
+                                    "a_txt": 1,
+                                    "mcq_choices": [
+                                        "the embryo.",
+                                        "the zygote.",
+                                        "the ovule.",
+                                        "the pollen grain."
+                                    ]
+                                },
+                                {
+                                    "ex_title": "Choose the correct answer:",
+                                    "type": "mcq",
+                                    "q_txt": "The organ responsible for the formation of the fruit in the plant is _____.",
+                                    "a_txt": 1,
+                                    "mcq_choices": [
+                                        "the sepal.",
+                                        "the ovary.",
+                                        "the anther.",
+                                        "the petal."
+                                    ]
+                                },
+                                {
+                                    "ex_title": "Choose the correct answer:",
+                                    "type": "mcq",
+                                    "q_txt": "The seed of the peach fruit develops from the _____.",
+                                    "a_txt": 2,
+                                    "mcq_choices": [
+                                        "anther.",
+                                        "ovary.",
+                                        "ovum.",
+                                        "stamen."
+                                    ]
+                                },
+                                {
+                                    "ex_title": "Choose the correct answer:",
+                                    "type": "mcq",
+                                    "q_txt": "The opposite figure shows a type of fruit (Peach). Which of the following describes the flower that forms this fruit?",
+                                    "a_txt": 0,
+                                    "mcq_choices": [
+                                        "It contains one ovule.",
+                                        "It does not have a stigma.",
+                                        "It does not have male organs.",
+                                        "It is pollinated without fertilization."
+                                    ]
+                                }
+                            ]
+                        },
+                        {
+                            "page": 196,
+                            "questions": [
+                                {
+                                    "ex_title": "Choose the correct answer:",
+                                    "type": "mcq",
+                                    "q_txt": "Which of the following fruits keeps the calyx after fruit formation?",
+                                    "a_txt": 1,
+                                    "mcq_choices": [
+                                        "Pomegranate.",
+                                        "Eggplant.",
+                                        "Cucumber.",
+                                        "Zucchini."
+                                    ]
+                                },
+                                {
+                                    "ex_title": "Choose the correct answer:",
+                                    "type": "mcq",
+                                    "q_txt": "From the opposite diagram: Which of the following is correct? (Diagram shows cycle: Germination -> (1) -> Reproduction -> (2) -> Germination).",
+                                    "a_txt": 1,
+                                    "mcq_choices": [
+                                        "(1): Planting the seed, (2): Seed dispersal.",
+                                        "(1): Vegetative growth, (2): Seed dispersal.",
+                                        "(1): Seed dispersal, (2): Planting the seed.",
+                                        "(1): Seed dispersal, (2): Vegetative growth."
+                                    ]
+                                },
+                                {
+                                    "ex_title": "Mark (T) or (X) for each statement, with correction if needed:",
+                                    "type": "true_false_with_correction",
+                                    "q_txt": "The unisexual flower is cross-pollinated.",
+                                    "a_txt": [
+                                        "True",
+                                        null
+                                    ],
+                                    "mcq_choices": null
+                                },
+                                {
+                                    "ex_title": "Mark (T) or (X) for each statement, with correction if needed:",
+                                    "type": "true_false_with_correction",
+                                    "q_txt": "In the pollination process, pollen grains transfer from the stigmas of the carpels to the anthers of the stamens.",
+                                    "a_txt": [
+                                        "False",
+                                        {
+                                            "mistake": "from the stigmas of the carpels to the anthers of the stamens",
+                                            "correction": "from the anthers of the stamens to the stigmas of the carpels"
+                                        }
+                                    ],
+                                    "mcq_choices": null
+                                },
+                                {
+                                    "ex_title": "Mark (T) or (X) for each statement, with correction if needed:",
+                                    "type": "true_false_with_correction",
+                                    "q_txt": "When fertilization occurs, one of the two male nuclei fuses with the nucleus of the ovule.",
+                                    "a_txt": [
+                                        "True",
+                                        null
+                                    ],
+                                    "mcq_choices": null
+                                },
+                                {
+                                    "ex_title": "Mark (T) or (X) for each statement, with correction if needed:",
+                                    "type": "true_false_with_correction",
+                                    "q_txt": "The ovary that contains more than one pollen grain produces a fruit containing more than one seed.",
+                                    "a_txt": [
+                                        "False",
+                                        {
+                                            "mistake": "more than one pollen grain",
+                                            "correction": "more than one ovule"
+                                        }
+                                    ],
+                                    "mcq_choices": null
+                                },
+                                {
+                                    "ex_title": "Mark (T) or (X) for each statement, with correction if needed:",
+                                    "type": "true_false_with_correction",
+                                    "q_txt": "After fertilization, the ovary develops into a fruit.",
+                                    "a_txt": [
+                                        "True",
+                                        null
+                                    ],
+                                    "mcq_choices": null
+                                },
+                                {
+                                    "ex_title": "Mark (T) or (X) for each statement, with correction if needed:",
+                                    "type": "true_false_with_correction",
+                                    "q_txt": "When the fruit is formed, the calyx remains in the zucchini and eggplant.",
+                                    "a_txt": [
+                                        "False",
+                                        {
+                                            "mistake": "zucchini and eggplant",
+                                            "correction": "tomato and eggplant"
+                                        }
+                                    ],
+                                    "mcq_choices": null
+                                },
+                                {
+                                    "ex_title": "Mark (T) or (X) for each statement, with correction if needed:",
+                                    "type": "true_false_with_correction",
+                                    "q_txt": "In the germination stage, the seed develops into a seedling.",
+                                    "a_txt": [
+                                        "True",
+                                        null
+                                    ],
+                                    "mcq_choices": null
+                                },
+                                {
+                                    "ex_title": "Mention one example for each of the following:",
+                                    "type": "text",
+                                    "q_txt": "A fruit that keeps the calyx.",
+                                    "a_txt": "Tomato fruit.",
+                                    "mcq_choices": null
+                                },
+                                {
+                                    "ex_title": "Mention one example for each of the following:",
+                                    "type": "text",
+                                    "q_txt": "A fruit that keeps the corolla.",
+                                    "a_txt": "Cucumber fruit.",
+                                    "mcq_choices": null
+                                },
+                                {
+                                    "ex_title": "Mention one example for each of the following:",
+                                    "type": "text",
+                                    "q_txt": "A fruit that keeps the stamens and sepals.",
+                                    "a_txt": "Pomegranate fruit.",
+                                    "mcq_choices": null
+                                },
+                                {
+                                    "ex_title": "Mention one example for each of the following:",
+                                    "type": "text",
+                                    "q_txt": "A fruit with one seed.",
+                                    "a_txt": "Peach fruit.",
+                                    "mcq_choices": null
+                                },
+                                {
+                                    "ex_title": "Mention one example for each of the following:",
+                                    "type": "text",
+                                    "q_txt": "A fruit containing several seeds.",
+                                    "a_txt": "Pea fruit.",
+                                    "mcq_choices": null
+                                },
+                                {
+                                    "ex_title": "What is meant by each of the following:",
+                                    "type": "text",
+                                    "q_txt": "Pollination.",
+                                    "a_txt": "The process of transfer of pollen grains from the anther of the stamens to the stigmas of the carpels (pistils).",
+                                    "mcq_choices": null
+                                },
+                                {
+                                    "ex_title": "What is meant by each of the following:",
+                                    "type": "text",
+                                    "q_txt": "Self-pollination.",
+                                    "a_txt": "The process of transfer of pollen grains from the anther of a flower to the stigma of the same flower or the stigma of another flower on the same plant.",
+                                    "mcq_choices": null
+                                },
+                                {
+                                    "ex_title": "What is meant by each of the following:",
+                                    "type": "text",
+                                    "q_txt": "Cross-pollination.",
+                                    "a_txt": "The process of transfer of pollen grains from the anther of a flower in a plant to the stigma of another flower on another plant of the same species.",
+                                    "mcq_choices": null
+                                },
+                                {
+                                    "ex_title": "What is meant by each of the following:",
+                                    "type": "text",
+                                    "q_txt": "Fertilization.",
+                                    "a_txt": "The process of fusion of the male cell nucleus (pollen grain) with the female cell nucleus (ovule) to form the zygote.",
+                                    "mcq_choices": null
+                                },
+                                {
+                                    "ex_title": "What is meant by each of the following:",
+                                    "type": "text",
+                                    "q_txt": "The zygote in the plant.",
+                                    "a_txt": "The cell resulting from the fusion of the male cell nucleus with the female cell nucleus.",
+                                    "mcq_choices": null
+                                },
+                                {
+                                    "ex_title": "Mention the importance of each of the following:",
+                                    "type": "text",
+                                    "q_txt": "Feathery stigmas in wind-pollinated flowers.",
+                                    "a_txt": "To trap pollen grains.",
+                                    "mcq_choices": null
+                                },
+                                {
+                                    "ex_title": "Mention the importance of each of the following:",
+                                    "type": "text",
+                                    "q_txt": "Sticky stigmas in insect-pollinated flowers.",
+                                    "a_txt": "To stick on the bodies of insects.",
+                                    "mcq_choices": null
+                                },
+                                {
+                                    "ex_title": "Mention the importance of each of the following:",
+                                    "type": "text",
+                                    "q_txt": "Micropyle.",
+                                    "a_txt": "An opening in the ovule through which the male nucleus of the pollen grain reaches the nucleus of the ovule cell.",
+                                    "mcq_choices": null
+                                }
+                            ]
+                        },
+                        {
+                            "page": 197,
+                            "questions": [
+                                {
+                                    "ex_title": "Give reasons for the following:",
+                                    "type": "text",
+                                    "q_txt": "The anthers of some flowers are long and hang outside the flower.",
+                                    "a_txt": "To be easily opened by winds for completing the pollination process.",
+                                    "mcq_choices": null
+                                },
+                                {
+                                    "ex_title": "Give reasons for the following:",
+                                    "type": "text",
+                                    "q_txt": "Pollen grains of wind-pollinated plants are light, dry and smooth.",
+                                    "a_txt": "To be easily carried by winds.",
+                                    "mcq_choices": null
+                                },
+                                {
+                                    "ex_title": "Give reasons for the following:",
+                                    "type": "text",
+                                    "q_txt": "Wind-pollinated plants produce pollen grains in large numbers.",
+                                    "a_txt": "To compensate what are lost in the air.",
+                                    "mcq_choices": null
+                                },
+                                {
+                                    "ex_title": "Give reasons for the following:",
+                                    "type": "text",
+                                    "q_txt": "Stigmas of some flowers are feathery and sticky.",
+                                    "a_txt": "To trap pollen grains.",
+                                    "mcq_choices": null
+                                },
+                                {
+                                    "ex_title": "Give reasons for the following:",
+                                    "type": "text",
+                                    "q_txt": "Some flowers have coloured petals and scent.",
+                                    "a_txt": "To attract insects that play an important role in completing the process of floral reproduction.",
+                                    "mcq_choices": null
+                                },
+                                {
+                                    "ex_title": "Give reasons for the following:",
+                                    "type": "text",
+                                    "q_txt": "The anthers of some flowers are located inside the flower.",
+                                    "a_txt": "Because their filaments are short.",
+                                    "mcq_choices": null
+                                },
+                                {
+                                    "ex_title": "Give reasons for the following:",
+                                    "type": "text",
+                                    "q_txt": "Pollen grains of some plants may be sticky or rough.",
+                                    "a_txt": "So that they stick on the bodies of insects.",
+                                    "mcq_choices": null
+                                },
+                                {
+                                    "ex_title": "Give reasons for the following:",
+                                    "type": "text",
+                                    "q_txt": "Stigmas of some flowers are sticky and are located inside the flower.",
+                                    "a_txt": "So that the pollen grains attached to the bodies of insects stick on them.",
+                                    "mcq_choices": null
+                                },
+                                {
+                                    "ex_title": "Give reasons for the following:",
+                                    "type": "text",
+                                    "q_txt": "It is easy to distinguish between pollen grains that are transferred by wind and those transferred by insects.",
+                                    "a_txt": "Because pollen grains that are transferred by wind are light, dry and smooth, while pollen grains that are transferred by insects are sticky or rough.",
+                                    "mcq_choices": null
+                                },
+                                {
+                                    "ex_title": "Give reasons for the following:",
+                                    "type": "text",
+                                    "q_txt": "Fruits differ according to the nature of the ovary.",
+                                    "a_txt": "Because the ovary that contains: One ovule, gives a fruit containing one seed inside. Many ovules, give a fruit containing many seeds inside.",
+                                    "mcq_choices": null
+                                },
+                                {
+                                    "ex_title": "Give reasons for the following:",
+                                    "type": "text",
+                                    "q_txt": "The peach fruit contains one seed, while the pea fruit contains many seeds.",
+                                    "a_txt": "Because the ovary in the flower of the peach plant contains one ovule, while in the flower of the pea plant it contains many ovules.",
+                                    "mcq_choices": null
+                                },
+                                {
+                                    "ex_title": "What are the results of each of the following:",
+                                    "type": "text",
+                                    "q_txt": "Stamens and carpels mature at the same time in some flowers.",
+                                    "a_txt": "Pollination occurs in them by self-pollination.",
+                                    "mcq_choices": null
+                                },
+                                {
+                                    "ex_title": "What are the results of each of the following:",
+                                    "type": "text",
+                                    "q_txt": "Some flowers remain closed and do not bloom until pollination is completed.",
+                                    "a_txt": "Pollination occurs in them by self-pollination.",
+                                    "mcq_choices": null
+                                },
+                                {
+                                    "ex_title": "What are the results of each of the following:",
+                                    "type": "text",
+                                    "q_txt": "Stamens and carpels do not mature at the same time in some flowers.",
+                                    "a_txt": "Pollination occurs in them by cross-pollination.",
+                                    "mcq_choices": null
+                                },
+                                {
+                                    "ex_title": "What are the results of each of the following:",
+                                    "type": "text",
+                                    "q_txt": "Anthers are far from the stigmas in some flowers.",
+                                    "a_txt": "Pollination occurs in them by cross-pollination.",
+                                    "mcq_choices": null
+                                },
+                                {
+                                    "ex_title": "What are the results of each of the following:",
+                                    "type": "text",
+                                    "q_txt": "Falling of a pollen grain on the stigma of a flower of the same type.",
+                                    "a_txt": "The stigma secretes a sugary solution that is absorbed by the pollen grain, then it begins to germinate forming the pollen tube.",
+                                    "mcq_choices": null
+                                },
+                                {
+                                    "ex_title": "What are the results of each of the following:",
+                                    "type": "text",
+                                    "q_txt": "Fusion of the male nucleus of the pollen grain with the nucleus of the ovule.",
+                                    "a_txt": "A fertilized ovule (zygote) is formed (2n).",
+                                    "mcq_choices": null
+                                },
+                                {
+                                    "ex_title": "What are the results of each of the following:",
+                                    "type": "text",
+                                    "q_txt": "Fusion of the male cell nucleus with the female cell nucleus.",
+                                    "a_txt": "A fertilized ovule (zygote) is formed (2n).",
+                                    "mcq_choices": null
+                                },
+                                {
+                                    "ex_title": "What are the results of each of the following:",
+                                    "type": "text",
+                                    "q_txt": "The ovary of the flower contains more than one ovule.",
+                                    "a_txt": "The ovary turns into a fruit containing many seeds after the fertilization process is completed.",
+                                    "mcq_choices": null
+                                },
+                                {
+                                    "ex_title": "What are the results of each of the following:",
+                                    "type": "text",
+                                    "q_txt": "Falling of a plant seed into suitable soil.",
+                                    "a_txt": "The seed turns into a seedling that begins to emerge from the soil.",
+                                    "mcq_choices": null
+                                },
+                                {
+                                    "ex_title": "Mention one difference between each of the following:",
+                                    "type": "text",
+                                    "q_txt": "Pollen grains carried by wind and pollen grains carried by insects.",
+                                    "a_txt": "Pollen grains carried by wind: light, dry and smooth. Pollen grains carried by insects: sticky or rough.",
+                                    "mcq_choices": null
+                                },
+                                {
+                                    "ex_title": "Mention one difference between each of the following:",
+                                    "type": "text",
+                                    "q_txt": "The seed and the fruit.",
+                                    "a_txt": "The seed: A mature fertilized ovule. The fruit: A mature ovary after the fertilization process is completed.",
+                                    "mcq_choices": null
+                                },
+                                {
+                                    "ex_title": "Mention one difference between each of the following:",
+                                    "type": "text",
+                                    "q_txt": "Tomato fruit and cucumber fruit.",
+                                    "a_txt": "Tomato fruit: Persist the calyx after the fruit is formed. Cucumber fruit: Persist the corolla after the fruit is formed.",
+                                    "mcq_choices": null
+                                },
+                                {
+                                    "ex_title": "Mention one difference between each of the following:",
+                                    "type": "text",
+                                    "q_txt": "Zucchini fruit and pomegranate fruit.",
+                                    "a_txt": "Zucchini fruit: Persist the corolla after the fruit is formed. Pomegranate fruit: Persist the stamens and sepals after the fruit is formed.",
+                                    "mcq_choices": null
+                                },
+                                {
+                                    "ex_title": "Mention one difference between each of the following:",
+                                    "type": "text",
+                                    "q_txt": "Peach fruit and pea fruit.",
+                                    "a_txt": "Peach fruit: Contains one seed. Pea fruit: Contains many seeds.",
+                                    "mcq_choices": null
+                                },
+                                {
+                                    "ex_title": "Mention one difference between each of the following:",
+                                    "type": "text",
+                                    "q_txt": "Germination stage and reproduction stage.",
+                                    "a_txt": "Germination stage: The seed turns into a seedling that begins to emerge from the soil. Reproduction stage: The mature plant begins to form flowers that reproduce to form fruits containing seeds.",
+                                    "mcq_choices": null
+                                },
+                                {
+                                    "ex_title": "Compare between each of the following:",
+                                    "type": "text",
+                                    "q_txt": "Self-pollination and cross-pollination (In terms of: Definition - Characteristics of the flowers that are pollinated in this way).",
+                                    "a_txt": "Refer to the notebook, page (83).",
+                                    "mcq_choices": null
+                                },
+                                {
+                                    "ex_title": "Compare between each of the following:",
+                                    "type": "text",
+                                    "q_txt": "Wind-pollinated flowers and insect-pollinated flowers (In terms of: Characteristics).",
+                                    "a_txt": "Refer to the notebook, page (83).",
+                                    "mcq_choices": null
+                                },
+                                {
+                                    "ex_title": "Compare between each of the following:",
+                                    "type": "text",
+                                    "q_txt": "Pollination and fertilization in the flower.",
+                                    "a_txt": "Pollination: The process of transfer of pollen grains from the anthers of the stamens to the stigmas of the carpels (pistils). Pollination may be self-pollination or cross-pollination. Fertilization: The process of fusion of the male cell nucleus (pollen grain) with the female cell nucleus (ovule) to form the zygote. This results in the formation of fruits containing seeds inside.",
+                                    "mcq_choices": null
+                                }
+                            ]
+                        },
+                        {
+                            "page": 198,
+                            "questions": [
+                                {
+                                    "ex_title": "Study the following figures, then answer the following:",
+                                    "type": "text",
+                                    "q_txt": "The shown diagrams represent flowers of different sexes: (1) Mention the sex of each flower and its symbol, with explanation.",
+                                    "a_txt": "Flower (1): Male (\u2642), because it contains only the male organ (stamen). Flower (2): Female (\u2640), because it contains only the female organ (pistil). Flower (3): Bisexual (\u26a5), because it contains both male and female organs.",
+                                    "mcq_choices": null
+                                },
+                                {
+                                    "ex_title": "Study the following figures, then answer the following:",
+                                    "type": "text",
+                                    "q_txt": "The shown diagrams represent flowers of different sexes: (2) What is the type of the pollination which occurs in flower (2)?",
+                                    "a_txt": "Cross pollination.",
+                                    "mcq_choices": null
+                                },
+                                {
+                                    "ex_title": "Study the following figures, then answer the following:",
+                                    "type": "text",
+                                    "q_txt": "The shown diagrams represent flowers of different sexes: (3) Which of these flowers represents a typical flower? Give reason.",
+                                    "a_txt": "Flower (3) / Because it contains the four floral whorls.",
+                                    "mcq_choices": null
+                                },
+                                {
+                                    "ex_title": "Study the following figures, then answer the following:",
+                                    "type": "text",
+                                    "q_txt": "The opposite figure represents one of the processes that occur in flowering plants: (1) What is the name of this process? What is its importance?",
+                                    "a_txt": "The process of self-pollination / transferring pollen grains from the anther of the flower to the stigma of the same flower for fertilization and completion of sexual reproduction in the plant.",
+                                    "mcq_choices": null
+                                },
+                                {
+                                    "ex_title": "Study the following figures, then answer the following:",
+                                    "type": "text",
+                                    "q_txt": "The opposite figure represents one of the processes that occur in flowering plants: (2) Write the data of the figure.",
+                                    "a_txt": "(1): Stigma. (2): Pollen grains. (3): Anther.",
+                                    "mcq_choices": null
+                                },
+                                {
+                                    "ex_title": "Study the following figures, then answer the following:",
+                                    "type": "text",
+                                    "q_txt": "The opposite figure represents one of the processes that occur in flowering plants: (3) Explain the structure of part number (3).",
+                                    "a_txt": "It usually contains two lobes, each with two sacs filled with pollen grains.",
+                                    "mcq_choices": null
+                                },
+                                {
+                                    "ex_title": "Study the following figures, then answer the following:",
+                                    "type": "text",
+                                    "q_txt": "In the two opposite figures: (1) What does each of the figures (A) and (B) indicate?",
+                                    "a_txt": "(A): Stamen. (B): Carpel.",
+                                    "mcq_choices": null
+                                },
+                                {
+                                    "ex_title": "Study the following figures, then answer the following:",
+                                    "type": "text",
+                                    "q_txt": "In the two opposite figures: (2) Replace the numbers with the correct data.",
+                                    "a_txt": "(1): Anther. (2): Filament. (3): Stigma. (4): Style. (5): Ovary.",
+                                    "mcq_choices": null
+                                },
+                                {
+                                    "ex_title": "Study the following figures, then answer the following:",
+                                    "type": "text",
+                                    "q_txt": "In the two opposite figures: (3) What is the type of the pollination which occurs when the components of part (1) are transferred to: 1- A stigma in another flower on the same plant. 2- A stigma in another flower on another plant of the same species.",
+                                    "a_txt": "1- Self pollination. 2- Cross pollination.",
+                                    "mcq_choices": null
+                                },
+                                {
+                                    "ex_title": "Study the following figures, then answer the following:",
+                                    "type": "text",
+                                    "q_txt": "In the two opposite figures: (4) What are the characteristics of each of the two parts (1), (3) in the wind-pollinated flowers?",
+                                    "a_txt": "(1): Long and hanging outside. (3): Feathery, sticky and often outside the flower.",
+                                    "mcq_choices": null
+                                },
+                                {
+                                    "ex_title": "Study the following figures, then answer the following:",
+                                    "type": "text",
+                                    "q_txt": "The opposite figure shows a wind-pollinated flower: (1) Replace the numbers with the correct data.",
+                                    "a_txt": "(1): Petal. (2): Anther. (3): Stigma.",
+                                    "mcq_choices": null
+                                },
+                                {
+                                    "ex_title": "Study the following figures, then answer the following:",
+                                    "type": "text",
+                                    "q_txt": "The opposite figure shows a wind-pollinated flower: (2) Which one of the labelled parts does not play a role in the wind pollination method?",
+                                    "a_txt": "Part (1).",
+                                    "mcq_choices": null
+                                },
+                                {
+                                    "ex_title": "Study the following figures, then answer the following:",
+                                    "type": "text",
+                                    "q_txt": "The opposite figure shows a wind-pollinated flower: (3) Give an evidence to prove this statement: This flower is wind-pollinated.",
+                                    "a_txt": "The anthers are long and hanging outside. The stigmas are feathery, sticky and often outside the flower.",
+                                    "mcq_choices": null
+                                },
+                                {
+                                    "ex_title": "Study the following figures, then answer the following:",
+                                    "type": "text",
+                                    "q_txt": "The opposite figure shows one of the methods of pollination: (1) What is the method of this pollination?",
+                                    "a_txt": "Cross-pollination by insects.",
+                                    "mcq_choices": null
+                                },
+                                {
+                                    "ex_title": "Study the following figures, then answer the following:",
+                                    "type": "text",
+                                    "q_txt": "The opposite figure shows one of the methods of pollination: (2) Mention the characteristics of: 1- Part (1). 2- What are produced by part (2).",
+                                    "a_txt": "1- Large petals, bright colours, have noticeable scent and often secrete nectar. 2- Sticky or rough pollen grains.",
+                                    "mcq_choices": null
+                                }
+                            ]
+                        },
+                        {
+                            "page": 199,
+                            "questions": [
+                                {
+                                    "ex_title": "Study the following figures, then answer the following:",
+                                    "type": "text",
+                                    "q_txt": "In the shown figure: (1) Write the data on the diagram.",
+                                    "a_txt": "(1): Pollen grain. (2): Pollen tube. (3): Egg cell. (4): Micropyle opening. (5): Ovary. (6): Ovule.",
+                                    "mcq_choices": null
+                                },
+                                {
+                                    "ex_title": "Study the following figures, then answer the following:",
+                                    "type": "text",
+                                    "q_txt": "In the shown figure: (2) What is the result of the fusion of the nucleus of part (1) with part (3)? What is the name of this process?",
+                                    "a_txt": "Formation of zygote / Fertilization process.",
+                                    "mcq_choices": null
+                                },
+                                {
+                                    "ex_title": "Study the following figures, then answer the following:",
+                                    "type": "text",
+                                    "q_txt": "In the shown figure: (3) After this process, what is the number of the part that develops into: 1- Seed. 2- Fruit.",
+                                    "a_txt": "1- (6). 2- (5).",
+                                    "mcq_choices": null
+                                },
+                                {
+                                    "ex_title": "Study the following figures, then answer the following:",
+                                    "type": "text",
+                                    "q_txt": "The given figure shows the structure of a typical flower: (1) Why is this flower described as a typical flower?",
+                                    "a_txt": "Because it contains the four floral whorls.",
+                                    "mcq_choices": null
+                                },
+                                {
+                                    "ex_title": "Study the following figures, then answer the following:",
+                                    "type": "text",
+                                    "q_txt": "The given figure shows the structure of a typical flower: (2) Does the removal of structure (3) lead to the flower's inability to form fruits? Explain.",
+                                    "a_txt": "No / Because cross-pollination can occur for this flower.",
+                                    "mcq_choices": null
+                                },
+                                {
+                                    "ex_title": "Study the following figures, then answer the following:",
+                                    "type": "text",
+                                    "q_txt": "The given figure shows the structure of a typical flower: (3) Identify the numbers of the parts that remain after fruit formation in: 1- Eggplant. 2- Cucumber.",
+                                    "a_txt": "1- (4). 2- (2).",
+                                    "mcq_choices": null
+                                },
+                                {
+                                    "ex_title": "Study the following figures, then answer the following:",
+                                    "type": "text",
+                                    "q_txt": "From the figures: (1) Which floral whorls did the fruit keep after maturity in each figure? (1) Tomato, (2) Zucchini, (3) Pomegranate.",
+                                    "a_txt": "(1): Calyx. (2): Corolla. (3): Stamens and sepals.",
+                                    "mcq_choices": null
+                                },
+                                {
+                                    "ex_title": "Study the following figures, then answer the following:",
+                                    "type": "text",
+                                    "q_txt": "From the figures: (2) What is the sex of the flower of plant (1)?",
+                                    "a_txt": "Bisexual flower.",
+                                    "mcq_choices": null
+                                },
+                                {
+                                    "ex_title": "Variant questions:",
+                                    "type": "text",
+                                    "q_txt": "Mention the methods of the transfer of pollen grains in cross-pollination.",
+                                    "a_txt": "Wind, insects, water and human.",
+                                    "mcq_choices": null
+                                },
+                                {
+                                    "ex_title": "Variant questions:",
+                                    "type": "text",
+                                    "q_txt": "Mention three characteristics of the flowers that are cross-pollinated by: (1) Wind. (2) Insects.",
+                                    "a_txt": "Refer to the notebook, page (83).",
+                                    "mcq_choices": null
+                                },
+                                {
+                                    "ex_title": "Variant questions:",
+                                    "type": "text",
+                                    "q_txt": "Mention two characteristics of pollen grains in flowers cross-pollinated by: (1) Wind. (2) Insects.",
+                                    "a_txt": "Refer to the notebook, page (83).",
+                                    "mcq_choices": null
+                                },
+                                {
+                                    "ex_title": "Variant questions:",
+                                    "type": "text",
+                                    "q_txt": "After fruit formation, some parts of the flower may persist. Mention with evidence and give examples.",
+                                    "a_txt": "Refer to the notebook, page (88).",
+                                    "mcq_choices": null
+                                },
+                                {
+                                    "ex_title": "Variant questions:",
+                                    "type": "text",
+                                    "q_txt": "The life cycle of flowering plants passes through four main stages. What are these stages? Explain two of them.",
+                                    "a_txt": "Refer to the notebook, page (88).",
+                                    "mcq_choices": null
+                                }
+                            ]
+                        }
+                    ]
+                }
+            ]
+        }
+    ]
+}

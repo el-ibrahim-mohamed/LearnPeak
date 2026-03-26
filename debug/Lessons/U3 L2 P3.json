@@ -1,0 +1,985 @@
+{
+    "units": [
+        {
+            "unit_num": 3,
+            "unit_name": "Reproduction in Living Organisms",
+            "lessons": [
+                {
+                    "lesson_num": 2,
+                    "lesson_name": "Floral Reproduction",
+                    "pages": [
+                        {
+                            "page": 187,
+                            "questions": [
+                                {
+                                    "ex_title": "Write the scientific term of each of the following statements:",
+                                    "type": "text",
+                                    "q_txt": "A short stem whose leaves are modified to perform the reproduction process in the plant.",
+                                    "a_txt": "Flower",
+                                    "mcq_choices": null
+                                },
+                                {
+                                    "ex_title": "Write the scientific term of each of the following statements:",
+                                    "type": "text",
+                                    "q_txt": "A leaf which the vegetative bud emerges from its axil, and develops into a flower.",
+                                    "a_txt": "Bract",
+                                    "mcq_choices": null
+                                },
+                                {
+                                    "ex_title": "Write the scientific term of each of the following statements:",
+                                    "type": "text",
+                                    "q_txt": "A cluster of flowers carried by the peduncle.",
+                                    "a_txt": "Inflorescence",
+                                    "mcq_choices": null
+                                },
+                                {
+                                    "ex_title": "Write the scientific term of each of the following statements:",
+                                    "type": "text",
+                                    "q_txt": "The part of the stem that carries a cluster of flowers.",
+                                    "a_txt": "Peduncle",
+                                    "mcq_choices": null
+                                },
+                                {
+                                    "ex_title": "Write the scientific term of each of the following statements:",
+                                    "type": "text",
+                                    "q_txt": "An inflorescence that resembles a cluster of grapes, in which the flowers bloom from bottom to top.",
+                                    "a_txt": "Simple raceme inflorescence",
+                                    "mcq_choices": null
+                                },
+                                {
+                                    "ex_title": "Write the scientific term of each of the following statements:",
+                                    "type": "text",
+                                    "q_txt": "An inflorescence in which all the pedicels emerge from one point at the end of the peduncle.",
+                                    "a_txt": "Simple umbel inflorescence",
+                                    "mcq_choices": null
+                                },
+                                {
+                                    "ex_title": "Write the scientific term of each of the following statements:",
+                                    "type": "text",
+                                    "q_txt": "An inflorescence that resembles a comb, where the flowers emerge on both sides of the peduncle.",
+                                    "a_txt": "Simple corymb inflorescence",
+                                    "mcq_choices": null
+                                },
+                                {
+                                    "ex_title": "Write the scientific term of each of the following statements:",
+                                    "type": "text",
+                                    "q_txt": "A swollen part at the end of the flower pedicel that carries the floral whorls.",
+                                    "a_txt": "Receptacle",
+                                    "mcq_choices": null
+                                },
+                                {
+                                    "ex_title": "Write the scientific term of each of the following statements:",
+                                    "type": "text",
+                                    "q_txt": "The floral whorl whose function is to protect the inner parts of the flower, especially before blooming.",
+                                    "a_txt": "Calyx",
+                                    "mcq_choices": null
+                                },
+                                {
+                                    "ex_title": "Write the scientific term of each of the following statements:",
+                                    "type": "text",
+                                    "q_txt": "The floral whorl whose function is attracting insects by its colour and fragrant.",
+                                    "a_txt": "Corolla",
+                                    "mcq_choices": null
+                                },
+                                {
+                                    "ex_title": "Write the scientific term of each of the following statements:",
+                                    "type": "text",
+                                    "q_txt": "A flower in which sepals and petals are absent.",
+                                    "a_txt": "Naked flowers",
+                                    "mcq_choices": null
+                                },
+                                {
+                                    "ex_title": "Write the scientific term of each of the following statements:",
+                                    "type": "text",
+                                    "q_txt": "The floral whorl that consists of a group of carpels.",
+                                    "a_txt": "Pistil",
+                                    "mcq_choices": null
+                                },
+                                {
+                                    "ex_title": "Write the scientific term of each of the following statements:",
+                                    "type": "text",
+                                    "q_txt": "An inflammation caused by an immune response to harmless substances such as pollen grains.",
+                                    "a_txt": "Hay fever",
+                                    "mcq_choices": null
+                                },
+                                {
+                                    "ex_title": "Write the scientific term of each of the following statements:",
+                                    "type": "text",
+                                    "q_txt": "The flower whose floral leaves are arranged in four floral whorls.",
+                                    "a_txt": "Typical flower",
+                                    "mcq_choices": null
+                                },
+                                {
+                                    "ex_title": "Write the scientific term of each of the following statements:",
+                                    "type": "text",
+                                    "q_txt": "The flower that contains both male and female organs together.",
+                                    "a_txt": "Bisexual flower",
+                                    "mcq_choices": null
+                                },
+                                {
+                                    "ex_title": "Write the scientific term of each of the following statements:",
+                                    "type": "text",
+                                    "q_txt": "The flower that has either male organs only or female organs only.",
+                                    "a_txt": "Unisexual flower",
+                                    "mcq_choices": null
+                                },
+                                {
+                                    "ex_title": "Complete the following sentences:",
+                                    "type": "complete",
+                                    "q_txt": "The _____ plants are the most widespread types of plants in the world, and they maintain their survival through _____ reproduction, which is occured by _____.",
+                                    "a_txt": [
+                                        "Flowering",
+                                        "sexual",
+                                        "flowers"
+                                    ],
+                                    "mcq_choices": null
+                                },
+                                {
+                                    "ex_title": "Complete the following sentences:",
+                                    "type": "complete",
+                                    "q_txt": "Flowering plants reproduce sexually by _____, while they reproduce asexually by several forms, including _____.",
+                                    "a_txt": [
+                                        "flowers",
+                                        "vegetative reproduction"
+                                    ],
+                                    "mcq_choices": null
+                                },
+                                {
+                                    "ex_title": "Complete the following sentences:",
+                                    "type": "complete",
+                                    "q_txt": "The flower arises from a _____ which usually emerges from the axil of a leaf called _____.",
+                                    "a_txt": [
+                                        "vegetative bud",
+                                        "bract"
+                                    ],
+                                    "mcq_choices": null
+                                }
+                            ]
+                        },
+                        {
+                            "page": 188,
+                            "questions": [
+                                {
+                                    "ex_title": "Complete the following sentences:",
+                                    "type": "complete",
+                                    "q_txt": "Among the types of inflorescences are _____, the simple corymb and _____.",
+                                    "a_txt": [
+                                        "simple raceme",
+                                        "simple umbel"
+                                    ],
+                                    "mcq_choices": null
+                                },
+                                {
+                                    "ex_title": "Complete the following sentences:",
+                                    "type": "complete",
+                                    "q_txt": "The flowers in simple corymb inflorescences bloom from _____ to _____.",
+                                    "a_txt": [
+                                        "outside",
+                                        "inside"
+                                    ],
+                                    "mcq_choices": null
+                                },
+                                {
+                                    "ex_title": "Complete the following sentences:",
+                                    "type": "complete",
+                                    "q_txt": "The type of inflorescences in stock plant is _____, while the type of inflorescences in garlic plant is _____.",
+                                    "a_txt": [
+                                        "simple raceme",
+                                        "simple umbel"
+                                    ],
+                                    "mcq_choices": null
+                                },
+                                {
+                                    "ex_title": "Complete the following sentences:",
+                                    "type": "complete",
+                                    "q_txt": "The calyx consists of _____ sepals in the Egyptian rose flower, while the calyx consists of _____ sepals in the petunia flower.",
+                                    "a_txt": [
+                                        "separated",
+                                        "fused"
+                                    ],
+                                    "mcq_choices": null
+                                },
+                                {
+                                    "ex_title": "Complete the following sentences:",
+                                    "type": "complete",
+                                    "q_txt": "The corolla leaves may be white or _____ and are called _____.",
+                                    "a_txt": [
+                                        "coloured",
+                                        "petals"
+                                    ],
+                                    "mcq_choices": null
+                                },
+                                {
+                                    "ex_title": "Complete the following sentences:",
+                                    "type": "complete",
+                                    "q_txt": "The Egyptian rose flower has _____ petals that are arranged in _____.",
+                                    "a_txt": [
+                                        "separated",
+                                        "several whorls"
+                                    ],
+                                    "mcq_choices": null
+                                },
+                                {
+                                    "ex_title": "Complete the following sentences:",
+                                    "type": "complete",
+                                    "q_txt": "It is difficult to distinguish the colour of sepals from petals in _____ flower, while sepals and petals are absent in _____ flower.",
+                                    "a_txt": [
+                                        "Daffodil",
+                                        "Willow"
+                                    ],
+                                    "mcq_choices": null
+                                },
+                                {
+                                    "ex_title": "Complete the following sentences:",
+                                    "type": "complete",
+                                    "q_txt": "The stamen consists of _____ which carries at its end a swelling called _____.",
+                                    "a_txt": [
+                                        "thin filament",
+                                        "anther"
+                                    ],
+                                    "mcq_choices": null
+                                },
+                                {
+                                    "ex_title": "Complete the following sentences:",
+                                    "type": "complete",
+                                    "q_txt": "The male organ of the flower consists of several leaves called _____, while pistil consists of several leaves called _____.",
+                                    "a_txt": [
+                                        "stamens",
+                                        "carpels"
+                                    ],
+                                    "mcq_choices": null
+                                },
+                                {
+                                    "ex_title": "Complete the following sentences:",
+                                    "type": "complete",
+                                    "q_txt": "The flowers of _____ are used to calm the nervous system, while the flowers of _____ are used to lower high blood pressure.",
+                                    "a_txt": [
+                                        "chamomile",
+                                        "hibiscus"
+                                    ],
+                                    "mcq_choices": null
+                                },
+                                {
+                                    "ex_title": "Complete the following sentences:",
+                                    "type": "complete",
+                                    "q_txt": "Among the symptoms of hay fever are frequent _____ and _____.",
+                                    "a_txt": [
+                                        "sneezing",
+                                        "watery eyes"
+                                    ],
+                                    "mcq_choices": null
+                                },
+                                {
+                                    "ex_title": "Complete the following sentences:",
+                                    "type": "complete",
+                                    "q_txt": "Bisexual flowers are symbolized by _____, while flowers that carry only male organs are symbolized by _____.",
+                                    "a_txt": [
+                                        "\u26a5 / \u2642\u2640",
+                                        "\u2642"
+                                    ],
+                                    "mcq_choices": null
+                                },
+                                {
+                                    "ex_title": "Complete the following sentences:",
+                                    "type": "complete",
+                                    "q_txt": "The female flower contains _____ floral whorls and is symbolized by _____.",
+                                    "a_txt": [
+                                        "3",
+                                        "\u2640"
+                                    ],
+                                    "mcq_choices": null
+                                },
+                                {
+                                    "ex_title": "Complete the following sentences:",
+                                    "type": "complete",
+                                    "q_txt": "According to sex of the flower, the flower of the pumpkin plant is _____, while the flower of the eggplant is _____.",
+                                    "a_txt": [
+                                        "unisexual",
+                                        "bisexual"
+                                    ],
+                                    "mcq_choices": null
+                                },
+                                {
+                                    "ex_title": "Choose the correct answer:",
+                                    "type": "mcq",
+                                    "q_txt": "The flower is a modified _____.",
+                                    "a_txt": 2,
+                                    "mcq_choices": [
+                                        "root",
+                                        "leaf",
+                                        "stem",
+                                        "fruit"
+                                    ]
+                                },
+                                {
+                                    "ex_title": "Choose the correct answer:",
+                                    "type": "mcq",
+                                    "q_txt": "Which of the following represents each of the two inflorescences (X), (Y)? (Image shows X as a cluster of grapes shape and Y as a comb shape).",
+                                    "a_txt": 0,
+                                    "mcq_choices": [
+                                        "Simple raceme / Simple corymb",
+                                        "Simple umbel / Simple raceme",
+                                        "Simple corymb / Simple umbel",
+                                        "Simple raceme / Simple umbel"
+                                    ]
+                                },
+                                {
+                                    "ex_title": "Choose the correct answer:",
+                                    "type": "mcq",
+                                    "q_txt": "The inflorescence of cherry plant is characterized by _____.",
+                                    "a_txt": 2,
+                                    "mcq_choices": [
+                                        "a shape resembles cluster of grapes",
+                                        "a shape resembles tent",
+                                        "flowers which emerge on both sides of the peduncle",
+                                        "flowers which emerge from all directions"
+                                    ]
+                                }
+                            ]
+                        },
+                        {
+                            "page": 189,
+                            "questions": [
+                                {
+                                    "ex_title": "Choose the correct answer:",
+                                    "type": "mcq",
+                                    "q_txt": "The floral whorls are carried on the _____.",
+                                    "a_txt": 3,
+                                    "mcq_choices": [
+                                        "pedicel",
+                                        "peduncle",
+                                        "inflorescence",
+                                        "receptacle"
+                                    ]
+                                },
+                                {
+                                    "ex_title": "Choose the correct answer:",
+                                    "type": "mcq",
+                                    "q_txt": "The whorl that protects the inner parts of the flower before blooming is the _____.",
+                                    "a_txt": 0,
+                                    "mcq_choices": [
+                                        "calyx",
+                                        "corolla",
+                                        "stamens",
+                                        "pistil"
+                                    ]
+                                },
+                                {
+                                    "ex_title": "Choose the correct answer:",
+                                    "type": "mcq",
+                                    "q_txt": "Which of the following flowers lacks both the calyx and the corolla whorls?",
+                                    "a_txt": 3,
+                                    "mcq_choices": [
+                                        "Daffodil",
+                                        "Egyptian rose",
+                                        "Onion",
+                                        "Willow"
+                                    ]
+                                },
+                                {
+                                    "ex_title": "Choose the correct answer:",
+                                    "type": "mcq",
+                                    "q_txt": "What is the similarity between the stock flower and petunia flower?",
+                                    "a_txt": 1,
+                                    "mcq_choices": [
+                                        "Presence of the perianth",
+                                        "Presence of calyx and corolla",
+                                        "Presence of fused sepals",
+                                        "Presence of separate petals"
+                                    ]
+                                },
+                                {
+                                    "ex_title": "Choose the correct answer:",
+                                    "type": "mcq",
+                                    "q_txt": "How does the willow flower differ from the daffodil flower?",
+                                    "a_txt": 2,
+                                    "mcq_choices": [
+                                        "Presence of stamens",
+                                        "Presence of carpels",
+                                        "Absence of sepals and petals",
+                                        "Absence of stamens and pistil"
+                                    ]
+                                },
+                                {
+                                    "ex_title": "Choose the correct answer:",
+                                    "type": "mcq",
+                                    "q_txt": "The opposite figure represents a flower, its stigma is indicated by the letter _____ (Diagram shows a flower with parts labeled A, B, C, D).",
+                                    "a_txt": 0,
+                                    "mcq_choices": [
+                                        "(A)",
+                                        "(B)",
+                                        "(C)",
+                                        "(D)"
+                                    ]
+                                },
+                                {
+                                    "ex_title": "Choose the correct answer:",
+                                    "type": "mcq",
+                                    "q_txt": "Which of the following floral whorls is located at the center of the flower?",
+                                    "a_txt": 3,
+                                    "mcq_choices": [
+                                        "Calyx",
+                                        "Corolla",
+                                        "Stamens",
+                                        "Carpels"
+                                    ]
+                                },
+                                {
+                                    "ex_title": "Choose the correct answer:",
+                                    "type": "mcq",
+                                    "q_txt": "Which of the following flowers is used to relieve headache?",
+                                    "a_txt": 2,
+                                    "mcq_choices": [
+                                        "Chamomile",
+                                        "Hibiscus",
+                                        "Lavender",
+                                        "Egyptian rose"
+                                    ]
+                                },
+                                {
+                                    "ex_title": "Choose the correct answer:",
+                                    "type": "mcq",
+                                    "q_txt": "The number of floral whorls in the typical flower is _____.",
+                                    "a_txt": 1,
+                                    "mcq_choices": [
+                                        "3",
+                                        "4",
+                                        "5",
+                                        "8"
+                                    ]
+                                },
+                                {
+                                    "ex_title": "Choose the correct answer:",
+                                    "type": "mcq",
+                                    "q_txt": "The floral whorl that is not present in the male flower is _____.",
+                                    "a_txt": 3,
+                                    "mcq_choices": [
+                                        "calyx",
+                                        "corolla",
+                                        "stamens",
+                                        "carpels"
+                                    ]
+                                },
+                                {
+                                    "ex_title": "Choose the correct answer:",
+                                    "type": "mcq",
+                                    "q_txt": "Which of the following flowers is composed of 4 floral whorls?",
+                                    "a_txt": 1,
+                                    "mcq_choices": [
+                                        "Tomato and maize (corn) flowers",
+                                        "Tomato and eggplant flowers",
+                                        "Palm and pumpkin flowers",
+                                        "Maize (corn) and pumpkin flowers"
+                                    ]
+                                },
+                                {
+                                    "ex_title": "Choose the correct answer:",
+                                    "type": "mcq",
+                                    "q_txt": "All the following are plants with unisexual flowers, except _____.",
+                                    "a_txt": 3,
+                                    "mcq_choices": [
+                                        "maize (corn)",
+                                        "palm",
+                                        "pumpkin",
+                                        "rose"
+                                    ]
+                                },
+                                {
+                                    "ex_title": "Choose from column (B) what matches column (A):",
+                                    "type": "text",
+                                    "q_txt": "(1) Stock flower. (2) Petunia flower. (3) Daffodil flower. (4) Willow flower.",
+                                    "a_txt": "(1/1), (2/4), (3/3), (4/2).",
+                                    "mcq_choices": null
+                                }
+                            ]
+                        },
+                        {
+                            "page": 190,
+                            "questions": [
+                                {
+                                    "ex_title": "Match column (A) with what is suitable in both columns (B) and (C):",
+                                    "type": "text",
+                                    "q_txt": "(A) Floral whorl: (1) Calyx, (2) Corolla, (3) Androecium, (4) Pistil.",
+                                    "a_txt": "(1/2/3), (2/4/4), (3/1/1), (4/3/2).",
+                                    "mcq_choices": null
+                                },
+                                {
+                                    "ex_title": "Mark (T) or (X) for each statement, with correction if needed:",
+                                    "type": "true_false_with_correction",
+                                    "q_txt": "The peduncle may carry many carpels forming what is called the inflorescence.",
+                                    "a_txt": [
+                                        "False",
+                                        {
+                                            "mistake": "many carpels",
+                                            "correction": "many flowers"
+                                        }
+                                    ],
+                                    "mcq_choices": null
+                                },
+                                {
+                                    "ex_title": "Mark (T) or (X) for each statement, with correction if needed:",
+                                    "type": "true_false_with_correction",
+                                    "q_txt": "The calyx consists of coloured leaves called petals.",
+                                    "a_txt": [
+                                        "False",
+                                        {
+                                            "mistake": "The calyx consists of coloured leaves called petals",
+                                            "correction": "The corolla consists of coloured leaves called petals"
+                                        }
+                                    ],
+                                    "mcq_choices": null
+                                },
+                                {
+                                    "ex_title": "Mark (T) or (X) for each statement, with correction if needed:",
+                                    "type": "true_false_with_correction",
+                                    "q_txt": "The corolla is the third whorl in the flower, while the stamens is the fourth whorl.",
+                                    "a_txt": [
+                                        "False",
+                                        {
+                                            "mistake": "the second .... the third whorl",
+                                            "correction": "the second .... the third whorl"
+                                        }
+                                    ],
+                                    "mcq_choices": null
+                                },
+                                {
+                                    "ex_title": "Mark (T) or (X) for each statement, with correction if needed:",
+                                    "type": "true_false_with_correction",
+                                    "q_txt": "The stamen consists of stigma, style and ovary.",
+                                    "a_txt": [
+                                        "False",
+                                        {
+                                            "mistake": "The stamen",
+                                            "correction": "The carpel"
+                                        }
+                                    ],
+                                    "mcq_choices": null
+                                },
+                                {
+                                    "ex_title": "Mark (T) or (X) for each statement, with correction if needed:",
+                                    "type": "true_false_with_correction",
+                                    "q_txt": "Hibiscus flowers are used in the production of rose water and rose oil.",
+                                    "a_txt": [
+                                        "False",
+                                        {
+                                            "mistake": "Hibiscus flowers",
+                                            "correction": "Egyptian rose flowers"
+                                        }
+                                    ],
+                                    "mcq_choices": null
+                                },
+                                {
+                                    "ex_title": "Mark (T) or (X) for each statement, with correction if needed:",
+                                    "type": "true_false_with_correction",
+                                    "q_txt": "Flowers contain antioxidants and volatile oils.",
+                                    "a_txt": [
+                                        "True",
+                                        null
+                                    ],
+                                    "mcq_choices": null
+                                },
+                                {
+                                    "ex_title": "Mark (T) or (X) for each statement, with correction if needed:",
+                                    "type": "true_false_with_correction",
+                                    "q_txt": "The Egyptian rose flower contains a perianth.",
+                                    "a_txt": [
+                                        "False",
+                                        {
+                                            "mistake": "The Egyptian rose flower",
+                                            "correction": "Daffodil flower"
+                                        }
+                                    ],
+                                    "mcq_choices": null
+                                },
+                                {
+                                    "ex_title": "Mark (T) or (X) for each statement, with correction if needed:",
+                                    "type": "true_false_with_correction",
+                                    "q_txt": "The male flower contains three floral whorls.",
+                                    "a_txt": [
+                                        "True",
+                                        null
+                                    ],
+                                    "mcq_choices": null
+                                },
+                                {
+                                    "ex_title": "Mark (T) or (X) for each statement, with correction if needed:",
+                                    "type": "true_false_with_correction",
+                                    "q_txt": "The whorl that does not exist in the female flower is the stamens.",
+                                    "a_txt": [
+                                        "True",
+                                        null
+                                    ],
+                                    "mcq_choices": null
+                                },
+                                {
+                                    "ex_title": "Mark (T) or (X) for each statement, with correction if needed:",
+                                    "type": "true_false_with_correction",
+                                    "q_txt": "The flower that contains only sepals, petals and stamens is symbolized by \u2640.",
+                                    "a_txt": [
+                                        "False",
+                                        {
+                                            "mistake": "\u2640",
+                                            "correction": "\u2642"
+                                        }
+                                    ],
+                                    "mcq_choices": null
+                                },
+                                {
+                                    "ex_title": "Identify the odd item in each list, then mention the connection between the others:",
+                                    "type": "text",
+                                    "q_txt": "Calyx / Corolla / Stem / Stamen / Pistil.",
+                                    "a_txt": "Odd item: Stem. Connection: The floral whorls of the typical flower.",
+                                    "mcq_choices": null
+                                },
+                                {
+                                    "ex_title": "Identify the odd item in each list, then mention the connection between the others:",
+                                    "type": "text",
+                                    "q_txt": "Sepals / Petals / Tubers / Carpels.",
+                                    "a_txt": "Odd item: Tubers. Connection: The floral whorl leaves of the female flower.",
+                                    "mcq_choices": null
+                                },
+                                {
+                                    "ex_title": "Identify the odd item in each list, then mention the connection between the others:",
+                                    "type": "text",
+                                    "q_txt": "Stigma / Stamen / Style / Ovary.",
+                                    "a_txt": "Odd item: Stamen. Connection: Components of the carpel.",
+                                    "mcq_choices": null
+                                },
+                                {
+                                    "ex_title": "Identify the odd item in each list, then mention the connection between the others:",
+                                    "type": "text",
+                                    "q_txt": "Palm / Maize (corn) / Tomato / Pumpkin.",
+                                    "a_txt": "Odd item: Tomato. Connection: Unisexual flowers.",
+                                    "mcq_choices": null
+                                },
+                                {
+                                    "ex_title": "Mention one example for each of the following:",
+                                    "type": "text",
+                                    "q_txt": "Plant with a simple raceme inflorescence.",
+                                    "a_txt": "Snapdragon plant / Stock plant.",
+                                    "mcq_choices": null
+                                },
+                                {
+                                    "ex_title": "Mention one example for each of the following:",
+                                    "type": "text",
+                                    "q_txt": "Plant with a simple corymb inflorescence.",
+                                    "a_txt": "Cherry plant / Iberis plant.",
+                                    "mcq_choices": null
+                                },
+                                {
+                                    "ex_title": "Mention one example for each of the following:",
+                                    "type": "text",
+                                    "q_txt": "Plant with a simple umbel inflorescence.",
+                                    "a_txt": "Garlic plant / Onion plant.",
+                                    "mcq_choices": null
+                                },
+                                {
+                                    "ex_title": "Mention one example for each of the following:",
+                                    "type": "text",
+                                    "q_txt": "Flower with separate sepals and petals.",
+                                    "a_txt": "Egyptian rose flower.",
+                                    "mcq_choices": null
+                                },
+                                {
+                                    "ex_title": "Mention one example for each of the following:",
+                                    "type": "text",
+                                    "q_txt": "Flower with fused sepals and petals.",
+                                    "a_txt": "Petunia flower.",
+                                    "mcq_choices": null
+                                },
+                                {
+                                    "ex_title": "Mention one example for each of the following:",
+                                    "type": "text",
+                                    "q_txt": "Flower in which sepals cannot be distinguished from petals.",
+                                    "a_txt": "Daffodil flower.",
+                                    "mcq_choices": null
+                                },
+                                {
+                                    "ex_title": "Mention one example for each of the following:",
+                                    "type": "text",
+                                    "q_txt": "Flower with a perianth.",
+                                    "a_txt": "Daffodil flower.",
+                                    "mcq_choices": null
+                                },
+                                {
+                                    "ex_title": "Mention one example for each of the following:",
+                                    "type": "text",
+                                    "q_txt": "Naked flower.",
+                                    "a_txt": "Willow flower.",
+                                    "mcq_choices": null
+                                },
+                                {
+                                    "ex_title": "Mention one example for each of the following:",
+                                    "type": "text",
+                                    "q_txt": "Typical flower.",
+                                    "a_txt": "Eggplant flower / Tomato flower.",
+                                    "mcq_choices": null
+                                },
+                                {
+                                    "ex_title": "Mention one example for each of the following:",
+                                    "type": "text",
+                                    "q_txt": "Bisexual flower.",
+                                    "a_txt": "Tomato flower.",
+                                    "mcq_choices": null
+                                },
+                                {
+                                    "ex_title": "Mention one example for each of the following:",
+                                    "type": "text",
+                                    "q_txt": "Unisexual flower.",
+                                    "a_txt": "Maize (corn) flower.",
+                                    "mcq_choices": null
+                                }
+                            ]
+                        },
+                        {
+                            "page": 191,
+                            "questions": [
+                                {
+                                    "ex_title": "What is meant by each of the following:",
+                                    "type": "text",
+                                    "q_txt": "The flower.",
+                                    "a_txt": "A short stem whose leaves are modified to perform the reproductive function.",
+                                    "mcq_choices": null
+                                },
+                                {
+                                    "ex_title": "What is meant by each of the following:",
+                                    "type": "text",
+                                    "q_txt": "Bract.",
+                                    "a_txt": "A leaf where the vegetative bud emerges from its axil and develops into a flower.",
+                                    "mcq_choices": null
+                                },
+                                {
+                                    "ex_title": "What is meant by each of the following:",
+                                    "type": "text",
+                                    "q_txt": "Inflorescence.",
+                                    "a_txt": "A cluster of flowers carried by the peduncle.",
+                                    "mcq_choices": null
+                                },
+                                {
+                                    "ex_title": "What is meant by each of the following:",
+                                    "type": "text",
+                                    "q_txt": "Peduncle.",
+                                    "a_txt": "The part of the stem that carries a cluster of flowers.",
+                                    "mcq_choices": null
+                                },
+                                {
+                                    "ex_title": "What is meant by each of the following:",
+                                    "type": "text",
+                                    "q_txt": "Receptacle.",
+                                    "a_txt": "A swollen part at the end of the flower pedicel that carries the floral leaves (whorls).",
+                                    "mcq_choices": null
+                                },
+                                {
+                                    "ex_title": "What is meant by each of the following:",
+                                    "type": "text",
+                                    "q_txt": "Hay fever.",
+                                    "a_txt": "It is an inflammation caused by an immune response to harmless substances such as pollen grains.",
+                                    "mcq_choices": null
+                                },
+                                {
+                                    "ex_title": "What is meant by each of the following:",
+                                    "type": "text",
+                                    "q_txt": "Typical flower.",
+                                    "a_txt": "The flower whose floral leaves are arranged in four floral whorls.",
+                                    "mcq_choices": null
+                                },
+                                {
+                                    "ex_title": "What is meant by each of the following:",
+                                    "type": "text",
+                                    "q_txt": "Bisexual flower.",
+                                    "a_txt": "The flower that contains both male and female organs.",
+                                    "mcq_choices": null
+                                },
+                                {
+                                    "ex_title": "What is meant by each of the following:",
+                                    "type": "text",
+                                    "q_txt": "Unisexual flower.",
+                                    "a_txt": "The flower that has either male organs only or female organs only.",
+                                    "mcq_choices": null
+                                },
+                                {
+                                    "ex_title": "Mention the importance of each of the following:",
+                                    "type": "text",
+                                    "q_txt": "The flower.",
+                                    "a_txt": "The sexual reproductive organ in flowering plants.",
+                                    "mcq_choices": null
+                                },
+                                {
+                                    "ex_title": "Mention the importance of each of the following:",
+                                    "type": "text",
+                                    "q_txt": "Receptacle.",
+                                    "a_txt": "Carrying the floral (whorl) leaves.",
+                                    "mcq_choices": null
+                                },
+                                {
+                                    "ex_title": "Mention the importance of each of the following:",
+                                    "type": "text",
+                                    "q_txt": "Calyx.",
+                                    "a_txt": "Protection of the inner parts of the flower, especially before blooming.",
+                                    "mcq_choices": null
+                                },
+                                {
+                                    "ex_title": "Mention the importance of each of the following:",
+                                    "type": "text",
+                                    "q_txt": "Corolla.",
+                                    "a_txt": "Protection of the reproductive organs of the flower. Attracting insects that play an important role in completing the process of floral reproduction.",
+                                    "mcq_choices": null
+                                },
+                                {
+                                    "ex_title": "Mention the importance of each of the following:",
+                                    "type": "text",
+                                    "q_txt": "Stamens.",
+                                    "a_txt": "Production of male gametes (pollen grains).",
+                                    "mcq_choices": null
+                                },
+                                {
+                                    "ex_title": "Mention the importance of each of the following:",
+                                    "type": "text",
+                                    "q_txt": "Pistil.",
+                                    "a_txt": "Production of female gametes (ovules).",
+                                    "mcq_choices": null
+                                },
+                                {
+                                    "ex_title": "Give reasons for the following:",
+                                    "type": "text",
+                                    "q_txt": "Naming the simple raceme inflorescence as such.",
+                                    "a_txt": "Because the flowers emerge from all directions and each has a small stalk, (pedicel) giving it a shape similar to a cluster of grapes.",
+                                    "mcq_choices": null
+                                },
+                                {
+                                    "ex_title": "Give reasons for the following:",
+                                    "type": "text",
+                                    "q_txt": "The inflorescences of the iberis plant are called simple corymb inflorescences.",
+                                    "a_txt": "Because the flowers emerge on both sides of the peduncle and all are almost at the same level, giving it a shape similar to a comb.",
+                                    "mcq_choices": null
+                                },
+                                {
+                                    "ex_title": "Give reasons for the following:",
+                                    "type": "text",
+                                    "q_txt": "The inflorescences of the onion plant are simple umbel inflorescences.",
+                                    "a_txt": "Because the flowers emerge from one point at the end of the peduncle and their pedicels are of equal length, giving it a shape similar to a tent or an umbrella.",
+                                    "mcq_choices": null
+                                },
+                                {
+                                    "ex_title": "Give reasons for the following:",
+                                    "type": "text",
+                                    "q_txt": "The importance of sepals for the flower especially before blooming.",
+                                    "a_txt": "Because they protect the inner parts of the flower.",
+                                    "mcq_choices": null
+                                },
+                                {
+                                    "ex_title": "Give reasons for the following:",
+                                    "type": "text",
+                                    "q_txt": "The calyx and corolla whorls in the petunia plant are not called the perianth.",
+                                    "a_txt": "Because in Petunia flowers, it is easy to distinguish the colour of the sepals from the petals.",
+                                    "mcq_choices": null
+                                },
+                                {
+                                    "ex_title": "Give reasons for the following:",
+                                    "type": "text",
+                                    "q_txt": "The stamen is the male organ in the flower.",
+                                    "a_txt": "Because it produces male gametes (pollen grains).",
+                                    "mcq_choices": null
+                                },
+                                {
+                                    "ex_title": "Give reasons for the following:",
+                                    "type": "text",
+                                    "q_txt": "The pistil is the female organ in the flower.",
+                                    "a_txt": "Because it produces female gametes (ovules).",
+                                    "mcq_choices": null
+                                },
+                                {
+                                    "ex_title": "Give reasons for the following:",
+                                    "type": "text",
+                                    "q_txt": "The petals of rose plant have an economic importance for human.",
+                                    "a_txt": "Because it is used in the production of rose water and rose oil.",
+                                    "mcq_choices": null
+                                },
+                                {
+                                    "ex_title": "Give reasons for the following:",
+                                    "type": "text",
+                                    "q_txt": "It is preferable to avoid the areas where the concentrations of pollen grains are high.",
+                                    "a_txt": "For the prevention of hay fever, which causes frequent sneezing and watery eyes.",
+                                    "mcq_choices": null
+                                },
+                                {
+                                    "ex_title": "Give reasons for the following:",
+                                    "type": "text",
+                                    "q_txt": "The tomato flower is a typical bisexual flower.",
+                                    "a_txt": "Because it contains the four floral whorls and contains both the male organ (stamens) and the female organ (pistil).",
+                                    "mcq_choices": null
+                                },
+                                {
+                                    "ex_title": "Mention one difference between each of the following:",
+                                    "type": "text",
+                                    "q_txt": "Stock flower and iberis plant.",
+                                    "a_txt": "Stock flower: Has simple raceme inflorescences. Iberis plant: Has simple corymb inflorescences.",
+                                    "mcq_choices": null
+                                },
+                                {
+                                    "ex_title": "Mention one difference between each of the following:",
+                                    "type": "text",
+                                    "q_txt": "Daffodil flower and willow flower.",
+                                    "a_txt": "Daffodil flower: It is difficult to distinguish the colour of the sepals from the colour of the petals in it. Willow flower: Lacks both sepals and petals.",
+                                    "mcq_choices": null
+                                }
+                            ]
+                        },
+                        {
+                            "page": 192,
+                            "questions": [
+                                {
+                                    "ex_title": "Study the following figures, then answer the following:",
+                                    "type": "text",
+                                    "q_txt": "From the opposite figures (1, 2, 3): (1) What do the figures (1) to (3) represent? (2) Mention two examples for each of them.",
+                                    "a_txt": "(1) Figure (1): Simple raceme inflorescence. Figure (2): Simple corymb inflorescence. Figure (3): Simple umbel inflorescence. (2) Figure (1): Snapdragon plant / Stock plant. Figure (2): Cherry plant / Iberis plant. Figure (3): Garlic plant / Onion plant.",
+                                    "mcq_choices": null
+                                },
+                                {
+                                    "ex_title": "Study the following figures, then answer the following:",
+                                    "type": "text",
+                                    "q_txt": "The two opposite figures are two different flowers: (1) What are the similarities and differences between the flower (1) and the flower (2)? (2) What is the economic importance of the flower (1)?",
+                                    "a_txt": "(1) Similarity: Both are flowering plants. Difference: Figure (1): The sepals are separated and the petals are separated, arranged in several whorls. Figure (2): The sepals are fused and the petals are fused, arranged in one whorl. (2) The petals of Egyptian rose are used in the production of rose water and rose oil.",
+                                    "mcq_choices": null
+                                },
+                                {
+                                    "ex_title": "Study the following figures, then answer the following:",
+                                    "type": "text",
+                                    "q_txt": "From the opposite diagram: (1) Write the labels indicated by the numbers. (2) What is the name of the floral whorl in which each of the following parts participate in its formation: 1- Part (3). 2- Part (4). (3) What is the name of the organ that consists of: 1- The two parts (5), (6). 2- The parts (7), (8), (9). (4) Which numbers represent the parts forming the floral whorl that is not present in the flower with the symbol \u2642?",
+                                    "a_txt": "(1) (1): Pedicel, (2): Receptacle, (3): Sepal, (4): Petal, (5): Filament, (6): Anther, (7): Stigma, (8): Style, (9): Ovary, (10): Ovules. (2) 1- Calyx, 2- Corolla. (3) 1- Stamen, 2- Carpel. (4) (7), (8), (9), (10).",
+                                    "mcq_choices": null
+                                }
+                            ]
+                        },
+                        {
+                            "page": 193,
+                            "questions": [
+                                {
+                                    "ex_title": "Study the following figures, then answer the following:",
+                                    "type": "text",
+                                    "q_txt": "These figures represent four different flowers: (1) What is the similarity between each of the following: 1- The flower (1) and the flower (2). 2- The flower (2) and the flower (4). (2) What is the difference between each of the following: 1- The flower (1) and the flower (2). 2- The flower (3) and the flower (4).",
+                                    "a_txt": "(1) 1- Both carry the female organ (pistil). 2- Both carry the male organ (stamens). (2) 1- The flower (1) is unisexual (female), while the flower (2) is bisexual. 2- The flower (3) is female, while the flower (4) is male.",
+                                    "mcq_choices": null
+                                },
+                                {
+                                    "ex_title": "Variant questions:",
+                                    "type": "text",
+                                    "q_txt": "Arrange the floral whorls in the typical flower from outside to inside.",
+                                    "a_txt": "First: Calyx, Second: Corolla, Third: Stamens, Fourth: Pistil.",
+                                    "mcq_choices": null
+                                },
+                                {
+                                    "ex_title": "Variant questions:",
+                                    "type": "text",
+                                    "q_txt": "The medical benefits of flowers for human are numerous ... Mention some examples to explain this statement.",
+                                    "a_txt": "The flowers of chamomile are used to calm the nervous system, while the flowers of hibiscus are used to lower high blood pressure.",
+                                    "mcq_choices": null
+                                }
+                            ]
+                        }
+                    ]
+                }
+            ]
+        }
+    ]
+}
