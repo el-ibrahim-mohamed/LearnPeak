@@ -45,7 +45,10 @@ def email_login():
                 password_ph.write(f":red[* {password_validity}]")
 
             if email_validity == True and password_validity == True:
-                st.session_state["new_user"] = {"email": email.strip(), "password": password.strip()}
+                st.session_state["new_user"] = {
+                    "email": email.strip(),
+                    "password": password.strip(),
+                }
                 st.session_state["signup_step"] = 2
                 st.rerun()
 
@@ -124,7 +127,7 @@ def take_username():
 
 def take_user_info():
 
-    def map_grades(grade: str, to: Literal["short", "long"] = 'short'):
+    def map_grades(grade: str, to: Literal["short", "long"] = "short"):
         grade_mapping = {
             "🎨 kG 1": "kg1",
             "🎨 KG 2": "kg2",
@@ -198,7 +201,9 @@ def take_user_info():
             and education
             and grade
         ):
-            ph.success("Created your account successfully. Welcome to :red[Learn] :blue[Peak]!")
+            ph.success(
+                "Created your account successfully. Welcome to :red[Learn] :blue[Peak]!"
+            )
 
             new_user = st.session_state["new_user"]
             new_user["full_name"] = full_name
@@ -226,7 +231,7 @@ def take_user_info():
 if not st.session_state.get("signup_method"):
     st.title("Create your :red[Learn] :blue[Peak] account", text_alignment="center")
     _, col2, _ = st.columns(3)
-    col2.image("assets/logo.png")
+    col2.image("static/logo.png")
     " "
 
     btn1_ph = st.empty()

@@ -6,18 +6,51 @@ from firebase_admin import credentials, db
 from streamlit_js_eval import streamlit_js_eval
 from user_agents import parse
 import json
+import time
 
 if "layout" not in st.session_state:
     st.session_state["layout"] = "wide"
 
 st.set_page_config(
-    "Learn Peak",
-    page_icon="assets/mountain_logo.png",
+    "LearnPeak",
+    page_icon="static/mountain_logo.png",
     layout="centered",
     initial_sidebar_state="auto",
 )
 
-# --- 1. Setting up Firebase RTDB ---
+# --- 1. Defining the app's pages with st.Page ---
+# Home
+home = st.Page("pages/home.py", title="Home", icon="🏠", default=True)
+
+# Account
+signin = st.Page("pages/signin.py", title="Sign In", icon="🔐")
+signup = st.Page("pages/signup.py", title="Create Account", icon="🚀")
+
+profile = st.Page("pages/profile.py", title="Profile", icon="🧑")
+
+# Tools
+ar = st.Page("pages/ar.py", title="Learn with AR", icon="🪄")
+quizzes = st.Page("pages/quizzes.py", title="Quiz Generation", icon="📝")
+ask_book = st.Page("pages/ask-book.py", title="Ask your book", icon="🧠")
+
+# --- 2. Running the pages ---
+if st.session_state.get("user"):
+    pages = {
+        "": [home],
+        "👤 Account": [profile],
+        "✨ Features": [ask_book, ar, quizzes],
+    }
+else:
+    pages = {
+        "": [home],
+        "🚀 Get Started": [signin, signup],
+        "✨ Features": [ask_book, ar, quizzes],
+    }
+
+# Run st.navigation as soon as possible to show the nav to the user
+pg = st.navigation(pages, position="top")
+
+# --- 3. Setting up Firebase RTDB ---
 
 # Fetch the service account key JSON file contents
 service_account_key_dict = dict(st.secrets["firebase_service_account"])
@@ -35,15 +68,16 @@ if not firebase_admin._apps:
 
 root_ref = db.reference("/")
 
-# --- 2. Getting the device type ---
+# --- 4. Getting the device type ---
 if "user_device_type" not in st.session_state:
     user_agent = streamlit_js_eval(
-        js_expressions="navigator.userAgent", key="user_agent"
+        js_expressions="window.navigator.userAgent", key="user_agent"
     )
 
     # Check if user_agent is available before parsing
     if user_agent:
         ua = parse(user_agent)
+        print(ua)
         if ua.is_mobile:
             st.session_state["user_device_type"] = "mobile"
         elif ua.is_tablet:
@@ -51,9 +85,9 @@ if "user_device_type" not in st.session_state:
         elif ua.is_pc:
             st.session_state["user_device_type"] = "pc"
     else:
-        st.stop()
+        st.session_state["user_device_type"] = "mobile"
 
-# --- 3. Checking for cookies ---
+# --- 5. Checking for cookies ---
 if "cookie_manager" not in st.session_state:
     cookies = EncryptedCookieManager(
         password=st.secrets["cookies"]["PASSWORD"], prefix="learnpeak/"
@@ -71,34 +105,4 @@ if cookies.get(st.secrets["cookies"]["AUTH_NAME"]):
     user_info = root_ref.child(f"users/{username}/info").get()
     st.session_state["user"] = {**user_info, "username": username}
 
-# --- 4. Defining the app's pages with st.Page ---
-# Home
-home = st.Page("pages/home.py", title="Home", icon="🏠", default=True)
-
-# Account
-signin = st.Page("pages/signin.py", title="Sign In", icon="🔐")
-signup = st.Page("pages/signup.py", title="Create Account", icon="🚀")
-
-profile = st.Page("pages/profile.py", title="Profile", icon="🧑")
-
-# Tools
-ar = st.Page("pages/ar.py", title="Learn with AR", icon="🪄")
-quizzes = st.Page("pages/quizzes.py", title="Quiz Generation", icon="📝")
-rag = st.Page("pages/ask-book.py", title="Ask your book", icon="🧠")
-
-# Sharing session states across pages
-st.session_state["client"] = genai.Client(api_key=st.secrets["GEMINI_API_KEY"])
-st.session_state["root_ref"] = root_ref
-
-# --- 5. Creating and running the pages ---
-if st.session_state.get("user"):
-    pages = {"": [home], "👤 Account": [profile], "✨ Features": [rag, ar, quizzes]}
-else:
-    pages = {
-        "": [home],
-        "🚀 Get Started": [signin, signup],
-        "✨ Features": [rag, ar, quizzes],
-    }
-
-pg = st.navigation(pages, position="top")
 pg.run()

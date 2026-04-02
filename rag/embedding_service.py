@@ -1,5 +1,5 @@
 from sentence_transformers import SentenceTransformer
-from typing import List
+from typing import List, Literal
 
 
 class EmbeddingService:
@@ -7,25 +7,24 @@ class EmbeddingService:
     Handles text-to-vector embedding generation.
     """
 
-    MODEL_NAME = "all-MiniLM-L6-v2"
+    def __init__(
+        self,
+        model_name: str = "intfloat/multilingual-e5-small",
+    ):
+        self.model = SentenceTransformer(model_name)
 
-    def __init__(self):
-        self.model = SentenceTransformer(self.MODEL_NAME)
-
-    def embed_text(self, text: str) -> List[float]:
-        embedding = self.model.encode(
-            text,
-            normalize_embeddings=True
-        )
-        return embedding.tolist()
-
-    def embed_batch(self, texts: List[str]) -> List[List[float]]:
+    def embed(
+        self, texts: List[str], type: Literal["passage", "query"] = "passage"
+    ) -> List[List[float]]:
+        texts = [f"{type}: {text}" for text in texts]
         embeddings = self.model.encode(
             texts,
             batch_size=32,
+            convert_to_numpy=True,
             normalize_embeddings=True,
         )
         return embeddings.tolist()
+
     @property
     def vector_size(self) -> int:
-        return self.model.get_sentence_embedding_dimension()
+        return 384

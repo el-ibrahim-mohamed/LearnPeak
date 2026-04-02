@@ -40,7 +40,7 @@ class RagService:
     ) -> None:
 
         # Batch embedding (single model call)
-        embeddings = self.embedding_service.embed_batch(embed_texts)
+        embeddings = self.embedding_service.embed(embed_texts, "passage")
 
         points = [
             models.PointStruct(
@@ -65,14 +65,14 @@ class RagService:
         self,
         user_question: str,
         limit: int = 10,
-        score_threshold: float = 0.5,
+        score_threshold: float = 0.8,
         query_filter: Optional[models.Filter] = None,
     ) -> List[Dict]:
         """
         Takes raw user question string, encodes internally, returns list of payload dicts.
         """
 
-        query_embedding = self.embedding_service.embed_text(user_question)
+        query_embedding = self.embedding_service.embed([user_question], "query")[0]
 
         response = self.qdrant_client.query_points(
             collection_name=self.collection_name,
@@ -260,18 +260,15 @@ class AddSource:
 
                     if explanations_list:
                         for i, exp_chunk in enumerate(explanations_list):
-                            chunk_txt = (
-                                f"[Unit {unit_num} Lesson {lesson_num}]\n{exp_chunk}"
-                            )
-
-                            unique_string = f"{lesson_id}|{page}|chunk{i + 1}|{chunk_txt}"
+                            unique_string = f"{lesson_id}|{page}|chunk{i + 1}|{exp_chunk}"
                             chunk_id = str(uuid.uuid5(uuid.NAMESPACE_DNS, unique_string))
 
                             explanation_point = {
                                 **default_payload,
                                 "id": chunk_id,
                                 "point_type": "explanation",
-                                "chunk_txt": chunk_txt,
+                                "order": i,
+                                "chunk_txt": exp_chunk,
                             }
                             points_payloads.append(explanation_point)
 

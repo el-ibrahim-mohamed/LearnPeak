@@ -130,13 +130,13 @@ class Signup:
         email = email.strip().lower()
 
         msg = EmailMessage()
-        msg["Subject"] = "Your Learn Peak verification code"
+        msg["Subject"] = "Your LearnPeak verification code"
         msg["From"] = self.sender_email
         msg["To"] = email
 
         msg.set_content(
             f"""
-Welcome to Learn Peak!
+Welcome to LearnPeak!
 
 Your verification code is:
 

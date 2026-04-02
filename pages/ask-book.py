@@ -44,8 +44,8 @@ if "msgs_visible_counts" not in st.session_state:
     st.session_state["msgs_visible_counts"] = {}
 
 # Loading the RAG system
-st.sidebar.title("🧠 Learn Peak :blue[RAG] System")
-with st.spinner("Loading Learn Peak RAG System...", show_time=True):
+st.sidebar.title("🧠 LearnPeak :blue[RAG] System")
+with st.spinner("Loading LearnPeak RAG System...", show_time=True):
     with st.spinner("Importing services..."):
         from qdrant_client import models
         from rag.embedding_service import EmbeddingService
@@ -53,7 +53,7 @@ with st.spinner("Loading Learn Peak RAG System...", show_time=True):
         from rag.rag_service import RagService, AddSource
 
     # Initialize Services (Cached)
-    @st.cache_resource
+    @st.cache_resource()
     def init_services():
         embedding_service = EmbeddingService()
         qdrant_service = QdrantService(
@@ -150,16 +150,16 @@ if page == "add_source":
 
     st.error("This feature is currently unavailable!")
     st.stop()
-    
+
+    @st.cache_resource()
+    def get_add_source_service(_client, _rag_service, grade):
+        return AddSource(_client, _rag_service, grade)
+
     if st.session_state.get("user"):
-        if "add_source_service" not in st.session_state:
-            with st.spinner("Loading Add Source Service..."):
-                st.session_state["add_source_service"] = AddSource(
-                    st.session_state["client"],
-                    rag_service,
-                    st.session_state["user"]["grade"],
-                )
-        add_source_service = st.session_state["add_source_service"]
+        grade = st.session_state["user"]["grade"]
+        st.session_state["add_source_service"] = get_add_source_service(
+            st.session_state["client"], rag_service, grade
+        )
 
     else:
         add_source_service = None
@@ -211,7 +211,7 @@ if page == "add_source":
                 book_name.lower(),
                 uploaded_book.getvalue(),
                 uploaded_guide_answers.getvalue(),
-                gemini_model = "gemini-3-flash-preview"
+                gemini_model="gemini-3-flash-preview",
             )
             st.success("Source added successfuly!", icon="✅")
 
@@ -257,154 +257,157 @@ elif page == "chat":
                 with st.chat_message("user"):
                     st.markdown(msg["msg"])
             else:
-
-                if msg["is_error"] == True:
-                    st.error(
-                        "An error occured while retrieving your answer. Check your internet connection and try again."
-                    )
-
-                else:
-                    results = msg["results"]
-
-                    if results:
-                        msg_id = msg.get("id")
-
-                        msgs_visible_counts = st.session_state["msgs_visible_counts"]
-
-                        if msg_id not in msgs_visible_counts:
-                            msgs_visible_counts[msg_id] = 3  # default
-
-                        visible_limit = msgs_visible_counts[msg_id]
-                        visible_results = results[:visible_limit]
-
-                        for i, q_dict in enumerate(visible_results):
-
-                            if i != 0:
-                                "---"
-
-                            if q_dict["point_type"] == "question":
-                                ex_title: str = q_dict["ex_title"]
-                                ex_type: str = q_dict["ex_type"]
-                                question: str = q_dict["q_txt"]
-                                answer: str = q_dict["a_txt"]
-
-                                if ex_type in [
-                                    "true_false",
-                                    "true_false_with_correction",
-                                ]:
-                                    ex_title = (
-                                        ex_title.replace("(T)", "(✓)")
-                                        .replace("(t)", "(✓)")
-                                        .replace("()", "Put (✓)")
-                                        .replace("(X)", "(✗)")
-                                        .replace("(x)", "(✗)")
-                                    )
-
-                                metadata = (
-                                    f"📍 {q_dict["subject"].title()} , Unit {q_dict["unit_num"]} , Lesson {q_dict["lesson_num"]} , Page {q_dict["page"]} <br>"
-                                    f"{ex_titles_icons[ex_type]} Ex {q_dict["ex_num"]}: {ex_title}"
-                                    f"{":" if ex_title[-1] != ":" else ""}"
-                                )
-                                st.markdown(
-                                    f"<p style='font-size: 1.2rem;'><strong>{metadata}</strong></p>",
-                                    unsafe_allow_html=True,
-                                )
-
-                                if ex_type == "mcq":
-                                    st.markdown(
-                                        f"<p style='font-size: 1.1rem'> <strong>Q{q_dict["q_num"]}.</strong> {question}</p>",
-                                        unsafe_allow_html=True,
-                                    )
-
-                                    for i, choice in enumerate(q_dict["mcq_choices"]):
-                                        if i == int(answer):
-                                            st.markdown(f"🔘 **{choice}**")
-                                        else:
-                                            st.markdown(f"⚪ {choice}")
-
-                                elif ex_type == "complete":
-                                    answer = list(answer)
-                                    it = iter(answer)
-                                    question = re.sub(
-                                        "_____",
-                                        lambda x: f"<span style='color: #FF0000;'><strong><u>{next(it)}</u></strong></span>",
-                                        question,
-                                    )
-
-                                    st.markdown(
-                                        f"<p style='font-size: 1.1rem'> <strong>Q{q_dict["q_num"]}.</strong> {question}</p>",
-                                        unsafe_allow_html=True,
-                                    )
-
-                                elif ex_type == "true_false":
-                                    st.markdown(
-                                        f"<p style='font-size: 1.1rem'> <strong>Q{q_dict["q_num"]}.</strong> {question}</p>",
-                                        unsafe_allow_html=True,
-                                    )
-                                    if str(answer) == "True":
-                                        st.write(f"A: ✅")
-                                    elif str(answer) == "False":
-                                        st.write(f"A: ❌")
-
-                                elif ex_type == "true_false_with_correction":
-                                    if str(answer[0]) == "True":
-                                        st.markdown(
-                                            f"<p style='font-size: 1.1rem'> <strong>Q{q_dict["q_num"]}.</strong> {question}</p>",
-                                            unsafe_allow_html=True,
-                                        )
-                                        st.write(f"A: ✅")
-                                    elif str(answer[0]) == "False":
-                                        replacement = r"<u><strong>\1</strong></u>"
-                                        question = re.sub(
-                                            rf"(\b{answer[1]["mistake"]}\b)",
-                                            replacement,
-                                            question,
-                                        )
-                                        st.markdown(
-                                            f"<p style='font-size: 1.1rem'> <strong>Q{q_dict["q_num"]}.</strong> {question}</p>",
-                                            unsafe_allow_html=True,
-                                        )
-
-                                        st.markdown(
-                                            f"A: ❌ / <span style='color: #FF0000;'><strong>{answer[1]["correction"]}</strong></span>",
-                                            unsafe_allow_html=True,
-                                        )
-
-                                elif ex_type == "correct_underlined":
-                                    mistake = answer["mistake"]
-                                    question = question.replace(
-                                        mistake, f"<u><strong>{mistake}</strong></u>"
-                                    )
-                                    st.markdown(
-                                        f"<p style='font-size: 1.1rem'> <strong>Q{q_dict["q_num"]}.</strong> {question}</p>",
-                                        unsafe_allow_html=True,
-                                    )
-                                    st.markdown(
-                                        f"A: <span style='color: #FF0000;'><strong>{answer["correction"]}</strong></span>",
-                                        unsafe_allow_html=True,
-                                    )
-
-                                else:
-                                    st.markdown(
-                                        f"<p style='font-size: 1.1rem'> <strong>Q{q_dict["q_num"]}.</strong> {question}</p>",
-                                        unsafe_allow_html=True,
-                                    )
-                                    st.markdown(
-                                        f"A: <span style='color: #FF0000;'><strong>{answer}</strong></span>",
-                                        unsafe_allow_html=True,
-                                    )
-
-                        if msg_id == last_assistant_id and len(results) > visible_limit:
-                            if st.button(
-                                "Load More",
-                                key=f"load_more_{msg_id}",
-                            ):
-                                st.session_state["load_more_clicked"] = True
-                                st.session_state["msgs_visible_counts"][msg_id] += 3
-                                st.rerun()
+                with st.expander("🔍 Similar Questions", expanded=True):
+                    if msg["is_error"] == True:
+                        st.error(
+                            "An error occured while retrieving your answer. Check your internet connection and try again."
+                        )
 
                     else:
-                        st.write("**No Relevant Matches Found**")
+                        results = msg["results"]
+
+                        if results:
+                            msg_id = msg.get("id")
+
+                            msgs_visible_counts = st.session_state["msgs_visible_counts"]
+
+                            if msg_id not in msgs_visible_counts:
+                                msgs_visible_counts[msg_id] = 3  # default
+
+                            visible_limit = msgs_visible_counts[msg_id]
+                            visible_results = results[:visible_limit]
+
+                            for i, q_dict in enumerate(visible_results):
+
+                                if i != 0:
+                                    "---"
+
+                                if q_dict["point_type"] == "question":
+                                    ex_title: str = q_dict["ex_title"]
+                                    ex_type: str = q_dict["ex_type"]
+                                    question: str = q_dict["q_txt"]
+                                    answer: str = q_dict["a_txt"]
+
+                                    if ex_type in [
+                                        "true_false",
+                                        "true_false_with_correction",
+                                    ]:
+                                        ex_title = (
+                                            ex_title.replace("(T)", "(✓)")
+                                            .replace("(t)", "(✓)")
+                                            .replace("()", "Put (✓)")
+                                            .replace("(X)", "(✗)")
+                                            .replace("(x)", "(✗)")
+                                        )
+
+                                    metadata = (
+                                        f"📍 {q_dict["subject"].title()} , Unit {q_dict["unit_num"]} , Lesson {q_dict["lesson_num"]} , Page {q_dict["page"]} <br>"
+                                        f"{ex_titles_icons[ex_type]} Ex {q_dict["ex_num"]}: {ex_title}"
+                                        f"{":" if ex_title[-1] != ":" else ""}"
+                                    )
+                                    st.markdown(
+                                        f"<p style='font-size: 1.2rem;'><strong>{metadata}</strong></p>",
+                                        unsafe_allow_html=True,
+                                    )
+
+                                    if ex_type == "mcq":
+                                        st.markdown(
+                                            f"<p style='font-size: 1.1rem'> <strong>Q{q_dict["q_num"]}.</strong> {question}</p>",
+                                            unsafe_allow_html=True,
+                                        )
+
+                                        for i, choice in enumerate(q_dict["mcq_choices"]):
+                                            if i == int(answer):
+                                                st.markdown(
+                                                    f"<span style='color: #FF0000;'>🔘 <strong><u>{choice}</u></strong></span>",
+                                                    unsafe_allow_html=True,
+                                                )
+                                            else:
+                                                st.markdown(f"⚪ {choice}")
+
+                                    elif ex_type == "complete":
+                                        answer = list(answer)
+                                        it = iter(answer)
+                                        question = re.sub(
+                                            "_____",
+                                            lambda x: f"<span style='color: #FF0000;'><strong><u>{next(it)}</u></strong></span>",
+                                            question,
+                                        )
+
+                                        st.markdown(
+                                            f"<p style='font-size: 1.1rem'> <strong>Q{q_dict["q_num"]}.</strong> {question}</p>",
+                                            unsafe_allow_html=True,
+                                        )
+
+                                    elif ex_type == "true_false":
+                                        st.markdown(
+                                            f"<p style='font-size: 1.1rem'> <strong>Q{q_dict["q_num"]}.</strong> {question}</p>",
+                                            unsafe_allow_html=True,
+                                        )
+                                        if str(answer) == "True":
+                                            st.write(f"A: ✅")
+                                        elif str(answer) == "False":
+                                            st.write(f"A: ❌")
+
+                                    elif ex_type == "true_false_with_correction":
+                                        if str(answer[0]) == "True":
+                                            st.markdown(
+                                                f"<p style='font-size: 1.1rem'> <strong>Q{q_dict["q_num"]}.</strong> {question}</p>",
+                                                unsafe_allow_html=True,
+                                            )
+                                            st.write(f"A: ✅")
+                                        elif str(answer[0]) == "False":
+                                            replacement = r"<u><strong>\1</strong></u>"
+                                            question = re.sub(
+                                                rf"(\b{answer[1]["mistake"]}\b)",
+                                                replacement,
+                                                question,
+                                            )
+                                            st.markdown(
+                                                f"<p style='font-size: 1.1rem'> <strong>Q{q_dict["q_num"]}.</strong> {question}</p>",
+                                                unsafe_allow_html=True,
+                                            )
+
+                                            st.markdown(
+                                                f"A: ❌ / <span style='color: #FF0000;'><strong>{answer[1]["correction"]}</strong></span>",
+                                                unsafe_allow_html=True,
+                                            )
+
+                                    elif ex_type == "correct_underlined":
+                                        mistake = answer["mistake"]
+                                        question = question.replace(
+                                            mistake, f"<u><strong>{mistake}</strong></u>"
+                                        )
+                                        st.markdown(
+                                            f"<p style='font-size: 1.1rem'> <strong>Q{q_dict["q_num"]}.</strong> {question}</p>",
+                                            unsafe_allow_html=True,
+                                        )
+                                        st.markdown(
+                                            f"A: <span style='color: #FF0000;'><strong>{answer["correction"]}</strong></span>",
+                                            unsafe_allow_html=True,
+                                        )
+
+                                    else:
+                                        st.markdown(
+                                            f"<p style='font-size: 1.1rem'> <strong>Q{q_dict["q_num"]}.</strong> {question}</p>",
+                                            unsafe_allow_html=True,
+                                        )
+                                        st.markdown(
+                                            f"A: <span style='color: #FF0000;'><strong>{answer}</strong></span>",
+                                            unsafe_allow_html=True,
+                                        )
+
+                            if msg_id == last_assistant_id and len(results) > visible_limit:
+                                if st.button(
+                                    "Load More",
+                                    key=f"load_more_{msg_id}",
+                                ):
+                                    st.session_state["load_more_clicked"] = True
+                                    st.session_state["msgs_visible_counts"][msg_id] += 3
+                                    st.rerun()
+
+                        else:
+                            st.write("**No Relevant Matches Found**")
 
                 " "
                 " "
@@ -472,7 +475,7 @@ elif page == "chat":
         col1, col2 = st.columns([0.08, 0.92], vertical_alignment="center")
         with col1:
             with st.popover("", icon="➕", help="Apply filters to get better results"):
-                grade_f_options = ["♾️ All", *grades]
+                grade_f_options = ["♾️ All", "📓 Preparatory 2"]  # ["♾️ All", *grades]
                 grade_f_index = 0
                 if st.session_state.get("user"):
                     grade_f_index = grade_f_options.index(
@@ -483,7 +486,7 @@ elif page == "chat":
                     "🎓 Grade", grade_f_options, index=grade_f_index
                 )
 
-                subject_filter = st.selectbox("📚 Subject", ["♾️ All", *subjects])
+                subject_filter = st.selectbox("📚 Subject", ["♾️ All", "🔬 Science"])
                 unit_num_filter = st.selectbox(
                     "📌 Unit",
                     ["♾️ All", 1, 2, 3, 4],
@@ -527,7 +530,10 @@ elif page == "chat":
 
                 questions_filter = models.Filter(must=must_filters)
                 results_payloads = rag_service.search(
-                    user_query, query_filter=questions_filter
+                    user_query,
+                    limit=9,
+                    score_threshold=0.8,
+                    query_filter=questions_filter,
                 )
                 st.session_state["load_more_clicked"] = False
 

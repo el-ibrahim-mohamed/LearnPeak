@@ -128,8 +128,6 @@ def get_saved_quizzes(username: str) -> list[dict]:
         # Sort by most recent
         quizzes.sort(key=lambda x: x.get("created_at", 0), reverse=True)
 
-    st.write(quizzes)
-
     return quizzes
 
 
@@ -358,7 +356,7 @@ if not st.session_state.get("quiz_started"):
                     "---"
 
         else:
-            st.info("No AR models found. Create your first one!")
+            st.info("No quizzes found. Create your first one!")
 
 # Generated the Quiz
 else:
@@ -423,7 +421,10 @@ else:
                         st.switch_page("pages/signin.py")
 
                     if st.button(
-                        "Create Account", type="primary", icon="👤", use_container_width=True
+                        "Create Account",
+                        type="primary",
+                        icon="👤",
+                        use_container_width=True,
                     ):
                         st.session_state["save_after_auth"] = True
                         st.session_state["page_before_auth"] = "quizzes"

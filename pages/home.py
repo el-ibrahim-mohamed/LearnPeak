@@ -18,7 +18,7 @@ with st.sidebar:
 - 📄 Quiz Generation"""
     )
 
-    st.image("assets/logo.png")
+    st.image("static/logo.png")
 
 st.header(" **🏔️ Welcome to :red[Learn]:blue[Peak]!**", anchor=False)
 st.subheader("Engage your learning process with a creative AI Toolkit")
@@ -29,14 +29,14 @@ st.markdown(
 4. Would you like to test your knowledge by generating quizzes from YouTube videos, documents, websites or even from your books to prepare for exams?
 """
 )
-st.write("**If you want any of these solutions, _Learn Peak_ is your place.**")
+st.write("**If you want any of these solutions, _LearnPeak_ is your place.**")
 "---"
 
 st.subheader("✨ Explore our Features")
 
 # Ask your Book & Q.A Database
 with st.container(border=True):
-    if st.session_state["user_device_type"] == "pc":
+    if st.session_state.get("user_device_type", "mobile") == "pc":
         col1, col2, col3 = st.columns([1, 0.1, 1])
 
         with col1:
@@ -56,19 +56,20 @@ with st.container(border=True):
                 </style>
                 """
             )
-            
+
         with col3:
             st.markdown("#### 📚 Q.A Database")
             st.write("Instantly find answers to any question in your books!")
 
         " "
         if st.button("**Ask your Book**", use_container_width=True):
-            st.switch_page("pages/ask-book.py")
+            page = st.Page("pages/ask-book.py", title="Ask your book", icon="🧠")
+            st.switch_page(page)
 
     else:
         st.markdown("#### 🧠 Ask your Book")
         st.write("Get instant answers from your curriculum with the power of AI!")
-        
+
         st.markdown("#### 📚 Q.A Database")
         st.write("Instantly find answers to any question in your books!")
 
