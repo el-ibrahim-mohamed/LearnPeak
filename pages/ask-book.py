@@ -4,6 +4,7 @@ from streamlit_theme import st_theme
 from typing import Literal
 import re
 import uuid
+from typing import Literal
 
 
 # Defining Functions
@@ -47,7 +48,12 @@ if "msgs_visible_counts" not in st.session_state:
 st.sidebar.title("🧠 LearnPeak :blue[RAG] System")
 with st.spinner("Loading LearnPeak RAG System...", show_time=True):
     with st.spinner("Importing services..."):
-        from qdrant_client import models
+        from qdrant_client.models import (
+            PayloadSchemaType,
+            Filter,
+            FieldCondition,
+            MatchValue,
+        )
         from rag.embedding_service import EmbeddingService
         from rag.qdrant_service import QdrantService
         from rag.rag_service import RagService, AddSource
@@ -80,17 +86,17 @@ with st.spinner("Loading LearnPeak RAG System...", show_time=True):
             qdrant_service.create_payload_index(
                 qdrant_service.collection_name,
                 payload_key,
-                models.PayloadSchemaType.KEYWORD,
+                PayloadSchemaType.KEYWORD,
             )
 
         for payload_key in ["term", "unit_num", "lesson_num", "page"]:
             qdrant_service.create_payload_index(
                 qdrant_service.collection_name,
                 payload_key,
-                models.PayloadSchemaType.INTEGER,  # <-- changed
+                PayloadSchemaType.INTEGER,  # <-- changed
             )
 
-        return RagService(qdrant_service, embedding_service)
+        return RagService(qdrant_service, embedding_service, st.session_state["client"])
 
     rag_service = init_services()
 
@@ -112,9 +118,6 @@ with st.sidebar:
         st.session_state["messages_data"] = []
 
     st.caption("Your chats")
-
-
-page = st.session_state.get("rag_page", "chat")
 
 subjects = [
     "📖 English",
@@ -142,6 +145,8 @@ grades = [
     "🔬 Secondary 2",
     "🔬 Secondary 3",
 ]
+
+page = st.session_state.get("rag_page", "chat")
 
 # Add source page
 if page == "add_source":
@@ -220,20 +225,21 @@ if page == "add_source":
 elif page == "chat":
 
     def render_messages(messages_data: list):
+        # Custom HTML to right-align user messages
         st.html(
             """
-        <style>
-            .stChatMessage:has([data-testid="stChatMessageAvatarUser"]) {
-                display: flex;
-                flex-direction: row-reverse;
-                align-itmes: end;
-            }
+            <style>
+                .stChatMessage:has([data-testid="stChatMessageAvatarUser"]) {
+                    display: flex;
+                    flex-direction: row-reverse;
+                    align-itmes: end;
+                }
 
-            [data-testid="stChatMessageAvatarUser"] + [data-testid="stChatMessageContent"] * {
-                text-align: right;
-            }
-        </style>
-        """
+                [data-testid="stChatMessageAvatarUser"] + [data-testid="stChatMessageContent"] * {
+                    text-align: right;
+                }
+            </style>
+            """
         )
 
         last_assistant_id = None
@@ -257,7 +263,9 @@ elif page == "chat":
                 with st.chat_message("user"):
                     st.markdown(msg["msg"])
             else:
-                with st.expander("🔍 Similar Questions", expanded=True):
+                # Render questions
+                
+                with st.expander("🔍 Similar Questions", expanded=not bool(msg.get("ai_response"))):
                     if msg["is_error"] == True:
                         st.error(
                             "An error occured while retrieving your answer. Check your internet connection and try again."
@@ -269,7 +277,9 @@ elif page == "chat":
                         if results:
                             msg_id = msg.get("id")
 
-                            msgs_visible_counts = st.session_state["msgs_visible_counts"]
+                            msgs_visible_counts = st.session_state[
+                                "msgs_visible_counts"
+                            ]
 
                             if msg_id not in msgs_visible_counts:
                                 msgs_visible_counts[msg_id] = 3  # default
@@ -301,7 +311,7 @@ elif page == "chat":
                                         )
 
                                     metadata = (
-                                        f"📍 {q_dict["subject"].title()} , Unit {q_dict["unit_num"]} , Lesson {q_dict["lesson_num"]} , Page {q_dict["page"]} <br>"
+                                        f"📍 {q_dict["subject"].title()} , U{q_dict["unit_num"]} L{q_dict["lesson_num"]} , Page {q_dict["page"]} <br>"
                                         f"{ex_titles_icons[ex_type]} Ex {q_dict["ex_num"]}: {ex_title}"
                                         f"{":" if ex_title[-1] != ":" else ""}"
                                     )
@@ -316,7 +326,9 @@ elif page == "chat":
                                             unsafe_allow_html=True,
                                         )
 
-                                        for i, choice in enumerate(q_dict["mcq_choices"]):
+                                        for i, choice in enumerate(
+                                            q_dict["mcq_choices"]
+                                        ):
                                             if i == int(answer):
                                                 st.markdown(
                                                     f"<span style='color: #FF0000;'>🔘 <strong><u>{choice}</u></strong></span>",
@@ -376,7 +388,8 @@ elif page == "chat":
                                     elif ex_type == "correct_underlined":
                                         mistake = answer["mistake"]
                                         question = question.replace(
-                                            mistake, f"<u><strong>{mistake}</strong></u>"
+                                            mistake,
+                                            f"<u><strong>{mistake}</strong></u>",
                                         )
                                         st.markdown(
                                             f"<p style='font-size: 1.1rem'> <strong>Q{q_dict["q_num"]}.</strong> {question}</p>",
@@ -397,7 +410,10 @@ elif page == "chat":
                                             unsafe_allow_html=True,
                                         )
 
-                            if msg_id == last_assistant_id and len(results) > visible_limit:
+                            if (
+                                msg_id == last_assistant_id
+                                and len(results) > visible_limit
+                            ):
                                 if st.button(
                                     "Load More",
                                     key=f"load_more_{msg_id}",
@@ -408,6 +424,10 @@ elif page == "chat":
 
                         else:
                             st.write("**No Relevant Matches Found**")
+
+                # Render AI response
+                if msg.get("ai_response"):
+                    st.html(msg["ai_response"])
 
                 " "
                 " "
@@ -439,8 +459,8 @@ elif page == "chat":
             """
             st.components.v1.html(js, height=0)
 
+    # Custom HTML to add the "+" button beside st.chat_input
     theme = st_theme()
-
     st.markdown(
         f"""
         <style>
@@ -449,7 +469,7 @@ elif page == "chat":
             bottom: 0 !important;
             left: 50% !important;
             transform: translateX(-50%) !important;
-            width: {"70" if st.session_state["user_device_type"] == "pc" else "100"}% !important;
+            width: {"70" if st.session_state.get("user_device_type", "pc") == "pc" else "100"}% !important;
             padding: 1rem 1rem 2.5rem !important;
             background: {theme["backgroundColor"] if theme else "#FFFFFF"} !important;
             z-index: 999 !important;
@@ -497,44 +517,70 @@ elif page == "chat":
                     ["♾️ All", 1, 2, 3, 4],
                     accept_new_options=True,
                 )
+                ai_mode = st.toggle("✨ AI Mode", value=True)
 
         with col2:
             user_query = st.chat_input("Ask something...")
 
     if user_query and user_query.strip():
+
+        def get_filters(point_type: Literal["question", "explanation"] = "explanation"):
+            filters = []
+            for key, value in {
+                "point_type": point_type,
+                "grade": str(grade_filter),
+                "subject": clean_string(str(subject_filter)).lower(),
+                "unit_num": clean_string(str(unit_num_filter)),
+                "lesson_num": clean_string(str(lesson_num_filter)),
+            }.items():
+                if value and clean_string(value).lower() != "all":
+                    if key in ["unit_num", "lesson_num"]:
+                        value = int(value)
+                    elif key == "grade":
+                        value = map_grades(value)
+
+                    filters.append(
+                        FieldCondition(
+                            key=key,
+                            match=MatchValue(value=value),
+                        )
+                    )
+
+            return Filter(must=filters)
+
         with st.spinner("Thinking..."):
             is_error = False
-            results_payloads = []
+            questions_payloads = []
+            html_response = ""
 
             try:
-                must_filters = []
-                for key, value in {
-                    "point_type": "question",
-                    "grade": str(grade_filter),
-                    "subject": clean_string(str(subject_filter)).lower(),
-                    "unit_num": clean_string(str(unit_num_filter)),
-                    "lesson_num": clean_string(str(lesson_num_filter)),
-                }.items():
-                    if value and clean_string(value).lower() != "all":
-                        if key in ["unit_num", "lesson_num"]:
-                            value = int(value)
-                        elif key == "grade":
-                            value = map_grades(value)
-
-                        must_filters.append(
-                            models.FieldCondition(
-                                key=key,
-                                match=models.MatchValue(value=value),
-                            )
-                        )
-
-                questions_filter = models.Filter(must=must_filters)
-                results_payloads = rag_service.search(
+                # 1. Retrieve similar questions
+                questions_payloads = rag_service.search(
                     user_query,
-                    limit=9,
+                    limit=12,
                     score_threshold=0.8,
-                    query_filter=questions_filter,
+                    query_filter=get_filters("question"),
                 )
+
+                # 2. Generate AI response
+                if ai_mode:
+                    explanation_payloads = rag_service.search(
+                        user_query,
+                        limit=6,
+                        score_threshold=0.6,
+                        query_filter=get_filters("explanation"),
+                    )
+
+                    # Get all the included lessons ids
+                    lesson_ids = []
+                    for exp in explanation_payloads:
+                        if exp["lesson_id"] not in lesson_ids:
+                            lesson_ids.append(exp["lesson_id"])
+
+                    # Get the lessons sources concatenated texts
+                    sources_text = rag_service.get_sources(lesson_ids)
+                    html_response = rag_service.generate_response(user_query, sources_text)
+
                 st.session_state["load_more_clicked"] = False
 
             except Exception as e:
@@ -546,7 +592,8 @@ elif page == "chat":
             "id": str(uuid.uuid4()),
             "role": "assistant",
             "is_error": is_error,
-            "results": results_payloads,
+            "results": questions_payloads,
+            "ai_response": html_response
         }
 
         messages_data: list = st.session_state.get("messages_data", [])
@@ -557,4 +604,4 @@ elif page == "chat":
     if st.session_state.get("messages_data"):
         render_messages(st.session_state.get("messages_data"))
     else:
-        st.header("How can I help you today?", text_alignment="center")
+        st.header("How can I help you today?", text_alignment="center", anchor=False)

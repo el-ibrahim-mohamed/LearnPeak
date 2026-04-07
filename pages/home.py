@@ -20,7 +20,7 @@ with st.sidebar:
 
     st.image("static/logo.png")
 
-st.header(" **🏔️ Welcome to :red[Learn]:blue[Peak]!**", anchor=False)
+st.header("**🏔️ Welcome to :red[Learn]:blue[Peak]!**", anchor=False)
 st.subheader("Engage your learning process with a creative AI Toolkit")
 st.markdown(
     """1. Have you ever asked ChatGPT a question from your book but didn't get the answer according to your curriculum?

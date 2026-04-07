@@ -13,7 +13,7 @@ users_ref = root_ref.child("users")
 
 # Detecting the user's device type to customize the layout
 if "device_supports_ar" not in st.session_state:
-    device_type = st.session_state.get("user_device_type", "pc")
+    device_type = st.session_state.get("user_device_type", "mobile")
     st.session_state["device_supports_ar"] = False if device_type == "pc" else True
 
 # Scrolling Logic

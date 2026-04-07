@@ -10,7 +10,13 @@ import re
 from io import BytesIO
 from datetime import datetime
 from itertools import chain
-from qdrant_client import models
+from qdrant_client.models import (
+    Filter,
+    PointStruct,
+    FieldCondition,
+    MatchValue,
+    MatchAny,
+)
 from rag.embedding_service import EmbeddingService
 from rag.qdrant_service import QdrantService
 
@@ -21,12 +27,16 @@ class RagService:
     """
 
     def __init__(
-        self, qdrant_service: QdrantService, embedding_service: EmbeddingService
+        self,
+        qdrant_service: QdrantService,
+        embedding_service: EmbeddingService,
+        gemini_client: genai.Client,
     ):
         self.qdrant_service = qdrant_service
         self.qdrant_client = qdrant_service.get_client()
         self.collection_name = qdrant_service.collection_name
         self.embedding_service = embedding_service
+        self.gemini_client = gemini_client
 
     # -------------------------
     # Insert Methods
@@ -43,7 +53,7 @@ class RagService:
         embeddings = self.embedding_service.embed(embed_texts, "passage")
 
         points = [
-            models.PointStruct(
+            PointStruct(
                 id=point_id,
                 vector=embedding,
                 payload=payload,
@@ -66,7 +76,7 @@ class RagService:
         user_question: str,
         limit: int = 10,
         score_threshold: float = 0.8,
-        query_filter: Optional[models.Filter] = None,
+        query_filter: Optional[Filter] = None,
     ) -> List[Dict]:
         """
         Takes raw user question string, encodes internally, returns list of payload dicts.
@@ -85,6 +95,197 @@ class RagService:
         results = response.points
 
         return [res.payload for res in results] if results else []
+
+    def scroll(self, scroll_filter: Filter):
+        all_points = []
+        offset = None
+
+        while True:
+
+            points, offset = self.qdrant_client.scroll(
+                collection_name=self.collection_name,
+                scroll_filter=scroll_filter,
+                limit=100,
+                offset=offset,
+            )
+
+            all_points.extend(points)
+
+            if offset is None:
+                break
+
+        return [p.payload for p in all_points]
+
+    # -------------------------
+    # AI Mode Methods
+    # -------------------------
+
+    def get_sources(self, lesson_ids: list[str]):
+
+        filters = Filter(
+            must=[
+                FieldCondition(key="lesson_id", match=MatchAny(any=lesson_ids)),
+                FieldCondition(key="point_type", match=MatchValue(value="explanation")),
+            ]
+        )
+
+        exp_payloads = self.scroll(filters)
+
+        if not exp_payloads:
+            return
+
+        exp_payloads = sorted(
+            exp_payloads,
+            key=lambda x: (
+                x["country"],
+                x["education"],
+                x["subject"],
+                x["unit_num"],
+                x["lesson_num"],
+                x["page"],
+                x["order"],
+            ),
+        )
+
+        result = []
+
+        current_country = None
+        current_education = None
+        current_subject = None
+        current_unit = None
+        current_lesson = None
+        current_page = None
+
+        for exp in exp_payloads:
+
+            country = exp["country"]
+            education = exp["education"]
+            subject = exp["subject"]
+            unit = exp["unit_num"]
+            lesson = exp["lesson_num"]
+            page = exp["page"]
+
+            # New subject
+            if (
+                country != current_country
+                or education != current_education
+                or subject != current_subject
+            ):
+                if result:
+                    result.append("")
+
+                result.append(
+                    f"[{country.title()} - {education.title()} - {subject.title()}]"
+                )
+                result.append("")
+
+                current_country = country
+                current_education = education
+                current_subject = subject
+
+                current_unit = None
+                current_lesson = None
+                current_page = None
+
+            # New lesson
+            if unit != current_unit or lesson != current_lesson:
+                result.append(
+                    f"\n[Unit {unit}: {exp['unit_name']} - "
+                    f"Lesson {lesson}: {exp['lesson_name']}]\n"
+                )
+
+                current_unit = unit
+                current_lesson = lesson
+                current_page = None
+
+            # New page
+            if page != current_page:
+                result.append(f"\n[Page {page}]\n")
+                current_page = page
+
+            result.append(exp["chunk_txt"])
+
+        return "\n".join(result)
+
+    def generate_response(self, user_query, sources: str):
+        prompt = f"""
+You are an AI RAG Assistant in an edcational platform called LearnPeak, specialized in school books sources.
+Your job is to answer the student's question using ONLY the provided sources.
+
+-----------------------
+STRICT RULES
+-----------------------
+
+If the full answer is found in the sources:
+- You MUST use only the information inside the provided sources (books).
+- DO NOT use any external knowledge.
+- DO NOT guess or hallucinate.
+
+If the whole answer or part of it is not found in the sources: 
+- Say "The provided sources do not contain information regarding {{...}}.
+  I will provide the answer from my general knowledge, and you may want to independently verify it." OR SIMILAR
+  Then answer from your knowledge.
+- When answering any part from outside the sources, you MUST declare that it is not found in the sources.
+- You should fully answer the question even if part of the answer is not from the sources 
+
+-----------------------
+SOURCES (May be irrelevant or None)
+-----------------------
+
+{sources}
+
+-----------------------
+STUDENT QUESTION
+-----------------------
+
+{user_query}
+
+-----------------------
+OUTPUT FORMAT
+-----------------------
+Return your response as an HTML code answering the student's question.
+You can use the HTML tags to format your response.
+
+HTML Rules:
+- Return a valid HTML.
+- Do NOT include <html>, <head>, or <body> tags.
+- Use inline CSS only.
+
+EDUCATIONAL RULES:
+- Sound natural like a normal chatbot continuing on the conversation
+- Answer clearly and fully
+- Use bullet points, short paragraphs, and dividers when needed
+- Highlight definitions and important text with <strong>
+- You MUST USE the <em> tag to refer to the sources at the end in bullet points IN THIS FORM:
+  Sources: \\n• [{{Subject}} - Unit {{unit_num}} - Lesson {{lesson_num}} - Page {{page_num}}]
+  For example: "• [Science - Unit 1 - Lesson 3 - Page 58]". Do not include country or education type.
+-----------------------
+
+Now answer the student's question.
+"""
+
+        for model in [
+            "gemini-3.1-flash-lite-preview",
+            "gemini-2.5-flash-lite",
+            "gemini-3.1-flash-preview",
+            "gemini-2.5-flash",
+        ]:
+            print(model)
+            try:
+                response = self.gemini_client.models.generate_content(
+                    model=model,
+                    contents=[prompt],
+                    config=types.GenerateContentConfig(
+                        max_output_tokens=4000,
+                        temperature=0.7,
+                    ),
+                )
+                break
+            except:
+                continue
+
+        # Return the HTML response
+        return response.text
 
 
 class AddSource:
@@ -186,7 +387,6 @@ class AddSource:
             ),
         )
 
-        print(f"Finish Reason: {response.candidates[0].finish_reason}")
         json_results = json.loads(response.text)
 
         # DEBUG SAVE
@@ -260,8 +460,12 @@ class AddSource:
 
                     if explanations_list:
                         for i, exp_chunk in enumerate(explanations_list):
-                            unique_string = f"{lesson_id}|{page}|chunk{i + 1}|{exp_chunk}"
-                            chunk_id = str(uuid.uuid5(uuid.NAMESPACE_DNS, unique_string))
+                            unique_string = (
+                                f"{lesson_id}|{page}|chunk{i + 1}|{exp_chunk}"
+                            )
+                            chunk_id = str(
+                                uuid.uuid5(uuid.NAMESPACE_DNS, unique_string)
+                            )
 
                             explanation_point = {
                                 **default_payload,
@@ -388,13 +592,13 @@ You are an Expert Educational Data Extraction Engine. Your goal is to convert PD
 2. For explanation pages, perform OCR or text extraction to extract 100% of the text in the pages.
    Handle layouts, tables, containers, colors, etc. You should chunk the whole extracted text of the page into chunks.
 3. For questions pages, match every question from the questions PDF to its exact answer in the answers PDF.
-4. Extract 100% of the texts. Do not summarize, edit, or skip texts.
+4. You MUST extract 100% of the texts. Do not summarize, edit, or skip texts.
 
 ### EXPLANATION CHUNKING RULES
 1. SEMANTIC BOUNDARIES: Preserve a little context in the chunks. Do not break in the middle of a sentence.
 2. SEMANTIC ORDER: Chunks MUST be in the list in the same order they appear.
 3. TOKEN LIMIT: Each chunk must be approximately 30-120 words, up to 150 tokens (to fit the 200 token limit of the embedding model).
-4. IMAGE DESCRIPTION: If a chunk refers to a diagram or table, include a brief text description of that visual within the chunk text (1-2 sentences).
+4. IMAGE DESCRIPTION: If a chunk refers to a diagram or table, include a brief text description of that visual within the chunk text (1-2 sentences, inside []).
 
 ### OUTPUT SCHEMA
 You MUST return JSON object with this structure:
