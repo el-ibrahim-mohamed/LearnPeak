@@ -18,7 +18,7 @@ st.set_page_config(
 )
 
 def load_app():
-    # --- 4. Setting up Firebase RTDB ---
+    # --- Setting up Firebase RTDB ---
     # Fetch the service account key JSON file contents
     service_account_key_dict = dict(st.secrets["firebase_service_account"])
 
@@ -34,8 +34,9 @@ def load_app():
         )
 
     root_ref = db.reference("/")
-    # --- 2. Checking for auth cookies ---
-    if "cookie_manager" not in st.session_state:
+
+    # --- Checking for auth cookies ---
+    if "cookies" not in st.session_state:
         cookies = EncryptedCookieManager(
             password=st.secrets["cookies"]["PASSWORD"], prefix="learnpeak/"
         )
@@ -52,7 +53,7 @@ def load_app():
         user_info = root_ref.child(f"users/{username}/info").get()
         st.session_state["user"] = {**user_info, "username": username}
 
-    # --- 1. Defining the app's pages with st.Page ---
+    # --- Defining the app's pages with st.Page ---
     # Home
     home = st.Page("pages/home.py", title="Home", icon="🏠", default=True)
 
@@ -63,11 +64,11 @@ def load_app():
     profile = st.Page("pages/profile.py", title="Profile", icon="🧑")
 
     # Tools
+    ask_book = st.Page("pages/ask-book.py", title="Ask your book", icon="🧠")
     ar = st.Page("pages/ar.py", title="Learn with AR", icon="🪄")
     quizzes = st.Page("pages/quizzes.py", title="Quiz Generation", icon="📝")
-    ask_book = st.Page("pages/ask-book.py", title="Ask your book", icon="🧠")
 
-    # --- 3. Running the pages ---
+    # --- Running the pages ---
     if st.session_state.get("user"):
         pages = {
             "": [home],
@@ -84,7 +85,7 @@ def load_app():
     # Run st.navigation as soon as possible to show the nav to the user
     pg = st.navigation(pages, position="top")
 
-    # --- 5. Getting the device type ---
+    # --- Getting the device type ---
     if "user_device_type" not in st.session_state:
         user_agent = streamlit_js_eval(
             js_expressions="window.navigator.userAgent", key="user_agent"

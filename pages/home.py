@@ -36,7 +36,9 @@ st.subheader("✨ Explore our Features")
 
 # Ask your Book & Q.A Database
 with st.container(border=True):
-    if st.session_state.get("user_device_type", "mobile") == "pc":
+    user_device_type = st.session_state.get("user_device_type", "mobile")
+
+    if user_device_type == "pc":
         col1, col2, col3 = st.columns([1, 0.1, 1])
 
         with col1:
@@ -63,8 +65,7 @@ with st.container(border=True):
 
         " "
         if st.button("**Ask your Book**", use_container_width=True):
-            page = st.Page("pages/ask-book.py", title="Ask your book", icon="🧠")
-            st.switch_page(page)
+            st.switch_page("pages/ask-book.py")
 
     else:
         st.markdown("#### 🧠 Ask your Book")

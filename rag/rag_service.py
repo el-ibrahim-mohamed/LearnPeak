@@ -243,11 +243,11 @@ STUDENT QUESTION
 -----------------------
 OUTPUT FORMAT
 -----------------------
-Return your response as an HTML code answering the student's question.
-You can use the HTML tags to format your response.
+You must return your response as an **HTML** code containing the answer of the student's question.
+USE the HTML tags to format your response.
 
 HTML Rules:
-- Return a valid HTML.
+- You MUST return valid HTML code.
 - Do NOT include <html>, <head>, or <body> tags.
 - Use inline CSS only.
 
@@ -257,8 +257,9 @@ EDUCATIONAL RULES:
 - Use bullet points, short paragraphs, and dividers when needed
 - Highlight definitions and important text with <strong>
 - You MUST USE the <em> tag to refer to the sources at the end in bullet points IN THIS FORM:
-  Sources: \\n• [{{Subject}} - Unit {{unit_num}} - Lesson {{lesson_num}} - Page {{page_num}}]
-  For example: "• [Science - Unit 1 - Lesson 3 - Page 58]". Do not include country or education type.
+  "Sources: \\n• {{Subject}} - Unit {{unit_num}} - Lesson {{lesson_num}} - Page {{page_num}}"
+  For example: "• Science - Unit 1 - Lesson 3 - Page 58" or "• Science - Unit 1 - Lesson 3 - Page 58 to 62"
+  Do not include country or education type.
 -----------------------
 
 Now answer the student's question.
@@ -276,7 +277,7 @@ Now answer the student's question.
                     model=model,
                     contents=[prompt],
                     config=types.GenerateContentConfig(
-                        max_output_tokens=4000,
+                        max_output_tokens=40000,
                         temperature=0.7,
                     ),
                 )
@@ -285,6 +286,13 @@ Now answer the student's question.
                 continue
 
         # Return the HTML response
+        with open(
+            f"debug/rag_responses/gemini_response_{str(uuid.uuid4())}.txt",
+            "w",
+            encoding="utf-8",
+        ) as f:
+            f.write(response.text)
+            
         return response.text
 
 
@@ -390,7 +398,7 @@ class AddSource:
         json_results = json.loads(response.text)
 
         # DEBUG SAVE
-        debug_file = f"debug/gemini_response_{uuid.uuid4().hex}.json"
+        debug_file = f"debug/gemini_response_{str(uuid.uuid4())}.json"
         with open(debug_file, "w", encoding="utf-8") as f:
             json.dump(json_results, f, indent=4)
 

@@ -59,7 +59,7 @@ def generate_ar_experience(topic_name: str, use_model_viewer: bool = False):
             st.session_state["sketchfab_embed_html"] = result["sketchfab_embed_html"]
             st.session_state["ai_description"] = result["ai_description"]
 
-            height = 200 if st.session_state["device_supports_ar"] else 700
+            height = 200 if st.session_state["device_supports_ar"] else 400
             components.html(result["sketchfab_embed_html"], height=height)
             "---"
 

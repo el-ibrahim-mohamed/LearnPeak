@@ -24,7 +24,7 @@ class ARService:
         self.github_username = github_username
         self.github_access_token = github_access_token
         self.repo = repo
-        self.client = gemini_client
+        self.gemini_client = gemini_client
         self._topic_name = ""
 
     @property
@@ -177,11 +177,26 @@ You should return your response in a JSON structure like this example:
             )
 
         # --- 5. Generating the response ---
-        response = self.client.models.generate_content(
-            model="gemini-2.5-flash",
-            contents=contents,
-            config={"response_mime_type": "application/json"},
-        )
+        for model in [
+            "gemini-3.1-flash-preview",
+            "gemini-3.1-flash-lite-preview",
+            "gemini-2.5-flash",
+            "gemini-2.5-flash-lite",
+        ]:
+            print(model)
+            try:
+                response = self.gemini_client.models.generate_content(
+                    model=model,
+                    contents=contents,
+                    config=types.GenerateContentConfig(
+                        response_mime_type="application/json",
+                        temperature=0.7,
+                    ),
+                )
+                break
+            except:
+                continue
+
         response_json = json.loads(response.text)
 
         model_index = int(response_json["best_model_index"])
