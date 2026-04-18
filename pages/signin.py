@@ -89,56 +89,56 @@ with st.container(border=False):
         else:
             ph.error("❌ Username or Password Incorrect")
 
-    # OR Divider
-    st.markdown(
-        """
-    <style>
-    .divider {
-        display: flex;
-        align-items: center;
-        text-align: center;
-        margin-top: 5px;
-        margin-bottom: 20px;
-    }
+    # # OR Divider
+    # st.markdown(
+    #     """
+    # <style>
+    # .divider {
+    #     display: flex;
+    #     align-items: center;
+    #     text-align: center;
+    #     margin-top: 5px;
+    #     margin-bottom: 20px;
+    # }
 
-    .divider::before,
-    .divider::after {
-        content: "";
-        flex: 1;
-        border-bottom: 1px solid #d9d9d9;
-    }
+    # .divider::before,
+    # .divider::after {
+    #     content: "";
+    #     flex: 1;
+    #     border-bottom: 1px solid #d9d9d9;
+    # }
 
-    .divider:not(:empty)::before {
-        margin-right: 20px;
-    }
+    # .divider:not(:empty)::before {
+    #     margin-right: 20px;
+    # }
 
-    .divider:not(:empty)::after {
-        margin-left: 20px;
-    }
+    # .divider:not(:empty)::after {
+    #     margin-left: 20px;
+    # }
 
-    .divider span {
-        color: #888;
-        font-size: 14px;
-        font-weight: 500;
-    }
-    </style>
+    # .divider span {
+    #     color: #888;
+    #     font-size: 14px;
+    #     font-weight: 500;
+    # }
+    # </style>
 
-    <div class="divider">
-        <span>OR</span>
-    </div>
-    """,
-        unsafe_allow_html=True,
-    )
+    # <div class="divider">
+    #     <span>OR</span>
+    # </div>
+    # """,
+    #     unsafe_allow_html=True,
+    # )
 
-    with stylable_container(
-        "continue_with_google",
-        css_styles="""
-        div.stButton > button {
-            background-color: #4285F4;
-            color: white;
-        }""",
-    ):
-        button2_clicked = st.button("Continue with Google", use_container_width=True)
+    # with stylable_container(
+    #     "continue_with_google",
+    #     css_styles="""
+    #     div.stButton > button {
+    #         background-color: #4285F4;
+    #         color: white;
+    #     }""",
+    # ):
+    #     button2_clicked = st.button("Continue with Google", use_container_width=True)
 
     " "
     if st.button(

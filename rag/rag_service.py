@@ -243,22 +243,19 @@ STUDENT QUESTION
 -----------------------
 OUTPUT FORMAT
 -----------------------
-You must return your response as an **HTML** code containing the answer of the student's question.
-USE the HTML tags to format your response.
+You must return your response in markdown format.
 
-HTML Rules:
-- You MUST return valid HTML code.
-- Do NOT include <html>, <head>, or <body> tags.
-- Use inline CSS only.
+- Format your response using Markdown.
+- Use bolding for emphasis, bullet points or numbered lists for readability, and headers to organize sections.
+- For data comparisons, use tables.
+- Ensure the layout is visually structured and scannable
 
 EDUCATIONAL RULES:
 - Sound natural like a normal chatbot continuing on the conversation
 - Answer clearly and fully
-- Use bullet points, short paragraphs, and dividers when needed
-- Highlight definitions and important text with <strong>
-- You MUST USE the <em> tag to refer to the sources at the end in bullet points IN THIS FORM:
+- You MUST refer to the sources at the end in bullet points IN THIS FORM:
   "Sources: \\n• {{Subject}} - Unit {{unit_num}} - Lesson {{lesson_num}} - Page {{page_num}}"
-  For example: "• Science - Unit 1 - Lesson 3 - Page 58" or "• Science - Unit 1 - Lesson 3 - Page 58 to 62"
+  For example: "• Science - Unit 1 - Lesson 3 - Page 58 to 62"
   Do not include country or education type.
 -----------------------
 

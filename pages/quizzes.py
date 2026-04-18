@@ -1,4 +1,5 @@
 import streamlit as st
+import streamlit.components.v1 as components
 from firebase_admin.db import Reference
 from quizzes.service import QuizzesService
 import time
@@ -136,6 +137,18 @@ def delete_quiz(username: str, quiz_id: str):
     quiz_to_delete.delete()
 
 
+def open_quiz(quiz: dict):
+    """Load a quiz from history to display it"""
+    st.session_state["quiz_info"] = quiz["quiz_info"]
+    st.session_state["quiz_questions"] = quiz["quiz_questions"]
+    st.session_state["quiz_id"] = quiz["id"]
+    st.session_state["quiz_started"] = True
+    st.session_state["quiz_submitted"] = False
+    st.session_state["retakes"] = 0
+    st.session_state["scroll_to_top"] = True
+    st.rerun()
+
+
 # Scrolling Logic
 if st.session_state.get("scroll_to_top"):
     js = """
@@ -144,7 +157,7 @@ if st.session_state.get("scroll_to_top"):
     </script>
     """
     # , behavior: 'smooth'
-    st.components.v1.html(js, height=0)
+    components.html(js, height=0)
     st.session_state["scroll_to_top"] = False
 
 
@@ -333,7 +346,7 @@ if not st.session_state.get("quiz_started"):
         if quizzes:
             for i, quiz in enumerate(quizzes):
                 quiz_title = quiz["quiz_info"]["title"]
-                col1, col2 = st.columns([4, 1], vertical_alignment="center")
+                col1, col2, col3 = st.columns([4, 1, 1], vertical_alignment="center")
 
                 with col1:
                     st.subheader(f"#{i+1} {quiz_title}")
@@ -346,7 +359,21 @@ if not st.session_state.get("quiz_started"):
                     st.caption(f"Created: {date_time}")
 
                 with col2:
-                    if st.button("Delete", key=f"delete_{quiz['id']}", icon="🗑️"):
+                    if st.button(
+                        "Open",
+                        key=f"open_{quiz['id']}",
+                        icon="📖",
+                        use_container_width=True,
+                    ):
+                        open_quiz(quiz)
+
+                with col3:
+                    if st.button(
+                        "Delete",
+                        key=f"delete_{quiz['id']}",
+                        icon="🗑️",
+                        use_container_width=True,
+                    ):
                         delete_quiz(st.session_state["user"]["username"], quiz["id"])
 
                         st.success(f"Deleted '{quiz_title}'")
@@ -438,7 +465,7 @@ else:
                     st.session_state["quiz_info"],
                     st.session_state["quiz_questions"],
                 )
-                st.success("AR model saved successfuly.")
+                st.success("Quiz saved successfuly.")
 
         if col2.button("Submit", type="primary", icon="🚀", use_container_width=True):
 

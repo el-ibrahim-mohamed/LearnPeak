@@ -38,11 +38,11 @@ def email_login():
         ):
             email_validity = signup.validate_email(email)
             if email_validity != True:
-                email_ph.write(f":red[* {email_validity}]")
+                email_ph.error(email_validity)
 
             password_validity = signup.validate_password(password)
             if password_validity != True:
-                password_ph.write(f":red[* {password_validity}]")
+                password_ph.error(password_validity)
 
             if email_validity == True and password_validity == True:
                 st.session_state["new_user"] = {
@@ -81,7 +81,6 @@ def verify_email():
             if code_valid != True:
                 code_ph.error(code_valid)
             else:
-                code_ph.success("Email Verified!")
                 st.session_state["signup_step"] = 3
                 st.rerun()
 
@@ -202,7 +201,7 @@ def take_user_info():
             and grade
         ):
             ph.success(
-                "Created your account successfully. Welcome to :red[Learn] :blue[Peak]!"
+                "Created your account successfully. Welcome to **LearnPeak**!"
             )
 
             new_user = st.session_state["new_user"]
@@ -260,61 +259,61 @@ if not st.session_state.get("signup_method"):
             st.session_state["signup_step"] = 1
             st.rerun()
 
-    # OR Divider
-    st.markdown(
-        """
-    <style>
-    .divider {
-        display: flex;
-        align-items: center;
-        text-align: center;
-        margin: 25px 0;
-    }
+    # # OR Divider
+    # st.markdown(
+    #     """
+    # <style>
+    # .divider {
+    #     display: flex;
+    #     align-items: center;
+    #     text-align: center;
+    #     margin: 25px 0;
+    # }
 
-    .divider::before,
-    .divider::after {
-        content: "";
-        flex: 1;
-        border-bottom: 1px solid #d9d9d9;
-    }
+    # .divider::before,
+    # .divider::after {
+    #     content: "";
+    #     flex: 1;
+    #     border-bottom: 1px solid #d9d9d9;
+    # }
 
-    .divider:not(:empty)::before {
-        margin-right: 15px;
-    }
+    # .divider:not(:empty)::before {
+    #     margin-right: 15px;
+    # }
 
-    .divider:not(:empty)::after {
-        margin-left: 15px;
-    }
+    # .divider:not(:empty)::after {
+    #     margin-left: 15px;
+    # }
 
-    .divider span {
-        color: #888;
-        font-size: 14px;
-        font-weight: 500;
-    }
-    </style>
+    # .divider span {
+    #     color: #888;
+    #     font-size: 14px;
+    #     font-weight: 500;
+    # }
+    # </style>
 
-    <div class="divider">
-        <span>OR</span>
-    </div>
-    """,
-        unsafe_allow_html=True,
-    )
+    # <div class="divider">
+    #     <span>OR</span>
+    # </div>
+    # """,
+    #     unsafe_allow_html=True,
+    # )
 
-    # Continue with Google
-    with stylable_container(
-        key="google_button",
-        css_styles="""
-            div[data-testid="stButton"] > button {
-                background-color: #4285F4 !important;
-                color: white !important;
-                border-radius: 10px !important;
-                padding: 0.6em 1em !important;
-            }
-        """,
-    ):
-        if st.button("Continue with Google", use_container_width=True):
-            st.session_state["signup_method"] = "google"
-            st.rerun()
+    # # Continue with Google
+    # with stylable_container(
+    #     key="google_button",
+    #     css_styles="""
+    #         div[data-testid="stButton"] > button {
+    #             background-color: #4285F4 !important;
+    #             color: white !important;
+    #             border-radius: 10px !important;
+    #             padding: 0.6em 1em !important;
+    #         }
+    #     """,
+    # ):
+    #     if st.button("Continue with Google", use_container_width=True):
+    #         st.session_state["signup_method"] = "google"
+    #         st.rerun()
 
     " "
     _, col2, _ = st.columns([3, 4, 3])

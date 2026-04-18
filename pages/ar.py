@@ -4,6 +4,7 @@ from google import genai
 from ar.service import ARService
 from firebase_admin.db import Reference
 import time
+import uuid
 from datetime import datetime
 
 
@@ -24,7 +25,7 @@ if st.session_state.get("scroll_to_top"):
     </script>
     """
     # behavior: 'smooth'
-    st.components.v1.html(js, height=0)
+    components.html(js, height=0)
     st.session_state["scroll_to_top"] = False
 
 if st.session_state.get("scroll_to_bottom"):
@@ -35,7 +36,7 @@ if st.session_state.get("scroll_to_bottom"):
     </script>
     """
     # add "behavior: 'smooth'" if you want animation
-    st.components.v1.html(js, height=0)
+    components.html(js, height=0)
     st.session_state["scroll_to_bottom"] = False
 
 
@@ -83,12 +84,18 @@ def save_ar_experience(
     model_viewer_html: str = None,
 ):
     ar_ref = users_ref.child(f"{username}/history/ar")
+    id = str(uuid.uuid4())
+
     ar_saving_data = {
         "topic": topic,
+        "id": id,
         "created_at": time.time(),  # Timestamp
         "sketchfab_embed_html": sketchfab_embed_html,
         "ai_description": ai_description,
     }
+
+    st.session_state["id"] = id
+
     if model_viewer_html:
         ar_saving_data["model_viewer_html"] = model_viewer_html
 
@@ -172,7 +179,7 @@ if not st.session_state.get("generated_ar"):
 
                     description = model["ai_description"]
                     minimized_description = (
-                        description[:200] + "..."
+                        description[:150] + "..."
                         if len(description) > 200
                         else description
                     )
@@ -194,6 +201,7 @@ if not st.session_state.get("generated_ar"):
                 ):
                     st.session_state["generated_ar"] = True
                     st.session_state["topic"] = model["topic"]
+                    st.session_state["id"] = model["id"]
                     st.session_state["sketchfab_embed_html"] = model[
                         "sketchfab_embed_html"
                     ]
@@ -235,16 +243,13 @@ else:
             components.html(st.session_state["model_viewer_html"], height=50)
             "---"
 
-    col1, col2 = st.columns(2)
-
     # Saving the AR model
-    if col1.button("Save To History", icon="📂", use_container_width=True) or (
-        st.session_state.get("save_after_auth")
+    if (
+        not st.session_state.get("id")
         and st.session_state["topic"]
         and st.session_state["sketchfab_embed_html"]
         and st.session_state["ai_description"]
     ):
-        st.session_state["save_after_auth"] = False
 
         if not st.session_state.get("user"):
 
@@ -258,7 +263,6 @@ else:
                     icon="🔐",
                     use_container_width=True,
                 ):
-                    st.session_state["save_after_auth"] = True
                     st.session_state["page_before_auth"] = "ar"
                     st.switch_page("pages/signin.py")
 
@@ -268,7 +272,6 @@ else:
                     icon="👤",
                     use_container_width=True,
                 ):
-                    st.session_state["save_after_auth"] = True
                     st.session_state["page_before_auth"] = "ar"
                     st.switch_page("pages/signup.py")
 
@@ -285,20 +288,21 @@ else:
                 )
             st.success("AR model saved successfuly.")
 
-    # "Generate A New AR Experience" button
-    if col2.button(
-        "Generate A New AR Experience",
+    # "Generate a new AR experience" button
+    if st.button(
+        "Generate a new AR experience",
         type="primary",
         icon="✨",
         use_container_width=True,
     ):
-        del st.session_state["sketchfab_embed_html"]
-
-        if st.session_state.get("ai_description"):
-            del st.session_state["ai_description"]
-
-        if st.session_state.get("model_viewer_html"):
-            del st.session_state["model_viewer_html"]
+        for ss_name in [
+            "id",
+            "sketchfab_embed_html",
+            "ai_description",
+            "model_viewer_html",
+        ]:
+            if st.session_state.get(ss_name):
+                del st.session_state[ss_name]
 
         st.session_state["generated_ar"] = False
         st.session_state["scroll_to_top"] = True

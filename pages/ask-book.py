@@ -1,4 +1,5 @@
 import streamlit as st
+import streamlit.components.v1 as components
 from streamlit_shortcuts import shortcut_button
 from streamlit_theme import st_theme
 from typing import Literal
@@ -427,7 +428,7 @@ elif page == "chat":
 
                 # Render AI response
                 if msg.get("ai_response"):
-                    st.html(msg["ai_response"])
+                    st.markdown(msg["ai_response"])
 
                 " "
                 " "
@@ -457,7 +458,7 @@ elif page == "chat":
                 }
             </script>
             """
-            st.components.v1.html(js, height=0)
+            components.html(js, height=0)
 
     # Custom HTML to add the "+" button beside st.chat_input
     theme = st_theme()
@@ -551,7 +552,7 @@ elif page == "chat":
         with st.spinner("Thinking..."):
             is_error = False
             questions_payloads = []
-            html_response = ""
+            response = ""
 
             try:
                 # 1. Retrieve similar questions
@@ -579,7 +580,7 @@ elif page == "chat":
 
                     # Get the lessons sources concatenated texts
                     sources_text = rag_service.get_sources(lesson_ids)
-                    html_response = rag_service.generate_response(user_query, sources_text)
+                    response = rag_service.generate_response(user_query, sources_text)
 
                 st.session_state["load_more_clicked"] = False
 
@@ -593,7 +594,7 @@ elif page == "chat":
             "role": "assistant",
             "is_error": is_error,
             "results": questions_payloads,
-            "ai_response": html_response
+            "ai_response": response
         }
 
         messages_data: list = st.session_state.get("messages_data", [])
