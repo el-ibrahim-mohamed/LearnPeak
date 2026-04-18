@@ -283,12 +283,12 @@ Now answer the student's question.
                 continue
 
         # Return the HTML response
-        with open(
-            f"debug/rag_responses/gemini_response_{str(uuid.uuid4())}.txt",
-            "w",
-            encoding="utf-8",
-        ) as f:
-            f.write(response.text)
+        # with open(
+        #     f"debug/rag_responses/gemini_response_{str(uuid.uuid4())}.txt",
+        #     "w",
+        #     encoding="utf-8",
+        # ) as f:
+        #     f.write(response.text)
             
         return response.text
 
@@ -395,9 +395,9 @@ class AddSource:
         json_results = json.loads(response.text)
 
         # DEBUG SAVE
-        debug_file = f"debug/gemini_response_{str(uuid.uuid4())}.json"
-        with open(debug_file, "w", encoding="utf-8") as f:
-            json.dump(json_results, f, indent=4)
+        # debug_file = f"debug/gemini_response_{str(uuid.uuid4())}.json"
+        # with open(debug_file, "w", encoding="utf-8") as f:
+        #     json.dump(json_results, f, indent=4)
 
         return json_results
 
@@ -581,8 +581,8 @@ class AddSource:
 
         points_payloads = list(chain.from_iterable(points_payloads))
 
-        with open("enriched_questions.json", "w") as f:
-            json.dump(points_payloads, f, indent=4)
+        # with open("enriched_questions.json", "w") as f:
+        #     json.dump(points_payloads, f, indent=4)
 
         # self.insert_to_db(questions_payloads)
 
