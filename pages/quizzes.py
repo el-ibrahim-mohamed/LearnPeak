@@ -3,6 +3,7 @@ import streamlit.components.v1 as components
 from firebase_admin.db import Reference
 from quizzes.service import QuizzesService
 import time
+import uuid
 from datetime import datetime
 
 
@@ -95,18 +96,20 @@ def display_graded_quiz(quiz_questions: dict, quiz_grading: dict):
         "---"
 
 
-def save_quiz(username: str, quiz_info: dict, quiz_questions: dict) -> str:
+def save_quiz(username: str, quiz_info: dict, quiz_questions: dict):
     quizzes_ref = users_ref.child(f"{username}/history/quizzes")
+    id = str(uuid.uuid4())
     quiz_saving_data = {
+        "id": id,
+        "created_at": time.time(),
         "quiz_info": quiz_info,
         "quiz_questions": quiz_questions,
-        "created_at": time.time(),
     }
-    new_quiz_ref = quizzes_ref.push(
+    quizzes_ref.push(
         quiz_saving_data
     )  # push automatically creates a long, random key
 
-    return new_quiz_ref.key
+    st.session_state["quiz_id"] = id
 
 
 def save_quiz_grading(username: str, quiz_id: str, grading_data: dict):
@@ -144,7 +147,6 @@ def open_quiz(quiz: dict):
     st.session_state["quiz_id"] = quiz["id"]
     st.session_state["quiz_started"] = True
     st.session_state["quiz_submitted"] = False
-    st.session_state["retakes"] = 0
     st.session_state["scroll_to_top"] = True
     st.rerun()
 
@@ -355,7 +357,7 @@ if not st.session_state.get("quiz_started"):
                     dt = datetime.fromtimestamp(timestamp)
                     date_time = dt.strftime(
                         "%B %d, %Y at %I:%M %p"
-                    )  # "January 24, 2026 at 03:30 PM"
+                    )  # Example: "January 24, 2026 at 03:30 PM"
                     st.caption(f"Created: {date_time}")
 
                 with col2:
@@ -389,10 +391,7 @@ if not st.session_state.get("quiz_started"):
 else:
     # Solving the Quiz
     if not st.session_state.get("quiz_submitted"):
-        retakes = st.session_state.get("retakes")
-        st.title(
-            f"📃 {f"Retake {retakes}" if retakes else "Quiz"} - :blue[{st.session_state["quiz_info"]["title"]}]"
-        )
+        st.title(f"📃 Quiz - :blue[{st.session_state["quiz_info"]["title"]}]")
         "---"
 
         answers = display_quiz(st.session_state["quiz_questions"])
@@ -423,51 +422,7 @@ else:
             else:
                 end_quiz()
 
-        col1, col2 = st.columns(2)
-
-        if col1.button(
-            "Save To History", type="primary", icon="📂", use_container_width=True
-        ) or (
-            st.session_state.get("save_after_auth")
-            and st.session_state["quiz_info"]
-            and st.session_state["quiz_questions"]
-        ):
-            st.session_state["save_after_auth"] = False
-
-            if not st.session_state.get("user"):
-
-                @st.dialog("Get Started")
-                def sign_in_offer():
-                    st.info("Sign In to start saving your history!")
-
-                    if st.button(
-                        "Sign In", type="primary", icon="🔐", use_container_width=True
-                    ):
-                        st.session_state["save_after_auth"] = True
-                        st.session_state["page_before_auth"] = "quizzes"
-                        st.switch_page("pages/signin.py")
-
-                    if st.button(
-                        "Create Account",
-                        type="primary",
-                        icon="👤",
-                        use_container_width=True,
-                    ):
-                        st.session_state["save_after_auth"] = True
-                        st.session_state["page_before_auth"] = "quizzes"
-                        st.switch_page("pages/signup.py")
-
-                sign_in_offer()
-
-            else:
-                st.session_state["quiz_id"] = save_quiz(
-                    st.session_state["user"]["username"],
-                    st.session_state["quiz_info"],
-                    st.session_state["quiz_questions"],
-                )
-                st.success("Quiz saved successfuly.")
-
-        if col2.button("Submit", type="primary", icon="🚀", use_container_width=True):
+        if st.button("Submit", type="primary", icon="🚀", use_container_width=True):
 
             if not all(answers):
 
@@ -502,6 +457,41 @@ else:
                 st.session_state["scroll_to_top"] = True
                 st.rerun()
 
+        # Auto-save quiz if not already saved
+        if (
+            not st.session_state.get("quiz_id")
+            and st.session_state["quiz_info"]
+            and st.session_state["quiz_questions"]
+        ):
+            if not st.session_state.get("user"):
+
+                @st.dialog("Get Started")
+                def sign_in_offer():
+                    st.info("Sign In to start saving your history!")
+
+                    if st.button(
+                        "Sign In", type="primary", icon="🔐", use_container_width=True
+                    ):
+                        st.session_state["page_before_auth"] = "quizzes"
+                        st.switch_page("pages/signin.py")
+
+                    if st.button(
+                        "Create Account",
+                        type="primary",
+                        icon="👤",
+                        use_container_width=True,
+                    ):
+                        st.session_state["page_before_auth"] = "quizzes"
+                        st.switch_page("pages/signup.py")
+
+                sign_in_offer()
+            else:
+                save_quiz(
+                    st.session_state["user"]["username"],
+                    st.session_state["quiz_info"],
+                    st.session_state["quiz_questions"],
+                )
+
     # Submitted the Quiz - Display Grading
     else:
         st.title(f"💯 Quiz Grading - {st.session_state["quiz_info"]["title"]}")
@@ -535,6 +525,5 @@ else:
         if col2.button("Retake The Quiz", icon="🔃", use_container_width=True):
             st.session_state["quiz_submitted"] = False
             st.session_state["quiz_grading"] = None
-            st.session_state["retakes"] = st.session_state.get("retakes", 0) + 1
             st.session_state["scroll_to_top"] = True
             st.rerun()

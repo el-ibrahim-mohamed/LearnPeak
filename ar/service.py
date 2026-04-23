@@ -183,7 +183,6 @@ You should return your response in a JSON structure like this example:
             "gemini-2.5-flash",
             "gemini-2.5-flash-lite",
         ]:
-            print(model)
             try:
                 response = self.gemini_client.models.generate_content(
                     model=model,

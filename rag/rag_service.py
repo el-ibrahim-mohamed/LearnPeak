@@ -268,7 +268,6 @@ Now answer the student's question.
             "gemini-3.1-flash-preview",
             "gemini-2.5-flash",
         ]:
-            print(model)
             try:
                 response = self.gemini_client.models.generate_content(
                     model=model,
@@ -283,14 +282,96 @@ Now answer the student's question.
                 continue
 
         # Return the HTML response
-        # with open(
-        #     f"debug/rag_responses/gemini_response_{str(uuid.uuid4())}.txt",
-        #     "w",
-        #     encoding="utf-8",
-        # ) as f:
-        #     f.write(response.text)
-            
+        with open(
+            f"debug/rag_responses/gemini_response_{str(uuid.uuid4())}.txt",
+            "w",
+            encoding="utf-8",
+        ) as f:
+            f.write(response.text)
+
         return response.text
+
+    def generate_response_stream(self, user_query, sources: str):
+        """
+        Streaming version of generate_response.
+        Returns a generator that yields text chunks as they're generated.
+        """
+        prompt = f"""
+You are an AI RAG Assistant in an edcational platform called LearnPeak, specialized in school books sources.
+Your job is to answer the student's question using ONLY the provided sources.
+
+-----------------------
+STRICT RULES
+-----------------------
+
+If the full answer is found in the sources:
+- You MUST use only the information inside the provided sources (books).
+- DO NOT use any external knowledge.
+- DO NOT guess or hallucinate.
+
+If the whole answer or part of it is not found in the sources: 
+- Say "The provided sources do not contain information regarding {{...}}.
+  I will provide the answer from my general knowledge, and you may want to independently verify it." OR SIMILAR
+  Then answer from your knowledge.
+- When answering any part from outside the sources, you MUST declare that it is not found in the sources.
+- You should fully answer the question even if part of the answer is not from the sources 
+
+-----------------------
+SOURCES (May be irrelevant or None)
+-----------------------
+
+{sources}
+
+-----------------------
+STUDENT QUESTION
+-----------------------
+
+{user_query}
+
+-----------------------
+OUTPUT FORMAT
+-----------------------
+You must return your response in markdown format.
+
+- Format your response using Markdown.
+- Use bolding for emphasis, bullet points or numbered lists for readability, and headers to organize sections.
+- For data comparisons, use tables.
+- Ensure the layout is visually structured and scannable
+
+EDUCATIONAL RULES:
+- Sound natural like a normal chatbot continuing on the conversation
+- Answer clearly and fully
+- You MUST refer to the sources at the end in bullet points IN THIS FORM:
+  "Sources: \\n• {{Subject}} - Unit {{unit_num}} - Lesson {{lesson_num}} - Page {{page_num}}"
+  For example: "• Science - Unit 1 - Lesson 3 - Page 58 to 62"
+  Do not include country or education type.
+-----------------------
+
+Now answer the student's question.
+"""
+
+        for model in [
+            "gemini-3.1-flash-lite-preview",
+            "gemini-2.5-flash-lite",
+            "gemini-3.1-flash-preview",
+            "gemini-2.5-flash",
+        ]:
+            try:
+                stream = self.gemini_client.models.generate_content_stream(
+                    model=model,
+                    contents=[prompt],
+                    config=types.GenerateContentConfig(
+                        max_output_tokens=40000,
+                        temperature=0.7,
+                    ),
+                )
+                # Yield text chunks from the stream
+                for chunk in stream:
+                    if chunk.text:
+                        yield chunk.text
+                return
+            except:
+                continue
 
 
 class AddSource:
@@ -381,16 +462,25 @@ class AddSource:
             config={"mime_type": "application/pdf", "display_name": "Model Answer PDF"},
         )
 
-        response = self.gemini_client.models.generate_content(
-            model=gemini_model,
-            contents=[prompt, uploaded_questions, uploaded_answers],
-            config=types.GenerateContentConfig(
-                system_instruction=system_instructions,
-                response_mime_type="application/json",
-                max_output_tokens=64000,
-                temperature=0.1,
-            ),
-        )
+        for model in [
+            "gemini-3.1-flash-preview",
+            "gemini-2.5-flash",
+            "gemini-3.1-flash-lite-preview",
+            "gemini-2.5-flash-lite",
+        ]:
+            try:
+                response = self.gemini_client.models.generate_content(
+                    model=model,
+                    contents=[prompt, uploaded_questions, uploaded_answers],
+                    config=types.GenerateContentConfig(
+                        system_instruction=system_instructions,
+                        response_mime_type="application/json",
+                        max_output_tokens=64000,
+                        temperature=0.1,
+                    ),
+                )
+            except:
+                continue
 
         json_results = json.loads(response.text)
 

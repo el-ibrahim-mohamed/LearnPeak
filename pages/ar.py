@@ -60,7 +60,11 @@ def generate_ar_experience(topic_name: str, use_model_viewer: bool = False):
             st.session_state["sketchfab_embed_html"] = result["sketchfab_embed_html"]
             st.session_state["ai_description"] = result["ai_description"]
 
-            height = 200 if st.session_state["device_supports_ar"] else 400
+            # Calculate height bassed on screen inner width
+            inner_width = st.session_state["screen_inner_width"]
+            height = int(inner_width * 9 / 16)
+            height += 4  # small buffer
+
             components.html(result["sketchfab_embed_html"], height=height)
             "---"
 
@@ -163,28 +167,46 @@ if not st.session_state.get("generated_ar"):
 
         if ar_data:
             for i, model in enumerate(ar_data):
-                col1, col2 = st.columns(
-                    [4, 1], gap="large", vertical_alignment="center"
+
+                st.subheader(f"#{i+1} {model["topic"]}")
+
+                timestamp = model.get("created_at", "Unknown")
+                dt = datetime.fromtimestamp(timestamp)
+                date_time = dt.strftime(
+                    "%B %d, %Y at %I:%M %p"
+                )  # "January 24, 2026 at 03:30 PM"
+                st.caption(f"Created: {date_time}")
+
+                description = model["ai_description"]
+                minimized_description = (
+                    description[:150] + "..."
+                    if len(description) > 200
+                    else description
                 )
+                st.write(f"**{minimized_description}**")
+
+                col1, col2, _ = st.columns([1, 1, 4])
 
                 with col1:
-                    st.subheader(f"#{i+1} {model["topic"]}")
-
-                    timestamp = model.get("created_at", "Unknown")
-                    dt = datetime.fromtimestamp(timestamp)
-                    date_time = dt.strftime(
-                        "%B %d, %Y at %I:%M %p"
-                    )  # "January 24, 2026 at 03:30 PM"
-                    st.caption(f"Created: {date_time}")
-
-                    description = model["ai_description"]
-                    minimized_description = (
-                        description[:150] + "..."
-                        if len(description) > 200
-                        else description
-                    )
-                    st.write(f"**{minimized_description}**")
-
+                    if st.button(
+                        "View",
+                        key=f"view_model_{model['id']}",
+                        icon="👀",
+                        use_container_width=True
+                    ):
+                        st.session_state["generated_ar"] = True
+                        st.session_state["topic"] = model["topic"]
+                        st.session_state["id"] = model["id"]
+                        st.session_state["sketchfab_embed_html"] = model[
+                            "sketchfab_embed_html"
+                        ]
+                        st.session_state["ai_description"] = model["ai_description"]
+                        st.session_state["model_viewer_html"] = model.get(
+                            "model_viewer_html"
+                        )
+                        st.session_state["scroll_to_top"] = True
+                        st.rerun()
+                
                 with col2:
                     if st.button("🗑️ Delete", key=f"delete_{model['id']}"):
                         delete_ar_experience(
@@ -192,25 +214,6 @@ if not st.session_state.get("generated_ar"):
                         )
                         st.success(f"Deleted '{model['topic']}'")
                         st.rerun()
-
-                if st.button(
-                    "View AR Model",
-                    key=f"view_model_{model['id']}",
-                    type="primary",
-                    icon="👀",
-                ):
-                    st.session_state["generated_ar"] = True
-                    st.session_state["topic"] = model["topic"]
-                    st.session_state["id"] = model["id"]
-                    st.session_state["sketchfab_embed_html"] = model[
-                        "sketchfab_embed_html"
-                    ]
-                    st.session_state["ai_description"] = model["ai_description"]
-                    st.session_state["model_viewer_html"] = model.get(
-                        "model_viewer_html"
-                    )
-                    st.session_state["scroll_to_top"] = True
-                    st.rerun()
 
                 if i != len(ar_data) - 1:
                     "---"
@@ -231,7 +234,12 @@ else:
 
     else:
         # Displaying the previously generated model's data
-        height = 200 if st.session_state["device_supports_ar"] else 700
+
+        # Calculate height bassed on screen inner width
+        inner_width = st.session_state["screen_inner_width"]
+        height = int(inner_width * 9 / 16)
+        height += 4  # small buffer
+
         components.html(st.session_state["sketchfab_embed_html"], height=height)
         "---"
 

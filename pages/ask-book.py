@@ -225,8 +225,7 @@ if page == "add_source":
 # Chat page
 elif page == "chat":
 
-    def render_messages(messages_data: list):
-        # Custom HTML to right-align user messages
+    def right_align_user_msg():
         st.html(
             """
             <style>
@@ -243,195 +242,194 @@ elif page == "chat":
             """
         )
 
-        last_assistant_id = None
-        for msg in reversed(messages_data):
-            if msg["role"] == "assistant":
-                last_assistant_id = msg.get("id")
-                break
+    def render_user_prompt(msg: dict):
+        if msg["role"] == "user":
+            with st.chat_message("user"):
+                st.write(msg["msg"])
 
-        ex_titles_icons = {
-            "mcq": "📋",
-            "complete": "✏️",
-            "true_false": "✔️",
-            "true_false_with_correction": "✔️",
-            "correct_underlined": "🛠️",
-            "text": "✍️",
-        }
+    def render_similar_questions(msg: dict, is_last_msg: bool = False):
+        if msg["role"] == "assistant":
+            ex_titles_icons = {
+                "mcq": "📋",
+                "complete": "✏️",
+                "true_false": "✔️",
+                "true_false_with_correction": "✔️",
+                "correct_underlined": "🛠️",
+                "text": "✍️",
+            }
 
-        for msg in messages_data:
-            msg: dict
-            if msg["role"] == "user":
-                with st.chat_message("user"):
-                    st.markdown(msg["msg"])
-            else:
-                # Render questions
-                
-                with st.expander("🔍 Similar Questions", expanded=not bool(msg.get("ai_response"))):
-                    if msg["is_error"] == True:
-                        st.error(
-                            "An error occured while retrieving your answer. Check your internet connection and try again."
-                        )
+            with st.expander("🔍 Similar Questions", expanded=False):
+                if msg["is_q_error"] == True:
+                    st.error(
+                        "An error occured while retrieving your answer. Check your internet connection and try again."
+                    )
 
-                    else:
-                        results = msg["results"]
+                else:
+                    similar_questions = msg["similar_questions"]
 
-                        if results:
-                            msg_id = msg.get("id")
+                    if similar_questions:
+                        msg_id = msg.get("id")
 
-                            msgs_visible_counts = st.session_state[
-                                "msgs_visible_counts"
-                            ]
+                        msgs_visible_counts = st.session_state["msgs_visible_counts"]
 
-                            if msg_id not in msgs_visible_counts:
-                                msgs_visible_counts[msg_id] = 3  # default
+                        if msg_id not in msgs_visible_counts:
+                            msgs_visible_counts[msg_id] = 3  # default
 
-                            visible_limit = msgs_visible_counts[msg_id]
-                            visible_results = results[:visible_limit]
+                        visible_limit = msgs_visible_counts[msg_id]
+                        visible_similar_questions = similar_questions[:visible_limit]
 
-                            for i, q_dict in enumerate(visible_results):
+                        for i, q_dict in enumerate(visible_similar_questions):
 
-                                if i != 0:
-                                    "---"
+                            if i != 0:
+                                "---"
 
-                                if q_dict["point_type"] == "question":
-                                    ex_title: str = q_dict["ex_title"]
-                                    ex_type: str = q_dict["ex_type"]
-                                    question: str = q_dict["q_txt"]
-                                    answer: str = q_dict["a_txt"]
+                            if q_dict["point_type"] == "question":
+                                ex_title: str = q_dict["ex_title"]
+                                ex_type: str = q_dict["ex_type"]
+                                question: str = q_dict["q_txt"]
+                                answer: str = q_dict["a_txt"]
 
-                                    if ex_type in [
-                                        "true_false",
-                                        "true_false_with_correction",
-                                    ]:
-                                        ex_title = (
-                                            ex_title.replace("(T)", "(✓)")
-                                            .replace("(t)", "(✓)")
-                                            .replace("()", "Put (✓)")
-                                            .replace("(X)", "(✗)")
-                                            .replace("(x)", "(✗)")
-                                        )
-
-                                    metadata = (
-                                        f"📍 {q_dict["subject"].title()} , U{q_dict["unit_num"]} L{q_dict["lesson_num"]} , Page {q_dict["page"]} <br>"
-                                        f"{ex_titles_icons[ex_type]} Ex {q_dict["ex_num"]}: {ex_title}"
-                                        f"{":" if ex_title[-1] != ":" else ""}"
+                                if ex_type in [
+                                    "true_false",
+                                    "true_false_with_correction",
+                                ]:
+                                    ex_title = (
+                                        ex_title.replace("(T)", "(✓)")
+                                        .replace("(t)", "(✓)")
+                                        .replace("()", "Put (✓)")
+                                        .replace("(X)", "(✗)")
+                                        .replace("(x)", "(✗)")
                                     )
+
+                                metadata = (
+                                    f"📍 {q_dict["subject"].title()} , U{q_dict["unit_num"]} L{q_dict["lesson_num"]} , Page {q_dict["page"]} <br>"
+                                    f"{ex_titles_icons[ex_type]} Ex {q_dict["ex_num"]}: {ex_title}"
+                                    f"{":" if ex_title[-1] != ":" else ""}"
+                                )
+                                st.markdown(
+                                    f"<p style='font-size: 1.2rem;'><strong>{metadata}</strong></p>",
+                                    unsafe_allow_html=True,
+                                )
+
+                                if ex_type == "mcq":
                                     st.markdown(
-                                        f"<p style='font-size: 1.2rem;'><strong>{metadata}</strong></p>",
+                                        f"<p style='font-size: 1.1rem'> <strong>Q{q_dict["q_num"]}.</strong> {question}</p>",
                                         unsafe_allow_html=True,
                                     )
 
-                                    if ex_type == "mcq":
+                                    for i, choice in enumerate(q_dict["mcq_choices"]):
+                                        if i == int(answer):
+                                            st.markdown(
+                                                f"<span style='color: #FF0000;'>🔘 <strong><u>{choice}</u></strong></span>",
+                                                unsafe_allow_html=True,
+                                            )
+                                        else:
+                                            st.markdown(f"⚪ {choice}")
+
+                                elif ex_type == "complete":
+                                    answer = list(answer)
+                                    it = iter(answer)
+                                    question = re.sub(
+                                        "_____",
+                                        lambda x: f"<span style='color: #FF0000;'><strong><u>{next(it)}</u></strong></span>",
+                                        question,
+                                    )
+
+                                    st.markdown(
+                                        f"<p style='font-size: 1.1rem'> <strong>Q{q_dict["q_num"]}.</strong> {question}</p>",
+                                        unsafe_allow_html=True,
+                                    )
+
+                                elif ex_type == "true_false":
+                                    st.markdown(
+                                        f"<p style='font-size: 1.1rem'> <strong>Q{q_dict["q_num"]}.</strong> {question}</p>",
+                                        unsafe_allow_html=True,
+                                    )
+                                    if str(answer) == "True":
+                                        st.write(f"A: ✅")
+                                    elif str(answer) == "False":
+                                        st.write(f"A: ❌")
+
+                                elif ex_type == "true_false_with_correction":
+                                    if str(answer[0]) == "True":
                                         st.markdown(
                                             f"<p style='font-size: 1.1rem'> <strong>Q{q_dict["q_num"]}.</strong> {question}</p>",
                                             unsafe_allow_html=True,
                                         )
-
-                                        for i, choice in enumerate(
-                                            q_dict["mcq_choices"]
-                                        ):
-                                            if i == int(answer):
-                                                st.markdown(
-                                                    f"<span style='color: #FF0000;'>🔘 <strong><u>{choice}</u></strong></span>",
-                                                    unsafe_allow_html=True,
-                                                )
-                                            else:
-                                                st.markdown(f"⚪ {choice}")
-
-                                    elif ex_type == "complete":
-                                        answer = list(answer)
-                                        it = iter(answer)
+                                        st.write(f"A: ✅")
+                                    elif str(answer[0]) == "False":
+                                        replacement = r"<u><strong>\1</strong></u>"
                                         question = re.sub(
-                                            "_____",
-                                            lambda x: f"<span style='color: #FF0000;'><strong><u>{next(it)}</u></strong></span>",
+                                            rf"(\b{answer[1]["mistake"]}\b)",
+                                            replacement,
                                             question,
                                         )
-
                                         st.markdown(
                                             f"<p style='font-size: 1.1rem'> <strong>Q{q_dict["q_num"]}.</strong> {question}</p>",
                                             unsafe_allow_html=True,
                                         )
 
-                                    elif ex_type == "true_false":
                                         st.markdown(
-                                            f"<p style='font-size: 1.1rem'> <strong>Q{q_dict["q_num"]}.</strong> {question}</p>",
-                                            unsafe_allow_html=True,
-                                        )
-                                        if str(answer) == "True":
-                                            st.write(f"A: ✅")
-                                        elif str(answer) == "False":
-                                            st.write(f"A: ❌")
-
-                                    elif ex_type == "true_false_with_correction":
-                                        if str(answer[0]) == "True":
-                                            st.markdown(
-                                                f"<p style='font-size: 1.1rem'> <strong>Q{q_dict["q_num"]}.</strong> {question}</p>",
-                                                unsafe_allow_html=True,
-                                            )
-                                            st.write(f"A: ✅")
-                                        elif str(answer[0]) == "False":
-                                            replacement = r"<u><strong>\1</strong></u>"
-                                            question = re.sub(
-                                                rf"(\b{answer[1]["mistake"]}\b)",
-                                                replacement,
-                                                question,
-                                            )
-                                            st.markdown(
-                                                f"<p style='font-size: 1.1rem'> <strong>Q{q_dict["q_num"]}.</strong> {question}</p>",
-                                                unsafe_allow_html=True,
-                                            )
-
-                                            st.markdown(
-                                                f"A: ❌ / <span style='color: #FF0000;'><strong>{answer[1]["correction"]}</strong></span>",
-                                                unsafe_allow_html=True,
-                                            )
-
-                                    elif ex_type == "correct_underlined":
-                                        mistake = answer["mistake"]
-                                        question = question.replace(
-                                            mistake,
-                                            f"<u><strong>{mistake}</strong></u>",
-                                        )
-                                        st.markdown(
-                                            f"<p style='font-size: 1.1rem'> <strong>Q{q_dict["q_num"]}.</strong> {question}</p>",
-                                            unsafe_allow_html=True,
-                                        )
-                                        st.markdown(
-                                            f"A: <span style='color: #FF0000;'><strong>{answer["correction"]}</strong></span>",
+                                            f"A: ❌ / <span style='color: #FF0000;'><strong>{answer[1]["correction"]}</strong></span>",
                                             unsafe_allow_html=True,
                                         )
 
-                                    else:
-                                        st.markdown(
-                                            f"<p style='font-size: 1.1rem'> <strong>Q{q_dict["q_num"]}.</strong> {question}</p>",
-                                            unsafe_allow_html=True,
-                                        )
-                                        st.markdown(
-                                            f"A: <span style='color: #FF0000;'><strong>{answer}</strong></span>",
-                                            unsafe_allow_html=True,
-                                        )
+                                elif ex_type == "correct_underlined":
+                                    mistake = answer["mistake"]
+                                    question = question.replace(
+                                        mistake,
+                                        f"<u><strong>{mistake}</strong></u>",
+                                    )
+                                    st.markdown(
+                                        f"<p style='font-size: 1.1rem'> <strong>Q{q_dict["q_num"]}.</strong> {question}</p>",
+                                        unsafe_allow_html=True,
+                                    )
+                                    st.markdown(
+                                        f"A: <span style='color: #FF0000;'><strong>{answer["correction"]}</strong></span>",
+                                        unsafe_allow_html=True,
+                                    )
 
-                            if (
-                                msg_id == last_assistant_id
-                                and len(results) > visible_limit
+                                else:
+                                    st.markdown(
+                                        f"<p style='font-size: 1.1rem'> <strong>Q{q_dict["q_num"]}.</strong> {question}</p>",
+                                        unsafe_allow_html=True,
+                                    )
+                                    st.markdown(
+                                        f"A: <span style='color: #FF0000;'><strong>{answer}</strong></span>",
+                                        unsafe_allow_html=True,
+                                    )
+
+                        if is_last_msg and len(similar_questions) > visible_limit:
+                            if st.button(
+                                "Load More",
+                                key=f"load_more_{msg_id}",
                             ):
-                                if st.button(
-                                    "Load More",
-                                    key=f"load_more_{msg_id}",
-                                ):
-                                    st.session_state["load_more_clicked"] = True
-                                    st.session_state["msgs_visible_counts"][msg_id] += 3
-                                    st.rerun()
+                                st.session_state["load_more_clicked"] = True
+                                st.session_state["msgs_visible_counts"][msg_id] += 3
+                                st.rerun()
 
-                        else:
-                            st.write("**No Relevant Matches Found**")
+                    else:
+                        st.write("**No Relevant Matches Found**")
 
-                # Render AI response
-                if msg.get("ai_response"):
-                    st.markdown(msg["ai_response"])
+    def render_messages(messages_data: list):
 
-                " "
-                " "
+        # Custom HTML to right-align user messages
+        right_align_user_msg()
+
+        for msg_idx, msg in enumerate(messages_data):
+            msg: dict
+
+            render_user_prompt(msg)
+
+            render_similar_questions(
+                msg, is_last_msg=bool(msg_idx == len(messages_data) - 1)
+            )
+
+            if msg["role"] == "assistant":
+                st.markdown(msg["ai_response"])
+
+            " "
+            " "
 
         # Scroll to bottom smoothly
         if not st.session_state.get("load_more_clicked", False):
@@ -518,42 +516,79 @@ elif page == "chat":
                     ["♾️ All", 1, 2, 3, 4],
                     accept_new_options=True,
                 )
-                ai_mode = st.toggle("✨ AI Mode", value=True)
 
         with col2:
             user_query = st.chat_input("Ask something...")
 
+    def get_filters(point_type: Literal["question", "explanation"] = "explanation"):
+        filters = []
+        for key, value in {
+            "point_type": point_type,
+            "grade": str(grade_filter),
+            "subject": clean_string(str(subject_filter)).lower(),
+            "unit_num": clean_string(str(unit_num_filter)),
+            "lesson_num": clean_string(str(lesson_num_filter)),
+        }.items():
+            if value and clean_string(value).lower() != "all":
+                if key in ["unit_num", "lesson_num"]:
+                    value = int(value)
+                elif key == "grade":
+                    value = map_grades(value)
+
+                filters.append(
+                    FieldCondition(
+                        key=key,
+                        match=MatchValue(value=value),
+                    )
+                )
+
+        return Filter(must=filters)
+    
+    # Render previous msgs if found
+    render_messages(st.session_state.get("messages_data", []))
+
     if user_query and user_query.strip():
 
-        def get_filters(point_type: Literal["question", "explanation"] = "explanation"):
-            filters = []
-            for key, value in {
-                "point_type": point_type,
-                "grade": str(grade_filter),
-                "subject": clean_string(str(subject_filter)).lower(),
-                "unit_num": clean_string(str(unit_num_filter)),
-                "lesson_num": clean_string(str(lesson_num_filter)),
-            }.items():
-                if value and clean_string(value).lower() != "all":
-                    if key in ["unit_num", "lesson_num"]:
-                        value = int(value)
-                    elif key == "grade":
-                        value = map_grades(value)
+        # Step 1: Save user message and render it
+        messages_data: list = st.session_state.get("messages_data", [])
 
-                    filters.append(
-                        FieldCondition(
-                            key=key,
-                            match=MatchValue(value=value),
-                        )
-                    )
+        user_msg_dict = {"role": "user", "msg": user_query}
+        messages_data.append(user_msg_dict)
 
-            return Filter(must=filters)
+        # Render user message
+        right_align_user_msg()
+        with st.chat_message("user"):
+            st.write(user_query)
 
-        with st.spinner("Thinking..."):
-            is_error = False
-            questions_payloads = []
-            response = ""
+        # Step 2: Save similar questions and render it
+        assistant_msg_id = str(uuid.uuid4())
+        assistant_msg_dict = {
+            "id": assistant_msg_id,
+            "role": "assistant",
+            "similar_questions": [],
+            "ai_response": "",
+            "is_q_error": False,
+            "is_ai_error": False,
+        }
+        messages_data.append(assistant_msg_dict)
 
+        last_msg_idx = len(messages_data) - 1
+
+        # # Check if last message is still being processed (has empty ai_response and is assistant)
+        # is_streaming = (
+        #     last_msg_idx >= 0
+        #     and messages_data[last_msg_idx]["role"] == "assistant"
+        #     and messages_data[last_msg_idx]["ai_response"] == ""
+        #     and not messages_data[last_msg_idx]["similar_questions"]
+        # )
+
+        # # If streaming needed, fetch data and stream response
+        # if is_streaming:
+
+        is_q_error = False
+        questions_payloads = []
+
+        with st.spinner("Retrieving similar questions..."):
             try:
                 # 1. Retrieve similar questions
                 questions_payloads = rag_service.search(
@@ -563,46 +598,60 @@ elif page == "chat":
                     query_filter=get_filters("question"),
                 )
 
-                # 2. Generate AI response
-                if ai_mode:
-                    explanation_payloads = rag_service.search(
-                        user_query,
-                        limit=6,
-                        score_threshold=0.6,
-                        query_filter=get_filters("explanation"),
-                    )
-
-                    # Get all the included lessons ids
-                    lesson_ids = []
-                    for exp in explanation_payloads:
-                        if exp["lesson_id"] not in lesson_ids:
-                            lesson_ids.append(exp["lesson_id"])
-
-                    # Get the lessons sources concatenated texts
-                    sources_text = rag_service.get_sources(lesson_ids)
-                    response = rag_service.generate_response(user_query, sources_text)
-
-                st.session_state["load_more_clicked"] = False
+                # Update similar_questions in session state
+                messages_data[last_msg_idx]["similar_questions"] = questions_payloads
 
             except Exception as e:
-                is_error = True
+                is_q_error = True
+                messages_data[last_msg_idx]["is_q_error"] = True
                 st.write(e)
 
-        user_msg_dict = {"role": "user", "msg": user_query}
-        assistant_msg_dict = {
-            "id": str(uuid.uuid4()),
-            "role": "assistant",
-            "is_error": is_error,
-            "results": questions_payloads,
-            "ai_response": response
-        }
+        st.session_state["load_more_clicked"] = False
 
-        messages_data: list = st.session_state.get("messages_data", [])
-        messages_data.append(user_msg_dict)
-        messages_data.append(assistant_msg_dict)
-        st.session_state["messages_data"] = messages_data
+        # Render similar questions
+        render_similar_questions(assistant_msg_dict, is_last_msg=True)
 
-    if st.session_state.get("messages_data"):
-        render_messages(st.session_state.get("messages_data"))
-    else:
+        # Step 3: Save AI response and stream it
+        with st.spinner("Generating..."):
+            try:
+                explanation_payloads = rag_service.search(
+                    user_query,
+                    limit=6,
+                    score_threshold=0.6,
+                    query_filter=get_filters("explanation"),
+                )
+
+                # Get all the included lessons ids
+                lesson_ids = []
+                for exp in explanation_payloads:
+                    if exp["lesson_id"] not in lesson_ids:
+                        lesson_ids.append(exp["lesson_id"])
+
+                # Get the lessons sources concatenated texts
+                sources_text = rag_service.get_sources(lesson_ids)
+
+                # Create a generator that yields chunks and collects full response
+                def stream_and_collect():
+                    full_response = ""
+                    for chunk in rag_service.generate_response_stream(
+                        user_query, sources_text
+                    ):
+                        full_response += chunk
+                        yield chunk
+
+                    # Update ss with full response
+                    messages_data[last_msg_idx]["ai_response"] = full_response
+
+                # Update messages_data ss
+                st.session_state["messages_data"] = messages_data
+
+                # Stream the AI response
+                st.write_stream(stream_and_collect())
+
+            except Exception as e:
+                messages_data[last_msg_idx]["is_ai_error"] = True
+                st.session_state["messages_data"] = messages_data
+                st.write(f"Error generating response: {e}")
+
+    elif not st.session_state.get("messages_data"):
         st.header("How can I help you today?", text_alignment="center", anchor=False)

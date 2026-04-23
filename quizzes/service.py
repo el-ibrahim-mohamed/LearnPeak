@@ -105,11 +105,21 @@ Note: You musn't add other quiz info like the title or difficulty in you JSON re
                     types.Part.from_bytes(data=file["bytes"], mime_type=mime_type)
                 )
 
-        response = self.client.models.generate_content(
-            model="gemini-2.5-flash-lite",
-            contents=contents,
-            config={"response_mime_type": "application/json"},
-        )
+        for model in [
+            "gemini-3.1-flash-preview",
+            "gemini-3.1-flash-lite-preview",
+            "gemini-2.5-flash",
+            "gemini-2.5-flash-lite",
+        ]:
+            try:
+                response = self.client.models.generate_content(
+                    model=model,
+                    contents=contents,
+                    config={"response_mime_type": "application/json"},
+                )
+            except:
+                continue
+
         return json.loads(response.text)["quiz_questions"]
 
     def grade_quiz(self, quiz_questions: dict, answers: list) -> dict:
@@ -144,12 +154,20 @@ Your output should be in a JSON structure like this sample:
 }}
 """
 
-        contents = [prompt]
-        response = self.client.models.generate_content(
-            model="gemini-2.5-flash",
-            contents=contents,
-            config={"response_mime_type": "application/json"},
-        )
+        for model in [
+            "gemini-3.1-flash-preview",
+            "gemini-3.1-flash-lite-preview",
+            "gemini-2.5-flash",
+            "gemini-2.5-flash-lite",
+        ]:
+            try:
+                response = self.client.models.generate_content(
+                    model=model,
+                    contents=[prompt],
+                    config={"response_mime_type": "application/json"},
+                )
+            except:
+                continue
 
         quiz_grading = json.loads(response.text)
 
