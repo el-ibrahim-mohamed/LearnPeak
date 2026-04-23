@@ -91,11 +91,7 @@ def load_app():
         user_agent = streamlit_js_eval(
             js_expressions="window.navigator.userAgent", key="user_agent"
         )
-        inner_width = streamlit_js_eval(
-            js_expressions="window.innerWidth", key="inner_width"
-        )
 
-        # Check if user_agent is available before parsing
         if user_agent:
             ua = parse(user_agent)
 
@@ -105,7 +101,13 @@ def load_app():
                 st.session_state["user_device_type"] = "tablet"
             elif ua.is_pc:
                 st.session_state["user_device_type"] = "pc"
-        
+    
+    # --- Getting the screen inner width ---
+    if "screen_inner_width" not in st.session_state:
+        inner_width = streamlit_js_eval(
+            js_expressions="window.innerWidth", key="inner_width"
+        )
+
         if inner_width:
             st.session_state["screen_inner_width"] = inner_width
 

@@ -61,9 +61,12 @@ def generate_ar_experience(topic_name: str, use_model_viewer: bool = False):
             st.session_state["ai_description"] = result["ai_description"]
 
             # Calculate height bassed on screen inner width
-            inner_width = st.session_state["screen_inner_width"]
-            height = int(inner_width * 9 / 16)
-            height += 4  # small buffer
+            inner_width = st.session_state.get("screen_inner_width")
+            if inner_width:
+                height = int(inner_width * 9 / 16)
+                height += 4  # small buffer
+            else:
+                height = 189 if st.session_state.get("device_supports_ar") else 400
 
             components.html(result["sketchfab_embed_html"], height=height)
             "---"
@@ -179,20 +182,17 @@ if not st.session_state.get("generated_ar"):
 
                 description = model["ai_description"]
                 minimized_description = (
-                    description[:150] + "..."
-                    if len(description) > 200
-                    else description
+                    description[:150] + "..." if len(description) > 200 else description
                 )
                 st.write(f"**{minimized_description}**")
 
-                col1, col2, _ = st.columns([1, 1, 4])
+                col1, col2, _ = st.columns([0.95, 1, 4])
 
                 with col1:
                     if st.button(
                         "View",
                         key=f"view_model_{model['id']}",
                         icon="👀",
-                        use_container_width=True
                     ):
                         st.session_state["generated_ar"] = True
                         st.session_state["topic"] = model["topic"]
@@ -206,7 +206,7 @@ if not st.session_state.get("generated_ar"):
                         )
                         st.session_state["scroll_to_top"] = True
                         st.rerun()
-                
+
                 with col2:
                     if st.button("🗑️ Delete", key=f"delete_{model['id']}"):
                         delete_ar_experience(
@@ -236,9 +236,12 @@ else:
         # Displaying the previously generated model's data
 
         # Calculate height bassed on screen inner width
-        inner_width = st.session_state["screen_inner_width"]
-        height = int(inner_width * 9 / 16)
-        height += 4  # small buffer
+        inner_width = st.session_state.get("screen_inner_width")
+        if inner_width:
+            height = int(inner_width * 9 / 16)
+            height += 4  # small buffer
+        else:
+            height = 189 if st.session_state.get("device_supports_ar") else 400
 
         components.html(st.session_state["sketchfab_embed_html"], height=height)
         "---"
@@ -294,7 +297,6 @@ else:
                     st.session_state["ai_description"],
                     st.session_state.get("model_viewer_html", None),
                 )
-            st.success("AR model saved successfuly.")
 
     # "Generate a new AR experience" button
     if st.button(
