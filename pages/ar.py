@@ -66,7 +66,7 @@ def generate_ar_experience(topic_name: str, use_model_viewer: bool = False):
                 height = int(inner_width * 9 / 16)
                 height += 4  # small buffer
             else:
-                height = 189 if st.session_state.get("device_supports_ar") else 400
+                height = 190 if st.session_state.get("device_supports_ar") else 400
 
             components.html(result["sketchfab_embed_html"], height=height)
             "---"
@@ -74,12 +74,10 @@ def generate_ar_experience(topic_name: str, use_model_viewer: bool = False):
             st.markdown(result["ai_description"])
             "---"
 
-        elif result["step"] == "ar_viewer":
+        elif result["step"] == "ar_viewer" and st.session_state.get("device_supports_ar"):
             st.session_state["model_viewer_html"] = result["model_viewer_html"]
             components.html(result["model_viewer_html"], height=50)
-            
-            if st.session_state.get("device_supports_ar"):
-                "---"
+            "---"
 
     # NOTE: The 3D model embed in the page is shown by sketchfab_embed_html, while it's closed in model_viewer_html
     # A "View in AR" button appears by model_viewer_html when device supports AR
@@ -249,7 +247,7 @@ else:
             height = int(inner_width * 9 / 16)
             height += 4  # small buffer
         else:
-            height = 189 if st.session_state.get("device_supports_ar") else 400
+            height = 190 if st.session_state.get("device_supports_ar") else 400
 
         components.html(st.session_state["sketchfab_embed_html"], height=height)
         "---"
@@ -258,7 +256,7 @@ else:
             st.markdown(st.session_state["ai_description"])
             "---"
 
-        if st.session_state.get("model_viewer_html"):
+        if st.session_state.get("model_viewer_html") and st.session_state.get("device_supports_ar"):
             components.html(st.session_state["model_viewer_html"], height=50)
             "---"
 
