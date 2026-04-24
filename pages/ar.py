@@ -77,7 +77,9 @@ def generate_ar_experience(topic_name: str, use_model_viewer: bool = False):
         elif result["step"] == "ar_viewer":
             st.session_state["model_viewer_html"] = result["model_viewer_html"]
             components.html(result["model_viewer_html"], height=50)
-            "---"
+            
+            if st.session_state.get("device_supports_ar"):
+                "---"
 
     # NOTE: The 3D model embed in the page is shown by sketchfab_embed_html, while it's closed in model_viewer_html
     # A "View in AR" button appears by model_viewer_html when device supports AR
@@ -125,8 +127,14 @@ def get_saved_ar_data(username: str) -> list[dict]:
 
 
 def delete_ar_experience(username: str, model_id: str):
-    ar_model_to_delete = users_ref.child(f"{username}/history/ar/{model_id}")
-    ar_model_to_delete.delete()
+    ar_ref = users_ref.child(f"{username}/history/ar")
+    ar_data_dict: dict = ar_ref.get()
+    
+    if ar_data_dict:
+        for ar_key, ar_model in ar_data_dict.items():
+            if ar_model.get("id") == model_id:
+                ar_ref.child(ar_key).delete()
+                break
 
 
 if not st.session_state.get("generated_ar"):
@@ -208,7 +216,7 @@ if not st.session_state.get("generated_ar"):
                         st.rerun()
 
                 with col2:
-                    if st.button("🗑️ Delete", key=f"delete_{model['id']}"):
+                    if st.button("🗑️ Delete", key=f"delete_{model["id"]}"):
                         delete_ar_experience(
                             st.session_state["user"]["username"], model["id"]
                         )
