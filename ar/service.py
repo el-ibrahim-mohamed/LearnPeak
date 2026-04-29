@@ -160,7 +160,7 @@ Focus on helping students understand the topic better through this visual repres
 Markdown is available.
 
 
-You should return your response in a JSON structure like this example:
+You MUST return your response in a JSON structure like this example:
 {{
     "best_model_index": 0,  # 0-indexed
     "description": "Your description here"
@@ -178,10 +178,10 @@ You should return your response in a JSON structure like this example:
 
         # --- 5. Generating the response ---
         for model in [
-            "gemini-3.1-flash-preview",
             "gemini-3.1-flash-lite-preview",
-            "gemini-2.5-flash",
             "gemini-2.5-flash-lite",
+            "gemini-3.1-flash-preview",
+            "gemini-2.5-flash",
         ]:
             try:
                 response = self.gemini_client.models.generate_content(

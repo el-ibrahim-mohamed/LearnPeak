@@ -1,4 +1,4 @@
-from typing import List, Dict, Optional, Any
+from typing import Literal, List, Dict, Optional, Any
 from PIL import Image
 import pytesseract
 import fitz
@@ -207,60 +207,12 @@ class RagService:
 
         return "\n".join(result)
 
-    def generate_response(self, user_query, sources: str):
-        prompt = f"""
-You are an AI RAG Assistant in an edcational platform called LearnPeak, specialized in school books sources.
-Your job is to answer the student's question using ONLY the provided sources.
-
------------------------
-STRICT RULES
------------------------
-
-If the full answer is found in the sources:
-- You MUST use only the information inside the provided sources (books).
-- DO NOT use any external knowledge.
-- DO NOT guess or hallucinate.
-
-If the whole answer or part of it is not found in the sources: 
-- Say "The provided sources do not contain information regarding {{...}}.
-  I will provide the answer from my general knowledge, and you may want to independently verify it." OR SIMILAR
-  Then answer from your knowledge.
-- When answering any part from outside the sources, you MUST declare that it is not found in the sources.
-- You should fully answer the question even if part of the answer is not from the sources 
-
------------------------
-SOURCES (May be irrelevant or None)
------------------------
-
-{sources}
-
------------------------
-STUDENT QUESTION
------------------------
-
-{user_query}
-
------------------------
-OUTPUT FORMAT
------------------------
-You must return your response in markdown format.
-
-- Format your response using Markdown.
-- Use bolding for emphasis, bullet points or numbered lists for readability, and headers to organize sections.
-- For data comparisons, use tables.
-- Ensure the layout is visually structured and scannable
-
-EDUCATIONAL RULES:
-- Sound natural like a normal chatbot continuing on the conversation
-- Answer clearly and fully
-- You MUST refer to the sources at the end in bullet points IN THIS FORM:
-  "Sources: \\n• {{Subject}} - Unit {{unit_num}} - Lesson {{lesson_num}} - Page {{page_num}}"
-  For example: "• Science - Unit 1 - Lesson 3 - Page 58 to 62"
-  Do not include country or education type.
------------------------
-
-Now answer the student's question.
-"""
+    def generate_response(
+        self, user_query, sources: str, chat_history=[], get_chat_title=True
+    ):
+        prompt = self.ai_prompt(
+            user_query, sources, chat_history, get_chat_title, output_format="json"
+        )
 
         for model in [
             "gemini-3.1-flash-lite-preview",
@@ -275,80 +227,23 @@ Now answer the student's question.
                     config=types.GenerateContentConfig(
                         max_output_tokens=40000,
                         temperature=0.7,
+                        response_mime_type="application/json",
                     ),
                 )
                 break
             except:
                 continue
+        
+        return json.loads(response.text)
 
-        # Return the HTML response
-        with open(
-            f"debug/rag_responses/gemini_response_{str(uuid.uuid4())}.txt",
-            "w",
-            encoding="utf-8",
-        ) as f:
-            f.write(response.text)
-
-        return response.text
-
-    def generate_response_stream(self, user_query, sources: str):
+    def generate_response_stream(
+        self, user_query, sources: str, chat_history: list = [], get_chat_title=False
+    ):
         """
         Streaming version of generate_response.
         Returns a generator that yields text chunks as they're generated.
         """
-        prompt = f"""
-You are an AI RAG Assistant in an edcational platform called LearnPeak, specialized in school books sources.
-Your job is to answer the student's question using ONLY the provided sources.
-
------------------------
-STRICT RULES
------------------------
-
-If the full answer is found in the sources:
-- You MUST use only the information inside the provided sources (books).
-- DO NOT use any external knowledge.
-- DO NOT guess or hallucinate.
-
-If the whole answer or part of it is not found in the sources: 
-- Say "The provided sources do not contain information regarding {{...}}.
-  I will provide the answer from my general knowledge, and you may want to independently verify it." OR SIMILAR
-  Then answer from your knowledge.
-- When answering any part from outside the sources, you MUST declare that it is not found in the sources.
-- You should fully answer the question even if part of the answer is not from the sources 
-
------------------------
-SOURCES (May be irrelevant or None)
------------------------
-
-{sources}
-
------------------------
-STUDENT QUESTION
------------------------
-
-{user_query}
-
------------------------
-OUTPUT FORMAT
------------------------
-You must return your response in markdown format.
-
-- Format your response using Markdown.
-- Use bolding for emphasis, bullet points or numbered lists for readability, and headers to organize sections.
-- For data comparisons, use tables.
-- Ensure the layout is visually structured and scannable
-
-EDUCATIONAL RULES:
-- Sound natural like a normal chatbot continuing on the conversation
-- Answer clearly and fully
-- You MUST refer to the sources at the end in bullet points IN THIS FORM:
-  "Sources: \\n• {{Subject}} - Unit {{unit_num}} - Lesson {{lesson_num}} - Page {{page_num}}"
-  For example: "• Science - Unit 1 - Lesson 3 - Page 58 to 62"
-  Do not include country or education type.
------------------------
-
-Now answer the student's question.
-"""
+        prompt = self.ai_prompt(user_query, sources, chat_history, get_chat_title, output_format="text_stream")
 
         for model in [
             "gemini-3.1-flash-lite-preview",
@@ -372,6 +267,92 @@ Now answer the student's question.
                 return
             except:
                 continue
+
+    @staticmethod
+    def ai_prompt(
+        user_query: str,
+        sources: str,
+        chat_history: list = [],
+        get_chat_title=False,
+        output_format: Literal["text_stream", "json"] = "text_stream",
+    ):
+
+        if output_format == "text_stream":
+            output_format_txt = "You MUST return your response in markdown format."
+
+        elif output_format == "json" and get_chat_title:
+            output_format_txt = """You MUST return your response in a JSON structure like this example:
+{{
+    "response": "Markdown formatted answer...",
+    "suggested_chat_title": "Suggest a chat title based on the first prompt..."
+    ],
+
+}}
+
+"response":"""
+
+        return f"""
+You are an AI RAG Assistant in an edcational platform called LearnPeak, specialized in school books sources.
+Your job is to answer the student's question using ONLY the provided sources.
+
+-----------------------
+STRICT RULES
+-----------------------
+
+If the full answer is found in the sources:
+- You MUST use only the information inside the provided sources (books).
+- DO NOT use any external knowledge.
+- DO NOT guess or hallucinate.
+
+If the whole answer or part of it is not found in the sources: 
+- Say "The provided sources do not contain information regarding {{...}}.
+  I will provide the answer from my general knowledge, and you may want to independently verify it." OR SIMILAR
+  Then answer from your knowledge.
+- When answering any part from outside the sources, you MUST declare that it is not found in the sources.
+- You should fully answer the question even if part of the answer is not from the sources 
+
+-----------------------
+SOURCES (May be irrelevant or None)
+-----------------------
+
+{sources}
+
+-----------------------
+CONVERSATION HISTORY
+-----------------------
+
+{chat_history}
+
+-----------------------
+STUDENT QUESTION
+-----------------------
+
+{user_query}
+
+-----------------------
+OUTPUT FORMAT
+-----------------------
+{output_format_txt}
+- Format your response using Markdown.
+- Use bolding for emphasis, bullet points or numbered lists for readability, and headers to organize sections.
+- For data comparisons, use tables.
+- Ensure the layout is visually structured and scannable
+
+EDUCATIONAL RULES:
+- Sound natural
+- Provide clear and complete answers
+- If the answer is not from the sources, don't write this, otherwise:
+  You MUST refer to the sources at the end in bullet points IN THIS FORM:
+  "Sources:
+  • {{Subject}} - Unit {{unit_num}} - Lesson {{lesson_num}} - Page {{page_num}}"
+  For example: "Sources:
+  • Science - Unit 1 - Lesson 3 - Page 58 to 62"
+  Do not include country or education type.
+
+-----------------------
+
+Now answer the student's question.
+"""
 
 
 class AddSource:

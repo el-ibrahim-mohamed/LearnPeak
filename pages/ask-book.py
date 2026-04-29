@@ -5,7 +5,7 @@ from streamlit_theme import st_theme
 from typing import Literal
 import re
 import uuid
-from typing import Literal
+from rag.chat_service import ChatService
 
 
 # Defining Functions
@@ -14,34 +14,15 @@ def clean_string(input_str: str):
         "".join(char for char in input_str if char.isalnum() or char.isspace())
         .strip()
         .replace("  ", " ")
+        .replace(" ", "_")
     )
 
 
-def map_grades(grade: str, to: Literal["short", "long"] = "short"):
-    grade_mapping = {
-        "🎨 kG 1": "kg1",
-        "🎨 KG 2": "kg2",
-        "🎒 Primary 1": "prim1",
-        "🎒 Primary 2": "prim2",
-        "🎒 Primary 3": "prim3",
-        "🎒 Primary 4": "prim4",
-        "🎒 Primary 5": "prim5",
-        "🎒 Primary 6": "prim6",
-        "📓 Preparatory 1": "prep1",
-        "📓 Preparatory 2": "prep2",
-        "📓 Preparatory 3": "prep3",
-        "🔬 Secondary 1": "sec1",
-        "🔬 Secondary 2": "sec2",
-        "🔬 Secondary 3": "sec3",
-    }
-
-    if to == "short":
-        return grade_mapping[grade]
-
-    elif to == "long":
-        return [k for k, v in grade_mapping.items() if v == grade][0]
+def get_key_by_value(d: dict, value):
+    return next((k for k, v in d.items() if v == value), None)
 
 
+# Initialize session states
 if "msgs_visible_counts" not in st.session_state:
     st.session_state["msgs_visible_counts"] = {}
 
@@ -97,17 +78,23 @@ with st.spinner("Loading LearnPeak RAG System...", show_time=True):
                 PayloadSchemaType.INTEGER,  # <-- changed
             )
 
-        return RagService(qdrant_service, embedding_service, st.session_state["client"])
+        return (
+            RagService(qdrant_service, embedding_service, st.session_state["client"]),
+            ChatService(st.session_state.get("root_ref")),
+        )
 
-    rag_service = init_services()
+    rag_service, chat_service = init_services()
 
 with st.sidebar:
     " "
-    if st.button("Add Source (Beta)", icon="➕", use_container_width=True):
-        st.session_state["rag_page"] = "add_source"
+
+    if st.button("Back to menu", icon="🔙", use_container_width=True):
+        st.session_state["rag_page"] = "menu"
+        st.session_state["messages_data"] = []
+        st.session_state["current_chat_id"] = None
 
     if shortcut_button(
-        "New Chat",
+        "New chat",
         "ctrl+k",
         hint=False,
         type="primary",
@@ -117,8 +104,93 @@ with st.sidebar:
     ):
         st.session_state["rag_page"] = "chat"
         st.session_state["messages_data"] = []
+        st.session_state["current_chat_id"] = None
 
     st.caption("Your chats")
+
+    # Load and display previous chats
+    if st.session_state.get("user"):
+        username = st.session_state["user"]["username"]
+        chats = chat_service.get_chats(username)
+
+        if chats:
+            for chat in chats:
+                col1, col2, col3 = st.columns(
+                    [0.65, 0.20, 0.15], vertical_alignment="center"
+                )
+
+                with col1:
+                    chat_title = chat["title"]
+                    chat_title = (
+                        chat_title if len(chat_title) <= 35 else f"{chat_title[:35]}.."
+                    )
+
+                    if st.button(
+                        chat_title,
+                        key=f"chat_{chat['id']}",
+                        use_container_width=True,
+                    ):
+                        # Load messages from Firebase
+                        db_messages = chat_service.get_chat_messages(
+                            username, chat["id"]
+                        )
+
+                        # Convert DB → UI format
+                        formatted_messages = []
+                        for m in db_messages:
+                            if m["role"] == "user":
+                                formatted_messages.append(
+                                    {"role": "user", "msg": m.get("content", "")}
+                                )
+                            else:
+                                formatted_messages.append(
+                                    {
+                                        "id": str(uuid.uuid4()),
+                                        "role": "assistant",
+                                        "ai_response": m.get("content", ""),
+                                        "similar_questions": m.get(
+                                            "similar_questions", []
+                                        ),
+                                        "is_q_error": False,
+                                        "is_ai_error": False,
+                                    }
+                                )
+
+                        # 4. Save to session state
+                        st.session_state["rag_page"] = "chat"
+                        st.session_state["current_chat_id"] = chat["id"]
+                        st.session_state["messages_data"] = formatted_messages
+
+                with col2:
+                    with st.popover("", icon="✏️"):
+                        with st.form(f"chat_rename_{chat['id']}", border=False):
+                            new_chat_title = st.text_input(
+                                "New chat name",
+                                value=chat["title"],
+                                icon="✍️",
+                                label_visibility="collapsed",
+                            )
+                            if st.form_submit_button(
+                                "Save", icon="💾", use_container_width=True
+                            ):
+                                chat_service.update_title(
+                                    username,
+                                    chat["id"],
+                                    new_chat_title,
+                                )
+                                st.rerun()
+
+                with col3:
+                    if st.button(
+                        "", key=f"del_{chat['id']}", icon="🗑️", use_container_width=True
+                    ):
+                        chat_service.delete_chat(username, chat["id"])
+                        st.session_state["rag_page"] = "chat"
+                        st.session_state["messages_data"] = []
+                        st.session_state["current_chat_id"] = None
+                        st.rerun()
+        else:
+            st.info("No chats found. Create your first one!")
 
 subjects = [
     "📖 English",
@@ -130,31 +202,155 @@ subjects = [
     "🇩🇪 German",
     "💻 ICT",
 ]
-grades = [
-    "🎨 kG 1",
-    "🎨 KG 2",
-    "🎒 Primary 1",
-    "🎒 Primary 2",
-    "🎒 Primary 3",
-    "🎒 Primary 4",
-    "🎒 Primary 5",
-    "🎒 Primary 6",
-    "📓 Preparatory 1",
-    "📓 Preparatory 2",
-    "📓 Preparatory 3",
-    "🔬 Secondary 1",
-    "🔬 Secondary 2",
-    "🔬 Secondary 3",
-]
+grades = {
+    "🎨 kG 1": "kg1",
+    "🎨 KG 2": "kg2",
+    "🎒 Primary 1": "prim1",
+    "🎒 Primary 2": "prim2",
+    "🎒 Primary 3": "prim3",
+    "🎒 Primary 4": "prim4",
+    "🎒 Primary 5": "prim5",
+    "🎒 Primary 6": "prim6",
+    "📓 Preparatory 1": "prep1",
+    "📓 Preparatory 2": "prep2",
+    "📓 Preparatory 3": "prep3",
+    "🔬 Secondary 1": "sec1",
+    "🔬 Secondary 2": "sec2",
+    "🔬 Secondary 3": "sec3",
+}
 
-page = st.session_state.get("rag_page", "chat")
+
+page = st.session_state.get("rag_page", "menu")
+
+# Menu page
+if page == "menu":
+    st.title("📚 Choose your subject", anchor=False)
+    "---"
+
+    def button_container_html(btn_key):
+        st.markdown(
+            f"""
+            <style>
+            .st-key-{btn_key} button {{
+                height: auto;
+                padding: 20px;
+                border-radius: 12px;
+                border: 1px solid #e0e0e0;
+                text-align: center;
+                display: block;
+                transition: all 0.3s ease-in-out;
+                white-space: pre-wrap;
+            }}
+
+            .st-key-{btn_key} button:hover {{
+                border-color: #ff4b4b;
+                background-color: #f9f9f9;
+                box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+                transform: translateY(-2px);
+            }}
+            
+            .st-key-{btn_key} button p {{
+                margin: 0;
+                line-height: 1.5;
+            }}
+            </style>
+            """,
+            unsafe_allow_html=True,
+        )
+
+    st.subheader("🌍 All Grades")
+    btn_key = "all_grades_btn"
+    button_container_html(btn_key)
+
+    if st.button(
+        "🔍 Browse All Subjects",
+        use_container_width=True,
+        key=btn_key,
+        help="Search across all grades and subjects",
+    ):
+        st.session_state["menu_choice"] = "all_grades"
+        st.session_state["rag_page"] = "chat"
+        st.session_state["messages_data"] = []
+        st.session_state["current_chat_id"] = None
+        st.rerun()
+
+    if st.session_state.get("user"):
+        " "
+        user_grade_long = get_key_by_value(grades, st.session_state["user"]["grade"])
+
+        st.subheader(user_grade_long)
+
+        # Display subjects for user's grade
+        cols = st.columns(2)
+        menu_subjects = ["🔬 Science"]
+
+        for i in range(0, len(menu_subjects), 2):
+            col1, col2 = st.columns(2)
+
+            # First item in row
+            subject = menu_subjects[i]
+            subj_code = clean_string(subject).lower()
+            btn_key = f"subject_{subj_code}"
+
+            with col1:
+                button_container_html(btn_key)
+                if st.button(subject, use_container_width=True, key=btn_key):
+                    st.session_state["menu_choice"] = subj_code
+                    st.session_state["rag_page"] = "chat"
+                    st.session_state["messages_data"] = []
+                    st.session_state["current_chat_id"] = None
+                    st.rerun()
+
+            # Second item in row (if exists)
+            if i + 1 < len(menu_subjects):
+                subject = menu_subjects[i + 1]
+                subj_code = clean_string(subject).lower()
+                btn_key = f"subject_{subj_code}"
+
+                with col2:
+                    button_container_html(btn_key)
+                    if st.button(subject, use_container_width=True, key=btn_key):
+                        st.session_state["menu_choice"] = subj_code
+                        st.session_state["rag_page"] = "chat"
+                        st.session_state["messages_data"] = []
+                        st.session_state["current_chat_id"] = None
+                        st.rerun()
+
+        "---"
+
+        def switch_to_add_source():
+            st.session_state["rag_page"] = "add_source"
+
+        st.button(
+            "Add your own sources (Coming Soon)",
+            type="primary",
+            on_click=switch_to_add_source(),
+            icon="➕",
+            disabled=True,
+            use_container_width=True,
+        )
+
+    else:
+        st.info("Sign in to see subjects for your grade in the menu page")
+        col1, col2 = st.columns(2)
+        with col1:
+            if st.button("Sign In", icon="🔐", use_container_width=True):
+                st.switch_page("pages/signin.py")
+        with col2:
+            if st.button(
+                "Create Account",
+                type="primary",
+                icon="👤",
+                use_container_width=True,
+            ):
+                st.switch_page("pages/signin.py")
 
 # Add source page
 if page == "add_source":
     st.title("➕ Add a Source")
     "---"
 
-    st.error("This feature is currently unavailable!")
+    st.error("This feature is will be available after adding our curriculum books.")
     st.stop()
 
     @st.cache_resource()
@@ -213,7 +409,7 @@ if page == "add_source":
 
         with st.spinner("Analyzing your documents...", show_time=True):
             add_source_service.add_book(
-                clean_string(subject).lower(),
+                clean_string(subject),
                 book_name.lower(),
                 uploaded_book.getvalue(),
                 uploaded_guide_answers.getvalue(),
@@ -494,18 +690,50 @@ elif page == "chat":
         col1, col2 = st.columns([0.08, 0.92], vertical_alignment="center")
         with col1:
             with st.popover("", icon="➕", help="Apply filters to get better results"):
-                grade_f_options = ["♾️ All", "📓 Preparatory 2"]  # ["♾️ All", *grades]
-                grade_f_index = 0
-                if st.session_state.get("user"):
-                    grade_f_index = grade_f_options.index(
-                        map_grades(st.session_state["user"]["grade"], to="long")
+                menu_choice = st.session_state.get("menu_choice", "all_grades")
+
+                # If user came from "All Grades", show all 4 filters
+                if menu_choice == "all_grades":
+                    grade_f_options = ["♾️ All", "📓 Preparatory 2"]
+                    grade_f_index = 0
+                    try:
+                        if st.session_state.get("user"):
+                            grade_f_index = grade_f_options.index(
+                                get_key_by_value(
+                                    grades, st.session_state["user"]["grade"]
+                                )
+                            )
+                    except:
+                        pass
+
+                    grade_filter = st.selectbox(
+                        "🎓 Grade", grade_f_options, grade_f_index
                     )
 
-                grade_filter = st.selectbox(
-                    "🎓 Grade", grade_f_options, index=grade_f_index
-                )
+                    subject_filter = st.selectbox("📚 Subject", ["♾️ All", "🔬 Science"])
 
-                subject_filter = st.selectbox("📚 Subject", ["♾️ All", "🔬 Science"])
+                # If user came from specific subject, only show Unit/Lesson and display grade/subject as locked
+                else:
+                    if st.session_state.get("user"):
+                        user_grade_long = get_key_by_value(
+                            grades, st.session_state["user"]["grade"]
+                        )
+                        selected_subject = menu_choice
+
+                        subjects_codes = [
+                            clean_string(subj).lower() for subj in subjects
+                        ]
+                        st.info(
+                            f"{user_grade_long} • {subjects[subjects_codes.index(selected_subject)]}",
+                        )
+
+                        # Set these for filter logic
+                        grade_filter = user_grade_long
+                        subject_filter = selected_subject
+                    else:
+                        grade_filter = "♾️ All"
+                        subject_filter = "♾️ All"
+
                 unit_num_filter = st.selectbox(
                     "📌 Unit",
                     ["♾️ All", 1, 2, 3, 4],
@@ -525,15 +753,16 @@ elif page == "chat":
         for key, value in {
             "point_type": point_type,
             "grade": str(grade_filter),
-            "subject": clean_string(str(subject_filter)).lower(),
+            "subject": clean_string(str(subject_filter)),
             "unit_num": clean_string(str(unit_num_filter)),
             "lesson_num": clean_string(str(lesson_num_filter)),
         }.items():
+
             if value and clean_string(value).lower() != "all":
                 if key in ["unit_num", "lesson_num"]:
                     value = int(value)
                 elif key == "grade":
-                    value = map_grades(value)
+                    value = grades[value]
 
                 filters.append(
                     FieldCondition(
@@ -543,17 +772,32 @@ elif page == "chat":
                 )
 
         return Filter(must=filters)
-    
+
     # Render previous msgs if found
     render_messages(st.session_state.get("messages_data", []))
 
     if user_query and user_query.strip():
 
-        # Step 1: Save user message and render it
+        # Step 1: Initialize chat if needed
+        username = (
+            st.session_state.get("user", {}).get("username")
+            if st.session_state.get("user")
+            else None
+        )
+        if not st.session_state.get("current_chat_id") and username:
+            st.session_state["current_chat_id"] = chat_service.create_chat(username)
+
+        # Save user message and render it
         messages_data: list = st.session_state.get("messages_data", [])
 
         user_msg_dict = {"role": "user", "msg": user_query}
         messages_data.append(user_msg_dict)
+
+        # Save to database
+        if username and st.session_state.get("current_chat_id"):
+            chat_service.save_message(
+                username, st.session_state["current_chat_id"], "user", user_query
+            )
 
         # Render user message
         right_align_user_msg()
@@ -573,17 +817,6 @@ elif page == "chat":
         messages_data.append(assistant_msg_dict)
 
         last_msg_idx = len(messages_data) - 1
-
-        # # Check if last message is still being processed (has empty ai_response and is assistant)
-        # is_streaming = (
-        #     last_msg_idx >= 0
-        #     and messages_data[last_msg_idx]["role"] == "assistant"
-        #     and messages_data[last_msg_idx]["ai_response"] == ""
-        #     and not messages_data[last_msg_idx]["similar_questions"]
-        # )
-
-        # # If streaming needed, fetch data and stream response
-        # if is_streaming:
 
         is_q_error = False
         questions_payloads = []
@@ -613,28 +846,84 @@ elif page == "chat":
 
         # Step 3: Save AI response and stream it
         with st.spinner("Generating..."):
-            try:
-                explanation_payloads = rag_service.search(
-                    user_query,
-                    limit=6,
-                    score_threshold=0.6,
-                    query_filter=get_filters("explanation"),
+            # try:
+            explanation_payloads = rag_service.search(
+                user_query,
+                limit=10,
+                score_threshold=0.5,
+                query_filter=get_filters("explanation"),
+            )
+
+            # Get all the included lessons ids
+            lesson_ids = []
+            for exp in explanation_payloads:
+                if exp["lesson_id"] not in lesson_ids:
+                    lesson_ids.append(exp["lesson_id"])
+            print(lesson_ids)
+            # Get the lessons sources concatenated texts
+            sources_text = rag_service.get_sources(lesson_ids)
+
+            # Get chat history for model context
+            chat_history = []
+
+            for m in st.session_state.get("messages_data", []):
+                if m["role"] == "user":
+                    chat_history.append({"role": "user", "content": m["msg"]})
+                else:
+                    chat_history.append(
+                        {"role": "assistant", "content": m["ai_response"]}
+                    )
+
+            if chat_history and chat_history[-1]["role"] == "user":
+                chat_history = chat_history[:-1]
+
+            # --- Rendering the AI response (2 ways) ---
+
+            is_first_prompt = (
+                chat_history
+                and len(chat_history) <= 2
+                and not chat_history[-1].get("content")
+            )
+
+            if is_first_prompt:
+                # FIRST - get response, suggested chat title
+                json_response = rag_service.generate_response(
+                    user_query, sources_text, chat_history, get_chat_title=True
                 )
 
-                # Get all the included lessons ids
-                lesson_ids = []
-                for exp in explanation_payloads:
-                    if exp["lesson_id"] not in lesson_ids:
-                        lesson_ids.append(exp["lesson_id"])
+                full_response: str = json_response["response"]
+                st.markdown(full_response)
 
-                # Get the lessons sources concatenated texts
-                sources_text = rag_service.get_sources(lesson_ids)
+                # Update ss with full response
+                messages_data[last_msg_idx]["ai_response"] = full_response
+
+                # Save to DB
+                if username and st.session_state.get("current_chat_id"):
+                    chat_service.save_message(
+                        username=username,
+                        chat_id=st.session_state["current_chat_id"],
+                        role="assistant",
+                        content=full_response,
+                        similar_questions=questions_payloads,
+                    )
+
+                if username:
+                    print(f"Chat title: {json_response["suggested_chat_title"]}")
+                    chat_service.update_title(
+                        username,
+                        st.session_state["current_chat_id"],
+                        json_response["suggested_chat_title"],
+                    )
+
+            else:
+                # SECOND - stream response
 
                 # Create a generator that yields chunks and collects full response
                 def stream_and_collect():
                     full_response = ""
+
                     for chunk in rag_service.generate_response_stream(
-                        user_query, sources_text
+                        user_query, sources_text, chat_history
                     ):
                         full_response += chunk
                         yield chunk
@@ -642,16 +931,25 @@ elif page == "chat":
                     # Update ss with full response
                     messages_data[last_msg_idx]["ai_response"] = full_response
 
-                # Update messages_data ss
-                st.session_state["messages_data"] = messages_data
+                    if username and st.session_state.get("current_chat_id"):
+                        chat_service.save_message(
+                            username=username,
+                            chat_id=st.session_state["current_chat_id"],
+                            role="assistant",
+                            content=full_response,
+                            similar_questions=questions_payloads,
+                        )
 
                 # Stream the AI response
                 st.write_stream(stream_and_collect())
 
-            except Exception as e:
-                messages_data[last_msg_idx]["is_ai_error"] = True
-                st.session_state["messages_data"] = messages_data
-                st.write(f"Error generating response: {e}")
+            # Update messages_data ss
+            st.session_state["messages_data"] = messages_data
+
+        # except Exception as e:
+        #     messages_data[last_msg_idx]["is_ai_error"] = True
+        #     st.session_state["messages_data"] = messages_data
+        #     st.error(f"Error: {e}")
 
     elif not st.session_state.get("messages_data"):
         st.header("How can I help you today?", text_alignment="center", anchor=False)

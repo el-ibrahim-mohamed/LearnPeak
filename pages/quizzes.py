@@ -105,9 +105,7 @@ def save_quiz(username: str, quiz_info: dict, quiz_questions: dict):
         "quiz_info": quiz_info,
         "quiz_questions": quiz_questions,
     }
-    quizzes_ref.push(
-        quiz_saving_data
-    )  # push automatically creates a long, random key
+    quizzes_ref.child(id).set(quiz_saving_data)
 
     st.session_state["quiz_id"] = id
 
@@ -173,7 +171,11 @@ if not st.session_state.get("quiz_started"):
     " "
 
     # Description
-    description = st.text_area("📄 **Description** (optional)", height=150)
+    description = st.text_area(
+        "📄 **Description** (optional)",
+        height=120,
+        placeholder="e.g. Quiz on unit 2 lesson 1.",
+    )
     " "
 
     # Sources
@@ -267,7 +269,7 @@ if not st.session_state.get("quiz_started"):
 
     # Number of questions
     number_of_questions = st.number_input(
-        "**Number of Questions**", min_value=1, value=10, max_value=100
+        "**Number of Questions**", min_value=1, value=5, max_value=100
     )
     " "
 
@@ -277,6 +279,13 @@ if not st.session_state.get("quiz_started"):
         "**Difficulty**",
         options=("Auto", "Very Easy", "Easy", "Medium", "Hard", "Very Hard"),
         label_visibility="collapsed",
+    )
+
+    # Custom instructions
+    custom_inst = st.text_area(
+        "**Custom instructions** (optional)",
+        height=120,
+        placeholder="e.g. Limit the quiz to this part",
     )
 
     " "
@@ -305,31 +314,8 @@ if not st.session_state.get("quiz_started"):
                 youtube_videos_urls=youtube_videos_urls,
                 files=[{"bytes": file.getvalue(), "name": file.name} for file in files],
                 web_urls=web_urls,
+                custom_instructions=custom_inst
             )
-
-            # quiz_questions = {
-            #     "q1": {
-            #         "type": "mcq",
-            #         "question": "What is the main function of mitochondria?",
-            #         "choices": [
-            #             "Energy production",
-            #             "Protein synthesis",
-            #             "DNA replication",
-            #             "Waste removal",
-            #         ],
-            #         "correct_answer": "Energy production",
-            #     },
-            #     "q2": {
-            #         "type": "true_or_false",
-            #         "question": "Photosynthesis occurs in animal cells.",
-            #         "correct_answer": "False",
-            #     },
-            #     "q3": {
-            #         "type": "fill_in_the_blank",
-            #         "question": "The process of cell division is called _____.",
-            #         "correct_answer": "mitosis",
-            #     },
-            # }
 
         st.session_state["quiz_info"] = quiz_info
         st.session_state["quiz_questions"] = quiz_questions
@@ -463,7 +449,9 @@ else:
             and st.session_state["quiz_info"]
             and st.session_state["quiz_questions"]
         ):
-            if not st.session_state.get("user"):
+            if not st.session_state.get("user") and not st.session_state.get(
+                "quiz_sign_in_offer", False
+            ):
 
                 @st.dialog("Get Started")
                 def sign_in_offer():
@@ -485,7 +473,9 @@ else:
                         st.switch_page("pages/signup.py")
 
                 sign_in_offer()
-            else:
+                st.session_state["quiz_sign_in_offer"] = True
+
+            elif st.session_state.get("user"):
                 save_quiz(
                     st.session_state["user"]["username"],
                     st.session_state["quiz_info"],

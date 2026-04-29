@@ -49,8 +49,7 @@ def load_app():
     cookies: EncryptedCookieManager = st.session_state["cookies"]
 
     if cookies.get(st.secrets["cookies"]["AUTH_NAME"]):
-        uname_cookie = json.loads(cookies.get(st.secrets["cookies"]["UNAME_NAME"]))
-        username = uname_cookie["username"]
+        username = cookies.get(st.secrets["cookies"]["UNAME_NAME"])
         user_info = root_ref.child(f"users/{username}/info").get()
         st.session_state["user"] = {**user_info, "username": username}
 

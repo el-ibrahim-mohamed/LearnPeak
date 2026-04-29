@@ -74,7 +74,9 @@ def generate_ar_experience(topic_name: str, use_model_viewer: bool = False):
             st.markdown(result["ai_description"])
             "---"
 
-        elif result["step"] == "ar_viewer" and st.session_state.get("device_supports_ar"):
+        elif result["step"] == "ar_viewer" and st.session_state.get(
+            "device_supports_ar"
+        ):
             st.session_state["model_viewer_html"] = result["model_viewer_html"]
             components.html(result["model_viewer_html"], height=50)
             "---"
@@ -127,7 +129,7 @@ def get_saved_ar_data(username: str) -> list[dict]:
 def delete_ar_experience(username: str, model_id: str):
     ar_ref = users_ref.child(f"{username}/history/ar")
     ar_data_dict: dict = ar_ref.get()
-    
+
     if ar_data_dict:
         for ar_key, ar_model in ar_data_dict.items():
             if ar_model.get("id") == model_id:
@@ -256,7 +258,9 @@ else:
             st.markdown(st.session_state["ai_description"])
             "---"
 
-        if st.session_state.get("model_viewer_html") and st.session_state.get("device_supports_ar"):
+        if st.session_state.get("model_viewer_html") and st.session_state.get(
+            "device_supports_ar"
+        ):
             components.html(st.session_state["model_viewer_html"], height=50)
             "---"
 
@@ -268,7 +272,9 @@ else:
         and st.session_state["ai_description"]
     ):
 
-        if not st.session_state.get("user"):
+        if not st.session_state.get("user") and not st.session_state.get(
+            "ar_sign_in_offer"
+        ):
 
             @st.dialog("Get Started")
             def sign_in_offer():
@@ -293,8 +299,9 @@ else:
                     st.switch_page("pages/signup.py")
 
             sign_in_offer()
+            st.session_state["quiz_sign_in_offer"] = True
 
-        else:
+        elif not st.session_state.get("user"):
             with st.spinner("Saving the AR model...", show_time=True):
                 save_ar_experience(
                     st.session_state["user"]["username"],

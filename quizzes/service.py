@@ -21,6 +21,7 @@ class QuizzesService:
         youtube_videos_urls: list[str] = [],
         files: list[dict] = [],
         web_urls: list[str] = [],
+        custom_instructions: str = "",
     ):
         text = text.strip()
         description = description.strip()
@@ -28,16 +29,21 @@ class QuizzesService:
         # --- 1. Build the prompt ---
         prompt = f"""You are a quiz generator tool for students.
 
+========================
+
 Quiz Information:
 Title: {title} {f"\nDescription: {description}" if description else ""}
 Number of Questions: {number_of_questions}
 Difficulty: {difficulty}
+
+========================
 
 Question Types to Include:
 1. Multiple Choice Questions (MCQ) - 4 choices each (majority)
 2. True or False questions (some)
 3. Fill in the Blank questions (a few)
 
+========================
 
 Your Task:
 Generate only the quiz questions with answers and provide your response like this sample JSON format:
@@ -62,7 +68,11 @@ Generate only the quiz questions with answers and provide your response like thi
         ...
     }}
 }}
-Note: You musn't add other quiz info like the title or difficulty in you JSON response.
+Note: You mustn't include other quiz info like the title or difficulty in you JSON response.
+
+========================
+
+{f"Custom instructions from the user:\n{custom_instructions}\n\n========================" if custom_instructions else ""}
 
 {"Sources to base questions on:" if any([text, audios, videos, files, web_urls]) else "The sources are open."}"""
 
@@ -106,10 +116,10 @@ Note: You musn't add other quiz info like the title or difficulty in you JSON re
                 )
 
         for model in [
-            "gemini-3.1-flash-preview",
             "gemini-3.1-flash-lite-preview",
-            "gemini-2.5-flash",
             "gemini-2.5-flash-lite",
+            "gemini-3.1-flash-preview",
+            "gemini-2.5-flash",
         ]:
             try:
                 response = self.client.models.generate_content(
