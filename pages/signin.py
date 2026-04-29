@@ -59,18 +59,8 @@ with st.container(border=False):
                 new_token = str(uuid.uuid4())
                 expires_at = (datetime.now() + timedelta(days=30)).isoformat()
 
-                cookies[auth_cookie_name] = json.dumps(
-                    {
-                        "token": new_token,
-                        "expires_at": expires_at,
-                    }
-                )
-                cookies[uname_cookie_name] = json.dumps(
-                    {
-                        "username": username,
-                        "expires_at": expires_at,
-                    }
-                )
+                cookies[auth_cookie_name] = new_token
+                cookies[uname_cookie_name] = username
                 cookies.save()
 
             st.session_state["user"] = {**user_info, "username": username}
