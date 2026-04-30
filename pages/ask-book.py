@@ -324,7 +324,7 @@ if page == "menu":
         st.button(
             "Add your own sources (Coming Soon)",
             type="primary",
-            on_click=switch_to_add_source(),
+            on_click=switch_to_add_source,
             icon="➕",
             disabled=True,
             use_container_width=True,
@@ -346,11 +346,11 @@ if page == "menu":
                 st.switch_page("pages/signin.py")
 
 # Add source page
-if page == "add_source":
+elif page == "add_source":
     st.title("➕ Add a Source")
     "---"
 
-    st.error("This feature is will be available after adding our curriculum books.")
+    st.info("This feature is will be available after adding our curriculum books.")
     st.stop()
 
     @st.cache_resource()
@@ -422,8 +422,7 @@ if page == "add_source":
 elif page == "chat":
 
     def right_align_user_msg():
-        st.html(
-            """
+        st.html("""
             <style>
                 .stChatMessage:has([data-testid="stChatMessageAvatarUser"]) {
                     display: flex;
@@ -435,8 +434,7 @@ elif page == "chat":
                     text-align: right;
                 }
             </style>
-            """
-        )
+            """)
 
     def render_user_prompt(msg: dict):
         if msg["role"] == "user":
@@ -710,7 +708,9 @@ elif page == "chat":
                         "🎓 Grade", grade_f_options, grade_f_index
                     )
 
-                    subject_filter = st.selectbox("📚 Subject", ["♾️ All", "🔬 Science"])
+                    subject_filter = st.selectbox(
+                        "📚 Subject", ["♾️ All", "🔬 Science"]
+                    )
 
                 # If user came from specific subject, only show Unit/Lesson and display grade/subject as locked
                 else:
