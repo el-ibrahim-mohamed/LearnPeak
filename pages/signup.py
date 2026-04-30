@@ -58,7 +58,7 @@ def verify_email():
     email = user["email"]
 
     if not st.session_state.get("verification_code"):
-        verification_code = signup.send_verification_code(email)
+        verification_code = signup.send_otp(email)
         st.session_state["verification_code"] = verification_code
 
     st.title("Verify your email address", text_alignment="center")
@@ -77,7 +77,7 @@ def verify_email():
         if st.form_submit_button(
             "Continue", type="primary", icon="⏭️", use_container_width=True
         ):
-            code_valid = signup.validate_verification_code(email, code)
+            code_valid = signup.validate_otp(email, code)
             if code_valid != True:
                 code_ph.error(code_valid)
             else:
@@ -205,7 +205,7 @@ def take_user_info():
             )
 
             new_user = st.session_state["new_user"]
-            new_user["full_name"] = full_name
+            new_user["full_name"] = full_name.strip()
             new_user["country"] = country.lower()
             new_user["education"] = education.lower()
             new_user["grade"] = map_grades(grade)
@@ -224,8 +224,6 @@ def take_user_info():
             else:
                 st.switch_page("pages/home.py")
 
-
-# st.session_state["signup_method"] = "email"
 
 if not st.session_state.get("signup_method"):
     st.title("Create your :red[Learn] :blue[Peak] account", text_alignment="center")

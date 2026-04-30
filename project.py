@@ -51,12 +51,17 @@ def load_app():
     if cookies.get(st.secrets["cookies"]["AUTH_NAME"]):
         username = cookies.get(st.secrets["cookies"]["UNAME_NAME"])
 
-        # Old cookies format check
-        try:
-            if isinstance(username, dict):
-                username = username["username"]
-        except:
-            pass
+        # Normalize usernames (handle old formats)
+        if isinstance(username, dict):
+            username = username.get("username")
+
+        if isinstance(username, str):
+            try:
+                parsed = json.loads(username)
+                if isinstance(parsed, dict):
+                    username = parsed.get("username")
+            except:
+                username = username
 
         user_info = root_ref.child(f"users/{username}/info").get()
         st.session_state["user"] = {**user_info, "username": username}

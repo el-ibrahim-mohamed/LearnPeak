@@ -859,7 +859,7 @@ elif page == "chat":
             for exp in explanation_payloads:
                 if exp["lesson_id"] not in lesson_ids:
                     lesson_ids.append(exp["lesson_id"])
-            print(lesson_ids)
+
             # Get the lessons sources concatenated texts
             sources_text = rag_service.get_sources(lesson_ids)
 
@@ -908,7 +908,6 @@ elif page == "chat":
                     )
 
                 if username:
-                    print(f"Chat title: {json_response["suggested_chat_title"]}")
                     chat_service.update_title(
                         username,
                         st.session_state["current_chat_id"],
