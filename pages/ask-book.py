@@ -326,7 +326,6 @@ if page == "menu":
             type="primary",
             on_click=switch_to_add_source,
             icon="➕",
-            disabled=True,
             use_container_width=True,
         )
 
@@ -345,13 +344,14 @@ if page == "menu":
             ):
                 st.switch_page("pages/signin.py")
 
+
 # Add source page
 elif page == "add_source":
     st.title("➕ Add a Source")
     "---"
 
-    st.info("This feature is will be available after adding our curriculum books.")
-    st.stop()
+    # st.info("This feature is will be available after adding our curriculum books.")
+    # st.stop()
 
     @st.cache_resource()
     def get_add_source_service(_client, _rag_service, grade):
@@ -359,7 +359,7 @@ elif page == "add_source":
 
     if st.session_state.get("user"):
         grade = st.session_state["user"]["grade"]
-        st.session_state["add_source_service"] = get_add_source_service(
+        add_source_service = get_add_source_service(
             st.session_state["client"], rag_service, grade
         )
 
@@ -413,7 +413,6 @@ elif page == "add_source":
                 book_name.lower(),
                 uploaded_book.getvalue(),
                 uploaded_guide_answers.getvalue(),
-                gemini_model="gemini-3-flash-preview",
             )
             st.success("Source added successfuly!", icon="✅")
 
@@ -753,17 +752,17 @@ elif page == "chat":
         for key, value in {
             "point_type": point_type,
             "grade": str(grade_filter),
-            "subject": clean_string(str(subject_filter)),
+            "subject": clean_string(str(subject_filter)).lower(),
             "unit_num": clean_string(str(unit_num_filter)),
             "lesson_num": clean_string(str(lesson_num_filter)),
         }.items():
-
             if value and clean_string(value).lower() != "all":
                 if key in ["unit_num", "lesson_num"]:
                     value = int(value)
                 elif key == "grade":
                     value = grades[value]
 
+                print(key, value)
                 filters.append(
                     FieldCondition(
                         key=key,
