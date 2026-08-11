@@ -260,7 +260,7 @@ def choose_method():
             cookies["google_auth_clicked_at"] = datetime.now().isoformat()
             cookies.save()
             print(f"COOKIES: {time.time() - start}")
-            time.sleep(0.3)
+            time.sleep(0.15)
 
             st.login()
 

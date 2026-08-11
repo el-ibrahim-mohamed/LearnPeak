@@ -40,9 +40,13 @@ def handle_google_auth_redirect():
             # So don't redirect to it anymore AND logout
             google_auth_clicked_at = cookies.get("google_auth_clicked_at")
             if google_auth_clicked_at:
+                print()
+                print(google_auth_clicked_at)
+                print()
                 time_difference = datetime.now() - datetime.fromisoformat(google_auth_clicked_at)
                 seconds_passed = time_difference.total_seconds()
-                if 0 <= seconds_passed <= 500:
+                print(seconds_passed)
+                if seconds_passed > 500:  # 5 minutes
                     redirect_to_signup = False
                     
             if redirect_to_signup:
