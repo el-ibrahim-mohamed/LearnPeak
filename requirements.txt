@@ -1,4 +1,5 @@
 streamlit
+streamlit[auth]
 streamlit-js-eval
 streamlit-extras
 streamlit-cookies-manager-v2
