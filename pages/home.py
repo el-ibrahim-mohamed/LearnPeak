@@ -1,6 +1,6 @@
 import streamlit as st
 import uuid
-import time
+from datetime import datetime
 from services.account.auth import Login
 
 st.write(st.user)
@@ -33,12 +33,12 @@ def handle_google_auth_redirect():
 
         else:
             google_auth_clicked_at = cookies.get("google_auth_clicked_at")
-            current_time = time.time()
-            time_difference = current_time - google_auth_clicked_at
+            time_difference = datetime.now() - datetime.fromisoformat(google_auth_clicked_at)
+            seconds_passed = time_difference.total_seconds()
 
             # Detect if the user had skipped/abandoned the info form
             # So don't redirect to it anymore AND logout
-            if 0 <= time_difference <= 120:  # 2 minutes
+            if 0 <= seconds_passed <= 120:
                 st.session_state["take_signup_info"] = True
                 st.session_state["signup_email"] = st.user.get("email")
                 st.session_state["email_verified"] = True

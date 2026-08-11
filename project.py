@@ -52,7 +52,6 @@ def load_app():
         st.secrets["cookies"]["AUTH_NAME"]
     ):
         user_uid = cookies.get(st.secrets["cookies"]["USER_UID_NAME"])
-        print(user_uid)
         user_info = root_ref.child(f"users/{user_uid}/info").get()
         st.session_state["user"] = {**user_info, "uid": user_uid}
 

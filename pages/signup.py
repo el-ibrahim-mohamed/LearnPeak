@@ -1,6 +1,7 @@
 import streamlit as st
 import uuid
 import time
+from datetime import datetime
 from services.account.auth import Signup
 
 st.set_page_config(
@@ -253,7 +254,7 @@ def choose_method():
             "Continue with Google", key="google_btn", use_container_width=True
         ):
             start = time.time()
-            cookies["google_auth_clicked_at"] = time.time()
+            cookies["google_auth_clicked_at"] = datetime.now().isoformat()
             cookies.save()
             print(f"COOKIES: {time.time() - start}")
             time.sleep(0.3)
