@@ -1,7 +1,7 @@
 import streamlit as st
 import streamlit.components.v1 as components
 from firebase_admin.db import Reference
-from quizzes.service import QuizzesService
+from services.quizzes.service import QuizzesService
 import time
 import uuid
 from datetime import datetime
@@ -96,8 +96,8 @@ def display_graded_quiz(quiz_questions: dict, quiz_grading: dict):
         "---"
 
 
-def save_quiz(username: str, quiz_info: dict, quiz_questions: dict):
-    quizzes_ref = users_ref.child(f"{username}/history/quizzes")
+def save_quiz(user_uid: str, quiz_info: dict, quiz_questions: dict):
+    quizzes_ref = users_ref.child(f"{user_uid}/history/quizzes")
     id = str(uuid.uuid4())
     quiz_saving_data = {
         "id": id,
@@ -110,16 +110,16 @@ def save_quiz(username: str, quiz_info: dict, quiz_questions: dict):
     st.session_state["quiz_id"] = id
 
 
-def save_quiz_grading(username: str, quiz_id: str, grading_data: dict):
+def save_quiz_grading(user_uid: str, quiz_id: str, grading_data: dict):
     submit_gradings_ref = users_ref.child(
-        f"{username}/history/quizzes/{quiz_id}/submit_gradings"
+        f"{user_uid}/history/quizzes/{quiz_id}/submit_gradings"
     )
     grading_saving_data = {"grading_data": grading_data, "created_at": time.time()}
     submit_gradings_ref.push(grading_saving_data)
 
 
-def get_saved_quizzes(username: str) -> list[dict]:
-    quizzes_ref = users_ref.child(f"{username}/history/quizzes")
+def get_saved_quizzes(user_uid: str) -> list[dict]:
+    quizzes_ref = users_ref.child(f"{user_uid}/history/quizzes")
     quizzes_dict: dict = quizzes_ref.get()
 
     quizzes = []
@@ -133,8 +133,8 @@ def get_saved_quizzes(username: str) -> list[dict]:
     return quizzes
 
 
-def delete_quiz(username: str, quiz_id: str):
-    quiz_to_delete = users_ref.child(f"{username}/history/quizzes/{quiz_id}")
+def delete_quiz(user_uid: str, quiz_id: str):
+    quiz_to_delete = users_ref.child(f"{user_uid}/history/quizzes/{quiz_id}")
     quiz_to_delete.delete()
 
 
@@ -329,7 +329,7 @@ if not st.session_state.get("quiz_started"):
 
         # Getting quizzes data with their IDs
         if st.session_state.get("user"):
-            quizzes = get_saved_quizzes(st.session_state["user"]["username"])
+            quizzes = get_saved_quizzes(st.session_state["user"]["user_uid"])
 
         if quizzes:
             for i, quiz in enumerate(quizzes):
@@ -362,7 +362,7 @@ if not st.session_state.get("quiz_started"):
                         icon="🗑️",
                         use_container_width=True,
                     ):
-                        delete_quiz(st.session_state["user"]["username"], quiz["id"])
+                        delete_quiz(st.session_state["user"]["user_uid"], quiz["id"])
 
                         st.success(f"Deleted '{quiz_title}'")
                         st.rerun()
@@ -477,7 +477,7 @@ else:
 
             elif st.session_state.get("user"):
                 save_quiz(
-                    st.session_state["user"]["username"],
+                    st.session_state["user"]["user_uid"],
                     st.session_state["quiz_info"],
                     st.session_state["quiz_questions"],
                 )
@@ -493,7 +493,7 @@ else:
 
         if st.session_state.get("user") and st.session_state.get("quiz_id"):
             save_quiz_grading(
-                st.session_state["user"]["username"],
+                st.session_state["user"]["user_uid"],
                 st.session_state["quiz_id"],
                 st.session_state["quiz_grading"],
             )

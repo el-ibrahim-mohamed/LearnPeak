@@ -1,13 +1,11 @@
 import streamlit as st
 from streamlit_extras.stylable_container import stylable_container
 import uuid
-import json
 import time
-from datetime import datetime, timedelta
-from account.auth import Login, ForgotPassword
+from services.account.auth import Login, ForgotPassword
 
 
-# ==================== HELPER FUNCTIONS ====================
+# Define Helper functions
 def reset_forgot_password():
     """Reset forgot password state"""
     st.session_state["forgot_pwd_step"] = None
@@ -16,7 +14,7 @@ def reset_forgot_password():
     st.session_state["forgot_pwd_otp"] = None
 
 
-# ==================== MAIN UI ====================
+# MAIN UI
 with st.container(border=False):
     # Init ForgotPassword once
     forgot_password = ForgotPassword(
@@ -30,36 +28,33 @@ with st.container(border=False):
         st.title("🔑 Reset Password", anchor=False)
         " "
 
-        email_or_username = st.text_input(
+        id = st.text_input(
             "Email or Username",
             placeholder="Email or Username",
             label_visibility="collapsed",
             icon="📧",
         )
 
-        ph_error = st.empty()
+        status_ph = st.empty()
         " "
 
         col1, col2 = st.columns(2)
         with col1:
             if st.button("Send Reset Code", type="primary", use_container_width=True):
-                if not email_or_username.strip():
-                    ph_error.error("❌ Please enter your email address or username")
+                if not id.strip():
+                    status_ph.error("❌ Please enter your email or username.")
                 else:
-                    username, user_email = (
-                        forgot_password.find_user_by_email_or_username(
-                            email_or_username.strip()
-                        )
-                    )
+                    user_uid, username, user_email = forgot_password.find_user_by_id(id.strip())
 
                     # Show generic message (security: don't reveal if account exists)
-                    ph_error.info(
+                    status_ph.info(
                         "✅ If this account exists, you'll receive a reset code via email"
                     )
 
-                    if username and user_email:
-                        forgot_password.send_reset_otp(user_email, username)
-                        st.session_state["forgot_pwd_username"] = username
+                    if user_uid and user_email:
+                        forgot_password.send_reset_otp(user_uid, username, user_email)
+                        # st.session_state["forgot_pwd_username"] = username
+                        st.session_state["forgot_pwd_user_uid"] = user_uid
                         st.session_state["forgot_pwd_email"] = user_email
                         time.sleep(0.5)
 
@@ -91,18 +86,18 @@ with st.container(border=False):
             max_chars=6,
         )
 
-        ph_error = st.empty()
+        status_ph = st.empty()
         " "
 
         col1, col2 = st.columns(2)
         with col1:
             if st.button("Verify Code", type="primary", use_container_width=True):
                 if not otp or len(otp) != 6:
-                    ph_error.error("❌ Please enter a 6-digit code")
+                    status_ph.error("❌ Please enter a 6-digit code")
                 else:
                     if st.session_state.get("forgot_pwd_username"):
                         validation = forgot_password.validate_reset_otp(
-                            st.session_state.get("forgot_pwd_username"), otp
+                            st.session_state.get("forgot_pwd_user_uid"), otp
                         )
 
                         if validation is True:
@@ -111,9 +106,9 @@ with st.container(border=False):
                             time.sleep(0.5)
                             st.rerun()
                         else:
-                            ph_error.error(f"❌ {validation}")
+                            status_ph.error(f"❌ {validation}")
                     else:
-                        ph_error.error("❌ Invalid OTP")
+                        status_ph.error("❌ Invalid OTP")
 
         with col2:
             if st.button(
@@ -145,30 +140,30 @@ with st.container(border=False):
             icon="🔏",
         )
 
-        ph_error = st.empty()
+        status_ph = st.empty()
         " "
 
         if st.button("Reset Password", type="primary", use_container_width=True):
             # Validate password
             validation = forgot_password.validate_password(new_password)
             if validation is not True:
-                ph_error.error(f"❌ {validation}")
+                status_ph.error(f"❌ {validation}")
             elif new_password != password_confirm:
-                ph_error.error("❌ Passwords do not match")
+                status_ph.error("❌ Passwords do not match")
             else:
                 # Reset the password
                 if forgot_password.reset_password_with_otp(
-                    st.session_state.get("forgot_pwd_username", ""),
+                    st.session_state.get("forgot_pwd_user_uid", ""),
                     st.session_state.get("forgot_pwd_otp"),
                     new_password,
                 ):
-                    ph_error.success("✅ Password reset successful!")
+                    status_ph.success("✅ Password reset successful!")
 
                     time.sleep(2)
                     reset_forgot_password()
                     st.rerun()
                 else:
-                    ph_error.error("❌ Failed to reset password")
+                    status_ph.error("❌ Failed to reset password")
 
         " "
         if st.button("🔙 Back", use_container_width=True):
@@ -223,21 +218,19 @@ with st.container(border=False):
 
             login_result = login.login(email_or_uname.strip(), password.strip())
             if login_result:
-                username, user_info = login_result
+                user_uid, user_info = login_result
 
                 if remember_me:
                     cookies = st.session_state["cookies"]
 
                     auth_cookie_name = st.secrets["cookies"]["AUTH_NAME"]
-                    uname_cookie_name = st.secrets["cookies"]["UNAME_NAME"]
-                    new_token = str(uuid.uuid4())
-                    expires_at = (datetime.now() + timedelta(days=30)).isoformat()
+                    user_uid_cookie_name = st.secrets["cookies"]["USER_UID_NAME"]
 
-                    cookies[auth_cookie_name] = new_token
-                    cookies[uname_cookie_name] = username
+                    cookies[auth_cookie_name] = str(uuid.uuid4())
+                    cookies[user_uid_cookie_name] = user_uid
                     cookies.save()
 
-                st.session_state["user"] = {**user_info, "username": username}
+                st.session_state["user"] = user_info
 
                 ph.success("✅ Login Successful")
 

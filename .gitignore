@@ -1,4 +1,7 @@
 .streamlit/secrets.toml
-account/learn-peak-88a91-firebase-adminsdk-fbsvc-d3ff87b66a.json
+services/account/learn-peak-88a91-firebase-adminsdk-fbsvc-d3ff87b66a.json
 tst/
-insert_db.py
+admin/
+learnpeak_backup.json
+learnpeak_migrated.json
+remember.txt

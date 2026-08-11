@@ -1,5 +1,5 @@
 from google.genai import Client
-from ar.service import ARService
+from services.ar.service import ARService
 import json
 import uuid
 

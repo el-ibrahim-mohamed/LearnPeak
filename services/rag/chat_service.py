@@ -25,7 +25,6 @@ class ChatService:
         chat_id: str,
         role: str,
         content: str,
-        similar_questions: list = None,
     ):
         """Save message to chat"""
         msg_id = str(datetime.now().timestamp()).replace(".", "")
@@ -35,9 +34,6 @@ class ChatService:
             "content": content,
             "timestamp": datetime.now().isoformat(),
         }
-
-        if similar_questions:
-            data["similar_questions"] = similar_questions
 
         self.root_ref.child(
             f"users/{username}/history/chats/{chat_id}/messages/{msg_id}"

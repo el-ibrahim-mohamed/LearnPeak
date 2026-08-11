@@ -1,4 +1,53 @@
 import streamlit as st
+import uuid
+import time
+from services.account.auth import Login
+
+st.write(st.user)
+
+def handle_google_auth_redirect():
+    if (
+        st.user.is_logged_in
+        and not st.session_state.get("user")
+        and not st.session_state.get("take_signup_info")
+    ):
+        login = Login(st.session_state["root_ref"])
+        cookies = st.session_state["cookies"]
+
+        # Check auth state (if logged in)
+        user_uid = login.email_matches(st.user["email"])
+
+        # If logged in, save cookies, and user ss
+        if user_uid:
+            # Save cookies
+            auth_cookie_name = st.secrets["cookies"]["AUTH_NAME"]
+            user_uid_cookie_name = st.secrets["cookies"]["USER_UID_NAME"]
+
+            cookies[auth_cookie_name] = str(uuid.uuid4())
+            cookies[user_uid_cookie_name] = user_uid
+            cookies.save()
+
+            st.session_state["user"] = login.get_user_info(user_uid)
+
+            st.logout()
+
+        else:
+            google_auth_clicked_at = cookies.get("google_auth_clicked_at")
+            current_time = time.time()
+            time_difference = current_time - google_auth_clicked_at
+
+            # Detect if the user had skipped/abandoned the info form
+            # So don't redirect to it anymore AND logout
+            if 0 <= time_difference <= 120:  # 2 minutes
+                st.session_state["take_signup_info"] = True
+                st.session_state["signup_email"] = st.user.get("email")
+                st.session_state["email_verified"] = True
+
+                st.switch_page("pages/signup.py")
+            else:
+                st.logout()
+
+handle_google_auth_redirect()
 
 # Sidebar
 with st.sidebar:

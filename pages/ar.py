@@ -1,7 +1,7 @@
 import streamlit as st
 import streamlit.components.v1 as components
 from google import genai
-from ar.service import ARService
+from services.ar.service import ARService
 from firebase_admin.db import Reference
 import time
 import uuid
@@ -12,7 +12,7 @@ from datetime import datetime
 root_ref: Reference = st.session_state["root_ref"]
 users_ref = root_ref.child("users")
 
-# Detecting the user's device type to customize the layout
+# Detecting if user device supports AR to customize the layout
 if "device_supports_ar" not in st.session_state:
     device_type = st.session_state.get("user_device_type", "mobile")
     st.session_state["device_supports_ar"] = False if device_type == "pc" else True
@@ -86,13 +86,13 @@ def generate_ar_experience(topic_name: str, use_model_viewer: bool = False):
 
 
 def save_ar_experience(
-    username: str,
+    user_uid: str,
     topic: str,
     sketchfab_embed_html: str,
     ai_description: str,
     model_viewer_html: str = None,
 ):
-    ar_ref = users_ref.child(f"{username}/history/ar")
+    ar_ref = users_ref.child(f"{user_uid}/history/ar")
     id = str(uuid.uuid4())
 
     ar_saving_data = {
@@ -111,8 +111,8 @@ def save_ar_experience(
     ar_ref.push(ar_saving_data)  # push automatically creates a long, random key
 
 
-def get_saved_ar_data(username: str) -> list[dict]:
-    ar_ref = users_ref.child(f"{username}/history/ar")
+def get_saved_ar_data(user_uid: str) -> list[dict]:
+    ar_ref = users_ref.child(f"{user_uid}/history/ar")
     ar_data_dict: dict = ar_ref.get()
 
     ar_models = []
@@ -126,8 +126,8 @@ def get_saved_ar_data(username: str) -> list[dict]:
     return ar_models
 
 
-def delete_ar_experience(username: str, model_id: str):
-    ar_ref = users_ref.child(f"{username}/history/ar")
+def delete_ar_experience(user_uid: str, model_id: str):
+    ar_ref = users_ref.child(f"{user_uid}/history/ar")
     ar_data_dict: dict = ar_ref.get()
 
     if ar_data_dict:
@@ -168,13 +168,14 @@ if not st.session_state.get("generated_ar"):
             st.session_state["topic"] = topic
             st.session_state["show_in_ar"] = show_in_ar
             st.session_state["generated_ar"] = True
+            st.session_state["ar_sign_in_offer"] = False
             st.rerun()
 
     "---"
     with st.expander("📂 History"):
         ar_data = []
         if st.session_state.get("user"):
-            ar_data = get_saved_ar_data(st.session_state["user"]["username"])
+            ar_data = get_saved_ar_data(st.session_state["user"]["uid"])
 
         if ar_data:
             for i, model in enumerate(ar_data):
@@ -218,7 +219,7 @@ if not st.session_state.get("generated_ar"):
                 with col2:
                     if st.button("🗑️ Delete", key=f"delete_{model["id"]}"):
                         delete_ar_experience(
-                            st.session_state["user"]["username"], model["id"]
+                            st.session_state["user"]["uid"], model["id"]
                         )
                         st.success(f"Deleted '{model['topic']}'")
                         st.rerun()
@@ -275,6 +276,7 @@ else:
         if not st.session_state.get("user") and not st.session_state.get(
             "ar_sign_in_offer"
         ):
+            st.session_state["ar_sign_in_offer"] = True
 
             @st.dialog("Get Started")
             def sign_in_offer():
@@ -301,10 +303,10 @@ else:
             sign_in_offer()
             st.session_state["quiz_sign_in_offer"] = True
 
-        elif not st.session_state.get("user"):
+        elif st.session_state.get("user"):
             with st.spinner("Saving the AR model...", show_time=True):
                 save_ar_experience(
-                    st.session_state["user"]["username"],
+                    st.session_state["user"]["uid"],
                     st.session_state["topic"],
                     st.session_state["sketchfab_embed_html"],
                     st.session_state["ai_description"],

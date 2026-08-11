@@ -1,6 +1,6 @@
 import streamlit as st
 import streamlit.components.v1 as components
-from learning_plans.service import LearningPlansService
+from services.learning_plans.service import LearningPlansService
 from firebase_admin.db import Reference
 
 # Initializing DB Refrences
@@ -8,10 +8,10 @@ root_ref: Reference = st.session_state["root_ref"]
 users_ref = root_ref.child("users")
 
 
-def display_lp(username: str, lp: dict):
+def display_lp(user_uid: str, lp: dict):
     id = lp["id"]
-    if username and (
-        current_day := users_ref.child(f"{username}/history/lp/{id}/current_day").get()
+    if user_uid and (
+        current_day := users_ref.child(f"{user_uid}/history/lp/{id}/current_day").get()
     ):
         current_day
 
