@@ -11,7 +11,6 @@ st.set_page_config(
     initial_sidebar_state="auto",
 )
 
-
 def load_app():
     # --- Setting up Firebase RTDB ---
     @st.cache_resource

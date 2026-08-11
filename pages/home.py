@@ -1,6 +1,7 @@
 import streamlit as st
 import uuid
 from datetime import datetime
+import re
 from services.account.auth import Login
 
 st.write(st.user)
@@ -10,6 +11,7 @@ def handle_google_auth_redirect():
         st.user.is_logged_in
         and not st.session_state.get("user")
         and not st.session_state.get("take_signup_info")
+        and not st.session_state.get("redirected_to_signup", False)
     ):
         login = Login(st.session_state["root_ref"])
         cookies = st.session_state["cookies"]
@@ -32,16 +34,28 @@ def handle_google_auth_redirect():
             st.logout()
 
         else:
-            google_auth_clicked_at = cookies.get("google_auth_clicked_at")
-            time_difference = datetime.now() - datetime.fromisoformat(google_auth_clicked_at)
-            seconds_passed = time_difference.total_seconds()
+            redirect_to_signup = True
 
             # Detect if the user had skipped/abandoned the info form
             # So don't redirect to it anymore AND logout
-            if 0 <= seconds_passed <= 120:
+            google_auth_clicked_at = cookies.get("google_auth_clicked_at")
+            if google_auth_clicked_at:
+                time_difference = datetime.now() - datetime.fromisoformat(google_auth_clicked_at)
+                seconds_passed = time_difference.total_seconds()
+                if 0 <= seconds_passed <= 500:
+                    redirect_to_signup = False
+                    
+            if redirect_to_signup:
                 st.session_state["take_signup_info"] = True
-                st.session_state["signup_email"] = st.user.get("email")
+                signup_email = st.user.get("email")
+                st.session_state["signup_email"] = signup_email
                 st.session_state["email_verified"] = True
+
+                signup_username_placeholder = signup_email.split("@")[0]
+                signup_username_placeholder = re.sub(r'[^\w]', '', signup_username_placeholder)
+                st.session_state["signup_username_placeholder"] = signup_username_placeholder
+
+                st.session_state["signup_name_placeholder"] = st.user.get("name", "")
 
                 st.switch_page("pages/signup.py")
             else:

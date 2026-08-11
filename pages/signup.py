@@ -71,13 +71,16 @@ cookies = st.session_state["cookies"]
 # GOOGLE - TAKE USER INFO
 # ---------------------------------------------------------
 
-if st.session_state.get("take_signup_info", False):
+if st.session_state.get("take_signup_info"):
     # If the redirect handler already saved the Google email, use it.
     if st.session_state.get("signup_email"):
         st.session_state["email_verified"] = True
         st.session_state["username_from_google"] = True
         st.session_state["signup_step"] = STEP_USERNAME
         st.query_params["step"] = "username"
+
+        st.session_state["take_signup_info"] = False
+        st.session_state["redirected_to_signup"] = True
 
 # ---------------------------------------------------------
 # HELPER & NAVIGATION FUNCTIONS
@@ -411,6 +414,7 @@ def enter_username(
 
         username = st.text_input(
             "Username",
+            value=st.session_state.get("signup_username_placeholder", ""),
             placeholder="Choose a username",
             label_visibility="collapsed",
             icon="👤",
@@ -485,6 +489,7 @@ def enter_user_info():
 
         full_name = st.text_input(
             "Full name",
+            value=st.session_state.get("signup_name_placeholder", ""),
             placeholder="Enter your full name",
             icon="👤",
         )
@@ -566,6 +571,7 @@ def signup_success():
     user_uid_cookie_name = st.secrets["cookies"]["USER_UID_NAME"]
 
     cookies[auth_cookie_name] = str(uuid.uuid4())
+    print(f"USER UID: {st.session_state["signup_user_uid"]}")
     cookies[user_uid_cookie_name] = st.session_state["signup_user_uid"]
     cookies.save()
 
