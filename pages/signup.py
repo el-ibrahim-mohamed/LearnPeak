@@ -2,12 +2,16 @@ import streamlit as st
 import uuid
 import time
 from datetime import datetime
+from typing import Literal
 from services.account.auth import Signup
+from config import COUNTRIES, EDUCATION, GRADES
 
+# Set page config
 st.set_page_config(
-    page_title="Sign Up • LearnPeak",
-    page_icon="⛰️",
+    page_title="Sign Up - LearnPeak",
+    page_icon="static/mountain_logo.png",
     layout="centered",
+    initial_sidebar_state="auto",
 )
 
 # ---------------------------------------------------------
@@ -40,8 +44,8 @@ if "signup_step" not in st.session_state:
 if "signup_email" not in st.session_state:
     st.session_state["signup_email"] = ""
 
-if "email_verified" not in st.session_state:
-    st.session_state["email_verified"] = False
+if "signup_email_verified" not in st.session_state:
+    st.session_state["signup_email_verified"] = False
 
 if "signup_username" not in st.session_state:
     st.session_state["signup_username"] = ""
@@ -56,13 +60,10 @@ if "signup_user_uid" not in st.session_state:
 # INITIALIZE BACKEND
 # ---------------------------------------------------------
 
-sender_email = st.secrets["smtp"]["SENDER_EMAIL"]
-sender_app_password = st.secrets["smtp"]["SENDER_APP_PASSWORD"]
-
 signup = Signup(
     st.session_state["root_ref"],
-    sender_email,
-    sender_app_password,
+    st.secrets["smtp"]["SENDER_EMAIL"],
+    st.secrets["smtp"]["SENDER_APP_PASSWORD"],
 )
 
 cookies = st.session_state["cookies"]
@@ -74,13 +75,12 @@ cookies = st.session_state["cookies"]
 if st.session_state.get("take_signup_info"):
     # If the redirect handler already saved the Google email, use it.
     if st.session_state.get("signup_email"):
-        st.session_state["email_verified"] = True
+        st.session_state["signup_email_verified"] = True
         st.session_state["username_from_google"] = True
         st.session_state["signup_step"] = STEP_USERNAME
         st.query_params["step"] = "username"
 
         st.session_state["take_signup_info"] = False
-        st.session_state["redirected_to_signup"] = True
 
 # ---------------------------------------------------------
 # HELPER & NAVIGATION FUNCTIONS
@@ -91,7 +91,7 @@ def reset_signup():
     """Reset all signup state and query parameters."""
     st.session_state["signup_step"] = STEP_METHOD
     st.session_state["signup_email"] = ""
-    st.session_state["email_verified"] = False
+    st.session_state["signup_email_verified"] = False
     st.session_state["signup_username"] = ""
     st.session_state["signup_info"] = {}
     st.session_state["signup_user_uid"] = None
@@ -109,11 +109,11 @@ def navigate_to(step: str):
     st.rerun()
 
 
-def subtitle_markdown(subtitle: str):
+def subtitle_markdown(subtitle: str, align: str = "center"):
     # Subtitle
     st.markdown(
         f"""
-        <h6 style='color: #2563EB; text-align: center;'>
+        <h6 style='color: #2563EB; text-align: {align};'>
             {subtitle}
         </h6>
         """,
@@ -146,7 +146,7 @@ def header_and_navigation_row(
     else:
         col1, col2, col3 = st.columns([1, 5, 1], vertical_alignment="bottom")
 
-        if col1.button("Back", icon="🔙"):
+        if col1.button("Back", icon="🔙", disabled=disable_back_btn):
             if back_nav == STEP_METHOD:
                 reset_signup()
                 st.rerun()
@@ -164,15 +164,52 @@ def header_and_navigation_row(
     " "
 
 
+def methods_icons_css(icon_url: str, button_key: Literal["google_btn", "email_btn"]):
+    size = "24px"
+    left_padding = "15px"
+    if button_key == "email_btn":
+        size = "28px"
+        left_padding = "13px"
+
+    st.html(f"""
+        <style>
+        div.st-key-{button_key} button {{
+            padding-top: 8px !important;
+            padding-bottom: 8px !important;
+            transition: background-color 0.1s;
+        }}
+
+        div.st-key-{button_key} button p {{
+            font-size: 16px !important;
+            font-weight: 600 !important;
+        }}
+
+        div.st-key-{button_key} button::before {{
+            content: "";
+            position: absolute;
+            left: {left_padding};
+            top: 50%;
+            transform: translateY(-50%);
+            width: {size};
+            height: {size};
+            background-image: url('{icon_url}');
+            background-repeat: no-repeat;
+            background-size: contain;
+            
+        }}
+        </style>
+        """)
+
+
 def get_max_allowed_step() -> str:
     """Calculates the furthest step the user is allowed to access."""
     if st.session_state.get("signup_user_uid"):
         return STEP_SUCCESS
     if st.session_state.get("signup_username") and st.session_state.get(
-        "email_verified"
+        "signup_email_verified"
     ):
         return STEP_INFO
-    if st.session_state.get("email_verified"):
+    if st.session_state.get("signup_email_verified"):
         return STEP_USERNAME
     if st.session_state.get("signup_email"):
         return STEP_VERIFY
@@ -237,32 +274,58 @@ st.markdown(
 
 def choose_method():
 
-    st.title("Welcome to LearnPeak 👋", text_alignment="center", anchor=False)
+    st.title("👋 Welcome to LearnPeak", anchor=False)
 
     subtitle_markdown(
-        "Ready for your personal study space? Let’s get you set up in under a minute!"
+        "&emsp;Ready for your personal study space? Let's get you set up in under a minute!",
+        align="left",
     )
 
     " "
+    " "
 
-    _, col2, _ = st.columns([1, 4, 1])
+    email_key = "email_btn"
+    google_key = "google_btn"
 
-    with col2:
-        if st.button(
-            "Continue with Email", key="email_btn", icon="✉️", use_container_width=True
-        ):
-            navigate_to(STEP_EMAIL)
+    methods_icons_css(
+        icon_url=(
+            "data:image/svg+xml;base64,"
+            "PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciICB2aWV3Qm94PSIwIDAgNDg"
+            "gNDgiIHdpZHRoPSI0OHB4IiBoZWlnaHQ9IjQ4cHgiPjxwYXRoIGZpbGw9IiMxZTg4ZTUiIGQ9Ik"
+            "0zNCw0MkgxNGMtNC40MTEsMC04LTMuNTg5LTgtOFYxNGMwLTQuNDExLDMuNTg5LTgsOC04aDIwY"
+            "zQuNDExLDAsOCwzLjU4OSw4LDh2MjAgQzQyLDM4LjQxMSwzOC40MTEsNDIsMzQsNDJ6Ii8+PHBh"
+            "dGggZmlsbD0iI2ZmZiIgZD0iTTM1LjkyNiwxNy40ODhMMjkuNDE0LDI0bDYuNTExLDYuNTExQzM"
+            "1Ljk2OSwzMC4zNDcsMzYsMzAuMTc4LDM2LDMwVjE4IEMzNiwxNy44MjIsMzUuOTY5LDE3LjY1My"
+            "wzNS45MjYsMTcuNDg4eiBNMjYuNjg4LDIzLjg5OWw3LjgyNC03LjgyNUMzNC4zNDcsMTYuMDMxL"
+            "DM0LjE3OCwxNiwzNCwxNkgxNCBjLTAuMTc4LDAtMC4zNDcsMC4wMzEtMC41MTIsMC4wNzRsNy44"
+            "MjQsNy44MjVDMjIuNzk1LDI1LjM4LDI1LjIwNSwyNS4zOCwyNi42ODgsMjMuODk5eiBNMjQsMjc"
+            "uMDA5IGMtMS40NCwwLTIuODczLTAuNTQyLTMuOTktMS42MDVsLTYuNTIyLDYuNTIyQzEzLjY1My"
+            "wzMS45NjksMTMuODIyLDMyLDE0LDMyaDIwYzAuMTc4LDAsMC4zNDctMC4wMzEsMC41MTItMC4wN"
+            "zRsLTYuNTIyLTYuNTIyIEMyNi44NzMsMjYuNDY3LDI1LjQ0LDI3LjAwOSwyNCwyNy4wMDl6IE0x"
+            "Mi4wNzQsMTcuNDg4QzEyLjAzMSwxNy42NTMsMTIsMTcuODIyLDEyLDE4djEyYzAsMC4xNzgsMC4"
+            "wMzEsMC4zNDcsMC4wNzQsMC41MTIgTDE4LjU4NiwyNEwxMi4wNzQsMTcuNDg4eiIvPjwvc3ZnPg"
+            "=="
+        ),
+        button_key=email_key,
+    )
+    methods_icons_css(
+        icon_url="https://fonts.gstatic.com/s/i/productlogos/googleg/v6/24px.svg",
+        button_key=google_key,
+    )
 
-        if st.button(
-            "Continue with Google", key="google_btn", use_container_width=True
-        ):
-            start = time.time()
-            cookies["google_auth_clicked_at"] = datetime.now().isoformat()
-            cookies.save()
-            print(f"COOKIES: {time.time() - start}")
-            time.sleep(0.15)
+    if st.button(
+        "Continue with Email",
+        key=email_key,
+        use_container_width=True,
+    ):
+        navigate_to(STEP_EMAIL)
 
-            st.login()
+    if st.button("Continue with Google", key=google_key, use_container_width=True):
+        cookies["google_auth_clicked_at"] = datetime.now().isoformat()
+        cookies.save()
+        time.sleep(0.15)
+
+        st.login()
 
     " "
 
@@ -311,7 +374,7 @@ def enter_email():
             return
 
         # Send verification code
-        with error_ph.spinner("Sending Code..."):
+        with error_ph.spinner("Sending code..."):
             signup.send_otp(email)
 
         st.session_state["last_resend_time"] = time.time()
@@ -340,7 +403,7 @@ def verify_email():
 
     with st.form("email_verification_form", border=False):
 
-        code = st.text_input(
+        otp = st.text_input(
             "Verification code",
             placeholder="Enter the 6-digit code",
             label_visibility="collapsed",
@@ -357,19 +420,19 @@ def verify_email():
         )
 
     if submitted:
-        code = code.strip()
+        otp = otp.strip()
 
-        if not code:
+        if not otp:
             error_ph.error("❌ Verification code required")
             return
 
-        validation = signup.validate_otp(email, code)
+        validation = signup.validate_otp(email, otp)
 
         if validation is not True:
             error_ph.error(f"❌ {validation}")
             return
 
-        st.session_state["email_verified"] = True
+        st.session_state["signup_email_verified"] = True
         navigate_to(STEP_USERNAME)
 
     # ---------------------------------------------------------
@@ -400,7 +463,7 @@ def verify_email():
 
 
 def enter_username(
-    from_google: bool = st.session_state.get("google_username_input", False)
+    from_google: bool = st.session_state.get("username_from_google", False)
 ):
 
     header_and_navigation_row(
@@ -468,23 +531,6 @@ def enter_user_info():
         "Enter some basic information to personalize your LearnPeak experience.",
     )
 
-    grade_mapping = {
-        "🎨 KG 1": "kg1",
-        "🎨 KG 2": "kg2",
-        "🎒 Primary 1": "prim1",
-        "🎒 Primary 2": "prim2",
-        "🎒 Primary 3": "prim3",
-        "🎒 Primary 4": "prim4",
-        "🎒 Primary 5": "prim5",
-        "🎒 Primary 6": "prim6",
-        "📓 Preparatory 1": "prep1",
-        "📓 Preparatory 2": "prep2",
-        "📓 Preparatory 3": "prep3",
-        "🔬 Secondary 1": "sec1",
-        "🔬 Secondary 2": "sec2",
-        "🔬 Secondary 3": "sec3",
-    }
-
     with st.form("signup_user_info_form", border=False):
 
         full_name = st.text_input(
@@ -496,19 +542,18 @@ def enter_user_info():
 
         country = st.selectbox(
             "🌍 Country",
-            options=["Egypt"],
-            placeholder="Enter your country",
+            options=list(COUNTRIES.keys()),
+            placeholder="Choose your country",
         )
 
         education = st.selectbox(
-            "🎓 Education",
-            options=["National"],
-            placeholder="Enter your school / educational system",
+            "🎓 Education System",
+            options=list(EDUCATION.keys()),
+            placeholder="Choose your educational system",
         )
 
-        grade_display = st.selectbox(
-            "Grade",
-            list(grade_mapping.keys()),
+        grade = st.selectbox(
+            "Grade", options=list(GRADES.keys()), placeholder="Choose your grade"
         )
         " "
         error_ph = st.empty()
@@ -531,25 +576,32 @@ def enter_user_info():
             return
 
         if not education.strip():
-            error_ph.error("Education required")
+            error_ph.error("Education system required")
             return
 
-        grade = grade_mapping[grade_display]
+        if not grade.strip():
+            error_ph.error("Grade required")
+            return
+
+        country = COUNTRIES[country]
+        education = EDUCATION[education]
+        grade = GRADES[grade]
 
         email = st.session_state["signup_email"]
         username = st.session_state["signup_username"]
 
         try:
-            user_uid = signup.register_email_account(
+            user_info = signup.register_email_account(
                 email=email,
                 username=username,
                 full_name=full_name.strip(),
-                country=country.lower(),
-                education=education.lower(),
+                country=country,
+                education=education,
                 grade=grade,
             )
 
-            st.session_state["signup_user_uid"] = user_uid
+            st.session_state["signup_user_info"] = user_info
+            st.session_state["signup_user_uid"] = user_info["user_uid"]
 
         except Exception as e:
             error_ph.error("Something went wrong while creating your account.")
@@ -566,34 +618,26 @@ def enter_user_info():
 
 
 def signup_success():
+    st.title("Account created! 🎉", text_alignment="center")
+    subtitle_markdown(
+        "Your account has been created successfully.\nThank you for joining 💙."
+    )
+    st.balloons()
+
+    st.session_state["user"] = st.session_state["signup_user_info"]
+
     # Save cookies
     auth_cookie_name = st.secrets["cookies"]["AUTH_NAME"]
     user_uid_cookie_name = st.secrets["cookies"]["USER_UID_NAME"]
 
     cookies[auth_cookie_name] = str(uuid.uuid4())
-    print(f"USER UID: {st.session_state["signup_user_uid"]}")
     cookies[user_uid_cookie_name] = st.session_state["signup_user_uid"]
     cookies.save()
 
-    st.title("Account created! 🎉", text_alignment="center")
-    st.markdown(
-        """
-        <h6 style='color: #00A86B; text-align: center;'>
-            Welcome to LearnPeak. Your account has been created successfully.
-        </h6>
-        """,
-        unsafe_allow_html=True,
-    )
-    st.balloons()
-    " "
+    time.sleep(1)
 
-    if st.button(
-        "Go to home page",
-        type="primary",
-        icon="🏠",
-        use_container_width=True,
-    ):
-        st.switch_page("pages/home.py")
+    # Log out and auto redirect to home page
+    st.logout()
 
 
 # ---------------------------------------------------------

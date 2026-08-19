@@ -1,21 +1,27 @@
-from typing import Literal, List, Dict, Optional
+import base64
+from datetime import datetime
+from io import BytesIO
+import json
+import re
+import os
+import time
+from typing import Literal, Optional
+import uuid
+
+import pymupdf
 from google import genai
 from google.genai import types
-import json
-import uuid
-import re
-from datetime import datetime
-import base64
 from mistralai.client import Mistral
 from qdrant_client.models import (
-    Filter,
-    PointStruct,
     FieldCondition,
+    Filter,
     MatchValue,
-    MatchAny,
+    PointStruct,
 )
+
 from services.rag.embedding_service import EmbeddingService
 from services.rag.qdrant_service import QdrantService
+
 
 
 class RagService:
@@ -162,8 +168,7 @@ class RagService:
 
         # Collect the unique page/lesson combinations
         combinations = {
-            tuple(payload[key] for key in metadata_keys)
-            for payload in chunks_payloads
+            tuple(payload[key] for key in metadata_keys) for payload in chunks_payloads
         }
 
         # Build one filter for each page/lesson
@@ -244,10 +249,10 @@ class RagService:
         )
 
         for model in [
+            "gemini-3.5-flash-lite",
             "gemini-3.1-flash-lite",
-            "gemini-2.5-flash-lite",
-            "gemini-3.1-flash",
-            "gemini-2.5-flash",
+            "gemini-3.7-flash",
+            "gemini-3.6-flash",
         ]:
             try:
                 response = self.gemini_client.models.generate_content(
@@ -282,10 +287,10 @@ class RagService:
         )
 
         for model in [
+            "gemini-3.5-flash-lite",
             "gemini-3.1-flash-lite",
-            "gemini-2.5-flash-lite",
-            "gemini-3.1-flash",
-            "gemini-2.5-flash",
+            "gemini-3.7-flash",
+            "gemini-3.6-flash",
         ]:
             try:
                 stream = self.gemini_client.models.generate_content_stream(
@@ -399,20 +404,311 @@ class AddSource:
     ):
         self.rag_service = rag_service
         self.mistral_client: Mistral = Mistral(api_key=mistral_api_key)
+        self.gemini_client = rag_service.gemini_client
 
-    def ocr_pdf(self, pdf_bytes: bytes) -> list[dict]:
+    def prepare_pdf(self, pdf_bytes: bytes):
+        """ """
+
+        # Upload the PDF using the Files API
+        def upload_pdf():
+            if len(pdf_bytes) >= 15 * 1024 * 1024:
+                return self.gemini_client.files.upload(
+                    file=BytesIO(pdf_bytes),
+                    config=types.UploadFileConfig(
+                        mime_type="application/pdf", display_name="Book PDF"
+                    ),
+                )
+            else:
+                return types.Part.from_bytes(
+                    data=pdf_bytes,
+                    mime_type="application/pdf"
+                )
+
+        start = time.perf_counter()
+        book_pdf = upload_pdf()
+        print(f"PREPARE PDF — UPLOAD: {time.perf_counter() - start:.2f}s")
+
+        # Create the system instructions
+        system_instructions = """
+You are an AI system responsible for analyzing an educational textbook PDF and extracting its structural information for an automated educational-content ingestion pipeline.
+Your task is to analyze the provided PDF and return ONLY the required JSON object.
+
+---
+
+## 1. Identify the Main Book
+
+The provided PDF may contain multiple books merged into a single PDF. For example, it may contain:
+
+- The Main Book / primary textbook
+- Notes Book
+- Guide / Answer Book
+- Revision Book
+- Other supplementary material
+
+Your task is to analyze ONLY the Main Book: the primary textbook containing the explanations and lessons intended to be learned.
+First determine the boundaries of the Main Book within the PDF. Completely ignore all other books and supplementary material.
+Do not assume that the Main Book is necessarily the first book in the PDF. Identify it from its title, structure, headers, footers, content, and other contextual clues.
+
+---
+
+## 2. Understand Digital and Actual Page Numbers
+
+There are two different page-number systems:
+
+- Digital page number: the page's position/number within the PDF.
+- Actual page number: the page number printed on the physical textbook page, usually visible in the footer.
+
+All `start_page` and `end_page` values in the output MUST use digital page numbering, never the printed actual page numbering.
+
+---
+
+## 3. Determine The Pages Offset
+
+Determine the constant offset between these two numbering systems within the Main Book.
+
+To determine the offset, inspect a suitable page of the Main Book that is NOT near the beginning of the book. Identify:
+
+1. Its digital/PDF page number.
+2. Its printed actual page number from the textbook.
+3. Calculate:
+
+actual page number - digital page number = offset
+
+For example, if digital page 10 corresponds to printed page 14:
+14 - 10 = 4
+
+Therefore:
+`"digital_to_actual_pages_offset": 4`
+
+The offset is constant throughout the Main Book.
+The offset MUST be returned as an integer, such as 4, 0, or -2.
+Do not attempt to return separate offsets for different sections.
+
+---
+
+## 4. Identify Explanation Page Ranges
+
+Identify all ranges of digital pages within the Main Book that contain educational explanation/content that should be included in the learning platform.
+
+An explanation page may contain:
+
+- Explanations of concepts
+- Definitions
+- Examples
+- Worked examples
+- Educational diagrams or figures
+- Explanatory tables
+- Normal lesson content
+- "Test Your Knowledge" sections or questions embedded WITHIN an explanation
+- Q&A questions embedded WITHIN normal explanatory content
+
+IMPORTANT: A page must NOT be excluded merely because it contains questions.
+Exclude a page as non-explanation content ONLY when the page consists entirely, or essentially entirely, of questions, exercises, tests, homework, or similar assessment/practice material.
+
+For example:
+- A lesson explanation containing a small "Test Your Knowledge" section → INCLUDE the page.
+- A lesson explanation containing some questions alongside explanatory content → INCLUDE the page.
+- A page consisting entirely of exercises/questions → EXCLUDE the page.
+
+An entirely-question-based page may occur in the middle of a lesson's explanation pages.
+
+For example, if the same lesson has:
+- explanation pages 10-15
+- an all-question page 16
+- explanation pages 17-22
+
+you MUST return two separate ranges: 10-15 and 17-22.
+Do NOT merge them into 10-22.
+Also exclude other clearly non-explanatory material such as introductions, tables of contents,
+indexes, advertisements, acknowledgements, publisher information, answer keys, revision-only material,
+and other supplementary sections when they are not part of the Main Book's actual lesson explanations.
+
+---
+
+## 5. Determine Unit and Lesson Metadata
+
+For every explanation-page range, determine:
+- Unit number
+- Unit name
+- Lesson number
+- Lesson name
+
+The unit and lesson information should primarily be determined from the headers and/or footers of the Main Book pages, where this information is provided.
+Preserve the names as they appear in the textbook.
+Use surrounding pages when necessary to correctly determine which unit and lesson a range belongs to.
+The metadata applies to every page within its corresponding explanation range.
+If an all-question page splits a lesson into multiple explanation ranges, the ranges on both sides should retain the same lesson metadata when they belong to the same lesson.
+
+---
+
+## 6. Page Ranges
+
+All ranges MUST be expressed using digital/PDF page numbers.
+`start_page` is the first digital page included in the explanation range.
+`end_page` is the last digital page included in the explanation range.
+Do not use printed page numbers for these fields.
+Return ranges in ascending digital-page order.
+Do not overlap ranges.
+Do not include pages outside the Main Book.
+
+---
+
+## 7. Required Output
+
+Return ONLY valid JSON matching exactly the structure in this example:
+
+{
+  "digital_to_actual_pages_offset": 4,
+  "explanation_pages_ranges": [
+    {
+      "start_page": 5,
+      "end_page": 12,
+      "unit_name": "Thermal Energy",
+      "unit_num": 1,
+      "lesson_name": "Thermal and Chemical Changes",
+      "lesson_num": 2
+    }
+  ]
+}
+
+The top-level object MUST contain exactly these two keys:
+
+- `digital_to_actual_pages_offset`
+- `explanation_pages_ranges`
+
+Each item in `explanation_pages_ranges` MUST contain exactly these six keys:
+
+- `start_page`
+- `end_page`
+- `unit_name`
+- `unit_num`
+- `lesson_name`
+- `lesson_num`
+
+Data types MUST be:
+
+- `digital_to_actual_pages_offset`: integer
+- `start_page`: integer
+- `end_page`: integer
+- `unit_name`: string
+- `unit_num`: integer
+- `lesson_name`: string
+- `lesson_num`: integer
+
+Do not wrap the JSON in Markdown code fences.
+Do not include any additional keys.
+Do not include any explanation before or after the JSON.
+"""
+
+        # Send the request to the Gemini API
+        start = time.perf_counter()
+        for model in [
+            "gemini-3.7-flash",
+            "gemini-3.6-flash",
+            "gemini-3.5-flash-lite",
+            "gemini-3.1-flash-lite",
+        ]:
+            try:
+                response = self.gemini_client.models.generate_content(
+                    model=model,
+                    contents=[book_pdf],
+                    config=types.GenerateContentConfig(
+                        system_instruction=system_instructions,
+                        temperature=0.3,
+                        response_mime_type="application/json",
+                        thinking_config=types.ThinkingConfig(
+                            thinking_level="low",
+                            include_thoughts=False,
+                        ),
+                    ),
+                )
+                break
+            except Exception as e:
+                print(e)
+                continue
+
+        json_response = json.loads(response.text)
+        print(f"PREPARE PDF — GEMINI REQUEST: {time.perf_counter() - start:.2f}s")
+
+        # Prepare explanation-only PDF
+        offset: int = json_response["digital_to_actual_pages_offset"]
+        explanation_ranges: list = json_response["explanation_pages_ranges"]
+
+        # Open the original PDF from its bytes
+        source_pdf = pymupdf.open(stream=pdf_bytes, filetype="pdf")
+
+        # Create the new explanation-only PDF, map its pages to the actual pages,
+        # and create the metadata mapping dict by page
+        prepared_pdf = pymupdf.open()
+        digital_to_actual_mapping = {}
+        pages_metadata = {}
+
+        new_digital_page = 1
+
+        for page_range in explanation_ranges:
+            start_page = page_range["start_page"]
+            end_page = page_range["end_page"]
+
+            # Validate the range
+            if start_page < 1 or end_page > len(source_pdf) or start_page > end_page:
+                raise ValueError(
+                    f"Invalid page range returned by Gemini: {start_page}-{end_page}. "
+                    f"The PDF contains {len(source_pdf)} pages."
+                )
+
+            # Copy the entire range at once.
+            # Gemini uses 1-based digital pages, while PyMuPDF uses 0-based indexes.
+            prepared_pdf.insert_pdf(
+                source_pdf,
+                from_page=start_page - 1,
+                to_page=end_page - 1,
+            )
+
+            # Map each new digital page to its actual page number + its metadata.
+            for original_digital_page in range(start_page, end_page + 1):
+                actual_page = original_digital_page + offset
+
+                digital_to_actual_mapping[new_digital_page] = actual_page
+
+                pages_metadata[actual_page] = {
+                    "unit_name": page_range["unit_name"],
+                    "unit_num": page_range["unit_num"],
+                    "lesson_name": page_range["lesson_name"],
+                    "lesson_num": page_range["lesson_num"],
+                }
+
+                new_digital_page += 1
+
+        # Convert the prepared PDF back to bytes.
+        explanations_pdf_bytes = prepared_pdf.tobytes()
+        debug_pdf_path = "debug/prepared/explanations_only.pdf"
+
+        os.makedirs(os.path.dirname(debug_pdf_path), exist_ok=True)
+
+        with open(debug_pdf_path, "wb") as f:
+            f.write(explanations_pdf_bytes)
+
+        # Close the PDF documents.
+        prepared_pdf.close()
+        source_pdf.close()
+
+        return explanations_pdf_bytes, digital_to_actual_mapping, pages_metadata
+
+    def ocr_pdf(self, pdf_bytes: bytes, pages_mapping: dict) -> list[dict]:
         """
         Perform OCR on a PDF document using Mistral OCR and extract the text of each page.
 
         The PDF is sent to the Mistral OCR API directly from its bytes. For each page,
-        the function extracts the page's Markdown content and footer, determines the
-        real page number from the footer, and returns a list containing the page number
-        and its corresponding OCR text.
+        the function extracts the page's Markdown content and footer, maps its digital
+        page number to its actual page number from the footer, and returns a list containing
+        the actual page number and its corresponding OCR text.
 
         Parameters
         ----------
         pdf_bytes : bytes
             The raw bytes of the PDF document to process.
+        pages_mapping : dict
+            The dictionary mapping the digital page number to the actual page number.
 
         Returns
         -------
@@ -466,7 +762,7 @@ class AddSource:
         response = self.mistral_client.ocr.process(
             model="mistral-ocr-latest",
             document={"type": "document_url", "document_url": pdf_data_url},
-            extract_footer=True,
+            # extract_footer=True,
         )
 
         # Save the respoonse for debugging and reuse
@@ -483,9 +779,10 @@ class AddSource:
         results = []
         for page in response.pages:
             extracted_text = page.markdown
-            footer_text = page.footer
+            # footer_text = page.footer
 
-            page_num = extract_page_number(footer_text)
+            # page_num = extract_page_number(footer_text)
+            page_num = pages_mapping[page.index + 1]
 
             results.append(
                 {
@@ -499,9 +796,9 @@ class AddSource:
     def attach_metadata(
         self,
         ocr_result: list[dict],
+        unit_lesson_metadata: dict,
         grade: str,
         subject: str,
-        unit_lesson_input: str,
         book_publisher: str = "el-moasser",
         country: str = "egypt",
         education: str = "national",
@@ -531,35 +828,9 @@ class AddSource:
         if not term:
             term = self.current_term()
 
-        # Map each page number to its metadata
-        page_map = {}
-
-        for line in unit_lesson_input.splitlines():
-            if not line.strip():
-                continue
-
-            page_range, metadata = line.split(":", maxsplit=1)
-
-            start_page, end_page = map(int, page_range.split("-"))
-
-            unit_num, unit_name, lesson_num, lesson_name = [
-                part.strip() for part in metadata.split(",", maxsplit=3)
-            ]
-
-            unit_num = int(unit_num.removeprefix("U"))
-            lesson_num = int(lesson_num.removeprefix("L"))
-
-            for page in range(start_page, end_page + 1):
-                page_map[page] = {
-                    "unit_num": unit_num,
-                    "unit_name": unit_name,
-                    "lesson_num": lesson_num,
-                    "lesson_name": lesson_name,
-                }
-
         # Attach metadata to each OCR page
         for page_data in ocr_result:
-            unit_lesson_metadata = page_map.get(page_data["page_num"])
+            current_metadata = unit_lesson_metadata.get(page_data["page_num"])
 
             page_data.update(
                 {
@@ -569,7 +840,7 @@ class AddSource:
                     "term": term,
                     "subject": subject,
                     "book_publisher": book_publisher,
-                    **unit_lesson_metadata,
+                    **current_metadata,
                 }
             )
 
@@ -685,7 +956,6 @@ class AddSource:
         pdf_bytes: bytes,
         grade: str,
         subject: str,
-        unit_lesson_input: str,
         book_publisher: str = "el-moasser",
     ):
         """
@@ -701,36 +971,62 @@ class AddSource:
         ----------
         pdf_bytes : bytes
             The raw bytes of the PDF document.
+        grade : str
+            The grade of the student.
         subject : str
             The subject of the book.
         book_publisher : str
             The publisher of the book.
-        unit_lesson_input : str
-            The page-to-unit/lesson mapping entered by the user.
 
         Returns
         -------
         None
         """
 
+        print("PREPARING PDF")
+        start = time.perf_counter()
+
+        explanations_pdf_bytes, digital_to_actual_mapping, pages_metadata = (
+            self.prepare_pdf(pdf_bytes)
+        )
+
+        print(f"PREPARING PDF FINISHED — {time.perf_counter() - start:.2f}s")
+
+
         print("STARTING OCR")
-        pages = self.ocr_pdf(pdf_bytes)
-        print("OCR FINISHED")
+        start = time.perf_counter()
+
+        pages = self.ocr_pdf(explanations_pdf_bytes, digital_to_actual_mapping)
+
+        print(f"OCR FINISHED — {time.perf_counter() - start:.2f}s")
+
+
+        start = time.perf_counter()
 
         pages = self.attach_metadata(
             pages,
+            unit_lesson_metadata=pages_metadata,
             grade=grade,
             subject=subject,
             book_publisher=book_publisher,
-            unit_lesson_input=unit_lesson_input,
             term=1,
         )
-        print("METADATA ATTACHED")
+
+        print(f"METADATA ATTACHED — {time.perf_counter() - start:.2f}s")
+
+
+        start = time.perf_counter()
 
         chunks = self.chunk_pages(pages)
-        print("CHUNKED")
+
+        print(f"CHUNKED — {time.perf_counter() - start:.2f}s")
+
+
+        start = time.perf_counter()
 
         self.insert_to_vector_db(chunks)
+
+        print(f"INSERTED TO VECTOR DB — {time.perf_counter() - start:.2f}s")
 
     @staticmethod
     def current_term():

@@ -1,19 +1,46 @@
 import streamlit as st
 import uuid
-from datetime import datetime
+import time
 import re
+from datetime import datetime
 from services.account.auth import Login
 
-st.write(st.user)
+# Set page config
+st.set_page_config(
+    page_title="LearnPeak | AI Tools Built for Your Curriculum",
+    page_icon="static/mountain_logo.png",
+    layout="centered",
+    initial_sidebar_state="auto",
+)
+
+st.markdown(
+    """
+    <meta
+        name="description"
+        content="AI-powered learning system built around your curriculum, with textbook chat, quizzes, AR, and science-backed study strategies like spaced repetition for lasting knowledge.">
+    """,
+    unsafe_allow_html=True,
+)
+
+# ---------------------------------------------------------
+# GOOGLE AUTH REDIRECT LOGIC
+# ---------------------------------------------------------
+
+# st.write(st.session_state.get("user"))
+# st.write(st.user.is_logged_in)
+
 
 def handle_google_auth_redirect():
     if (
-        st.user.is_logged_in
-        and not st.session_state.get("user")
-        and not st.session_state.get("take_signup_info")
-        and not st.session_state.get("redirected_to_signup", False)
+        not st.session_state.get("user")
+        and st.user.is_logged_in
+        and not st.session_state.get("take_signup_info", False)
     ):
-        login = Login(st.session_state["root_ref"])
+        login = Login(
+            st.session_state["root_ref"],
+            st.secrets["smtp"]["SENDER_EMAIL"],
+            st.secrets["smtp"]["SENDER_APP_PASSWORD"],
+        )
         cookies = st.session_state["cookies"]
 
         # Check auth state (if logged in)
@@ -27,11 +54,13 @@ def handle_google_auth_redirect():
 
             cookies[auth_cookie_name] = str(uuid.uuid4())
             cookies[user_uid_cookie_name] = user_uid
-            cookies.save()
+            cookies["google_auth_clicked_at"] = "no_redirect"
 
-            st.session_state["user"] = login.get_user_info(user_uid)
+            cookies.save()
+            time.sleep(0.2)
 
             st.logout()
+            st.stop()
 
         else:
             redirect_to_signup = True
@@ -40,137 +69,137 @@ def handle_google_auth_redirect():
             # So don't redirect to it anymore AND logout
             google_auth_clicked_at = cookies.get("google_auth_clicked_at")
             if google_auth_clicked_at:
-                print()
-                print(google_auth_clicked_at)
-                print()
-                time_difference = datetime.now() - datetime.fromisoformat(google_auth_clicked_at)
-                seconds_passed = time_difference.total_seconds()
-                print(seconds_passed)
-                if seconds_passed > 500:  # 5 minutes
+                if google_auth_clicked_at == "no_redirect":
                     redirect_to_signup = False
-                    
+
+                else:
+                    time_difference = datetime.now() - datetime.fromisoformat(
+                        google_auth_clicked_at
+                    )
+                    seconds_passed = time_difference.total_seconds()
+                    if seconds_passed > 500:  # 5 minutes
+                        redirect_to_signup = False
+
             if redirect_to_signup:
                 st.session_state["take_signup_info"] = True
+
+                cookies["google_auth_clicked_at"] = "no_redirect"
+                cookies.save()
+
                 signup_email = st.user.get("email")
                 st.session_state["signup_email"] = signup_email
                 st.session_state["email_verified"] = True
 
                 signup_username_placeholder = signup_email.split("@")[0]
-                signup_username_placeholder = re.sub(r'[^\w]', '', signup_username_placeholder)
-                st.session_state["signup_username_placeholder"] = signup_username_placeholder
+                signup_username_placeholder = re.sub(
+                    r"[^\w]", "", signup_username_placeholder
+                )
+                st.session_state["signup_username_placeholder"] = (
+                    signup_username_placeholder
+                )
 
                 st.session_state["signup_name_placeholder"] = st.user.get("name", "")
 
                 st.switch_page("pages/signup.py")
-            else:
-                st.logout()
+
 
 handle_google_auth_redirect()
 
-# Sidebar
-with st.sidebar:
-    if st.session_state.get("user"):
-        full_name: str = st.session_state["user"]["full_name"]
-        st.title(f"👋 Welcome back :blue[{full_name.split()[0]}]!")
-    else:
-        st.title("👋 Welcome to :red[Learn]:blue[Peak]!")
 
-    " "
-    st.write("🔎 AI-powered tools to boost your learning:")
-    st.write(
-        """- 🧠 Ask your Book  
-- 📚 Q.A Database  
-- 🪄 Learn with AR  
-- 📄 Quiz Generation"""
-    )
+# ---------------------------------------------------------
+# Home Page
+# ---------------------------------------------------------
 
-    st.image("static/logo.png")
-
-# Hero Section
+# --- 1. HERO SECTION ---
+st.title("⛰️ :red[Learn]:blue[Peak]", text_alignment="center", anchor=False)
 st.markdown(
     """
-    <h1 style='text-align: center;'>
-        🏔️ <span style='color:#ff4b4b;'>Learn</span><span style='color:#1f77b4;'>Peak</span>
-    </h1>
-    <h3 style='text-align: center; font-weight: normal;'>
-    Study smarter with AI that understands YOUR curriculum
-    </h3>
-    """,
-    unsafe_allow_html=True
-)
-
-" "
-
-col1, col2, col3 = st.columns([1,2,1])
-with col2:
-    if st.button("🚀 Start with Ask Your Book", use_container_width=True):
-        st.switch_page("pages/ask-book.py")
-
-" "
-
-# Value Points
-st.markdown(
-    """
-    <div style='text-align: center; font-size: 16px;'>
-    ✔ Answers based on your curriculum<br>
-    ✔ Instant question bank search<br>
-    ✔ Generate quizzes from any source<br>
-    ✔ Visualize lessons with AR
+    <div style='font-size: 1.4rem; font-weight: 500;'>
+        AI that understands your curriculum.
     </div>
     """,
-    unsafe_allow_html=True
+    unsafe_allow_html=True,
+    text_alignment="center",
+)
+st.space(20)
+
+# Centered Hero Button
+_, col2, _ = st.columns([0.1, 0.8, 0.1])
+with col2:
+    if st.button(
+        "🚀 Start with Ask Your Book", use_container_width=True, type="primary"
+    ):
+        st.switch_page("pages/ask-book.py")
+
+"---"
+
+# --- 2. WHAT IS LEARNPEAK? ---
+st.subheader("What is LearnPeak?")
+st.text(
+    "AI-powered learning system built around your curriculum, with textbook chat, quizzes, AR, and science-backed study strategies like spaced repetition for long-term memory."
+)
+"---"
+
+# --- 3. WHY LEARNPEAK? ---
+st.subheader("Why LearnPeak?")
+
+st.markdown(
+    "- 🎯 **Tailored to Your Textbooks:** LearnPeak syncs directly with your actual curriculum, "
+    "so you focus strictly on what’s on your exam—not generic learning content."
+)
+st.markdown(
+    "- 🧠 **Study with Strategy:** Master proven learning techniques and let LearnPeak "
+    "automatically structure your study sessions to put them into practice."
+)
+st.markdown(
+    "- ⚡ **Interactive & Active Learning:** Test your knowledge with instant AI-generated "
+    "quizzes and bring complex concepts to life with immersive AR."
 )
 
 "---"
 
-# Features
-st.subheader("✨ Explore Features")
-
-# Main Feature (highlighted)
-with st.container(border=True):
-    st.markdown("### 🧠 Ask Your Book (Core)")
-    st.write("Ask anything from your curriculum and get accurate, AI-powered answers instantly.")
-    st.write("Search thousands of questions from your textbooks instantly.")
-    if st.button("Start Asking", use_container_width=True):
-        st.switch_page("pages/ask-book.py")
-
-" "
-
-col1, col2 = st.columns(2)
-
-with col1.container(border=True, horizontal_alignment="center"):
-    st.markdown("#### 🪄 Learn with AR")
-    st.write("Visualize complex topics using interactive 3D models.")
-    if st.button("Open AR", use_container_width=True):
-        st.switch_page("pages/ar.py")
-
-with col2.container(border=True):
-    st.markdown("#### 📄 Quiz Generation")
-    st.write("Generate quizzes from videos, documents, websites, or your books.")
-    if st.button("Generate Quiz", use_container_width=True):
-        st.switch_page("pages/quizzes.py")
-
-" "
+# --- 4. FEATURES SECTION ---
+st.subheader("Features")
 
 col1, col2 = st.columns(2)
 
 with col1.container(border=True):
-    st.markdown("#### ✒️ Auto Mark Answers")
-    st.write("Get instant feedback by comparing your answers with model answers.")
+    st.markdown("### 📚 Ask Your Book", anchors=False)
+    st.write("Chat with your textbooks for instant, curriculum-based answers.")
 
-    st.button("Coming Soon", key="coming_soon_1", disabled=True, use_container_width=True)
+    " "
+    if st.button("Ask your book", use_container_width=True):
+        st.switch_page("pages/ask-book.py")
 
 with col2.container(border=True):
-    st.markdown("#### 🎧 Record & Recall")
-    st.write("Answer long questions by recording your voice.")
-    st.button("Coming Soon", key="coming_soon_2", disabled=True, use_container_width=True)
+    st.markdown("### 📝 Quiz Generation", anchors=False)
+    st.write("Turn lessons into custom practice quizzes in seconds.")
+
+    " "
+    if st.button("Generate Quiz", use_container_width=True):
+        st.switch_page("quizzes.py")
 
 " "
+col1, col2 = st.columns(2)
 
-# Footer #
+with col1.container(border=True):
+    st.markdown("### 🥽 Learn with AR", anchors=False)
+    st.write("Explore complex topics using interactive 3D models.")
+
+    " "
+    if st.button("Launch AR", key="btn_ar", use_container_width=True):
+        st.switch_page("pages/ar.py")
+
 "---"
-st.markdown("### :red[Learn]:blue[Peak]", text_alignment="center")
+
+# --- 5. FOOTER ---
+st.markdown("### :red[Learn]:blue[Peak]", text_alignment="center", anchors=False)
 st.markdown(
-    "AI tools designed to transform how students interact with their curriculum.",
+    """
+    <div style='font-size: 1rem; font-weight: 500;'>
+        Master your curriculum with AI-powered study tools built directly around your textbooks.
+    </div>
+    """,
+    unsafe_allow_html=True,
     text_alignment="center",
 )

@@ -7,6 +7,13 @@ import time
 import uuid
 from datetime import datetime
 
+# Set page config
+st.set_page_config(
+    page_title="Learn with AR - LearnPeak",
+    page_icon="static/mountain_logo.png",
+    layout="centered",
+    initial_sidebar_state="auto",
+)
 
 # Initializing DB Refrences
 root_ref: Reference = st.session_state["root_ref"]
@@ -138,7 +145,7 @@ def delete_ar_experience(user_uid: str, model_id: str):
 
 
 if not st.session_state.get("generated_ar"):
-    st.title("🔖 Learn with AR", anchor=False)
+    st.title("🥽 Learn with AR", anchor=False)
     "---"
 
     with st.form("learn_with_ar", border=False):

@@ -3,8 +3,15 @@ import streamlit.components.v1 as components
 import re
 from streamlit_shortcuts import shortcut_button
 from services.rag.chat_service import ChatService
-from streamlit_js_eval import streamlit_js_eval
-from user_agents import parse
+from config import GRADES, SUBJECTS
+
+# Set page config
+st.set_page_config(
+    page_title="Ask Your Book - LearnPeak",
+    page_icon="static/mountain_logo.png",
+    layout="centered",
+    initial_sidebar_state="auto",
+)
 
 
 # Defining Functions
@@ -181,38 +188,6 @@ with st.sidebar:
         else:
             st.info("No chats found. Create your first one!")
 
-# The UI names to DB format for subjects
-# Rule to convert to DB format: Remove emojis, strip and lower, recplace spaces with _
-subjects = {
-    "📖 English": "english",
-    "🔢 Math": "math",
-    "🔬 Science": "science",
-    "📚 Arabic": "arabic",
-    "🌍 Social Studies": "social_studies",
-    "🕌 Islamic Religion": "islamic_religion",
-    "🇩🇪 German": "german",
-    "💻 ICT": "ict",
-}
-
-# A dict mapping UI grade names to DB format
-grades = {
-    "🎨 kG 1": "kg1",
-    "🎨 KG 2": "kg2",
-    "🎒 Primary 1": "prim1",
-    "🎒 Primary 2": "prim2",
-    "🎒 Primary 3": "prim3",
-    "🎒 Primary 4": "prim4",
-    "🎒 Primary 5": "prim5",
-    "🎒 Primary 6": "prim6",
-    "📓 Preparatory 1": "prep1",
-    "📓 Preparatory 2": "prep2",
-    "📓 Preparatory 3": "prep3",
-    "🔬 Secondary 1": "sec1",
-    "🔬 Secondary 2": "sec2",
-    "🔬 Secondary 3": "sec3",
-}
-
-
 # Determine the page to show (menu, chat)
 page = st.session_state.get("rag_page", "menu")
 
@@ -277,18 +252,18 @@ if page == "menu":
 
     if st.session_state.get("user"):
         " "
-        user_grade_long = get_key_by_value(grades, st.session_state["user"]["grade"])
+        user_grade_long = get_key_by_value(GRADES, st.session_state["user"]["grade"])
 
         st.subheader(user_grade_long, anchor=False)
 
         # Display subjects for user's grade
-        subjects_list = list(subjects.keys())
+        subjects_list = list(SUBJECTS.keys())
         for i in range(0, len(subjects_list), 2):
             col1, col2 = st.columns(2)
 
             # First item in row
             subject = subjects_list[i]
-            subj_code = subjects[subject]
+            subj_code = SUBJECTS[subject]
             btn_key = f"subject_{subj_code}"
 
             with col1:
@@ -303,7 +278,7 @@ if page == "menu":
             # Second item in row (if exists)
             if i + 1 < len(subjects_list):
                 subject = subjects_list[i + 1]
-                subj_code = subjects[subject]
+                subj_code = SUBJECTS[subject]
                 btn_key = f"subject_{subj_code}"
 
                 with col2:
@@ -316,6 +291,7 @@ if page == "menu":
                         st.rerun()
 
     else:
+        st.space()
         st.info("Sign in to see subjects for your grade in the menu page")
         col1, col2 = st.columns(2)
         with col1:
@@ -432,14 +408,14 @@ elif page == "chat":
             with st.popover("", icon="➕", help="Apply filters to get better results"):
                 menu_choice = st.session_state.get("menu_choice", "all_grades")
 
-                grade_options = ["♾️ All", *list(grades.keys())]
+                grade_options = ["♾️ All", *list(GRADES.keys())]
                 grade_index = 0
-                subject_options = ["♾️ All", *list(subjects.keys())]
+                subject_options = ["♾️ All", *list(SUBJECTS.keys())]
                 subject_index = 0
 
                 if menu_choice != "all_grades":
                     selected_subject = menu_choice
-                    subjects_codes = list(subjects.values())
+                    subjects_codes = list(SUBJECTS.values())
                     try:
                         subject_index = subjects_codes.index(selected_subject) + 1
                     except Exception:
@@ -449,7 +425,7 @@ elif page == "chat":
                         try:
                             grade_index = grade_options.index(
                                 get_key_by_value(
-                                    grades, st.session_state["user"]["grade"]
+                                    GRADES, st.session_state["user"]["grade"]
                                 )
                             )
                         except Exception:
@@ -460,7 +436,7 @@ elif page == "chat":
                         try:
                             grade_index = grade_options.index(
                                 get_key_by_value(
-                                    grades, st.session_state["user"]["grade"]
+                                    GRADES, st.session_state["user"]["grade"]
                                 )
                             )
                         except Exception:
@@ -512,7 +488,7 @@ elif page == "chat":
                 if key in ["unit_num", "lesson_num"]:
                     value = int(value)
                 elif key == "grade":
-                    value = grades[value]
+                    value = GRADES[value]
 
                 filters.append(
                     FieldCondition(

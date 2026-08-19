@@ -6,6 +6,13 @@ import time
 import uuid
 from datetime import datetime
 
+# Set page config
+st.set_page_config(
+    page_title="Quiz Generation - LearnPeak",
+    page_icon="static/mountain_logo.png",
+    layout="centered",
+    initial_sidebar_state="auto",
+)
 
 # Initializing DB Refrences
 root_ref: Reference = st.session_state["root_ref"]
@@ -314,7 +321,7 @@ if not st.session_state.get("quiz_started"):
                 youtube_videos_urls=youtube_videos_urls,
                 files=[{"bytes": file.getvalue(), "name": file.name} for file in files],
                 web_urls=web_urls,
-                custom_instructions=custom_inst
+                custom_instructions=custom_inst,
             )
 
         st.session_state["quiz_info"] = quiz_info

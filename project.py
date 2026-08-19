@@ -4,12 +4,6 @@ from google import genai
 import firebase_admin
 from firebase_admin import credentials, db
 
-st.set_page_config(
-    "LearnPeak",
-    page_icon="static/mountain_logo.png",
-    layout="centered",
-    initial_sidebar_state="auto",
-)
 
 def load_app():
     # --- Setting up Firebase RTDB ---
@@ -52,7 +46,8 @@ def load_app():
     ):
         user_uid = cookies.get(st.secrets["cookies"]["USER_UID_NAME"])
         user_info = root_ref.child(f"users/{user_uid}/info").get()
-        st.session_state["user"] = {**user_info, "uid": user_uid}
+        if user_info:
+            st.session_state["user"] = {**user_info, "uid": user_uid}
 
     # --- Defining the app's pages with st.Page ---
     # Home
@@ -62,19 +57,20 @@ def load_app():
     signin = st.Page("pages/signin.py", title="Sign In", icon="🔐")
     signup = st.Page("pages/signup.py", title="Create Account", icon="🚀")
 
-    profile = st.Page("pages/profile.py", title="Profile", icon="🧑")
-
     # Tools
     ask_book = st.Page("pages/ask-book.py", title="Ask your book", icon="🧠")
-    ar = st.Page("pages/ar.py", title="Learn with AR", icon="🪄")
+    ar = st.Page("pages/ar.py", title="Learn with AR", icon="🥽")
     quizzes = st.Page("pages/quizzes.py", title="Quiz Generation", icon="📝")
+
+    # Settings
+    settings = st.Page("pages/settings.py", title="Settings", icon="⚙️")
 
     # --- Running the pages ---
     if st.session_state.get("user"):
         pages = {
-            "": [home],
-            "👤 Account": [profile],
+            "": [home, settings],
             "✨ Features": [ask_book, ar, quizzes],
+
         }
     else:
         pages = {
@@ -114,6 +110,19 @@ else:
     # Run time-consuming code after app load
     from streamlit_js_eval import streamlit_js_eval
     from user_agents import parse
+
+    # CSS to hide the blank space
+    st.markdown(
+        """
+        <style>
+        div[class*="st-key-user_agent"],
+        div[class*="st-key-inner_width"] {
+            display: none !important;
+        }
+        </style>
+        """,
+        unsafe_allow_html=True,
+    )
 
     if "user_device_type" not in st.session_state:
         user_agent = streamlit_js_eval(
