@@ -19,6 +19,8 @@ def get_key_by_value(d: dict, value):
     return next((k for k, v in d.items() if v == value), None)
 
 
+user: dict = st.session_state.get("user", {})
+
 # Loading the RAG system
 st.sidebar.title("🧠 LearnPeak :blue[RAG] System")
 with st.spinner("Loading LearnPeak RAG System...", show_time=True):
@@ -47,10 +49,11 @@ with st.spinner("Loading LearnPeak RAG System...", show_time=True):
         qdrant_service.ensure_collection_exists()
 
         for payload_key in [
+            "id",
+            "batch_id",
             "country",
             "education",
             "book_publisher",
-            "id",
             "grade",
             "subject",
         ]:
@@ -64,12 +67,14 @@ with st.spinner("Loading LearnPeak RAG System...", show_time=True):
             qdrant_service.create_payload_index(
                 qdrant_service.collection_name,
                 payload_key,
-                PayloadSchemaType.INTEGER,  # <-- changed
+                PayloadSchemaType.INTEGER,
             )
 
         return (
             RagService(qdrant_service, embedding_service, st.session_state["client"]),
-            ChatService(st.session_state.get("root_ref")),
+            ChatService(
+                st.session_state.get("root_ref"), user["uid"]
+            ),
         )
 
     rag_service, chat_service = init_services()
@@ -99,14 +104,13 @@ with st.sidebar:
     # Load and display previous chats
     st.caption("Your chats")
 
-    if st.session_state.get("user"):
-        username = st.session_state["user"]["username"]
+    if user:
 
         @st.cache_data(ttl=3600)  # Caches for 1 hour
-        def get_cached_chats(username):
-            return chat_service.get_chats(username)
+        def get_cached_chats(user_uid: str):
+            return chat_service.get_chats()
 
-        chats = get_cached_chats(username)
+        chats = get_cached_chats(user["uid"])
 
         if chats:
             for chat in chats:
@@ -129,9 +133,7 @@ with st.sidebar:
                         use_container_width=True,
                     ):
                         # Load messages from Firebase
-                        db_messages = chat_service.get_chat_messages(
-                            username, chat["id"]
-                        )
+                        db_messages = chat_service.get_chat_messages(chat["id"])
 
                         # Convert DB to UI format
                         formatted_messages = []
@@ -167,7 +169,6 @@ with st.sidebar:
                         # Triggers auto-save on Enter or tap/click away
                         if new_chat_title.strip() and new_chat_title != chat["title"]:
                             chat_service.update_title(
-                                username,
                                 chat["id"],
                                 new_chat_title.strip(),
                             )
@@ -179,7 +180,7 @@ with st.sidebar:
                     if st.button(
                         "", key=f"del_{chat['id']}", icon="🗑️", use_container_width=True
                     ):
-                        chat_service.delete_chat(username, chat["id"])
+                        chat_service.delete_chat(chat["id"])
                         st.cache_data.clear()
                         st.session_state["rag_page"] = "chat"
                         st.session_state["messages_data"] = []
@@ -250,9 +251,9 @@ if page == "menu":
         st.session_state["current_chat_id"] = None
         st.rerun()
 
-    if st.session_state.get("user"):
+    if user:
         " "
-        user_grade_long = get_key_by_value(GRADES, st.session_state["user"]["grade"])
+        user_grade_long = get_key_by_value(GRADES, user["grade"])
 
         st.subheader(user_grade_long, anchor=False)
 
@@ -421,22 +422,22 @@ elif page == "chat":
                     except Exception:
                         subject_index = 0
 
-                    if st.session_state.get("user"):
+                    if user:
                         try:
                             grade_index = grade_options.index(
                                 get_key_by_value(
-                                    GRADES, st.session_state["user"]["grade"]
+                                    GRADES, user["grade"]
                                 )
                             )
                         except Exception:
                             grade_index = 0
 
                 else:
-                    if st.session_state.get("user"):
+                    if user:
                         try:
                             grade_index = grade_options.index(
                                 get_key_by_value(
-                                    GRADES, st.session_state["user"]["grade"]
+                                    GRADES, user["grade"]
                                 )
                             )
                         except Exception:
@@ -480,15 +481,18 @@ elif page == "chat":
         filters = []
         for key, value in {
             "grade": str(grade_filter),
-            "subject": normalize_string(str(subject_filter)).lower(),
-            "unit_num": normalize_string(str(unit_num_filter)),
-            "lesson_num": normalize_string(str(lesson_num_filter)),
+            "subject": subject_filter,
+            "unit_num": unit_num_filter,
+            "lesson_num": lesson_num_filter,
         }.items():
-            if value and normalize_string(value).lower() != "all":
-                if key in ["unit_num", "lesson_num"]:
-                    value = int(value)
-                elif key == "grade":
+            if value and value != "♾️ All":
+                print(key, value)
+                if key == "grade":
                     value = GRADES[value]
+                elif key == "subject":
+                    value = SUBJECTS[value]
+                elif key in ["unit_num", "lesson_num"]:
+                    value = int(value)
 
                 filters.append(
                     FieldCondition(
@@ -497,7 +501,7 @@ elif page == "chat":
                     )
                 )
 
-        return Filter(must=filters)
+        return Filter(must=filters) if filters else None
 
     # Render previous msgs if found
     render_messages(st.session_state.get("messages_data", []))
@@ -505,14 +509,8 @@ elif page == "chat":
     if user_query and user_query.strip():
 
         # Step 1: Initialize chat if needed
-        username = (
-            st.session_state.get("user", {}).get("username")
-            if st.session_state.get("user")
-            else None
-        )
-
-        if not st.session_state.get("current_chat_id") and username:
-            st.session_state["current_chat_id"] = chat_service.create_chat(username)
+        if user and not st.session_state.get("current_chat_id"):
+            st.session_state["current_chat_id"] = chat_service.create_chat()
             st.cache_data.clear()
 
         # Save user message and render it
@@ -522,9 +520,9 @@ elif page == "chat":
         messages_data.append(user_msg_dict)
 
         # Save to database
-        if username and st.session_state.get("current_chat_id"):
+        if user and st.session_state.get("current_chat_id"):
             chat_service.save_message(
-                username, st.session_state["current_chat_id"], "user", user_query
+                st.session_state["current_chat_id"], "user", user_query
             )
 
         # Render user message
@@ -575,10 +573,14 @@ elif page == "chat":
                 query_filter=get_filters(),
             )
 
+            st.write(chunks_payloads)
+
             # Get the lessons sources concatenated texts
             sources_text = rag_service.enrich_sources(
                 chunks_payloads, scope=enriching_scope
             )
+
+            st.write(sources_text)
 
             # Get chat history for model context
             chat_history = []
@@ -615,17 +617,15 @@ elif page == "chat":
                 messages_data[last_msg_idx]["ai_response"] = full_response
 
                 # Save to DB
-                if username and st.session_state.get("current_chat_id"):
+                if user and st.session_state.get("current_chat_id"):
                     chat_service.save_message(
-                        username=username,
                         chat_id=st.session_state["current_chat_id"],
                         role="assistant",
                         content=full_response,
                     )
 
-                if username:
+                if user:
                     chat_service.update_title(
-                        username,
                         st.session_state["current_chat_id"],
                         json_response["suggested_chat_title"],
                     )
@@ -647,9 +647,8 @@ elif page == "chat":
                     # Update ss with full response
                     messages_data[last_msg_idx]["ai_response"] = full_response
 
-                    if username and st.session_state.get("current_chat_id"):
+                    if user and st.session_state.get("current_chat_id"):
                         chat_service.save_message(
-                            username=username,
                             chat_id=st.session_state["current_chat_id"],
                             role="assistant",
                             content=full_response,

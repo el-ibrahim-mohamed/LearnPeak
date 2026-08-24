@@ -1,10 +1,6 @@
 import streamlit as st
 import streamlit.components.v1 as components
-from google import genai
-from services.ar.service import ARService
-from firebase_admin.db import Reference
-import time
-import uuid
+from services.ar.service import ARService, ARHistory
 from datetime import datetime
 
 # Set page config
@@ -15,217 +11,212 @@ st.set_page_config(
     initial_sidebar_state="auto",
 )
 
-# Initializing DB Refrences
-root_ref: Reference = st.session_state["root_ref"]
-users_ref = root_ref.child("users")
-
-# Detecting if user device supports AR to customize the layout
+# Detecting if user device supports AR
 if "device_supports_ar" not in st.session_state:
     device_type = st.session_state.get("user_device_type", "mobile")
     st.session_state["device_supports_ar"] = False if device_type == "pc" else True
 
-# Scrolling Logic
-if st.session_state.get("scroll_to_top"):
-    js = """
-    <script>
-        window.parent.document.querySelector('section.stMain').scrollTo({top: 0});
-    </script>
-    """
-    # behavior: 'smooth'
-    components.html(js, height=0)
-    st.session_state["scroll_to_top"] = False
+# ---------------------------------------------------------
+# STEPS CONFIG
+# ---------------------------------------------------------
+STEP_INPUT = "input"
+STEP_CHOOSE = "choose_model"
+STEP_VIEW = "view"
 
-if st.session_state.get("scroll_to_bottom"):
-    js = """
-    <script>
-        const el = window.parent.document.querySelector('section.stMain');
-        el.scrollTo({ top: el.scrollHeight });
-    </script>
-    """
-    # add "behavior: 'smooth'" if you want animation
-    components.html(js, height=0)
-    st.session_state["scroll_to_bottom"] = False
+# ---------------------------------------------------------
+# Helper Functions
+# ---------------------------------------------------------
+
+def reset_ar():
+    for ss_name in [
+        "id",
+        "ar_model_id",
+        "ar_topic",
+        "found_models",
+        "selected_model",
+        "sketchfab_embed_html",
+        "ai_description",
+        "model_viewer_html",
+    ]:
+        if ss_name in st.session_state:
+            del st.session_state[ss_name]
+
+    st.session_state["generated_ar"] = False
+    st.session_state["choose_to_view_from"] = "choose"
 
 
-def generate_ar_experience(topic_name: str, use_model_viewer: bool = False):
-    # Getting ARService API Keys
-    SKETCHFAB_API_KEY = st.secrets["SKETCHFAB_API_KEY"]
-    github_secrets = st.secrets["github"]
-    GITHUB_USERNAME = github_secrets["USERNAME"]
-    GITHUB_ACCESS_TOKEN = github_secrets["ACCESS_TOKEN"]
-    REPO = github_secrets["REPO"]
-    client: genai.Client = st.session_state["client"]
+def navigate_to(step: str):
+    st.session_state["ar_step"] = step
+    st.rerun()
 
-    arservice = ARService(
-        SKETCHFAB_API_KEY, GITHUB_USERNAME, GITHUB_ACCESS_TOKEN, REPO, client
+
+def title_and_navigation_row(
+    back_nav: str,
+    title: str,
+    disable_back_btn: bool = False,
+):
+    if st.session_state.get("user_device_type", "mobile") == "mobile":
+        col1, col2 = st.columns(2)
+
+        if col1.button(
+            "Back", icon="🔙", use_container_width=True, disabled=disable_back_btn
+        ):
+            navigate_to(back_nav)
+
+        if col2.button("Reset", icon="🔄", use_container_width=True):
+            reset_ar()
+            navigate_to(STEP_INPUT)
+
+        st.title(title, text_alignment="center", anchor=False)
+
+    else:
+        col1, col2, col3 = st.columns([1, 5, 1], vertical_alignment="bottom")
+
+        if col1.button("Back", icon="🔙", disabled=disable_back_btn):
+            navigate_to(back_nav)
+
+        col2.title(title, text_alignment="center", anchor=False)
+
+        if col3.button("Reset", icon="🔄"):
+            reset_ar()
+            navigate_to(STEP_INPUT)
+
+
+@st.cache_resource
+def get_ar_services(sketchfab_key, gh_username, gh_token, gh_repo):
+    client = st.session_state["client"]
+    return (
+        ARService(sketchfab_key, gh_username, gh_token, gh_repo, client),
+        ARHistory(st.session_state["root_ref"]),
     )
 
-    # Loop through yielded results
-    for result in arservice.generate_ar_experience(topic_name, use_model_viewer):
 
-        if result["step"] == "embed_and_description":
-            st.session_state["sketchfab_embed_html"] = result["sketchfab_embed_html"]
-            st.session_state["ai_description"] = result["ai_description"]
+# Initializing AR Services
+github_secrets = st.secrets["github"]
+ar_service, ar_history = get_ar_services(
+    sketchfab_key=st.secrets["SKETCHFAB_API_KEY"],
+    gh_username=github_secrets["USERNAME"],
+    gh_token=github_secrets["ACCESS_TOKEN"],
+    gh_repo=github_secrets["REPO"],
+)
 
-            # Calculate height bassed on screen inner width
-            inner_width = st.session_state.get("screen_inner_width")
-            if inner_width:
-                height = int(inner_width * 9 / 16)
-                height += 4  # small buffer
-            else:
-                height = 190 if st.session_state.get("device_supports_ar") else 400
-
-            components.html(result["sketchfab_embed_html"], height=height)
-            "---"
-
-            st.markdown(result["ai_description"])
-            "---"
-
-        elif result["step"] == "ar_viewer" and st.session_state.get(
-            "device_supports_ar"
-        ):
-            st.session_state["model_viewer_html"] = result["model_viewer_html"]
-            components.html(result["model_viewer_html"], height=50)
-            "---"
-
-    # NOTE: The 3D model embed in the page is shown by sketchfab_embed_html, while it's closed in model_viewer_html
-    # A "View in AR" button appears by model_viewer_html when device supports AR
+# ---------------------------------------------------------
+# STEP 0: INPUT AND HISTORY
+# ---------------------------------------------------------
 
 
-def save_ar_experience(
-    user_uid: str,
-    topic: str,
-    sketchfab_embed_html: str,
-    ai_description: str,
-    model_viewer_html: str = None,
-):
-    ar_ref = users_ref.child(f"{user_uid}/history/ar")
-    id = str(uuid.uuid4())
-
-    ar_saving_data = {
-        "topic": topic,
-        "id": id,
-        "created_at": time.time(),  # Timestamp
-        "sketchfab_embed_html": sketchfab_embed_html,
-        "ai_description": ai_description,
-    }
-
-    st.session_state["id"] = id
-
-    if model_viewer_html:
-        ar_saving_data["model_viewer_html"] = model_viewer_html
-
-    ar_ref.push(ar_saving_data)  # push automatically creates a long, random key
-
-
-def get_saved_ar_data(user_uid: str) -> list[dict]:
-    ar_ref = users_ref.child(f"{user_uid}/history/ar")
-    ar_data_dict: dict = ar_ref.get()
-
-    ar_models = []
-    if ar_data_dict:
-        for ar_id, ar_model in ar_data_dict.items():
-            ar_models.append({"id": ar_id, **ar_model})
-
-        # Sort by most recent
-        ar_models.sort(key=lambda x: x.get("created_at", 0), reverse=True)
-
-    return ar_models
-
-
-def delete_ar_experience(user_uid: str, model_id: str):
-    ar_ref = users_ref.child(f"{user_uid}/history/ar")
-    ar_data_dict: dict = ar_ref.get()
-
-    if ar_data_dict:
-        for ar_key, ar_model in ar_data_dict.items():
-            if ar_model.get("id") == model_id:
-                ar_ref.child(ar_key).delete()
-                break
-
-
-if not st.session_state.get("generated_ar"):
-    st.title("🥽 Learn with AR", anchor=False)
+def input_and_history():
+    st.title(
+        "🥽 Learn with AR",
+        anchor=False,
+        help="AR is a technology that puts interactive digital 3D models into your real world using your device's camera.",
+    )
     "---"
 
     with st.form("learn_with_ar", border=False):
-        # Taking Input
-        topic = st.text_input("Topic:")
+        topic = st.text_input("Topic")
 
-        if st.session_state["device_supports_ar"]:
-            show_in_ar = st.checkbox("Show in AR", value=True)
-        else:
-            show_in_ar = st.checkbox(
-                "Show in AR",
-                value=False,
-                disabled=True,
-                help="This device does not support AR",
-            )
-
-        # Generate button
         if (
             st.form_submit_button(
-                "Generate AR Experience",
+                "Search 3D Models",
                 type="primary",
-                icon="✨",
+                icon="🔍",
                 use_container_width=True,
             )
-            and topic
+            and topic.strip()
         ):
-            st.session_state["topic"] = topic
-            st.session_state["show_in_ar"] = show_in_ar
-            st.session_state["generated_ar"] = True
-            st.session_state["ar_sign_in_offer"] = False
-            st.rerun()
+            topic = topic.title()
+
+            with st.spinner("Searching for 3D models...", show_time=True):
+                models = ar_service.search_models(topic)
+
+            if models:
+                st.session_state["ar_topic"] = topic
+                st.session_state["found_models"] = models
+                st.session_state["selected_model"] = None
+                navigate_to(STEP_CHOOSE)
+            else:
+                st.error("No models found for this topic. Try a different search.")
 
     "---"
+
     with st.expander("📂 History"):
         ar_data = []
         if st.session_state.get("user"):
-            ar_data = get_saved_ar_data(st.session_state["user"]["uid"])
+            ar_data = ar_history.get_saved_ar_data(st.session_state["user"]["uid"])
 
         if ar_data:
+            streamlit_colors = ["red", "blue", "orange", "yellow", "green", "violet", "gray"]
+
             for i, model in enumerate(ar_data):
+                # Pick the color dynamically based on the current loop index
+                chosen_color = streamlit_colors[i % len(streamlit_colors)]
 
-                st.subheader(f"#{i+1} {model["topic"]}")
+                col1, col2 = st.columns(2, vertical_alignment="top")
+                with col1:
+                    st.subheader(f":{chosen_color}[{model['topic']}]", anchor=False)
 
-                timestamp = model.get("created_at", "Unknown")
-                dt = datetime.fromtimestamp(timestamp)
-                date_time = dt.strftime(
-                    "%B %d, %Y at %I:%M %p"
-                )  # "January 24, 2026 at 03:30 PM"
-                st.caption(f"Created: {date_time}")
+                    timestamp = model.get("created_at", "Unknown")
+                    try:
+                        dt = datetime.fromtimestamp(timestamp)
+                        date_time = dt.strftime("%B %d, %Y at %I:%M %p")
+                        st.caption(f"Created: {date_time}")
+                    except:
+                        ...
+                with col2:
+                    if model.get("thumbnail_url"):
+                        st.image(model["thumbnail_url"], width=200)
 
-                description = model["ai_description"]
-                minimized_description = (
-                    description[:150] + "..." if len(description) > 200 else description
-                )
-                st.write(f"**{minimized_description}**")
+                # description = model.get("ai_description", "")
+                # if description:
+                #     minimized_description = (
+                #         description[:150] + "..."
+                #         if len(description) > 200
+                #         else description
+                #     )
+                #     st.write(f"**{minimized_description}**")
 
                 col1, col2, _ = st.columns([0.95, 1, 4])
 
                 with col1:
-                    if st.button(
-                        "View",
-                        key=f"view_model_{model['id']}",
-                        icon="👀",
-                    ):
+                    if st.button("View", key=f"view_model_{model['id']}", icon="👀"):
+                        sketchfab_uid = model.get("sketchfab_uid", "")
+                        if not sketchfab_uid and "embed" in model.get("sketchfab_embed_html", ""):
+                            try:
+                                sketchfab_uid = model["sketchfab_embed_html"].split("/models/")[1].split("/embed")[0]
+                            except IndexError:
+                                sketchfab_uid = ""
+
+                        # Reconstruct selected_model structure so AR/AI buttons work seamlessly
+                        st.session_state["selected_model"] = {
+                            "uid": sketchfab_uid,
+                            "name": model["topic"],
+                            "description": model.get("ai_description", ""),
+                            "thumbnails": {
+                                "images": [
+                                    {"url": model.get("thumbnail_url", "")},
+                                    {"url": model.get("thumbnail_url", "")},
+                                ]
+                            },
+                        }
                         st.session_state["generated_ar"] = True
-                        st.session_state["topic"] = model["topic"]
-                        st.session_state["id"] = model["id"]
+                        st.session_state["ar_topic"] = model["topic"]
+                        st.session_state["ar_model_id"] = model["id"]
                         st.session_state["sketchfab_embed_html"] = model[
                             "sketchfab_embed_html"
                         ]
-                        st.session_state["ai_description"] = model["ai_description"]
+                        st.session_state["ai_description"] = model.get(
+                            "ai_description", ""
+                        )
                         st.session_state["model_viewer_html"] = model.get(
                             "model_viewer_html"
                         )
-                        st.session_state["scroll_to_top"] = True
-                        st.rerun()
+                        st.session_state["choose_to_view_from"] = "history"
+                        navigate_to(STEP_VIEW)
 
                 with col2:
-                    if st.button("🗑️ Delete", key=f"delete_{model["id"]}"):
-                        delete_ar_experience(
+                    if st.button("🗑️ Delete", key=f"delete_{model['id']}"):
+                        ar_history.delete_ar_experience(
                             st.session_state["user"]["uid"], model["id"]
                         )
                         st.success(f"Deleted '{model['topic']}'")
@@ -233,53 +224,145 @@ if not st.session_state.get("generated_ar"):
 
                 if i != len(ar_data) - 1:
                     "---"
-
         else:
             st.info("No AR models found. Create your first one!")
 
-else:
-    st.title(f"AR Experience - :blue[{st.session_state["topic"]}]")
+
+# ---------------------------------------------------------
+# STEP 1: CHOOSE MODEL
+# ---------------------------------------------------------
+
+
+def choose_model():
+    title_and_navigation_row(STEP_INPUT, "Choose a 3D Model")
+    " "
+    st.write(f"Select a 3D model for: :blue[**{st.session_state['ar_topic']}**]")
+
+    models = st.session_state["found_models"]
+
+    # Render in explicit 2-column rows for clean layout across screen sizes
+    for i in range(0, len(models), 2):
+        row_models = models[i : i + 2]
+        cols = st.columns(2)
+
+        for idx, model in enumerate(row_models):
+            with cols[idx]:
+                images = model.get("thumbnails", {}).get("images", [])
+                thumb_url = (
+                    images[1]["url"]
+                    if len(images) > 1
+                    else (images[0]["url"] if images else "")
+                )
+
+                if thumb_url:
+                    st.image(thumb_url, use_container_width=True)
+
+                st.markdown(f"**{model.get('name', '3D Model')}**")
+
+                if st.button(
+                    "Select Model",
+                    key=f"select_model_{model['uid']}",
+                    use_container_width=True,
+                    type="secondary",
+                ):
+                    st.session_state["selected_model"] = model
+                    st.session_state["sketchfab_embed_html"] = (
+                        ar_service.sketchfab_embed_html(model["uid"])
+                    )
+                    st.session_state["generated_ar"] = True
+                    st.session_state["choose_to_view_from"] = "choose"
+                    navigate_to(STEP_VIEW)
+
+
+# ---------------------------------------------------------
+# STEP 2: DISPLAY MODEL - AI DESCRIPTION - SHOW IN AR
+# ---------------------------------------------------------
+
+
+def view_model():
+    disable_btn = False
+    if st.session_state.get("choose_to_view_from", "choose") == "history":
+        disable_btn = True
+
+    title_and_navigation_row(STEP_CHOOSE, "AR Experience", disable_back_btn=disable_btn)
+    st.subheader(
+        f":blue[{st.session_state['ar_topic']}]", anchor=False, text_alignment="center"
+    )
+
+    st.iframe(st.session_state["sketchfab_embed_html"])
     "---"
 
-    # Generating the AR experience if not generated before
-    if not st.session_state.get("sketchfab_embed_html"):
-        with st.spinner("Generating your AR experience...", show_time=True):
-            generate_ar_experience(
-                st.session_state["topic"], st.session_state["show_in_ar"]
-            )
-
-    else:
-        # Displaying the previously generated model's data
-
-        # Calculate height bassed on screen inner width
-        inner_width = st.session_state.get("screen_inner_width")
-        if inner_width:
-            height = int(inner_width * 9 / 16)
-            height += 4  # small buffer
-        else:
-            height = 190 if st.session_state.get("device_supports_ar") else 400
-
-        components.html(st.session_state["sketchfab_embed_html"], height=height)
+    if st.session_state.get("ai_description"):
+        st.markdown(st.session_state["ai_description"])
         "---"
 
-        if st.session_state.get("ai_description"):
-            st.markdown(st.session_state["ai_description"])
-            "---"
-
-        if st.session_state.get("model_viewer_html") and st.session_state.get(
-            "device_supports_ar"
-        ):
-            components.html(st.session_state["model_viewer_html"], height=50)
-            "---"
-
-    # Saving the AR model
-    if (
-        not st.session_state.get("id")
-        and st.session_state["topic"]
-        and st.session_state["sketchfab_embed_html"]
-        and st.session_state["ai_description"]
+    if st.session_state.get("model_viewer_html") and st.session_state.get(
+        "device_supports_ar"
     ):
+        components.html(st.session_state["model_viewer_html"], height=50)
+        "---"
 
+    col_ai, col_ar = st.columns(2)
+
+    with col_ai:
+        if st.button(
+            "✨ Generate AI Description",
+            type="primary",
+            use_container_width=True,
+            disabled=bool(st.session_state.get("ai_description")),
+        ):
+            with st.spinner("Generating AI explanation...", show_time=True):
+                description = ar_service.generate_ai_description(
+                    st.session_state["ar_topic"], st.session_state["selected_model"]
+                )
+                st.session_state["ai_description"] = description
+
+                # Dynamically update existing history node if viewing a saved model
+                if st.session_state.get("user") and st.session_state.get("ar_model_id"):
+                    ar_history.update_ar_experience(
+                        st.session_state["user"]["uid"],
+                        st.session_state["ar_model_id"],
+                        {"ai_description": description},
+                    )
+
+                st.rerun()
+
+    with col_ar:
+        if not st.session_state.get("model_viewer_html"):
+            ar_disabled = not st.session_state.get("device_supports_ar")
+            help_text = "This device does not support AR" if ar_disabled else None
+
+            if st.button(
+                "📱 Prepare for AR",
+                use_container_width=True,
+                disabled=ar_disabled,
+                help=help_text,
+            ):
+                model_uid = st.session_state["selected_model"]["uid"]
+                with st.spinner("Preparing model for AR...", show_time=True):
+                    model_bytes = ar_service.download_model(model_uid)
+                    hosted_url = ar_service.host_model_on_github(
+                        st.session_state["ar_topic"], model_bytes
+                    )
+                    model_viewer_html = ar_service.model_viewer_html(hosted_url)
+                    st.session_state["model_viewer_html"] = model_viewer_html
+
+                    # Dynamically update existing history node if viewing a saved model
+                    if st.session_state.get("user") and st.session_state.get("ar_model_id"):
+                        ar_history.update_ar_experience(
+                            st.session_state["user"]["uid"],
+                            st.session_state["ar_model_id"],
+                            {"model_viewer_html": model_viewer_html},
+                        )
+
+                    st.rerun()
+
+    # Save initial entry logic for authenticated users
+    if (
+        not st.session_state.get("ar_model_id")
+        and st.session_state.get("ar_topic")
+        and st.session_state.get("sketchfab_embed_html")
+    ):
         if not st.session_state.get("user") and not st.session_state.get(
             "ar_sign_in_offer"
         ):
@@ -290,11 +373,7 @@ else:
                 st.info("Sign In to start saving your history!")
                 col1, col2 = st.columns(2)
 
-                if col1.button(
-                    "Sign In",
-                    icon="🔐",
-                    use_container_width=True,
-                ):
+                if col1.button("Sign In", icon="🔐", use_container_width=True):
                     st.session_state["page_before_auth"] = "ar"
                     st.switch_page("pages/signin.py")
 
@@ -308,34 +387,49 @@ else:
                     st.switch_page("pages/signup.py")
 
             sign_in_offer()
-            st.session_state["quiz_sign_in_offer"] = True
 
         elif st.session_state.get("user"):
-            with st.spinner("Saving the AR model...", show_time=True):
-                save_ar_experience(
-                    st.session_state["user"]["uid"],
-                    st.session_state["topic"],
-                    st.session_state["sketchfab_embed_html"],
-                    st.session_state["ai_description"],
-                    st.session_state.get("model_viewer_html", None),
-                )
+            selected_model = st.session_state.get("selected_model", {})
+            images = selected_model.get("thumbnails", {}).get("images", [])
+            thumb_url = (
+                images[1]["url"]
+                if len(images) > 1
+                else (images[0]["url"] if images else "")
+            )
 
-    # "Generate a new AR experience" button
+            with st.spinner("Saving the AR model...", show_time=True):
+                id = ar_history.save_ar_experience(
+                    user_uid=st.session_state["user"]["uid"],
+                    topic=st.session_state["ar_topic"],
+                    sketchfab_embed_html=st.session_state["sketchfab_embed_html"],
+                    sketchfab_uid=selected_model.get("uid", ""),
+                    thumbnail_url=thumb_url,
+                    ai_description=st.session_state.get("ai_description", ""),
+                    model_viewer_html=st.session_state.get("model_viewer_html", None),
+                )
+                st.session_state["ar_model_id"] = id
+
     if st.button(
         "Generate a new AR experience",
-        type="primary",
+        type="secondary",
         icon="✨",
         use_container_width=True,
     ):
-        for ss_name in [
-            "id",
-            "sketchfab_embed_html",
-            "ai_description",
-            "model_viewer_html",
-        ]:
-            if st.session_state.get(ss_name):
-                del st.session_state[ss_name]
+        reset_ar()
+        navigate_to(STEP_INPUT)
 
-        st.session_state["generated_ar"] = False
-        st.session_state["scroll_to_top"] = True
-        st.rerun()
+
+# ---------------------------------------------------------
+# PAGE ROUTER
+# ---------------------------------------------------------
+
+step = st.session_state.get("ar_step", STEP_INPUT)
+
+if step == STEP_INPUT:
+    input_and_history()
+
+elif step == STEP_CHOOSE:
+    choose_model()
+
+elif step == STEP_VIEW:
+    view_model()

@@ -6,12 +6,43 @@ from datetime import datetime
 from services.account.auth import Login
 
 # Set page config
+about_text = """**LearnPeak** is an AI-powered learning platform built around students' school curricula and textbooks.
+
+Instead of providing generic AI answers, LearnPeak is designed to understand the educational material students are actually expected to study. It combines AI-powered textbook conversations, quiz generation, summarization, interactive learning experiences, and science-backed study strategies to help students understand, practice, and retain their curriculum.
+
+### What LearnPeak offers
+
+- **Ask Your Book** — Ask questions about your textbook and get answers grounded in its content.
+- **AI Quizzes** — Generate quizzes from curriculum material for active practice and revision.
+- **AI Summarizers** — Turn textbook content into useful summaries for easier review.
+- **Learn with AR** — Explore educational concepts through interactive 3D experiences.
+- **Science-backed Study Strategies** — Learn and apply techniques such as spaced repetition and active recall.
+
+LearnPeak's goal is to make studying more effective by combining **students' actual curriculum, artificial intelligence, and proven learning methods** in one platform.
+
+Built with 💙 for students by a student.
+"""
+
 st.set_page_config(
     page_title="LearnPeak | AI Tools Built for Your Curriculum",
     page_icon="static/mountain_logo.png",
     layout="centered",
     initial_sidebar_state="auto",
+    menu_items={
+        "Report a Bug": "mailto:learnpeak.eg@gmail.com?subject=LearnPeak%20Bug%20Report",
+        "About": about_text,
+    },
 )
+
+if "page" in st.query_params:
+    target_page = st.query_params["page"]
+    print(target_page)
+    st.query_params.clear()
+    try:
+        st.switch_page(f"pages/{target_page}.py")
+    except Exception as e:
+        print(e)
+        pass
 
 st.markdown(
     """

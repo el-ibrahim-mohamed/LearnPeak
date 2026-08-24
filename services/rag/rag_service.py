@@ -159,6 +159,9 @@ class RagService:
                 A formatted string containing the reconstructed source text.
         """
 
+        if not chunks_payloads:
+            return ""
+        
         # Metadata fields used to identify a lesson
         metadata_keys = ["country", "education", "subject", "unit_num", "lesson_num"]
 
@@ -323,14 +326,12 @@ class RagService:
 
         elif output_format == "json" and get_chat_title:
             output_format_txt = """You MUST return your response in a JSON structure like this example:
-{{
-    "response": "Markdown formatted answer...",
-    "suggested_chat_title": "Suggest a chat title based on the first prompt..."
-    ],
-
-}}
-
-"response":"""
+            {
+                "response": "Markdown formatted answer...",
+                "suggested_chat_title": "Suggest a chat title based on the first prompt..."
+                ],
+            }
+            """
 
         return f"""
 You are an AI RAG Assistant in an edcational platform called LearnPeak, specialized in school books sources.
@@ -345,11 +346,11 @@ If the full answer is found in the sources:
 - DO NOT use any external knowledge.
 - DO NOT guess or hallucinate.
 
-If the whole answer or part of it is not found in the sources: 
-- Say "The provided sources do not contain information regarding {{...}}.
-  I will provide the answer from my general knowledge, and you may want to independently verify it." OR SIMILAR
-  Then answer from your knowledge.
-- When answering any part from outside the sources, you MUST declare that it is not found in the sources.
+If the answer (or part of it) is NOT found in the sources:
+- Explicitly state in the **SAME LANGUAGE** as the user's prompt (e.g., Arabic if asked in Arabic) that the required information was missing from the textbook sources.
+- Vary your phrasing naturally each time.
+- State clearly that you are providing the remaining answer from your general knowledge and recommend verifying it.
+- Proceed to answer the question using your general knowledge, while clearly distinguishing which parts came from external knowledge vs. the sources.
 - You should fully answer the question even if part of the answer is not from the sources 
 
 -----------------------
@@ -828,12 +829,16 @@ Do not include any explanation before or after the JSON.
         if not term:
             term = self.current_term()
 
+        data = ocr_result
+        batch_id = str(uuid.uuid4())
+
         # Attach metadata to each OCR page
-        for page_data in ocr_result:
+        for page_data in data:
             current_metadata = unit_lesson_metadata.get(page_data["page_num"])
 
             page_data.update(
                 {
+                    "batch_id": batch_id,
                     "country": country,
                     "education": education,
                     "grade": grade,
@@ -844,7 +849,7 @@ Do not include any explanation before or after the JSON.
                 }
             )
 
-        return ocr_result
+        return data
 
     def chunk_pages(self, pages: list[dict]):
         """

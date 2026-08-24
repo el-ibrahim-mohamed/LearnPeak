@@ -57,10 +57,13 @@ def load_app():
     signin = st.Page("pages/signin.py", title="Sign In", icon="🔐")
     signup = st.Page("pages/signup.py", title="Create Account", icon="🚀")
 
-    # Tools
-    ask_book = st.Page("pages/ask-book.py", title="Ask your book", icon="🧠")
+    # Features
+    ask_book = st.Page("pages/ask-book.py", title="Ask your book", icon="📚")
     ar = st.Page("pages/ar.py", title="Learn with AR", icon="🥽")
     quizzes = st.Page("pages/quizzes.py", title="Quiz Generation", icon="📝")
+
+    # Study Strategies
+    learn = st.Page("pages/learn.py", title="Learn", icon="🎓")
 
     # Settings
     settings = st.Page("pages/settings.py", title="Settings", icon="⚙️")
@@ -70,6 +73,7 @@ def load_app():
         pages = {
             "": [home, settings],
             "✨ Features": [ask_book, ar, quizzes],
+            "🧠 Study Strategies": [learn],
 
         }
     else:
@@ -77,6 +81,7 @@ def load_app():
             "": [home],
             "🚀 Get Started": [signin, signup],
             "✨ Features": [ask_book, ar, quizzes],
+            "🧠 Study Strategies": [learn],
         }
 
     # Run st.navigation as soon as possible to show the nav to the user

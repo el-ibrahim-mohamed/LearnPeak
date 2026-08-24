@@ -1,8 +1,6 @@
 COUNTRIES = {"Egypt": "egypt"}
 
-
 EDUCATION = {"🏫 National": "national"}
-
 
 GRADES = {
     "🎨 kG 1": "kg1",
@@ -21,7 +19,6 @@ GRADES = {
     "🔬 Secondary 3": "sec3",
 }
 
-
 SUBJECTS = {
     "📖 English": "english",
     "🔢 Math": "math",
@@ -31,4 +28,10 @@ SUBJECTS = {
     "🕌 Islamic Religion": "islamic_religion",
     "🇩🇪 German": "german",
     "💻 ICT": "ict",
+}
+
+BOOK_PUBLISHERS = {
+    "📗 El-Moasser": "el-moasser",
+    "📙 El-Emtihan": "el-emtihan",
+    "🏫 School Book": "school_book",
 }
