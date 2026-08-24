@@ -3,9 +3,38 @@ from streamlit_cookies_manager import EncryptedCookieManager
 from google import genai
 import firebase_admin
 from firebase_admin import credentials, db
+import pathlib
 
 
 def load_app():
+    # --- Inject meta tags to head ---
+    META_TAGS = """
+    <!-- CUSTOM META TAGS START -->
+    <meta name="description" content="AI-powered learning system built around your curriculum, with textbook chat, quizzes, AR, and science-backed study strategies like spaced repetition for lasting knowledge.">
+    <meta name="google-site-verification" content="w9T1TZ9-ot5tapBIXg5YpwjbYNe1UFI-iP-0E1w71go" />
+    <!-- CUSTOM META TAGS END -->
+    """
+
+    def inject_meta_tags():
+        index_path = pathlib.Path(st.__file__).parent / "static" / "index.html"
+        
+        with open(index_path, 'r', encoding='utf-8') as f:
+            content = f.read()
+        
+        # Check if our tags are already there to avoid duplicate injections
+        if '<!-- CUSTOM META TAGS START -->' not in content:
+            new_content = content.replace('<head>', f'<head>\n{META_TAGS}')
+            
+            with open(index_path, 'w', encoding='utf-8') as f:
+                f.write(new_content)
+            print("Successfully injected meta tags into index.html!")
+            st.session_state["meta_tags_injected"] = True
+        else:
+            print("Meta tags already present, skipping injection.")
+            
+    if not st.session_state.get("meta_tags_injected"):
+        inject_meta_tags()
+
     # --- Setting up Firebase RTDB ---
     @st.cache_resource
     def get_db_root():
