@@ -3,7 +3,6 @@ from streamlit_cookies_manager import EncryptedCookieManager
 from google import genai
 import firebase_admin
 from firebase_admin import credentials, db
-import pathlib
 
 
 def load_app():
@@ -75,7 +74,6 @@ def load_app():
             "": [home, settings],
             "✨ Features": [ask_book, ar, quizzes],
             "🧠 Study Strategies": [learn],
-
         }
     else:
         pages = {
