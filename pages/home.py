@@ -165,7 +165,6 @@ with col2:
 "---"
 
 # --- 2. WHAT IS LEARNPEAK? ---
-st.subheader("What is LearnPeak?")
 st.text(
     "AI-powered learning system built around your curriculum, with textbook chat, quizzes, AR, and science-backed study strategies like spaced repetition for long-term memory."
 )
