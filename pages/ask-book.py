@@ -78,7 +78,7 @@ with st.spinner("Loading LearnPeak RAG System...", show_time=True):
 if user and user.get("uid"):
     chat_service = ChatService(
         st.session_state.get("root_ref"), user["uid"]
-    ),
+    )
 
 with st.sidebar:
     # Menu Page button
