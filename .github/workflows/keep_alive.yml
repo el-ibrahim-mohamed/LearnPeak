@@ -2,7 +2,7 @@ name: LearnPeak Keep Alive
 
 on:
   schedule:
-    - cron: "0 */11 * * *"
+    - cron: "0 */10 * * *"
 
   workflow_dispatch:
 
@@ -12,16 +12,16 @@ jobs:
 
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v4
+        uses: actions/checkout@v6
 
       - name: Set up Python
-        uses: actions/setup-python@v5
+        uses: actions/setup-python@v6
         with:
           python-version: "3.12"
 
       - name: Install Playwright
         run: |
-          pip install playwright
+          pip install playwright==1.62.0
           playwright install --with-deps chromium
 
       - name: Keep LearnPeak alive
