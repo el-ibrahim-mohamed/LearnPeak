@@ -1,5 +1,4 @@
 import streamlit as st
-import streamlit.components.v1 as components
 from services.learning_plans.service import LearningPlansService
 from firebase_admin.db import Reference
 
@@ -29,7 +28,7 @@ def display_lp(user_uid: str, lp: dict):
 
     youtube_embed_html = LearningPlansService.youtube_embed_html(day_data["video"])
     with tab2:
-        components.html(youtube_embed_html)
+        st.html(youtube_embed_html)
     
     flashcards: list = day_data["flashcards"]
     with tab3:
@@ -118,5 +117,5 @@ else:
                 st.session_state["lp"] = lp
 
             if result["step"] == "ar":
-                components.html(result["sketchfab_embed_html"])
+                st.html(result["sketchfab_embed_html"])
                 st.markdown(result["ai_description"])

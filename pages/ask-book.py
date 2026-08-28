@@ -1,5 +1,4 @@
 import streamlit as st
-import streamlit.components.v1 as components
 import re
 from streamlit_shortcuts import shortcut_button
 from services.rag.chat_service import ChatService
@@ -33,7 +32,7 @@ with st.spinner("Loading LearnPeak RAG System...", show_time=True):
         )
         from services.rag.embedding_service import EmbeddingService
         from services.rag.qdrant_service import QdrantService
-        from services.rag.rag_service import RagService, AddSource
+        from services.rag.rag_service import RagService
 
     # Initialize Services (Cached)
     @st.cache_resource()
@@ -72,13 +71,14 @@ with st.spinner("Loading LearnPeak RAG System...", show_time=True):
 
         return (
             RagService(qdrant_service, embedding_service, st.session_state["client"]),
-            ChatService(
-                st.session_state.get("root_ref"), user["uid"]
-            ),
         )
 
-    rag_service, chat_service = init_services()
+    rag_service = init_services()
 
+if user and user.get("uid"):
+    chat_service = ChatService(
+        st.session_state.get("root_ref"), user["uid"]
+    ),
 
 with st.sidebar:
     # Menu Page button
@@ -108,6 +108,7 @@ with st.sidebar:
 
         @st.cache_data(ttl=3600)  # Caches for 1 hour
         def get_cached_chats(user_uid: str):
+            _ = user_uid
             return chat_service.get_chats()
 
         chats = get_cached_chats(user["uid"])
@@ -371,7 +372,7 @@ elif page == "chat":
             }
         </script>
         """
-        components.html(js, height=0)
+        st.html(js, unsafe_allow_javascript=True)
 
     # Custom HTML to add the "+" button beside st.chat_input
     st.markdown(
@@ -425,9 +426,7 @@ elif page == "chat":
                     if user:
                         try:
                             grade_index = grade_options.index(
-                                get_key_by_value(
-                                    GRADES, user["grade"]
-                                )
+                                get_key_by_value(GRADES, user["grade"])
                             )
                         except Exception:
                             grade_index = 0
@@ -436,9 +435,7 @@ elif page == "chat":
                     if user:
                         try:
                             grade_index = grade_options.index(
-                                get_key_by_value(
-                                    GRADES, user["grade"]
-                                )
+                                get_key_by_value(GRADES, user["grade"])
                             )
                         except Exception:
                             grade_index = 0

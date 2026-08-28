@@ -1,5 +1,4 @@
 import streamlit as st
-import streamlit.components.v1 as components
 from services.ar.service import ARService, ARHistory
 from datetime import datetime
 
@@ -299,7 +298,7 @@ def view_model():
     if st.session_state.get("model_viewer_html") and st.session_state.get(
         "device_supports_ar"
     ):
-        components.html(st.session_state["model_viewer_html"], height=50)
+        st.html(st.session_state["model_viewer_html"])
         "---"
 
     col_ai, col_ar = st.columns(2)

@@ -1,5 +1,4 @@
 import streamlit as st
-import streamlit.components.v1 as components
 from firebase_admin.db import Reference
 from services.quizzes.service import QuizzesService
 import time
@@ -164,7 +163,7 @@ if st.session_state.get("scroll_to_top"):
     </script>
     """
     # , behavior: 'smooth'
-    components.html(js, height=0)
+    st.html(js, unsafe_allow_javascript=True)
     st.session_state["scroll_to_top"] = False
 
 
