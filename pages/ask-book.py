@@ -69,16 +69,12 @@ with st.spinner("Loading LearnPeak RAG System...", show_time=True):
                 PayloadSchemaType.INTEGER,
             )
 
-        return (
-            RagService(qdrant_service, embedding_service, st.session_state["client"]),
-        )
+        return RagService(qdrant_service, embedding_service, st.session_state["client"])
 
     rag_service = init_services()
 
 if user and user.get("uid"):
-    chat_service = ChatService(
-        st.session_state.get("root_ref"), user["uid"]
-    )
+    chat_service = ChatService(st.session_state.get("root_ref"), user["uid"])
 
 with st.sidebar:
     # Menu Page button
