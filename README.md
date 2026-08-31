@@ -1,7 +1,7 @@
 # LearnPeak | AI Tools Built for Your Curriculum
 
 
-**LearnPeak** is an AI-powered learning system built around your curriculum, with textbook chat, quizzes, AR, and science-backed study strategies like spaced repetition for long-term memory.
+**LearnPeak** is an AI-powered learning system built around your curriculum, with textbook chat, quizzes, AR, and and science-backed study strategies to retain knowledge.
 
 LearnPeak goes beyond generic AI assistance by focusing on the student's actual curriculum and educational content. It provides a collection of learning tools designed to help students interact with their learning material in more effective ways.
 
@@ -126,9 +126,9 @@ Instead of simply rereading a lesson, students can use generated quizzes to reca
 
 Visualizing a concept in 3D can provide a different way to understand subjects that may be difficult to grasp through written explanations or traditional textbook illustrations alone.
 
-### 🔁 Science-Backed Learning
+### 🔁 Study Strategies
 
-LearnPeak incorporates **evidence-based learning strategies** into the learning experience to help students learn and retain information more effectively.
+LearnPeak incorporates **science-backed evidence-based learning strategies** into the learning experience to help students learn and retain information more effectively.
 
 These include strategies such as:
 
@@ -199,7 +199,7 @@ LearnPeak represents a major part of this journey: a real-world project where pr
 
 ### Why I Built LearnPeak
 
-LearnPeak started from a simple idea: **AI should be able to help students with what they are actually studying, not just provide generic answers.**
+LearnPeak is built around a simple idea: **AI should adapt to the way students learn — not the other way around.**
 
 Students already have their curricula and textbooks, but they can still struggle with difficult concepts, unanswered questions, effective revision, and knowing how to study efficiently. I wanted to build a platform that brings AI-powered learning tools directly around the student's curriculum while also introducing students to evidence-based ways of learning.
 

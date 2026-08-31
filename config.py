@@ -35,3 +35,33 @@ BOOK_PUBLISHERS = {
     "📙 El-Emtihan": "el-emtihan",
     "🏫 School Book": "school_book",
 }
+
+UNIT_OPTIONS = [1, 2, 3, 4]
+
+LESSON_OPTIONS = [1, 2, 3, 4, 5, 6]
+
+GEMINI_MODELS_CODES = {
+    "flash-latest": "gemini-3.7-flash",
+    "flash-lite-latest": "gemini-3.5-flash-lite",
+    "3.7-flash": "gemini-3.7-flash",
+    "3.6-flash": "gemini-3.6-flash",
+    "3.5-flash": "gemini-3.5-flash",
+    "3.5-flash-lite": "gemini-3.5-flash-lite",
+    "3.1-flash-lite": "gemini-3.1-flash-lite",
+    "2.5-flash": "gemini-2.5-flash",
+    "2.5-flash-lite": "gemini-2.5-flash-lite",
+}
+
+GEMINI_LITE_FIRST = [
+    GEMINI_MODELS_CODES["flash-lite-latest"],
+    GEMINI_MODELS_CODES["3.1-flash-lite"],
+    GEMINI_MODELS_CODES["flash-latest"],
+    GEMINI_MODELS_CODES["3.6-flash"],
+]
+
+GEMINI_FLASH_FIRST = [
+    GEMINI_MODELS_CODES["flash-latest"],
+    GEMINI_MODELS_CODES["3.6-flash"],
+    GEMINI_MODELS_CODES["flash-lite-latest"],
+    GEMINI_MODELS_CODES["3.1-flash-lite"],
+]

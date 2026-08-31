@@ -68,12 +68,17 @@ def load_app():
     # Settings
     settings = st.Page("pages/settings.py", title="Settings", icon="⚙️")
 
+    # Support
+    about = st.Page("pages/about.py", title="About", icon="ℹ️")
+
     # --- Running the pages ---
     if st.session_state.get("user"):
         pages = {
-            "": [home, settings],
+            "": [home],
+            "👤 Account": [settings],
             "✨ Features": [ask_book, ar, quizzes],
             "🧠 Study Strategies": [learn],
+            "🛠️ Support": [about],
         }
     else:
         pages = {
@@ -81,6 +86,7 @@ def load_app():
             "🚀 Get Started": [signin, signup],
             "✨ Features": [ask_book, ar, quizzes],
             "🧠 Study Strategies": [learn],
+            "🛠️ Support": [about],
         }
 
     # Run st.navigation as soon as possible to show the nav to the user

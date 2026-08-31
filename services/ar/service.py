@@ -8,6 +8,7 @@ import base64
 import uuid
 import time
 from .errors import *
+from config import GEMINI_LITE_FIRST
 
 
 class ARService:
@@ -95,12 +96,7 @@ Markdown formatting is supported.
 """
         contents.insert(0, prompt)
 
-        for model in [
-            "gemini-3.1-flash-lite",
-            "gemini-2.5-flash-lite",
-            "gemini-3.1-flash",
-            "gemini-2.5-flash",
-        ]:
+        for model in GEMINI_LITE_FIRST:
             try:
                 response = self.gemini_client.models.generate_content(
                     model=model,

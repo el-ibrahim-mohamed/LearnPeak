@@ -2,7 +2,7 @@ import streamlit as st
 import re
 from streamlit_shortcuts import shortcut_button
 from services.rag.chat_service import ChatService
-from config import GRADES, SUBJECTS
+from config import GRADES, SUBJECTS, UNIT_OPTIONS, LESSON_OPTIONS
 
 # Set page config
 st.set_page_config(
@@ -28,7 +28,7 @@ with st.spinner("Loading LearnPeak RAG System...", show_time=True):
             PayloadSchemaType,
             Filter,
             FieldCondition,
-            MatchValue,
+            MatchAny,
         )
         from services.rag.embedding_service import EmbeddingService
         from services.rag.qdrant_service import QdrantService
@@ -436,22 +436,32 @@ elif page == "chat":
                         except Exception:
                             grade_index = 0
 
-                grade_filter = st.selectbox("🎓 Grade", grade_options, grade_index)
-                subject_filter = st.selectbox(
-                    "📚 Subject", subject_options, subject_index
+                grade_filter = st.multiselect(
+                    "🎓 Grade",
+                    grade_options,
+                    default=[grade_options[grade_index]]
+                    if grade_index > 0
+                    else [],
                 )
 
-                unit_num_filter = st.selectbox(
-                    "📌 Unit",
-                    ["♾️ All", 1, 2, 3, 4],
-                    index=0,
-                    accept_new_options=True,
+                subject_filter = st.multiselect(
+                    "📚 Subject",
+                    subject_options,
+                    default=[subject_options[subject_index]]
+                    if subject_index > 0
+                    else [],
                 )
-                lesson_num_filter = st.selectbox(
+
+                unit_num_filter = st.multiselect(
+                    "📌 Unit",
+                    UNIT_OPTIONS,
+                    default=[],
+                )
+
+                lesson_num_filter = st.multiselect(
                     "📝 Lesson",
-                    ["♾️ All", 1, 2, 3, 4],
-                    index=0,
-                    accept_new_options=True,
+                    LESSON_OPTIONS,
+                    default=[],
                 )
 
         with col2:
@@ -472,27 +482,33 @@ elif page == "chat":
 
     def get_filters():
         filters = []
-        for key, value in {
-            "grade": str(grade_filter),
+
+        filter_values = {
+            "grade": grade_filter,
             "subject": subject_filter,
             "unit_num": unit_num_filter,
             "lesson_num": lesson_num_filter,
-        }.items():
-            if value and value != "♾️ All":
-                print(key, value)
-                if key == "grade":
-                    value = GRADES[value]
-                elif key == "subject":
-                    value = SUBJECTS[value]
-                elif key in ["unit_num", "lesson_num"]:
-                    value = int(value)
+        }
 
-                filters.append(
-                    FieldCondition(
-                        key=key,
-                        match=MatchValue(value=value),
-                    )
+        for key, values in filter_values.items():
+            if not values:
+                continue
+
+            if key == "grade":
+                values = [GRADES[value] for value in values]
+
+            elif key == "subject":
+                values = [SUBJECTS[value] for value in values]
+
+            elif key in ["unit_num", "lesson_num"]:
+                values = [int(value) for value in values]
+
+            filters.append(
+                FieldCondition(
+                    key=key,
+                    match=MatchAny(any=values),
                 )
+            )
 
         return Filter(must=filters) if filters else None
 

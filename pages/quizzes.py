@@ -1,9 +1,12 @@
 import streamlit as st
 from firebase_admin.db import Reference
-from services.quizzes.service import QuizzesService
 import time
-import uuid
 from datetime import datetime
+from services.quizzes.service import QuizzesService, QuizzesHistory
+from config import GRADES, SUBJECTS, UNIT_OPTIONS, LESSON_OPTIONS
+from services.rag.embedding_service import EmbeddingService
+from services.rag.qdrant_service import QdrantService
+from services.rag.rag_service import RagService
 
 # Set page config
 st.set_page_config(
@@ -15,10 +18,48 @@ st.set_page_config(
 
 # Initializing DB Refrences
 root_ref: Reference = st.session_state["root_ref"]
+user = st.session_state.get("user", {})
 users_ref = root_ref.child("users")
 
-if "quizzes_service" not in st.session_state:
-    st.session_state.quizzes_service = QuizzesService(st.session_state["client"])
+
+@st.cache_resource
+def get_quiz_services():
+    return (
+        QuizzesService(st.session_state["client"]),
+        QuizzesHistory(st.session_state["root_ref"]),
+    )
+
+
+quizzes_service, quizzes_history = get_quiz_services()
+
+st.session_state["quizzes_service"] = quizzes_service
+
+
+@st.cache_resource
+def init_rag_service():
+    embedding_service = EmbeddingService()
+
+    qdrant_service = QdrantService(
+        url=st.secrets["qdrant"]["URL"],
+        api_key=st.secrets["qdrant"]["API_KEY"],
+        vector_size=embedding_service.vector_size,
+        collection_name="learnpeak_knowledge",
+    )
+
+    qdrant_service.ensure_collection_exists()
+
+    return RagService(
+        qdrant_service=qdrant_service,
+        embedding_service=embedding_service,
+        gemini_client=st.session_state["client"],
+    )
+
+
+rag_service = init_rag_service()
+
+
+def get_key_by_value(d: dict, value):
+    return next((k for k, v in d.items() if v == value), None)
 
 
 def display_quiz(quiz_questions: dict):
@@ -102,48 +143,6 @@ def display_graded_quiz(quiz_questions: dict, quiz_grading: dict):
         "---"
 
 
-def save_quiz(user_uid: str, quiz_info: dict, quiz_questions: dict):
-    quizzes_ref = users_ref.child(f"{user_uid}/history/quizzes")
-    id = str(uuid.uuid4())
-    quiz_saving_data = {
-        "id": id,
-        "created_at": time.time(),
-        "quiz_info": quiz_info,
-        "quiz_questions": quiz_questions,
-    }
-    quizzes_ref.child(id).set(quiz_saving_data)
-
-    st.session_state["quiz_id"] = id
-
-
-def save_quiz_grading(user_uid: str, quiz_id: str, grading_data: dict):
-    submit_gradings_ref = users_ref.child(
-        f"{user_uid}/history/quizzes/{quiz_id}/submit_gradings"
-    )
-    grading_saving_data = {"grading_data": grading_data, "created_at": time.time()}
-    submit_gradings_ref.push(grading_saving_data)
-
-
-def get_saved_quizzes(user_uid: str) -> list[dict]:
-    quizzes_ref = users_ref.child(f"{user_uid}/history/quizzes")
-    quizzes_dict: dict = quizzes_ref.get()
-
-    quizzes = []
-    if quizzes_dict:
-        for quiz_id, quiz in quizzes_dict.items():
-            quizzes.append({"id": quiz_id, **quiz})
-
-        # Sort by most recent
-        quizzes.sort(key=lambda x: x.get("created_at", 0), reverse=True)
-
-    return quizzes
-
-
-def delete_quiz(user_uid: str, quiz_id: str):
-    quiz_to_delete = users_ref.child(f"{user_uid}/history/quizzes/{quiz_id}")
-    quiz_to_delete.delete()
-
-
 def open_quiz(quiz: dict):
     """Load a quiz from history to display it"""
     st.session_state["quiz_info"] = quiz["quiz_info"]
@@ -173,25 +172,74 @@ if not st.session_state.get("quiz_started"):
     "---"
 
     # Quiz Title
-    title = st.text_input("🏷️ **Title**")
+    title = st.text_input("🏷️ **Title :red[*]**")
     " "
 
     # Description
     description = st.text_area(
-        "📄 **Description** (optional)",
+        "📄 **Description**",
         height=120,
         placeholder="e.g. Quiz on unit 2 lesson 1.",
     )
-    " "
+    "---"
 
     # Sources
-    with st.expander("📚 **Sources** (optional)"):
+    st.write("📚 **Textbook Sources**")
+
+    col1, col2 = st.columns(2)
+
+    with col1:
+        grade_options = list(GRADES.keys())
+        grade_index = None
+
+        if user:
+            grade_index = grade_options.index(get_key_by_value(GRADES, user["grade"]))
+
+        selected_grade = st.selectbox(
+            "Grade", grade_options, index=grade_index, placeholder="Choose your grade"
+        )
+
+    with col2:
+        subject_options = list(SUBJECTS.keys())
+        subject_index = 0
+
+        selected_subject = st.selectbox(
+            "Subject",
+            subject_options,
+            index=subject_index,
+        )
+
+    col1, col2 = st.columns(2)
+
+    with col1:
+        selected_units = st.multiselect(
+            "Units",
+            UNIT_OPTIONS,
+            placeholder="All units",
+        )
+
+    with col2:
+        selected_lessons = st.multiselect(
+            "Lessons",
+            LESSON_OPTIONS,
+            placeholder="All lessons",
+        )
+
+    st.caption(
+        "Select a subject to use your curriculum textbook as a quiz source. "
+        "Leave units or lessons empty to include all of them."
+    )
+
+    "---"
+
+    # External Sources
+    with st.expander("🔗 **External Sources**"):
         tab1, tab2, tab3, tab4, tab5 = st.tabs(
             ("📝 Text", "🎧 Audio", "🎥 Video", "📕 Files", "🌐 Website")
         )
 
         with tab1:
-            text = st.text_area("**Text**", height=250)
+            text = st.text_area("**Text**", height=200)
 
         with tab2:
             audios = st.file_uploader(
@@ -275,12 +323,12 @@ if not st.session_state.get("quiz_started"):
 
     # Number of questions
     number_of_questions = st.number_input(
-        "**Number of Questions**", min_value=1, value=5, max_value=100
+        "**Number of Questions :red[*]**", min_value=1, value=5, max_value=100
     )
     " "
 
     # Difficulty
-    st.write("**Difficulty**")
+    st.write("**Difficulty :red[*]**")
     difficulty = st.select_slider(
         "**Difficulty**",
         options=("Auto", "Very Easy", "Easy", "Medium", "Hard", "Very Hard"),
@@ -289,45 +337,80 @@ if not st.session_state.get("quiz_started"):
 
     # Custom instructions
     custom_inst = st.text_area(
-        "**Custom instructions** (optional)",
+        "**Custom instructions**",
         height=120,
         placeholder="e.g. Limit the quiz to this part",
     )
 
     " "
     if st.button("Generate Quiz", type="primary", icon="✨", use_container_width=True):
+        valid_inputs = True
+
         if not title:
             st.error("Missing a required field: Title")
-            st.stop()
+            valid_inputs = False
 
-        with st.spinner("Generating your Quiz...", show_time=True):
-            quiz_info = {
-                "title": title,
-                "number_of_questions": number_of_questions,
-                "difficulty": difficulty,
-                "description": description,
-            }
-
-            quiz_questions = st.session_state.quizzes_service.generate_quiz(
-                **quiz_info,
-                text=text,
-                audios=[
-                    {"bytes": audio.getvalue(), "name": audio.name} for audio in audios
-                ],
-                videos=[
-                    {"bytes": video.getvalue(), "name": video.name} for video in videos
-                ],
-                youtube_videos_urls=youtube_videos_urls,
-                files=[{"bytes": file.getvalue(), "name": file.name} for file in files],
-                web_urls=web_urls,
-                custom_instructions=custom_inst,
+        if valid_inputs:
+            book_text = ""
+            selected_grade_value = GRADES[selected_grade] if selected_grade else None
+            selected_subject_value = (
+                SUBJECTS[selected_subject] if selected_subject else None
             )
+            audios = [
+                {"bytes": audio.getvalue(), "name": audio.name} for audio in audios
+            ]
+            videos = [
+                {"bytes": video.getvalue(), "name": video.name} for video in videos
+            ]
+            files = [{"bytes": file.getvalue(), "name": file.name} for file in files]
 
-        st.session_state["quiz_info"] = quiz_info
-        st.session_state["quiz_questions"] = quiz_questions
-        st.session_state["quiz_started"] = True
-        st.session_state["scroll_to_top"] = True
-        st.rerun()
+            if selected_grade_value and selected_subject_value:
+                with st.spinner("Preparing your sources...", show_time=True):
+                    country = user["country"].lower() if user else "egypt"
+                    education = user["education"] if user else "national"
+                    book_text: str = rag_service.get_sources_from_filters(
+                        country,
+                        education,
+                        selected_grade_value,
+                        selected_subject_value,
+                        selected_units,
+                        selected_lessons,
+                    )
+
+            found_sources = True
+            if selected_grade_value and selected_subject_value and not book_text:
+                found_sources = False
+                st.warning(
+                    "No textbook content was found for the selected filters. You can "
+                    "still generate the quiz using external sources or without sources."
+                )
+
+            if found_sources:
+                with st.spinner("Generating your Quiz...", show_time=True):
+                    quiz_info = {
+                        "title": title,
+                        "number_of_questions": number_of_questions,
+                        "difficulty": difficulty,
+                        "description": description,
+                    }
+
+                    quiz_questions = st.session_state.quizzes_service.generate_quiz(
+                        **quiz_info,
+                        book_text=book_text,
+                        text=text,
+                        audios=audios,
+                        videos=videos,
+                        youtube_videos_urls=youtube_videos_urls,
+                        files=files,
+                        web_urls=web_urls,
+                        custom_instructions=custom_inst,
+                    )
+
+                st.session_state["quiz_info"] = quiz_info
+                st.session_state["quiz_questions"] = quiz_questions
+                st.session_state["quiz_started"] = True
+                st.session_state["scroll_to_top"] = True
+                st.rerun()
 
     "---"
     with st.expander("📂 History"):
@@ -335,15 +418,30 @@ if not st.session_state.get("quiz_started"):
 
         # Getting quizzes data with their IDs
         if st.session_state.get("user"):
-            quizzes = get_saved_quizzes(st.session_state["user"]["user_uid"])
+            quizzes = quizzes_history.get_saved_quizzes(st.session_state["user"]["uid"])
 
         if quizzes:
+            streamlit_colors = [
+                "red",
+                "blue",
+                "orange",
+                "yellow",
+                "green",
+                "violet",
+                "gray",
+            ]
+
             for i, quiz in enumerate(quizzes):
+                chosen_color = streamlit_colors[i % len(streamlit_colors)]
+
                 quiz_title = quiz["quiz_info"]["title"]
                 col1, col2, col3 = st.columns([4, 1, 1], vertical_alignment="center")
 
                 with col1:
-                    st.subheader(f"#{i+1} {quiz_title}")
+                    st.subheader(
+                        f":{chosen_color}[{quiz_title}]",
+                        anchor=False,
+                    )
 
                     timestamp = quiz["created_at"]
                     dt = datetime.fromtimestamp(timestamp)
@@ -368,7 +466,10 @@ if not st.session_state.get("quiz_started"):
                         icon="🗑️",
                         use_container_width=True,
                     ):
-                        delete_quiz(st.session_state["user"]["user_uid"], quiz["id"])
+                        quizzes_history.delete_quiz(
+                            st.session_state["user"]["uid"],
+                            quiz["id"],
+                        )
 
                         st.success(f"Deleted '{quiz_title}'")
                         st.rerun()
@@ -482,8 +583,8 @@ else:
                 st.session_state["quiz_sign_in_offer"] = True
 
             elif st.session_state.get("user"):
-                save_quiz(
-                    st.session_state["user"]["user_uid"],
+                st.session_state["quiz_id"] = quizzes_history.save_quiz(
+                    st.session_state["user"]["uid"],
                     st.session_state["quiz_info"],
                     st.session_state["quiz_questions"],
                 )
@@ -497,12 +598,19 @@ else:
             st.session_state["quiz_questions"], st.session_state["quiz_grading"]
         )
 
-        if st.session_state.get("user") and st.session_state.get("quiz_id"):
-            save_quiz_grading(
-                st.session_state["user"]["user_uid"],
+        if (
+            st.session_state.get("user")
+            and st.session_state.get("quiz_id")
+            and not st.session_state.get("grading_saved")
+        ):
+            grading_id = quizzes_history.save_quiz_grading(
+                st.session_state["user"]["uid"],
                 st.session_state["quiz_id"],
                 st.session_state["quiz_grading"],
             )
+
+            st.session_state["grading_id"] = grading_id
+            st.session_state["grading_saved"] = True
 
         col1, col2 = st.columns(2)
 
@@ -511,15 +619,24 @@ else:
         ):
             st.session_state["quiz_started"] = False
             st.session_state["quiz_submitted"] = False
+
             st.session_state["quiz_id"] = None
             st.session_state["quiz_info"] = None
             st.session_state["quiz_questions"] = None
             st.session_state["quiz_grading"] = None
+
+            st.session_state["grading_id"] = None
+            st.session_state["grading_saved"] = False
+
             st.session_state["scroll_to_top"] = True
             st.rerun()
 
         if col2.button("Retake The Quiz", icon="🔃", use_container_width=True):
             st.session_state["quiz_submitted"] = False
             st.session_state["quiz_grading"] = None
+
+            st.session_state["grading_id"] = None
+            st.session_state["grading_saved"] = False
+
             st.session_state["scroll_to_top"] = True
             st.rerun()

@@ -14,7 +14,6 @@ Instead of providing generic AI answers, LearnPeak is designed to understand the
 
 - **Ask Your Book** — Ask questions about your textbook and get answers grounded in its content.
 - **AI Quizzes** — Generate quizzes from curriculum material for active practice and revision.
-- **AI Summarizers** — Turn textbook content into useful summaries for easier review.
 - **Learn with AR** — Explore educational concepts through interactive 3D experiences.
 - **Science-backed Study Strategies** — Learn and apply techniques such as spaced repetition and active recall.
 
@@ -166,9 +165,9 @@ with col2:
 
 # --- 2. WHAT IS LEARNPEAK? ---
 st.text(
-    "AI-powered learning system built around your curriculum, with textbook chat, quizzes, AR, and science-backed study strategies like spaced repetition for long-term memory."
+    "AI-powered learning system built around your curriculum, with textbook chat, quizzes, AR, "
+    "and science-backed study strategies to retain knowledge."
 )
-"---"
 
 # --- 3. WHY LEARNPEAK? ---
 st.subheader("Why LearnPeak?")

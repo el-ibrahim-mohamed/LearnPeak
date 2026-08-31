@@ -16,12 +16,13 @@ from qdrant_client.models import (
     FieldCondition,
     Filter,
     MatchValue,
+    MatchAny,
     PointStruct,
 )
 
 from services.rag.embedding_service import EmbeddingService
 from services.rag.qdrant_service import QdrantService
-
+from config import GEMINI_FLASH_FIRST, GEMINI_LITE_FIRST
 
 
 class RagService:
@@ -126,7 +127,7 @@ class RagService:
         return [p.payload for p in all_points]
 
     # -------------------------
-    # AI Mode Methods
+    # Collect Sources Methods
     # -------------------------
 
     def enrich_sources(
@@ -161,7 +162,7 @@ class RagService:
 
         if not chunks_payloads:
             return ""
-        
+
         # Metadata fields used to identify a lesson
         metadata_keys = ["country", "education", "subject", "unit_num", "lesson_num"]
 
@@ -244,6 +245,106 @@ class RagService:
 
         return sources_text.strip()
 
+    def get_sources_from_filters(
+        self,
+        country: str,
+        education: str,
+        grade: str,
+        subject: str,
+        units: list[int] = None,
+        lessons: list[int] = None,
+    ) -> str:
+        """
+        Retrieve all textbook chunks matching the selected curriculum filters.
+
+        Unlike semantic search, this retrieves every matching chunk from Qdrant,
+        allowing the quiz generator to use an entire book, unit, or lesson.
+        """
+
+        conditions = [
+            FieldCondition(
+                key="country",
+                match=MatchValue(value=country),
+            ),
+            FieldCondition(
+                key="education",
+                match=MatchValue(value=education),
+            ),
+            FieldCondition(
+                key="grade",
+                match=MatchValue(value=grade),
+            ),
+            FieldCondition(
+                key="subject",
+                match=MatchValue(value=subject),
+            ),
+        ]
+
+        if units:
+            conditions.append(
+                FieldCondition(
+                    key="unit_num",
+                    match=MatchAny(any=units),
+                )
+            )
+
+        if lessons:
+            conditions.append(
+                FieldCondition(
+                    key="lesson_num",
+                    match=MatchAny(any=lessons),
+                )
+            )
+
+        query_filter = Filter(must=conditions)
+
+        chunks = self.scroll(query_filter)
+
+        if not chunks:
+            return ""
+
+        # Sort everything into textbook order.
+        chunks.sort(
+            key=lambda chunk: (
+                chunk.get("unit_num", 0),
+                chunk.get("lesson_num", 0),
+                chunk.get("page_num", 0),
+                chunk.get("chunk_order", 0),
+            )
+        )
+
+        sources_text = ""
+        current_page = None
+
+        for chunk in chunks:
+            page = (
+                chunk.get("book_publisher", ""),
+                chunk.get("unit_num"),
+                chunk.get("lesson_num"),
+                chunk.get("page_num"),
+            )
+
+            if page != current_page:
+                if current_page is not None:
+                    sources_text += "\n\n" + "-" * 50 + "\n\n"
+
+                sources_text += (
+                    f'=== Book: {chunk.get("book_publisher", "")} {chunk.get("subject")} | '
+                    f'Unit {chunk["unit_num"]} | '
+                    f'Lesson {chunk["lesson_num"]} | '
+                    f'Page {chunk["page_num"]} ===\n\n'
+                )
+
+                current_page = page
+
+            sources_text += chunk["chunk_text"] + "\n"
+
+        return sources_text.strip()
+
+    # -------------------------
+    # AI Mode Methods
+    # -------------------------
+
     def generate_response(
         self, user_query, sources: str, chat_history=[], get_chat_title=True
     ):
@@ -251,12 +352,7 @@ class RagService:
             user_query, sources, chat_history, get_chat_title, output_format="json"
         )
 
-        for model in [
-            "gemini-3.5-flash-lite",
-            "gemini-3.1-flash-lite",
-            "gemini-3.7-flash",
-            "gemini-3.6-flash",
-        ]:
+        for model in GEMINI_LITE_FIRST:
             try:
                 response = self.gemini_client.models.generate_content(
                     model=model,
@@ -289,12 +385,7 @@ class RagService:
             output_format="text_stream",
         )
 
-        for model in [
-            "gemini-3.5-flash-lite",
-            "gemini-3.1-flash-lite",
-            "gemini-3.7-flash",
-            "gemini-3.6-flash",
-        ]:
+        for model in GEMINI_LITE_FIRST:
             try:
                 stream = self.gemini_client.models.generate_content_stream(
                     model=model,
@@ -421,8 +512,7 @@ class AddSource:
                 )
             else:
                 return types.Part.from_bytes(
-                    data=pdf_bytes,
-                    mime_type="application/pdf"
+                    data=pdf_bytes, mime_type="application/pdf"
                 )
 
         start = time.perf_counter()
@@ -503,6 +593,8 @@ An explanation page may contain:
 - "Test Your Knowledge" sections or questions embedded WITHIN an explanation
 - Q&A questions embedded WITHIN normal explanatory content
 
+An explanation page must be inside a lesson. Do Not include explanation pages that are in between questions, rounds, or not in a lesson generally.
+
 IMPORTANT: A page must NOT be excluded merely because it contains questions.
 Exclude a page as non-explanation content ONLY when the page consists entirely, or essentially entirely, of questions, exercises, tests, homework, or similar assessment/practice material.
 
@@ -540,6 +632,17 @@ Use surrounding pages when necessary to correctly determine which unit and lesso
 The metadata applies to every page within its corresponding explanation range.
 If an all-question page splits a lesson into multiple explanation ranges, the ranges on both sides should retain the same lesson metadata when they belong to the same lesson.
 
+IMPORTANT: Some explanation pages may cover TWO OR MORE lessons together. When a page or explanation-page range explicitly belongs to multiple lessons, include ALL applicable lesson numbers and lesson names in `lesson_num` and `lesson_name` as lists.
+
+For example, if an explanation page covers "Lesson 1 & 2", return:
+- lesson_num: [1, 2]
+- lesson_name: ["Lesson 1 Name", "Lesson 2 Name"]
+
+Do NOT create a combined lesson number or combined lesson name such as `"1 & 2"` or `"Lesson 1 & 2"`.
+Each individual lesson must remain separately identifiable.
+
+For normal explanation pages belonging to only one lesson, return `lesson_num` and `lesson_name` as a single value.
+
 ---
 
 ## 6. Page Ranges
@@ -568,6 +671,14 @@ Return ONLY valid JSON matching exactly the structure in this example:
       "unit_num": 1,
       "lesson_name": "Thermal and Chemical Changes",
       "lesson_num": 2
+    },
+    {
+      "start_page": 13,
+      "end_page": 26,
+      "unit_name": "Thermal Energy",
+      "unit_num": 1,
+      "lesson_name": ["Lesson 1 Name", "Lesson 2 Name"],
+      "lesson_num": [1, 2]
     }
   ]
 }
@@ -593,8 +704,11 @@ Data types MUST be:
 - `end_page`: integer
 - `unit_name`: string
 - `unit_num`: integer
-- `lesson_name`: string
-- `lesson_num`: integer
+- `lesson_name`: string OR list of strings
+- `lesson_num`: integer OR list of integers
+
+When an explanation range belongs to multiple lessons,
+`lesson_name` and `lesson_num` MUST be lists containing all applicable lessons in their textbook order.
 
 Do not wrap the JSON in Markdown code fences.
 Do not include any additional keys.
@@ -603,12 +717,7 @@ Do not include any explanation before or after the JSON.
 
         # Send the request to the Gemini API
         start = time.perf_counter()
-        for model in [
-            "gemini-3.7-flash",
-            "gemini-3.6-flash",
-            "gemini-3.5-flash-lite",
-            "gemini-3.1-flash-lite",
-        ]:
+        for model in GEMINI_FLASH_FIRST:
             try:
                 response = self.gemini_client.models.generate_content(
                     model=model,
@@ -997,14 +1106,12 @@ Do not include any explanation before or after the JSON.
 
         print(f"PREPARING PDF FINISHED — {time.perf_counter() - start:.2f}s")
 
-
         print("STARTING OCR")
         start = time.perf_counter()
 
         pages = self.ocr_pdf(explanations_pdf_bytes, digital_to_actual_mapping)
 
         print(f"OCR FINISHED — {time.perf_counter() - start:.2f}s")
-
 
         start = time.perf_counter()
 
@@ -1019,13 +1126,11 @@ Do not include any explanation before or after the JSON.
 
         print(f"METADATA ATTACHED — {time.perf_counter() - start:.2f}s")
 
-
         start = time.perf_counter()
 
         chunks = self.chunk_pages(pages)
 
         print(f"CHUNKED — {time.perf_counter() - start:.2f}s")
-
 
         start = time.perf_counter()
 

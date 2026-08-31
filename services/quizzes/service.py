@@ -1,6 +1,10 @@
 from google.genai import Client, types
 import mimetypes
 import json
+from firebase_admin.db import Reference
+import time
+import uuid
+from config import GEMINI_LITE_FIRST
 
 
 class QuizzesService:
@@ -15,6 +19,7 @@ class QuizzesService:
         number_of_questions: int,
         difficulty: str,
         description: str = "",
+        book_text: str = "",
         text: str = "",
         audios: list[dict] = [],
         videos: list[dict] = [],
@@ -23,16 +28,22 @@ class QuizzesService:
         web_urls: list[str] = [],
         custom_instructions: str = "",
     ):
-        text = text.strip()
+        """"""
+        
+        title = title.strip()
         description = description.strip()
+        book_text = book_text.strip()
+        text = text.strip()
+        custom_instructions = custom_instructions.strip()
 
-        # --- 1. Build the prompt ---
+        # --- 1. Build the main prompt ---
         prompt = f"""You are a quiz generator tool for students.
 
 ========================
 
 Quiz Information:
-Title: {title} {f"\nDescription: {description}" if description else ""}
+Title: {title}
+{f"Description: {description}" if description else ""}
 Number of Questions: {number_of_questions}
 Difficulty: {difficulty}
 
@@ -45,90 +56,159 @@ Question Types to Include:
 
 ========================
 
+Source Rules:
+
+You may receive two categories of sources:
+
+1. BOOK SOURCE
+This is content taken directly from the student's selected curriculum textbook.
+Treat it as the primary curriculum source.
+
+2. EXTERNAL SOURCES
+These are additional materials provided by the user, such as text, audio,
+video, YouTube videos, files, or websites.
+
+Use the available sources to create accurate questions.
+Do not invent facts that are not supported by the provided sources.
+
+If both BOOK SOURCE and EXTERNAL SOURCES are available, use both.
+Prioritize the BOOK SOURCE when the sources conflict because it represents
+the student's curriculum textbook.
+
+========================
+
 Your Task:
 Generate only the quiz questions with answers and provide your response like this sample JSON format:
+
 {{
     "quiz_questions": {{
         "q1": {{
             "type": "mcq",
             "question": "What is the main function of mitochondria?",
-            "choices": ["Energy production", "Protein synthesis", "DNA replication", "Waste removal"],
-            "correct_answer": "Energy production"  # case-sensetive
+            "choices": [
+                "Energy production",
+                "Protein synthesis",
+                "DNA replication",
+                "Waste removal"
+            ],
+            "correct_answer": "Energy production"
         }},
         "q2": {{
             "type": "true_or_false",
             "question": "Photosynthesis occurs in animal cells.",
-            "correct_answer": "False"  # capitalized, str not bool
+            "correct_answer": "False"
         }},
         "q3": {{
             "type": "fill_in_the_blank",
             "question": "The process of cell division is called _____.",
             "correct_answer": "mitosis"
-        }},
-        ...
+        }}
     }}
 }}
-Note: You mustn't include other quiz info like the title or difficulty in you JSON response.
 
-========================
+Important:
+- Generate exactly {number_of_questions} questions.
+- MCQs must have exactly 4 choices.
+- The correct answer must exactly match one of the choices for MCQs.
+- True/False answers must be exactly "True" or "False".
+- Fill-in-the-blank answers should be concise.
+- Do not include quiz information in the JSON response.
+- Do not include explanations outside the requested JSON structure.
+"""
 
-{f"Custom instructions from the user:\n{custom_instructions}\n\n========================" if custom_instructions else ""}
+        if custom_instructions:
+            prompt += f"""
+            ========================
 
-{"Sources to base questions on:" if any([text, audios, videos, files, web_urls]) else "The sources are open."}"""
+            Custom instructions from the user:
+            {custom_instructions}
+            """
 
-        # --- 2. Add sources conditionally ---
-        contents = [prompt]
+        # --- 2. Add BOOK SOURCE ---
+        if book_text:
+            prompt += f"""
+            ========================
+
+            BOOK SOURCE:
+            The following content was retrieved from the student's curriculum textbook.
+
+            {book_text}
+            """
+
+        # --- 3. Add EXTERNAL SOURCES ---
+        external_text_sources = []
 
         if text:
-            prompt += f"\n**Text Source:**\n{text}"
+            external_text_sources.append(f"TEXT SOURCE:\n{text}")
 
         if youtube_videos_urls:
-            youtube_videos_urls_str = "\nYouTube Video URLs:"
-            for url in youtube_videos_urls:
-                youtube_videos_urls_str += f"\n{url}"
-            prompt += youtube_videos_urls_str
+            youtube_text = "YOUTUBE VIDEO URLS:\n"
+            youtube_text += "\n".join(youtube_videos_urls)
+            external_text_sources.append(youtube_text)
 
         if web_urls:
-            web_urls_str = "\nWebsite URLs:"
-            for url in web_urls:
-                web_urls_str += f"\n{url}"
-            prompt += web_urls_str
+            website_text = "WEBSITE URLS:\n"
+            website_text += "\n".join(web_urls)
+            external_text_sources.append(website_text)
 
-        if audios:
-            for audio in audios:
-                mime_type, _ = mimetypes.guess_type(audio["name"])
-                contents.append(
-                    types.Part.from_bytes(data=audio["bytes"], mime_type=mime_type)
+        if external_text_sources:
+            prompt += """
+            ========================
+
+            EXTERNAL SOURCES:
+
+            """ + "\n\n".join(external_text_sources)
+
+        # Build the final contents only AFTER the prompt is complete.
+        contents = [prompt]
+
+        # --- 4. Add binary external sources ---
+        for audio in audios:
+            mime_type, _ = mimetypes.guess_type(audio["name"])
+            contents.append(
+                types.Part.from_bytes(
+                    data=audio["bytes"],
+                    mime_type=mime_type,
                 )
+            )
 
-        if videos:
-            for video in videos:
-                mime_type, _ = mimetypes.guess_type(video["name"])
-                contents.append(
-                    types.Part.from_bytes(data=video["bytes"], mime_type=mime_type)
+        for video in videos:
+            mime_type, _ = mimetypes.guess_type(video["name"])
+            contents.append(
+                types.Part.from_bytes(
+                    data=video["bytes"],
+                    mime_type=mime_type,
                 )
+            )
 
-        if files:
-            for file in files:
-                mime_type, _ = mimetypes.guess_type(file["name"])
-                contents.append(
-                    types.Part.from_bytes(data=file["bytes"], mime_type=mime_type)
+        for file in files:
+            mime_type, _ = mimetypes.guess_type(file["name"])
+            contents.append(
+                types.Part.from_bytes(
+                    data=file["bytes"],
+                    mime_type=mime_type,
                 )
+            )
 
-        for model in [
-            "gemini-3.1-flash-lite-preview",
-            "gemini-2.5-flash-lite",
-            "gemini-3.1-flash-preview",
-            "gemini-2.5-flash",
-        ]:
+        # --- 5. Generate quiz ---
+        response = None
+
+        for model in GEMINI_LITE_FIRST:
             try:
                 response = self.client.models.generate_content(
                     model=model,
                     contents=contents,
-                    config={"response_mime_type": "application/json"},
+                    config={
+                        "response_mime_type": "application/json",
+                    },
                 )
-            except:
+                break
+            except Exception as e:
+                print(e)
                 continue
+
+        if response is None:
+            raise RuntimeError("Failed to generate quiz with all available models.")
 
         return json.loads(response.text)["quiz_questions"]
 
@@ -164,12 +244,7 @@ Your output should be in a JSON structure like this sample:
 }}
 """
 
-        for model in [
-            "gemini-3.1-flash-preview",
-            "gemini-3.1-flash-lite-preview",
-            "gemini-2.5-flash",
-            "gemini-2.5-flash-lite",
-        ]:
+        for model in GEMINI_LITE_FIRST:
             try:
                 response = self.client.models.generate_content(
                     model=model,
@@ -186,3 +261,86 @@ Your output should be in a JSON structure like this sample:
             graded_questions[id] = quiz_grading[id]
 
         return graded_questions
+
+
+class QuizzesHistory:
+    def __init__(self, root_ref: Reference):
+        self.root_ref = root_ref
+
+    def save_quiz(
+        self,
+        user_uid: str,
+        quiz_info: dict,
+        quiz_questions: dict,
+    ) -> str:
+        quiz_id = str(uuid.uuid4())
+
+        quizzes_ref = self.root_ref.child(
+            f"users/{user_uid}/history/quizzes"
+        )
+
+        quiz_saving_data = {
+            "id": quiz_id,
+            "created_at": time.time(),
+            "quiz_info": quiz_info,
+            "quiz_questions": quiz_questions,
+        }
+
+        quizzes_ref.child(quiz_id).set(quiz_saving_data)
+
+        return quiz_id
+
+    def save_quiz_grading(
+        self,
+        user_uid: str,
+        quiz_id: str,
+        grading_data: dict,
+    ) -> str:
+        grading_id = str(uuid.uuid4())
+
+        gradings_ref = self.root_ref.child(
+            f"users/{user_uid}/history/quizzes/{quiz_id}/submit_gradings"
+        )
+
+        grading_saving_data = {
+            "id": grading_id,
+            "grading_data": grading_data,
+            "created_at": time.time(),
+        }
+
+        gradings_ref.child(grading_id).set(grading_saving_data)
+
+        return grading_id
+
+    def get_saved_quizzes(self, user_uid: str) -> list[dict]:
+        quizzes_ref = self.root_ref.child(
+            f"users/{user_uid}/history/quizzes"
+        )
+
+        quizzes_dict: dict = quizzes_ref.get()
+
+        quizzes = []
+
+        if quizzes_dict:
+            for quiz_id, quiz in quizzes_dict.items():
+                quizzes.append({
+                    "id": quiz_id,
+                    **quiz,
+                })
+
+            quizzes.sort(
+                key=lambda x: x.get("created_at", 0),
+                reverse=True,
+            )
+
+        return quizzes
+
+    def delete_quiz(
+        self,
+        user_uid: str,
+        quiz_id: str,
+    ):
+        self.root_ref.child(
+            f"users/{user_uid}/history/quizzes/{quiz_id}"
+        ).delete()
+
