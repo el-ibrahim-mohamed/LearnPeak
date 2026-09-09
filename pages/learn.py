@@ -10,61 +10,57 @@ st.set_page_config(
 
 # Hero Header
 st.title("🎓 Learn: Core Study Strategies")
-st.caption("Master evidence-based techniques to learn faster and retain more.")
+st.caption("Master smart study habits to learn faster, remember more, and save time.")
 
 st.divider()
 
 # Section 1: The Basics of Studying
 st.header("⚡ The Basics of Studying")
-st.write("Before diving into complex techniques, lock in these **fundamental** habits.")
+st.write("Before diving into complex techniques, lock in these fundamental habits.")
 
 # Use columns for layout
 col1, col2 = st.columns(2)
 
 with col1:
-    st.markdown("### 💤 Rest and Alertness", anchors=False)
+    st.markdown("### 💤 Rest and Focus", anchors=False)
 
-    # warning/orange tone for energy/sleep alerts
     st.warning(
-        "Sleep consolidates memory. Studying while sleepy yields near-zero retention.",
+        "Sleep is when your brain saves what you learned. Studying when you're super tired means you'll forget almost everything.",
         icon="😴",
         title="Never Study Exhausted",
     )
 
-    # info/blue tone for standard biological positioning
     st.info(
-        "Sit up at a desk. Avoid studying in your bed at all costs.",
+        "Sit up straight at a desk or table. Avoid studying lying down in your bed—your brain thinks it's time to sleep!",
         icon="🏋️",
-        title="Active Physiology",
+        title="Sit Up Straight",
     )
 
-    # Use regular markdown with a colored header/emoji for the third point
     st.success(
-        "Verbalizing forces your brain to stay engaged and stops mind-wandering.",
+        "Saying your notes out loud keeps your brain awake and stops your mind from wandering away.",
         icon="🗣️",
         title="Read Out Loud",
     )
 
 with col2:
-    st.markdown("### 🧭 Environment & Focus", anchors=False)
+    st.markdown("### 🧭 Environment & Setup", anchors=False)
 
-    # error/red tone for absolute restrictions like distractions
     st.error(
-        "Keep your phone in another room or hand it to a parent/friend.",
+        "Put your phone in another room or give it to a parent while you study. Notifications kill your focus.",
         icon="📵",
-        title="Zero Phone Distraction",
+        title="Zero Phone Distractions",
     )
 
     st.info(
-        "Use the same clean desk area to prime your brain for focus mode.",
+        "Try to study in the same clean spot every time so your brain instantly knows it's time to work.",
         icon="🖥️",
-        title="Dedicated Space",
+        title="Your Study Spot",
     )
 
     st.success(
-        "Keep fresh water nearby and ensure bright, clear lighting.",
+        "Keep a glass of water nearby and make sure your room has good lighting.",
         icon="💡",
-        title="Hydration & Light",
+        title="Water & Light",
     )
 
 "---"
@@ -72,7 +68,7 @@ with col2:
 # Strategy 1: Spaced Repetition
 st.header("⏳ Strategy 1: Spaced Repetition")
 st.write(
-    "- Distributing your study sessions over time to build permanent long-term memory."
+    "- Reviewing information at increasing intervals over days or weeks to lock it into long-term memory."
 )
 
 # Embedded Video
@@ -80,37 +76,33 @@ st.video("https://www.youtube.com/watch?v=cVf38y07cfk")
 
 st.markdown("### 💡 How It Works", anchors=False)
 
-# Warning/Error tone for why cramming fails
 st.error(
-    "Have you ever studied really hard for a lesson, but then totally forgot it a few days later?  \n"
-    "Cramming puts information in your **short-term** memory, and your brain quickly forgets it because it wasn't practiced enough.",
+    "Have you ever memorized a lesson so well, but completely forgot everything a few days later? \n"
+    "Cramming only puts information into your temporary memory, so your brain throws it away quickly.",
     icon="⚠️",
     title="Why Cramming Fails",
 )
 
-# Info/Blue tone for the science mechanism
 st.info(
-    "Your brain naturally forgets information along the **Ebbinghaus Forgetting Curve**.  \n"
-    "When you review something just before you're about to forget it, your brain builds a stronger memory, making it easier to remember later.",
+    "Our brains naturally forget things over time. But every time you review a topic just as you're starting to forget it, your brain makes that memory stronger and harder to lose!",
     icon="🧠",
     title="The Forgetting Curve",
 )
 
 st.markdown("### 🛠️ How To Do It", anchors=False)
 
-# Success/Green tone for practice & intervals
 st.success(
-    "Once you finish studying a lesson, don't just leave it—schedule **review sessions** at expanding intervals (e.g., 1 day later, 3 days later, 7 days later).  \n"
-    "Change these times based on how hard the lesson is: tougher topics need shorter gaps, while easier ones can have longer breaks.",
+    "After finishing a lesson, don't just close the book. Review it again 1 day later, then 3 days later, and then 1 week later. \n"
+    "Tougher subjects need more frequent reviews, while easier ones need fewer.",
     icon="📅",
-    title="Strategic Review Intervals",
+    title="The Review Schedule",
 )
 
 "---"
 # Strategy 2: Active Recall
 st.header("🧠 Strategy 2: Active Recall")
 st.write(
-    "- Forcing your brain to retrieve information from memory instead of passively reviewing it."
+    "- Forcing your brain to dig up answers from memory instead of just rereading pages."
 )
 
 # Embedded Video
@@ -118,19 +110,16 @@ st.video("https://www.youtube.com/watch?v=qv2RsTSoyHI")
 
 st.markdown("### 💡 How It Works", anchors=False)
 
-# Re-engineered for impact and brevity
 st.error(
-    "Passive review (rereading and highlighting) only builds familiarity, **not memory**. "
-    "It creates an illusion where information looks recognizable, but remains impossible to retrieve during a test.",
+    "Rereading and highlighting your notes over and over makes you *feel* like you know it, but it tricks your brain. When test day comes, the information won't pop up.",
     icon="⚠️",
-    title="The Passive Review Trap",
+    title="The Rereading Trap",
 )
 
 st.info(
-    "True learning happens through retrieval practice. "
-    "Forcing your brain to struggle and pull information from scratch creates stronger, permanent **neural pathways**.",
+    "Real learning happens when you make your brain work hard to pull up answers from scratch. That mental struggle is what builds permanent memory.",
     icon="⚡",
-    title="The Retrieval Mechanism",
+    title="The Power of Testing Yourself",
 )
 
 st.markdown("### 🛠️ How To Do It", anchors=False)
@@ -141,13 +130,13 @@ col1, col2 = st.columns(2, border=True)
 with col1:
     st.subheader("🗂️ Flashcards", anchor=False)
     st.write(
-        "Look at a prompt and explicitly say or write the answer *before* flipping the card."
+        "Look at a question prompt and say the answer out loud *before* you flip the card over."
     )
     
 with col2:
-    st.subheader("❓ Self-Testing", anchor=False)
+    st.subheader("❓ Make Your Own Quiz", anchor=False)
     st.write(
-        "Turn your lecture notes and headers into custom practice questions, then test yourself later."
+        "Turn your lesson headers into custom questions, wait a day, and try answering them."
     )
 
 col1, col2 = st.columns(2, border=True)
@@ -155,13 +144,13 @@ col1, col2 = st.columns(2, border=True)
 with col1:
     st.subheader("📄 The Blank Page", anchor=False)
     st.write(
-        "Close your book, open a blank sheet, and write down absolutely everything you can remember."
+        "Close your book, grab a clean sheet of paper, and write down everything you remember about the lesson."
     )
 
 with col2:
-    st.subheader("🗣️ Teaching Others", anchor=False)
+    st.subheader("🗣️ Teach Someone Else", anchor=False)
     st.write(
-        "Explain the core concept out loud in your own simple words, as if teaching it to a complete beginner."
+        "Try explaining the core idea out loud in your own simple words, as if teaching a younger sibling."
     )
 
 "---"

@@ -125,8 +125,7 @@ else:
     st.markdown(
         """
         <style>
-        div[class*="st-key-user_agent"],
-        div[class*="st-key-inner_width"] {
+        div[class*="st-key-user_agent"] {
             display: none !important;
         }
         </style>
@@ -148,13 +147,5 @@ else:
                 st.session_state["user_device_type"] = "tablet"
             elif ua.is_pc:
                 st.session_state["user_device_type"] = "pc"
-
-    if "screen_inner_width" not in st.session_state:
-        inner_width = streamlit_js_eval(
-            js_expressions="window.innerWidth", key="inner_width"
-        )
-
-        if inner_width:
-            st.session_state["screen_inner_width"] = inner_width
 
     pg.run()

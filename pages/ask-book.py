@@ -1,8 +1,19 @@
 import streamlit as st
 import re
+import uuid
+from datetime import datetime
+import unicodedata
 from streamlit_shortcuts import shortcut_button
 from services.rag.chat_service import ChatService
-from config import GRADES, SUBJECTS, UNIT_OPTIONS, LESSON_OPTIONS
+from config import (
+    GRADES,
+    SUBJECTS,
+    GRADE_SUBJECTS,
+    UNIT_OPTIONS,
+    LESSON_OPTIONS,
+    get_key_by_value,
+    get_subjects_for_grade,
+)
 
 # Set page config
 st.set_page_config(
@@ -11,12 +22,6 @@ st.set_page_config(
     layout="centered",
     initial_sidebar_state="auto",
 )
-
-
-# Defining Functions
-def get_key_by_value(d: dict, value):
-    return next((k for k, v in d.items() if v == value), None)
-
 
 user: dict = st.session_state.get("user", {})
 
@@ -76,6 +81,98 @@ with st.spinner("Loading LearnPeak RAG System...", show_time=True):
 if user and user.get("uid"):
     chat_service = ChatService(st.session_state.get("root_ref"), user["uid"])
 
+if "sidebar_update_key" not in st.session_state:
+    st.session_state["sidebar_update_key"] = 0
+
+
+@st.cache_data(ttl=3600, show_spinner=False)  # Caches for 1 hour
+def get_cached_chats(user_uid: str):
+    return chat_service.get_chats(user_uid)
+
+
+def clear_cached_chats():
+    get_cached_chats.clear()
+    st.session_state["chats"] = None
+
+
+@st.fragment
+def render_sidebar_chats():
+    if user:
+
+        chats = st.session_state.get("chats")
+
+        if not chats and chats != []:
+            chats = get_cached_chats(user["uid"])
+            st.session_state["chats"] = chats
+
+        if chats:
+            counter = st.session_state.get("sidebar_update_key", 0)
+            for chat in chats:
+                # Chat name, rename, and delete columns
+                col1, col2, col3 = st.columns(
+                    [0.65, 0.20, 0.15], vertical_alignment="center"
+                )
+
+                # Open chat button
+                with col1:
+                    # Max chat title length: 35 characters
+                    chat_title = chat["title"]
+                    chat_title = (
+                        chat_title if len(chat_title) <= 35 else f"{chat_title[:35]}.."
+                    )
+
+                    if st.button(
+                        chat_title,
+                        key=f"chat_{chat['id']}_{counter}",
+                        use_container_width=True,
+                    ):
+                        # Load messages from Firebase
+                        db_chat_messages = chat_service.get_chat_messages(chat["id"])
+
+                        # 4. Save to session state
+                        st.session_state["rag_page"] = "chat"
+                        st.session_state["current_chat_id"] = chat["id"]
+                        st.session_state["messages_data"] = db_chat_messages
+                        st.session_state["scroll_to_bottom"] = True
+                        st.rerun()
+
+                # Rename chat button
+                with col2:
+                    with st.popover("", icon="✏️"):
+                        new_chat_title = st.text_input(
+                            "New chat name",
+                            value=chat["title"],
+                            icon="✍️",
+                            label_visibility="collapsed",
+                            key=f"rename_chat_{chat['id']}_{counter}",
+                        )
+
+                        # Triggers auto-save on Enter or tap/click away
+                        if new_chat_title.strip() and new_chat_title != chat["title"]:
+                            chat_service.update_title(
+                                chat["id"],
+                                new_chat_title.strip(),
+                            )
+                            clear_cached_chats()
+                            st.rerun(scope="fragment")
+
+                # Delete chat button
+                with col3:
+                    if st.button("", key=f"del_{chat['id']}_{counter}", icon="🗑️"):
+                        chat_service.delete_chat(chat["id"])
+                        clear_cached_chats()
+                        st.session_state["rag_page"] = "chat"
+                        st.session_state["messages_data"] = []
+                        st.session_state["current_chat_id"] = None
+                        st.rerun()
+
+        else:
+            st.info("No chats found. Create your first one!")
+
+    else:
+        st.info("Sign in to save your chats.")
+
+
 with st.sidebar:
     # Menu Page button
     if st.button("Menu", icon="📋", use_container_width=True):
@@ -100,91 +197,21 @@ with st.sidebar:
     # Load and display previous chats
     st.caption("Your chats")
 
-    if user:
+    # 1. Detect if the user JUST submitted a first prompt (before reaching the bottom)
+    current_chat_input = st.session_state.get("main_chat_input")
+    is_creating_new_chat = bool(current_chat_input) and not st.session_state.get(
+        "current_chat_id"
+    )
 
-        @st.cache_data(ttl=3600)  # Caches for 1 hour
-        def get_cached_chats(user_uid: str):
-            _ = user_uid
-            return chat_service.get_chats()
+    # 2. Conditionally apply the placeholder
+    if is_creating_new_chat:
+        chat_history_placeholder = st.empty()
+        with chat_history_placeholder.container():
+            render_sidebar_chats()
+    else:
+        # NORMAL RUN: Native rendering. Streamlit diffs this perfectly = NO FLICKER!
+        render_sidebar_chats()
 
-        chats = get_cached_chats(user["uid"])
-
-        if chats:
-            for chat in chats:
-                # Chat name, rename, and delete columns
-                col1, col2, col3 = st.columns(
-                    [0.65, 0.20, 0.15], vertical_alignment="center"
-                )
-
-                # Open chat button
-                with col1:
-                    # Max chat title length: 35 characters
-                    chat_title = chat["title"]
-                    chat_title = (
-                        chat_title if len(chat_title) <= 35 else f"{chat_title[:35]}.."
-                    )
-
-                    if st.button(
-                        chat_title,
-                        key=f"chat_{chat['id']}",
-                        use_container_width=True,
-                    ):
-                        # Load messages from Firebase
-                        db_messages = chat_service.get_chat_messages(chat["id"])
-
-                        # Convert DB to UI format
-                        formatted_messages = []
-                        for m in db_messages:
-                            if m["role"] == "user":
-                                formatted_messages.append(
-                                    {"role": "user", "msg": m.get("content", "")}
-                                )
-                            else:
-                                formatted_messages.append(
-                                    {
-                                        "role": "assistant",
-                                        "ai_response": m.get("content", ""),
-                                    }
-                                )
-
-                        # 4. Save to session state
-                        st.session_state["rag_page"] = "chat"
-                        st.session_state["current_chat_id"] = chat["id"]
-                        st.session_state["messages_data"] = formatted_messages
-
-                # Rename chat button
-                with col2:
-                    with st.popover("", icon="✏️"):
-                        new_chat_title = st.text_input(
-                            "New chat name",
-                            value=chat["title"],
-                            icon="✍️",
-                            label_visibility="collapsed",
-                            key=f"rename_chat_{chat['id']}",
-                        )
-
-                        # Triggers auto-save on Enter or tap/click away
-                        if new_chat_title.strip() and new_chat_title != chat["title"]:
-                            chat_service.update_title(
-                                chat["id"],
-                                new_chat_title.strip(),
-                            )
-                            st.cache_data.clear()
-                            st.rerun()
-
-                # Delete chat button
-                with col3:
-                    if st.button(
-                        "", key=f"del_{chat['id']}", icon="🗑️", use_container_width=True
-                    ):
-                        chat_service.delete_chat(chat["id"])
-                        st.cache_data.clear()
-                        st.session_state["rag_page"] = "chat"
-                        st.session_state["messages_data"] = []
-                        st.session_state["current_chat_id"] = None
-                        st.rerun()
-        else:
-            st.info("No chats found. Create your first one!")
 
 # Determine the page to show (menu, chat)
 page = st.session_state.get("rag_page", "menu")
@@ -196,8 +223,7 @@ if page == "menu":
 
     # Custom CSS for the subjects buttons
     def button_container_html(btn_key):
-        st.markdown(
-            f"""
+        st.html(f"""
             <style>
             .st-key-{btn_key} button {{
                 height: auto;
@@ -224,13 +250,12 @@ if page == "menu":
             }}
 
             .st-key-{btn_key} button p {{
+                font-size: 15px;
                 margin: 0;
                 line-height: 1.5;
             }}
             </style>
-            """,
-            unsafe_allow_html=True,
-        )
+            """)
 
     st.subheader("🌍 All Grades", anchor=False)
     btn_key = "all_grades_btn"
@@ -250,18 +275,21 @@ if page == "menu":
 
     if user:
         " "
-        user_grade_long = get_key_by_value(GRADES, user["grade"])
+        user_grade_code = user.get("grade", "prim4")
+        user_grade_long = get_key_by_value(GRADES, user_grade_code) or "Your Grade"
 
         st.subheader(user_grade_long, anchor=False)
 
-        # Display subjects for user's grade
-        subjects_list = list(SUBJECTS.keys())
+        # Retrieve grade-specific subjects
+        grade_subjects_dict = get_subjects_for_grade(user_grade_code)
+        subjects_list = list(grade_subjects_dict.keys())
+
         for i in range(0, len(subjects_list), 2):
             col1, col2 = st.columns(2)
 
             # First item in row
             subject = subjects_list[i]
-            subj_code = SUBJECTS[subject]
+            subj_code = grade_subjects_dict[subject]
             btn_key = f"subject_{subj_code}"
 
             with col1:
@@ -276,7 +304,7 @@ if page == "menu":
             # Second item in row (if exists)
             if i + 1 < len(subjects_list):
                 subject = subjects_list[i + 1]
-                subj_code = SUBJECTS[subject]
+                subj_code = grade_subjects_dict[subject]
                 btn_key = f"subject_{subj_code}"
 
                 with col2:
@@ -308,7 +336,7 @@ if page == "menu":
 # Chat page
 elif page == "chat":
 
-    def right_align_user_msg():
+    def right_align_user_avatar():
         st.html("""
             <style>
                 .stChatMessage:has([data-testid="stChatMessageAvatarUser"]) {
@@ -316,140 +344,111 @@ elif page == "chat":
                     flex-direction: row-reverse;
                     align-items: end;
                 }
-
-                [data-testid="stChatMessageAvatarUser"] + [data-testid="stChatMessageContent"] * {
-                    text-align: left;
-                }
             </style>
             """)
 
-    def render_user_prompt(msg: dict):
-        if msg["role"] == "user":
-            with st.chat_message("user"):
-                st.write(msg["msg"])
+    right_align_user_avatar()
+
+    def get_text_direction(text: str) -> str:
+        """Returns 'rtl' if there are more RTL characters than LTR, otherwise 'ltr'."""
+        rtl_count = 0
+        ltr_count = 0
+
+        for char in text:
+            direction = unicodedata.bidirectional(char)
+            if direction in ("R", "AL"):
+                rtl_count += 1
+            elif direction == "L":
+                ltr_count += 1
+
+        return "rtl" if rtl_count > ltr_count else "ltr"
+
+    def render_user_prompt(msg: str):
+        direction = get_text_direction(msg)
+        text_alignment = "right" if direction == "rtl" else "left"
+        with st.chat_message("user"):
+            st.markdown(msg, text_alignment=text_alignment)
+
+    def render_ai_response(response: str):
+        st.markdown(response, anchors=False)
 
     def render_messages(messages_data: list):
-
-        # Custom HTML to right-align user messages
-        right_align_user_msg()
-
         for msg in messages_data:
             msg: dict
 
-            render_user_prompt(msg)
+            if msg["role"] == "user":
+                render_user_prompt(msg["content"])
 
             if msg["role"] == "assistant":
-                st.markdown(msg["ai_response"])
+                render_ai_response(msg["content"])
 
             " "
             " "
 
-        # Scroll to bottom smoothly
-        js = """
-        <script>
-            const allMessages = window.parent.document.querySelectorAll('[data-testid="stChatMessage"]');
-            
-            let lastUserMsg = null;
-            for (const msg of allMessages) {
-                if (msg.querySelector('[data-testid="stChatMessageAvatarUser"]')) {
-                    lastUserMsg = msg;
-                }
-            }
+    def scroll_to_bottom():
+        st.html(
+            f"""
+            <script>
+            const main = window.parent.document.querySelector(
+                'section[data-testid="stMain"]'
+            );
 
-            if (lastUserMsg) {
-                lastUserMsg.scrollIntoView({ behavior: 'smooth', block: 'start' });
-                setTimeout(() => {
-                    const el = window.parent.document.querySelector('section.stMain');
-                    el.scrollBy({ top: -10, behavior: 'smooth' });
-                }, 300);
-            } else {
-                const el = window.parent.document.querySelector('section.stMain');
-                el.scrollTo({ top: el.scrollHeight, behavior: 'smooth' });
-            }
-        </script>
-        """
-        st.html(js, unsafe_allow_javascript=True)
+            if (main) {{
+                main.scrollTo({{
+                    top: main.scrollHeight,
+                }});
+            }}
+            </script>
+            """,
+            unsafe_allow_javascript=True,
+        )
 
-    # Custom HTML to add the "+" button beside st.chat_input
-    st.markdown(
-        f"""
-        <style>
-        div[data-testid="stLayoutWrapper"]:has(div[data-testid="stChatInput"]) {{
-            position: fixed !important;
-            bottom: 0 !important;
-            left: 50% !important;
-            transform: translateX(-50%) !important;
-            width: {"70" if st.session_state.get("user_device_type", "pc") == "pc" else "100"}% !important;
-            padding: 1rem 1rem 2.5rem !important;
-            z-index: 999 !important;
-        }}
-
-        body:has([data-testid="stSidebar"][aria-expanded="true"])
-        div[data-testid="stLayoutWrapper"]:has(div[data-testid="stChatInput"]) {{
-            left: calc(21rem + (100vw - 21rem - 70vw + 21rem * 0.7) / 2) !important;
-            transform: none !important;
-            width: calc((100vw - 21rem) * 0.7) !important;
-            left: calc(21rem + (100vw - 21rem) * 0.15) !important;
-        }}
-
-        .main .block-container {{
-            padding-bottom: 80px !important;
-        }}
-        </style>
-        """,
-        unsafe_allow_html=True,
-    )
-
-    with st.container():
+    with st.bottom:
         col1, col2 = st.columns([0.08, 0.92], vertical_alignment="center")
         with col1:
             with st.popover("", icon="➕", help="Apply filters to get better results"):
                 menu_choice = st.session_state.get("menu_choice", "all_grades")
 
-                grade_options = ["♾️ All", *list(GRADES.keys())]
-                grade_index = 0
-                subject_options = ["♾️ All", *list(SUBJECTS.keys())]
-                subject_index = 0
-
-                if menu_choice != "all_grades":
-                    selected_subject = menu_choice
-                    subjects_codes = list(SUBJECTS.values())
-                    try:
-                        subject_index = subjects_codes.index(selected_subject) + 1
-                    except Exception:
-                        subject_index = 0
-
-                    if user:
-                        try:
-                            grade_index = grade_options.index(
-                                get_key_by_value(GRADES, user["grade"])
-                            )
-                        except Exception:
-                            grade_index = 0
-
-                else:
-                    if user:
-                        try:
-                            grade_index = grade_options.index(
-                                get_key_by_value(GRADES, user["grade"])
-                            )
-                        except Exception:
-                            grade_index = 0
+                grade_options = list(GRADES.keys())
+                default_grade = []
+                if user and user.get("grade"):
+                    user_grade_label = get_key_by_value(GRADES, user["grade"])
+                    if user_grade_label and user_grade_label in grade_options:
+                        default_grade = [user_grade_label]
 
                 grade_filter = st.multiselect(
                     "🎓 Grade",
                     grade_options,
-                    default=[grade_options[grade_index]]
-                    if grade_index > 0
-                    else [],
+                    default=default_grade,
                 )
+
+                # Determine available subjects based on selected grades in filter
+                if grade_filter:
+                    allowed_codes = set()
+                    for g_label in grade_filter:
+                        g_code = GRADES.get(g_label)
+                        if g_code:
+                            allowed_codes.update(GRADE_SUBJECTS.get(g_code, []))
+
+                    available_subjects_dict = {
+                        k: v for k, v in SUBJECTS.items() if v in allowed_codes
+                    }
+                else:
+                    available_subjects_dict = SUBJECTS
+
+                subject_options = list(available_subjects_dict.keys())
+
+                # Determine default subject selection
+                default_subject = []
+                if menu_choice != "all_grades":
+                    chosen_subject_label = get_key_by_value(SUBJECTS, menu_choice)
+                    if chosen_subject_label and chosen_subject_label in subject_options:
+                        default_subject = [chosen_subject_label]
 
                 subject_filter = st.multiselect(
                     "📚 Subject",
                     subject_options,
-                    default=[subject_options[subject_index]]
-                    if subject_index > 0
-                    else [],
+                    default=default_subject,
                 )
 
                 unit_num_filter = st.multiselect(
@@ -465,20 +464,27 @@ elif page == "chat":
                 )
 
         with col2:
-            user_query = st.chat_input("Ask something...")
-
-    def normalize_string(input_str: str):
-        """
-        1. Filter for alnum characters (removes emojis)
-        2. Strip
-        3. Replace spaces with underscores
-        """
-        return (
-            "".join(char for char in input_str if char.isalnum() or char.isspace())
-            .strip()
-            .replace("  ", " ")
-            .replace(" ", "_")
-        )
+            user_input = st.chat_input(
+                "Ask something...",
+                key="main_chat_input",
+                max_upload_size=45,
+                accept_file="multiple",
+                file_type=[
+                    "pdf",
+                    "png",
+                    "jpg",
+                    "jpeg",
+                    "webp",
+                    "txt",
+                    "md",
+                    "csv",
+                    "json",
+                    "docx",
+                    "pptx",
+                    "xlsx",
+                ],
+                submit_mode="disable",
+            )
 
     def get_filters():
         filters = []
@@ -515,130 +521,133 @@ elif page == "chat":
     # Render previous msgs if found
     render_messages(st.session_state.get("messages_data", []))
 
-    if user_query and user_query.strip():
+    # Scroll to bottom if just opened the chat
+    if st.session_state.get("scroll_to_bottom"):
+        print(st.session_state["scroll_to_bottom"])
+        scroll_to_bottom()
+        st.session_state["scroll_to_bottom"] = False
+
+    if user_input:
+
+        # Get text and attachments
+        user_query = user_input.text
+        uploaded_files = user_input.files
 
         # Step 1: Initialize chat if needed
         if user and not st.session_state.get("current_chat_id"):
+            clear_cached_chats()
             st.session_state["current_chat_id"] = chat_service.create_chat()
-            st.cache_data.clear()
 
         # Save user message and render it
         messages_data: list = st.session_state.get("messages_data", [])
 
-        user_msg_dict = {"role": "user", "msg": user_query}
+        user_msg_dict = {"role": "user", "content": user_query}
         messages_data.append(user_msg_dict)
 
-        # Save to database
-        if user and st.session_state.get("current_chat_id"):
-            chat_service.save_message(
-                st.session_state["current_chat_id"], "user", user_query
-            )
+        # Save user msg timestamp
+        user_timestamp = datetime.now().isoformat()
 
-        # Render user message
-        right_align_user_msg()
-        with st.chat_message("user"):
-            st.write(user_query)
-
-        assistant_msg_dict = {
-            "role": "assistant",
-            "ai_response": "",
-            "is_ai_error": False,
-        }
-        messages_data.append(assistant_msg_dict)
-
-        last_msg_idx = len(messages_data) - 1
+        # Render user message and scroll to bottom
+        render_user_prompt(user_query)
+        scroll_to_bottom()
 
         # Step 3: Save AI response and stream it
         with st.spinner("Generating..."):
-            # Determining the enriching scope
-            LESSON_KEYWORDS = {
-                # English
-                "lesson",
-                "lessons",
-                "unit",
-                "units",
-                "chapter",
-                "chapters",
-                "summarize",
-                "summary",
-                "overview",
-                # Arabic
-                "درس",
-                "الدرس",
-                "الوحدة",
-                "وحدة",
-                "الفصل",
-                "ملخص",
-                "لخص",
-            }
-
-            words = set(re.findall(r"\b\w+\b", user_query.lower()))
-            enriching_scope = "lesson" if words & LESSON_KEYWORDS else "page"
-
-            chunks_payloads = rag_service.search(
-                user_query,
-                limit=10,
-                score_threshold=0.5,
-                query_filter=get_filters(),
+            # Determine whether the user selected a specific lesson scope
+            full_lesson_source = (
+                bool(grade_filter)
+                and bool(subject_filter)
+                and len(unit_num_filter) == 1
+                and bool(lesson_num_filter)
             )
 
-            st.write(chunks_payloads)
+            # Get the enriched sources text
+            if full_lesson_source:
+                sources_text = rag_service.scroll_from_filters(get_filters())
+            else:
+                # Determining the enriching scope
+                LESSON_KEYWORDS = {
+                    # English
+                    "lesson",
+                    "lessons",
+                    "unit",
+                    "units",
+                    "chapter",
+                    "chapters",
+                    "summarize",
+                    "summary",
+                    "overview",
+                    # Arabic
+                    "درس",
+                    "الدرس",
+                    "الوحدة",
+                    "وحدة",
+                    "الفصل",
+                    "ملخص",
+                    "لخص",
+                }
 
-            # Get the lessons sources concatenated texts
-            sources_text = rag_service.enrich_sources(
-                chunks_payloads, scope=enriching_scope
-            )
+                words = set(re.findall(r"\b\w+\b", user_query.lower()))
+                enriching_scope = "lesson" if words & LESSON_KEYWORDS else "page"
 
-            st.write(sources_text)
+                chunks_payloads = rag_service.search(
+                    user_query,
+                    limit=10,
+                    score_threshold=0.5,
+                    query_filter=get_filters(),
+                )
+
+                # Get the lessons sources concatenated texts
+                sources_text = rag_service.enrich_sources(
+                    chunks_payloads, scope=enriching_scope
+                )
 
             # Get chat history for model context
-            chat_history = []
-
-            for m in st.session_state.get("messages_data", []):
-                if m["role"] == "user":
-                    chat_history.append({"role": "user", "content": m["msg"]})
-                else:
-                    chat_history.append(
-                        {"role": "assistant", "content": m["ai_response"]}
-                    )
-
-            if chat_history and chat_history[-1]["role"] == "user":
-                chat_history = chat_history[:-1]
+            chat_history = st.session_state.get("messages_data", [])
 
             # --- Rendering the AI response (2 ways) ---
-
-            is_first_prompt = (
-                chat_history
-                and len(chat_history) <= 2
-                and not chat_history[-1].get("content")
-            )
+            is_first_prompt = bool(chat_history)
 
             if is_first_prompt:
                 # FIRST - get response, suggested chat title
                 json_response = rag_service.generate_response(
-                    user_query, sources_text, chat_history, get_chat_title=True
+                    user_query,
+                    sources_text,
+                    uploaded_files,
+                    chat_history,
+                    get_chat_title=True,
                 )
 
                 full_response: str = json_response["response"]
-                st.markdown(full_response)
+                render_ai_response(full_response)
 
                 # Update ss with full response
-                messages_data[last_msg_idx]["ai_response"] = full_response
+                assistant_msg_dict = {
+                    "role": "assistant",
+                    "content": full_response,
+                }
+                messages_data.append(assistant_msg_dict)
 
                 # Save to DB
                 if user and st.session_state.get("current_chat_id"):
                     chat_service.save_message(
                         chat_id=st.session_state["current_chat_id"],
-                        role="assistant",
-                        content=full_response,
+                        user_prompt=user_query,
+                        user_timestamp=user_timestamp,
+                        ai_response=full_response,
                     )
 
                 if user:
+                    clear_cached_chats()
                     chat_service.update_title(
                         st.session_state["current_chat_id"],
                         json_response["suggested_chat_title"],
                     )
-                    st.cache_data.clear()
+                    st.session_state["sidebar_update_key"] += 1
+                    # Overwrite the placeholder instantly
+                    if is_creating_new_chat:
+                        with chat_history_placeholder.container():
+                            render_sidebar_chats()
 
             else:
                 # SECOND - stream response
@@ -648,19 +657,24 @@ elif page == "chat":
                     full_response = ""
 
                     for chunk in rag_service.generate_response_stream(
-                        user_query, sources_text, chat_history
+                        user_query, sources_text, uploaded_files, chat_history
                     ):
                         full_response += chunk
                         yield chunk
 
                     # Update ss with full response
-                    messages_data[last_msg_idx]["ai_response"] = full_response
+                    assistant_msg_dict = {
+                        "role": "assistant",
+                        "content": full_response,
+                    }
+                    messages_data.append(assistant_msg_dict)
 
                     if user and st.session_state.get("current_chat_id"):
                         chat_service.save_message(
                             chat_id=st.session_state["current_chat_id"],
-                            role="assistant",
-                            content=full_response,
+                            user_prompt=user_query,
+                            user_timestamp=user_timestamp,
+                            ai_response=full_response,
                         )
 
                 # Stream the AI response
@@ -670,7 +684,7 @@ elif page == "chat":
             st.session_state["messages_data"] = messages_data
 
         # except Exception as e:
-        #     messages_data[last_msg_idx]["is_ai_error"] = True
+        #     messages_data[-1]["is_ai_error"] = True
         #     st.session_state["messages_data"] = messages_data
         #     st.error(f"Error: {e}")
 

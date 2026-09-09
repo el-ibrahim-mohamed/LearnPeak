@@ -23,24 +23,33 @@ class ChatService:
     def save_message(
         self,
         chat_id: str,
-        role: str,
-        content: str,
+        user_prompt: str,
+        user_timestamp: str,
+        ai_response: str,
     ):
         """Save message to chat"""
-        msg_id = str(datetime.now().timestamp()).replace(".", "")
 
-        data = {
-            "role": role,
-            "content": content,
+        user_msg = {
+            "role": "user",
+            "content": user_prompt,
+            "timestamp": user_timestamp,
+        }
+
+        assistant_msg = {
+            "role": "assistant",
+            "content": ai_response,
             "timestamp": datetime.now().isoformat(),
         }
 
         self.root_ref.child(
-            f"users/{self.user_uid}/history/chats/{chat_id}/messages/{msg_id}"
-        ).set(data)
+            f"users/{self.user_uid}/history/chats/{chat_id}/messages/"
+        ).update({str(uuid.uuid4()): user_msg, str(uuid.uuid4()): assistant_msg})
 
-    def get_chats(self) -> List[Dict]:
+    def get_chats(self, user_uid: str) -> List[Dict]:
         """Get all chats for user, sorted by recency"""
+        if user_uid != self.user_uid:
+            return []
+        
         try:
             chats_ref = self.root_ref.child(f"users/{self.user_uid}/history/chats")
             chats_data = chats_ref.get()
@@ -60,7 +69,7 @@ class ChatService:
             msgs_ref = self.root_ref.child(
                 f"users/{self.user_uid}/history/chats/{chat_id}/messages"
             )
-            msgs_data = msgs_ref.get()
+            msgs_data: dict = msgs_ref.get()
 
             if not msgs_data:
                 return []
@@ -69,16 +78,6 @@ class ChatService:
             return sorted(msgs, key=lambda x: x.get("timestamp", ""))
         except:
             return []
-
-    def prepare_conversation_history(self, chat_id: str) -> List[Dict]:
-        """Return messages formatted for LLM input"""
-        msgs = self.get_chat_messages(self.user_uid, chat_id)
-        if not msgs:
-            return []
-
-        msgs = [{"role": m["role"], "content": m["content"]} for m in msgs]
-        if msgs and msgs[-1]["role"] == "user":
-            msgs = msgs[:-1]
 
     def update_title(self, chat_id: str, title: str):
         """Update chat title"""

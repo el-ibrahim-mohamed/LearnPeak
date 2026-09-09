@@ -16,13 +16,12 @@ from qdrant_client.models import (
     FieldCondition,
     Filter,
     MatchValue,
-    MatchAny,
     PointStruct,
 )
 
 from services.rag.embedding_service import EmbeddingService
 from services.rag.qdrant_service import QdrantService
-from config import GEMINI_FLASH_FIRST, GEMINI_LITE_FIRST
+from config import SUBJECTS, GEMINI_FLASH_FIRST, GEMINI_LITE_FIRST, get_key_by_value
 
 
 class RagService:
@@ -201,7 +200,11 @@ class RagService:
                 chunk["education"],
                 chunk["subject"],
                 chunk["unit_num"],
-                chunk["lesson_num"],
+                (
+                    min(chunk["lesson_num"])
+                    if isinstance(chunk["lesson_num"], list)
+                    else chunk["lesson_num"]
+                ),
                 chunk["page_num"],
                 chunk["chunk_order"],
             )
@@ -245,14 +248,9 @@ class RagService:
 
         return sources_text.strip()
 
-    def get_sources_from_filters(
+    def scroll_from_filters(
         self,
-        country: str,
-        education: str,
-        grade: str,
-        subject: str,
-        units: list[int] = None,
-        lessons: list[int] = None,
+        filters: Filter,
     ) -> str:
         """
         Retrieve all textbook chunks matching the selected curriculum filters.
@@ -261,44 +259,7 @@ class RagService:
         allowing the quiz generator to use an entire book, unit, or lesson.
         """
 
-        conditions = [
-            FieldCondition(
-                key="country",
-                match=MatchValue(value=country),
-            ),
-            FieldCondition(
-                key="education",
-                match=MatchValue(value=education),
-            ),
-            FieldCondition(
-                key="grade",
-                match=MatchValue(value=grade),
-            ),
-            FieldCondition(
-                key="subject",
-                match=MatchValue(value=subject),
-            ),
-        ]
-
-        if units:
-            conditions.append(
-                FieldCondition(
-                    key="unit_num",
-                    match=MatchAny(any=units),
-                )
-            )
-
-        if lessons:
-            conditions.append(
-                FieldCondition(
-                    key="lesson_num",
-                    match=MatchAny(any=lessons),
-                )
-            )
-
-        query_filter = Filter(must=conditions)
-
-        chunks = self.scroll(query_filter)
+        chunks = self.scroll(filters)
 
         if not chunks:
             return ""
@@ -307,7 +268,11 @@ class RagService:
         chunks.sort(
             key=lambda chunk: (
                 chunk.get("unit_num", 0),
-                chunk.get("lesson_num", 0),
+                (
+                    min(chunk["lesson_num"])
+                    if isinstance(chunk["lesson_num"], list)
+                    else chunk["lesson_num"]
+                ),
                 chunk.get("page_num", 0),
                 chunk.get("chunk_order", 0),
             )
@@ -329,7 +294,7 @@ class RagService:
                     sources_text += "\n\n" + "-" * 50 + "\n\n"
 
                 sources_text += (
-                    f'=== Book: {chunk.get("book_publisher", "")} {chunk.get("subject")} | '
+                    f'=== {get_key_by_value(SUBJECTS, chunk.get("subject"))} | '
                     f'Unit {chunk["unit_num"]} | '
                     f'Lesson {chunk["lesson_num"]} | '
                     f'Page {chunk["page_num"]} ===\n\n'
@@ -346,17 +311,25 @@ class RagService:
     # -------------------------
 
     def generate_response(
-        self, user_query, sources: str, chat_history=[], get_chat_title=True
+        self,
+        user_query,
+        sources: str,
+        uploaded_files: list = [],
+        chat_history: list = [],
+        get_chat_title=True,
     ):
         prompt = self.ai_prompt(
             user_query, sources, chat_history, get_chat_title, output_format="json"
         )
+        uploaded_files = self._prepare_uploaded_files(uploaded_files)
+
+        contents = [prompt, *uploaded_files]
 
         for model in GEMINI_LITE_FIRST:
             try:
                 response = self.gemini_client.models.generate_content(
                     model=model,
-                    contents=[prompt],
+                    contents=contents,
                     config=types.GenerateContentConfig(
                         max_output_tokens=40000,
                         temperature=0.7,
@@ -371,7 +344,11 @@ class RagService:
         return json.loads(response.text)
 
     def generate_response_stream(
-        self, user_query, sources: str, chat_history: list = [], get_chat_title=False
+        self,
+        user_query,
+        sources: str,
+        uploaded_files: list = [],
+        chat_history: list = [],
     ):
         """
         Streaming version of generate_response.
@@ -381,15 +358,18 @@ class RagService:
             user_query,
             sources,
             chat_history,
-            get_chat_title,
             output_format="text_stream",
         )
+
+        uploaded_files = self._prepare_uploaded_files(uploaded_files)
+
+        contents = [prompt, *uploaded_files]
 
         for model in GEMINI_LITE_FIRST:
             try:
                 stream = self.gemini_client.models.generate_content_stream(
                     model=model,
-                    contents=[prompt],
+                    contents=contents,
                     config=types.GenerateContentConfig(
                         max_output_tokens=40000,
                         temperature=0.7,
@@ -416,6 +396,7 @@ class RagService:
             output_format_txt = "You MUST return your response in markdown format."
 
         elif output_format == "json" and get_chat_title:
+            print(True)
             output_format_txt = """You MUST return your response in a JSON structure like this example:
             {
                 "response": "Markdown formatted answer...",
@@ -487,6 +468,25 @@ EDUCATIONAL RULES:
 Now answer the student's question.
 """
 
+    @staticmethod
+    def _prepare_uploaded_files(uploaded_files: list):
+        """
+        Convert Streamlit UploadedFile objects into Gemini inline file parts.
+
+        Files are kept as inline data and are not treated as RAG sources.
+        """
+
+        if not uploaded_files:
+            return []
+
+        return [
+            types.Part.from_bytes(
+                data=file.getvalue(),
+                mime_type=file.type,
+            )
+            for file in uploaded_files
+        ]
+
 
 class AddSource:
     def __init__(
@@ -497,6 +497,87 @@ class AddSource:
         self.rag_service = rag_service
         self.mistral_client: Mistral = Mistral(api_key=mistral_api_key)
         self.gemini_client = rag_service.gemini_client
+
+    def split_pdf_by_size(self, pdf_bytes: bytes, max_mb: int = 45) -> list[bytes]:
+        """
+        Split a PDF into page-based chunks using an average-page-size estimate.
+
+        The function avoids repeatedly serializing a growing PDF. It first
+        estimates the number of pages that should fit in each chunk, then
+        serializes each chunk and adjusts the boundary only when necessary.
+
+        A single page larger than max_mb is returned as its own chunk.
+        """
+
+        max_bytes = max_mb * 1024 * 1024
+
+        if len(pdf_bytes) <= max_bytes:
+            return [pdf_bytes]
+
+        source_pdf = pymupdf.open(stream=pdf_bytes, filetype="pdf")
+
+        try:
+            total_pages = len(source_pdf)
+
+            if total_pages == 0:
+                return [pdf_bytes]
+
+            # Estimate the average serialized size per page.
+            avg_page_bytes = len(pdf_bytes) / total_pages
+
+            # Initial estimate of how many pages should fit in one chunk.
+            pages_per_chunk = max(1, int(max_bytes / avg_page_bytes))
+
+            chunks = []
+            start_page = 0
+
+            while start_page < total_pages:
+                end_page = min(start_page + pages_per_chunk, total_pages)
+
+                while True:
+                    doc = pymupdf.open()
+
+                    try:
+                        doc.insert_pdf(
+                            source_pdf,
+                            from_page=start_page,
+                            to_page=end_page - 1,
+                        )
+
+                        chunk_bytes = doc.tobytes(
+                            garbage=3,
+                            deflate=True,
+                        )
+
+                    finally:
+                        doc.close()
+
+                    # Chunk fits.
+                    if len(chunk_bytes) <= max_bytes:
+                        chunks.append(chunk_bytes)
+                        start_page = end_page
+                        break
+
+                    # Even one page is too large.
+                    if end_page - start_page == 1:
+                        chunks.append(chunk_bytes)
+                        start_page = end_page
+                        break
+
+                    # Chunk is too large. Estimate how much to shrink it.
+                    actual_avg = len(chunk_bytes) / (end_page - start_page)
+
+                    new_page_count = max(1, int(max_bytes / actual_avg))
+
+                    # Make sure we actually reduce the range.
+                    new_page_count = min(new_page_count, (end_page - start_page) - 1)
+
+                    end_page = start_page + new_page_count
+
+            return chunks
+
+        finally:
+            source_pdf.close()
 
     def prepare_pdf(self, pdf_bytes: bytes):
         """ """
@@ -515,9 +596,7 @@ class AddSource:
                     data=pdf_bytes, mime_type="application/pdf"
                 )
 
-        start = time.perf_counter()
         book_pdf = upload_pdf()
-        print(f"PREPARE PDF — UPLOAD: {time.perf_counter() - start:.2f}s")
 
         # Create the system instructions
         system_instructions = """
@@ -623,8 +702,8 @@ and other supplementary sections when they are not part of the Main Book's actua
 For every explanation-page range, determine:
 - Unit number
 - Unit name
-- Lesson number
-- Lesson name
+- Lesson(s) number(s)
+- Lesson(s) name(s)
 
 The unit and lesson information should primarily be determined from the headers and/or footers of the Main Book pages, where this information is provided.
 Preserve the names as they appear in the textbook.
@@ -632,16 +711,18 @@ Use surrounding pages when necessary to correctly determine which unit and lesso
 The metadata applies to every page within its corresponding explanation range.
 If an all-question page splits a lesson into multiple explanation ranges, the ranges on both sides should retain the same lesson metadata when they belong to the same lesson.
 
-IMPORTANT: Some explanation pages may cover TWO OR MORE lessons together. When a page or explanation-page range explicitly belongs to multiple lessons, include ALL applicable lesson numbers and lesson names in `lesson_num` and `lesson_name` as lists.
+Put lesson_num and lesson_name in lists, for example:
+- lesson_num: [1]
+- lesson_name: ["Lesson 1 Name"]
+
+IMPORTANT: Some explanation pages may cover TWO or more lessons together. When a page or explanation-page range explicitly belongs to multiple lessons,
+include ALL applicable lesson numbers and lesson names in `lesson_num` and `lesson_name` as lists.
 
 For example, if an explanation page covers "Lesson 1 & 2", return:
 - lesson_num: [1, 2]
 - lesson_name: ["Lesson 1 Name", "Lesson 2 Name"]
 
 Do NOT create a combined lesson number or combined lesson name such as `"1 & 2"` or `"Lesson 1 & 2"`.
-Each individual lesson must remain separately identifiable.
-
-For normal explanation pages belonging to only one lesson, return `lesson_num` and `lesson_name` as a single value.
 
 ---
 
@@ -669,12 +750,12 @@ Return ONLY valid JSON matching exactly the structure in this example:
       "end_page": 12,
       "unit_name": "Thermal Energy",
       "unit_num": 1,
-      "lesson_name": "Thermal and Chemical Changes",
-      "lesson_num": 2
+      "lesson_name": ["Thermal and Chemical Changes"],
+      "lesson_num": [2]
     },
     {
-      "start_page": 13,
-      "end_page": 26,
+      "start_page": 26,
+      "end_page": 45,
       "unit_name": "Thermal Energy",
       "unit_num": 1,
       "lesson_name": ["Lesson 1 Name", "Lesson 2 Name"],
@@ -704,11 +785,8 @@ Data types MUST be:
 - `end_page`: integer
 - `unit_name`: string
 - `unit_num`: integer
-- `lesson_name`: string OR list of strings
-- `lesson_num`: integer OR list of integers
-
-When an explanation range belongs to multiple lessons,
-`lesson_name` and `lesson_num` MUST be lists containing all applicable lessons in their textbook order.
+- `lesson_name`: list of strings
+- `lesson_num`: list of integers
 
 Do not wrap the JSON in Markdown code fences.
 Do not include any additional keys.
@@ -738,7 +816,6 @@ Do not include any explanation before or after the JSON.
                 continue
 
         json_response = json.loads(response.text)
-        print(f"PREPARE PDF — GEMINI REQUEST: {time.perf_counter() - start:.2f}s")
 
         # Prepare explanation-only PDF
         offset: int = json_response["digital_to_actual_pages_offset"]
@@ -791,7 +868,8 @@ Do not include any explanation before or after the JSON.
 
         # Convert the prepared PDF back to bytes.
         explanations_pdf_bytes = prepared_pdf.tobytes()
-        debug_pdf_path = "debug/prepared/explanations_only.pdf"
+        timestamp = datetime.now().isoformat(timespec="seconds").replace(":", "-")
+        debug_pdf_path = f"debug/prepared/{timestamp}.pdf"
 
         os.makedirs(os.path.dirname(debug_pdf_path), exist_ok=True)
 
@@ -864,16 +942,35 @@ Do not include any explanation before or after the JSON.
 
             return None
 
-        # Get the b64 format from the PDF bytes
-        pdf_data_url = "data:application/pdf;base64," + base64.b64encode(
-            pdf_bytes
-        ).decode("utf-8")
-
-        response = self.mistral_client.ocr.process(
-            model="mistral-ocr-latest",
-            document={"type": "document_url", "document_url": pdf_data_url},
-            # extract_footer=True,
+        # 1. Upload the raw PDF bytes directly to Mistral's storage
+        uploaded_file = self.mistral_client.files.upload(
+            file={
+                "file_name": "document.pdf",
+                "content": pdf_bytes,  # Pass raw bytes directly (0% Base64 bloat)
+            },
+            purpose="ocr",
         )
+
+        try:
+            # 2. Generate a temporary internal signed URL for the OCR tool
+            signed_url_response = self.mistral_client.files.get_signed_url(
+                file_id=uploaded_file.id
+            )
+
+            # 3. Process the OCR using the lightweight signed URL
+            response = self.mistral_client.ocr.process(
+                model="mistral-ocr-latest",
+                document={
+                    "type": "document_url",
+                    "document_url": signed_url_response.url,
+                },
+                include_blocks=False,
+                extract_footer=True,
+            )
+
+        finally:
+            # 4. Clean up the scratch space file immediately to prevent leaks
+            self.mistral_client.files.delete(file_id=uploaded_file.id)
 
         # Save the respoonse for debugging and reuse
         timestamp = datetime.now().strftime("%Y-%m-%d_%H-%M-%S")
@@ -906,6 +1003,7 @@ Do not include any explanation before or after the JSON.
     def attach_metadata(
         self,
         ocr_result: list[dict],
+        batch_id: str,
         unit_lesson_metadata: dict,
         grade: str,
         subject: str,
@@ -939,7 +1037,6 @@ Do not include any explanation before or after the JSON.
             term = self.current_term()
 
         data = ocr_result
-        batch_id = str(uuid.uuid4())
 
         # Attach metadata to each OCR page
         for page_data in data:
@@ -1075,68 +1172,162 @@ Do not include any explanation before or after the JSON.
         """
         Process a PDF book and add it to the vector database.
 
-        The pipeline performs the following steps:
-        1. OCR the PDF and extract page text.
-        2. Attach subject, publisher, unit, and lesson metadata.
-        3. Split each page into semantic chunks.
-        4. Embed the chunks and upload them to the vector database.
-
-        Parameters
-        ----------
-        pdf_bytes : bytes
-            The raw bytes of the PDF document.
-        grade : str
-            The grade of the student.
-        subject : str
-            The subject of the book.
-        book_publisher : str
-            The publisher of the book.
-
-        Returns
-        -------
-        None
+        Yields
+        ------
+        dict
+            Progress information for each completed pipeline step.
+            Each message contains:
+            - step: Human-readable step name
+            - message: Detailed status message
+            - elapsed: Time taken in seconds
         """
 
-        print("PREPARING PDF")
-        start = time.perf_counter()
+        batch_id = str(uuid.uuid4())
 
-        explanations_pdf_bytes, digital_to_actual_mapping, pages_metadata = (
-            self.prepare_pdf(pdf_bytes)
-        )
-
-        print(f"PREPARING PDF FINISHED — {time.perf_counter() - start:.2f}s")
-
-        print("STARTING OCR")
-        start = time.perf_counter()
-
-        pages = self.ocr_pdf(explanations_pdf_bytes, digital_to_actual_mapping)
-
-        print(f"OCR FINISHED — {time.perf_counter() - start:.2f}s")
+        # ---------------------------------------------------------
+        # SPLIT PDF
+        # ---------------------------------------------------------
 
         start = time.perf_counter()
 
-        pages = self.attach_metadata(
-            pages,
-            unit_lesson_metadata=pages_metadata,
-            grade=grade,
-            subject=subject,
-            book_publisher=book_publisher,
-            term=1,
-        )
+        pdf_chunks = self.split_pdf_by_size(pdf_bytes)
 
-        print(f"METADATA ATTACHED — {time.perf_counter() - start:.2f}s")
+        split_time = time.perf_counter() - start
 
-        start = time.perf_counter()
+        yield {
+            "step": "PDF Split",
+            "message": f"PDF split into {len(pdf_chunks)} processing chunk(s).",
+            "elapsed": split_time,
+        }
 
-        chunks = self.chunk_pages(pages)
+        # ---------------------------------------------------------
+        # PROCESS EACH PDF CHUNK
+        # ---------------------------------------------------------
 
-        print(f"CHUNKED — {time.perf_counter() - start:.2f}s")
+        for i, chunk_bytes in enumerate(pdf_chunks):
 
-        start = time.perf_counter()
+            chunk_number = i + 1
+            total_chunks = len(pdf_chunks)
 
-        self.insert_to_vector_db(chunks)
+            yield {
+                "step": f"Chunk {chunk_number}/{total_chunks}",
+                "message": f"Starting processing of chunk {chunk_number} of {total_chunks}.",
+                "elapsed": 0,
+            }
 
-        print(f"INSERTED TO VECTOR DB — {time.perf_counter() - start:.2f}s")
+            # -----------------------------------------------------
+            # PREPARE PDF
+            # -----------------------------------------------------
+
+            start = time.perf_counter()
+
+            explanations_pdf_bytes, digital_to_actual_mapping, pages_metadata = (
+                self.prepare_pdf(chunk_bytes)
+            )
+
+            elapsed = time.perf_counter() - start
+
+            yield {
+                "step": "PDF Prepared",
+                "message": (
+                    f"Chunk {chunk_number}/{total_chunks} prepared successfully."
+                ),
+                "elapsed": elapsed,
+            }
+
+            # -----------------------------------------------------
+            # OCR
+            # -----------------------------------------------------
+
+            start = time.perf_counter()
+
+            pages = self.ocr_pdf(
+                explanations_pdf_bytes,
+                digital_to_actual_mapping,
+            )
+
+            elapsed = time.perf_counter() - start
+
+            yield {
+                "step": "OCR Completed",
+                "message": (
+                    f"Extracted text from {len(pages)} page(s) "
+                    f"of chunk {chunk_number}/{total_chunks}."
+                ),
+                "elapsed": elapsed,
+            }
+
+            # -----------------------------------------------------
+            # ATTACH METADATA
+            # -----------------------------------------------------
+
+            start = time.perf_counter()
+
+            pages = self.attach_metadata(
+                pages,
+                batch_id=batch_id,
+                unit_lesson_metadata=pages_metadata,
+                grade=grade,
+                subject=subject,
+                book_publisher=book_publisher,
+                term=1,
+            )
+
+            elapsed = time.perf_counter() - start
+
+            yield {
+                "step": "Metadata Attached",
+                "message": (f"Added curriculum metadata to {len(pages)} page(s)."),
+                "elapsed": elapsed,
+            }
+
+            # -----------------------------------------------------
+            # CHUNK PAGES
+            # -----------------------------------------------------
+
+            start = time.perf_counter()
+
+            chunks = self.chunk_pages(pages)
+
+            elapsed = time.perf_counter() - start
+
+            yield {
+                "step": "Semantic Chunking Completed",
+                "message": (
+                    f"Created {len(chunks)} semantic chunk(s) "
+                    f"from chunk {chunk_number}/{total_chunks}."
+                ),
+                "elapsed": elapsed,
+            }
+
+            # -----------------------------------------------------
+            # INSERT INTO VECTOR DB
+            # -----------------------------------------------------
+
+            start = time.perf_counter()
+
+            self.insert_to_vector_db(chunks)
+
+            elapsed = time.perf_counter() - start
+
+            yield {
+                "step": "Vector Database Updated",
+                "message": (
+                    f"Inserted {len(chunks)} chunk(s) into the vector database."
+                ),
+                "elapsed": elapsed,
+            }
+
+        # ---------------------------------------------------------
+        # FINISHED
+        # ---------------------------------------------------------
+
+        yield {
+            "step": "Completed",
+            "message": "Book processing and ingestion completed successfully.",
+            "elapsed": 0,
+            "batch_id": batch_id,
+        }
 
     @staticmethod
     def current_term():

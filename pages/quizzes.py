@@ -3,7 +3,14 @@ from firebase_admin.db import Reference
 import time
 from datetime import datetime
 from services.quizzes.service import QuizzesService, QuizzesHistory
-from config import GRADES, SUBJECTS, UNIT_OPTIONS, LESSON_OPTIONS
+from config import (
+    GRADES,
+    SUBJECTS,
+    UNIT_OPTIONS,
+    LESSON_OPTIONS,
+    get_key_by_value,
+    get_subjects_for_grade,
+)
 from services.rag.embedding_service import EmbeddingService
 from services.rag.qdrant_service import QdrantService
 from services.rag.rag_service import RagService
@@ -56,10 +63,6 @@ def init_rag_service():
 
 
 rag_service = init_rag_service()
-
-
-def get_key_by_value(d: dict, value):
-    return next((k for k, v in d.items() if v == value), None)
 
 
 def display_quiz(quiz_questions: dict):
@@ -190,23 +193,32 @@ if not st.session_state.get("quiz_started"):
 
     with col1:
         grade_options = list(GRADES.keys())
-        grade_index = None
-
-        if user:
-            grade_index = grade_options.index(get_key_by_value(GRADES, user["grade"]))
+        user_grade_label = get_key_by_value(GRADES, user.get("grade")) if user else None
+        grade_index = (
+            grade_options.index(user_grade_label)
+            if user_grade_label in grade_options
+            else 0
+        )
 
         selected_grade = st.selectbox(
             "Grade", grade_options, index=grade_index, placeholder="Choose your grade"
         )
 
     with col2:
-        subject_options = list(SUBJECTS.keys())
-        subject_index = 0
+        # Dynamically load subjects based on selected grade
+        selected_grade_code = GRADES.get(selected_grade) if selected_grade else None
+        available_subjects_dict = (
+            get_subjects_for_grade(selected_grade_code)
+            if selected_grade_code
+            else SUBJECTS
+        )
+        subject_options = list(available_subjects_dict.keys())
 
         selected_subject = st.selectbox(
             "Subject",
             subject_options,
-            index=subject_index,
+            index=0 if subject_options else None,
+            placeholder="Choose a subject",
         )
 
     col1, col2 = st.columns(2)
