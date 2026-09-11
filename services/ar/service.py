@@ -8,7 +8,7 @@ import base64
 import uuid
 import time
 from .errors import *
-from config import GEMINI_LITE_FIRST
+from config import *
 
 
 class ARService:

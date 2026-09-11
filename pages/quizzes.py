@@ -3,14 +3,7 @@ from firebase_admin.db import Reference
 import time
 from datetime import datetime
 from services.quizzes.service import QuizzesService, QuizzesHistory
-from config import (
-    GRADES,
-    SUBJECTS,
-    UNIT_OPTIONS,
-    LESSON_OPTIONS,
-    get_key_by_value,
-    get_subjects_for_grade,
-)
+from config import *
 from services.rag.embedding_service import EmbeddingService
 from services.rag.qdrant_service import QdrantService
 from services.rag.rag_service import RagService

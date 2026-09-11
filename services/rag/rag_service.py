@@ -15,13 +15,14 @@ from mistralai.client import Mistral
 from qdrant_client.models import (
     FieldCondition,
     Filter,
+    MatchAny,
     MatchValue,
     PointStruct,
 )
 
 from services.rag.embedding_service import EmbeddingService
 from services.rag.qdrant_service import QdrantService
-from config import SUBJECTS, GEMINI_FLASH_FIRST, GEMINI_LITE_FIRST, get_key_by_value
+from config import *
 
 
 class RagService:
@@ -36,7 +37,6 @@ class RagService:
         gemini_client: genai.Client,
     ):
         self.qdrant_service = qdrant_service
-        self.qdrant_client = qdrant_service.get_client()
         self.collection_name = qdrant_service.collection_name
         self.embedding_service = embedding_service
         self.gemini_client = gemini_client
@@ -71,7 +71,7 @@ class RagService:
             for chunk, embedding in zip(chunks, embeddings)
         ]
 
-        self.qdrant_client.upsert(
+        self.qdrant_service.upsert(
             collection_name=self.collection_name,
             points=points,
         )
@@ -93,7 +93,7 @@ class RagService:
 
         query_embedding = self.embedding_service.embed([user_question], "query")[0]
 
-        response = self.qdrant_client.query_points(
+        response = self.qdrant_service.query_points(
             collection_name=self.collection_name,
             query=query_embedding,
             limit=limit,
@@ -111,7 +111,7 @@ class RagService:
 
         while True:
 
-            points, offset = self.qdrant_client.scroll(
+            points, offset = self.qdrant_service.scroll(
                 collection_name=self.collection_name,
                 scroll_filter=scroll_filter,
                 limit=100,
@@ -169,9 +169,13 @@ class RagService:
         if scope == "page":
             metadata_keys.append("page_num")
 
-        # Collect the unique page/lesson combinations
+        # Normalize list metadata so combinations can be hashed and deduplicated.
         combinations = {
-            tuple(payload[key] for key in metadata_keys) for payload in chunks_payloads
+            tuple(
+                tuple(payload[key]) if isinstance(payload[key], list) else payload[key]
+                for key in metadata_keys
+            )
+            for payload in chunks_payloads
         }
 
         # Build one filter for each page/lesson
@@ -181,7 +185,11 @@ class RagService:
                     must=[
                         FieldCondition(
                             key=key,
-                            match=MatchValue(value=value),
+                            match=(
+                                MatchAny(any=list(value))
+                                if isinstance(value, tuple)
+                                else MatchValue(value=value)
+                            ),
                         )
                         for key, value in zip(metadata_keys, combination)
                     ]
@@ -579,7 +587,7 @@ class AddSource:
         finally:
             source_pdf.close()
 
-    def prepare_pdf(self, pdf_bytes: bytes):
+    def prepare_pdf(self, pdf_bytes: bytes, english_category: str = None):
         """ """
 
         # Upload the PDF using the Files API
@@ -599,7 +607,7 @@ class AddSource:
         book_pdf = upload_pdf()
 
         # Create the system instructions
-        system_instructions = """
+        system_instructions = f"""
 You are an AI system responsible for analyzing an educational textbook PDF and extracting its structural information for an automated educational-content ingestion pipeline.
 Your task is to analyze the provided PDF and return ONLY the required JSON object.
 
@@ -700,6 +708,7 @@ and other supplementary sections when they are not part of the Main Book's actua
 ## 5. Determine Unit and Lesson Metadata
 
 For every explanation-page range, determine:
+{"- Category" if english_category else ""}
 - Unit number
 - Unit name
 - Lesson(s) number(s)
@@ -707,6 +716,10 @@ For every explanation-page range, determine:
 
 The unit and lesson information should primarily be determined from the headers and/or footers of the Main Book pages, where this information is provided.
 Preserve the names as they appear in the textbook.
+
+{"""English O.L books have 2 sections, the main units and the O.L Story. The options for `category` are either 'ol' or 'ol_story'.
+For the O.L story, consider the unit_num the next one if not specified and consider the lesson_num the chapters numbers.""" if english_category else ""}
+
 Use surrounding pages when necessary to correctly determine which unit and lesson a range belongs to.
 The metadata applies to every page within its corresponding explanation range.
 If an all-question page splits a lesson into multiple explanation ranges, the ranges on both sides should retain the same lesson metadata when they belong to the same lesson.
@@ -742,27 +755,43 @@ Do not include pages outside the Main Book.
 
 Return ONLY valid JSON matching exactly the structure in this example:
 
-{
+{{
   "digital_to_actual_pages_offset": 4,
   "explanation_pages_ranges": [
-    {
-      "start_page": 5,
-      "end_page": 12,
-      "unit_name": "Thermal Energy",
+    {{
+      "start_page": 23,
+      "end_page": 34,
+      "unit_name": "Generations",
       "unit_num": 1,
       "lesson_name": ["Thermal and Chemical Changes"],
-      "lesson_num": [2]
-    },
-    {
-      "start_page": 26,
-      "end_page": 45,
-      "unit_name": "Thermal Energy",
-      "unit_num": 1,
+      "lesson_num": [2],
+      {"'category': 'ol'," if english_category else ""}
+    }},
+    {{
+      "start_page": 51,
+      "end_page": 73,
+      "unit_name": "Discover Yourself",
+      "unit_num": 2,
       "lesson_name": ["Lesson 1 Name", "Lesson 2 Name"],
-      "lesson_num": [1, 2]
+      "lesson_num": [1, 2],
+      {"'category': 'ol'," if english_category else ""}
+    }}
+    {
+        """
+        {
+            "start_page": 130,
+            "end_page": 132,
+            "unit_name": "O.L Story",
+            "unit_num": 3,
+            "lesson_name": ["Story Chapter 1 Name"],
+            "lesson_num": [1],
+            "category": "ol_story",
+        }
+        """
+        if english_category else ""
     }
   ]
-}
+}}
 
 The top-level object MUST contain exactly these two keys:
 
@@ -773,6 +802,7 @@ Each item in `explanation_pages_ranges` MUST contain exactly these six keys:
 
 - `start_page`
 - `end_page`
+{"- `category`" if english_category else ""}
 - `unit_name`
 - `unit_num`
 - `lesson_name`
@@ -783,6 +813,7 @@ Data types MUST be:
 - `digital_to_actual_pages_offset`: integer
 - `start_page`: integer
 - `end_page`: integer
+{"- `category`: str" if english_category else ""}
 - `unit_name`: string
 - `unit_num`: integer
 - `lesson_name`: list of strings
@@ -863,6 +894,9 @@ Do not include any explanation before or after the JSON.
                     "lesson_name": page_range["lesson_name"],
                     "lesson_num": page_range["lesson_num"],
                 }
+
+                if page_range.get("category"):
+                    pages_metadata[actual_page]["category"] = page_range["category"]
 
                 new_digital_page += 1
 
@@ -1168,6 +1202,7 @@ Do not include any explanation before or after the JSON.
         grade: str,
         subject: str,
         book_publisher: str = "el-moasser",
+        english_category: str = None,
     ):
         """
         Process a PDF book and add it to the vector database.
@@ -1222,7 +1257,7 @@ Do not include any explanation before or after the JSON.
             start = time.perf_counter()
 
             explanations_pdf_bytes, digital_to_actual_mapping, pages_metadata = (
-                self.prepare_pdf(chunk_bytes)
+                self.prepare_pdf(chunk_bytes, english_category)
             )
 
             elapsed = time.perf_counter() - start

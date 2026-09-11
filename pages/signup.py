@@ -4,7 +4,7 @@ import time
 from datetime import datetime
 from typing import Literal
 from services.account.auth import Signup
-from config import COUNTRIES, EDUCATION, GRADES
+from config import *
 
 # Set page config
 st.set_page_config(

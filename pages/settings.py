@@ -2,7 +2,7 @@ import streamlit as st
 import time
 
 from services.account.settings import AccountSettingsService
-from config import COUNTRIES, EDUCATION, GRADES
+from config import *
 
 # ---------------------------------------------------------
 # PAGE SETUP

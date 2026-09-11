@@ -4,7 +4,7 @@ import json
 from firebase_admin.db import Reference
 import time
 import uuid
-from config import GEMINI_LITE_FIRST
+from config import *
 
 
 class QuizzesService:

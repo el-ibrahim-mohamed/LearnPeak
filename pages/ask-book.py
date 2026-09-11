@@ -1,19 +1,10 @@
 import streamlit as st
 import re
-import uuid
 from datetime import datetime
 import unicodedata
 from streamlit_shortcuts import shortcut_button
 from services.rag.chat_service import ChatService
-from config import (
-    GRADES,
-    SUBJECTS,
-    GRADE_SUBJECTS,
-    UNIT_OPTIONS,
-    LESSON_OPTIONS,
-    get_key_by_value,
-    get_subjects_for_grade,
-)
+from config import *
 
 # Set page config
 st.set_page_config(
@@ -39,15 +30,14 @@ with st.spinner("Loading LearnPeak RAG System...", show_time=True):
         from services.rag.qdrant_service import QdrantService
         from services.rag.rag_service import RagService
 
-    # Initialize Services (Cached)
-    @st.cache_resource()
-    def init_services():
-        embedding_service = EmbeddingService()
+    # Initialize Services
+    @st.cache_resource
+    def init_qdrant_service(vector_size: int):
+
         qdrant_service = QdrantService(
             url=st.secrets["qdrant"]["URL"],
             api_key=st.secrets["qdrant"]["API_KEY"],
-            vector_size=embedding_service.vector_size,
-            collection_name="learnpeak_knowledge",
+            vector_size=vector_size,
         )
 
         qdrant_service.ensure_collection_exists()
@@ -64,19 +54,44 @@ with st.spinner("Loading LearnPeak RAG System...", show_time=True):
             qdrant_service.create_payload_index(
                 qdrant_service.collection_name,
                 payload_key,
-                PayloadSchemaType.KEYWORD,
+                field_schema=PayloadSchemaType.KEYWORD,
             )
 
-        for payload_key in ["term", "unit_num", "lesson_num", "page_num"]:
+        for payload_key in [
+            "term",
+            "unit_num",
+            "lesson_num",
+            "page_num",
+        ]:
             qdrant_service.create_payload_index(
                 qdrant_service.collection_name,
                 payload_key,
-                PayloadSchemaType.INTEGER,
+                field_schema=PayloadSchemaType.INTEGER,
             )
 
-        return RagService(qdrant_service, embedding_service, st.session_state["client"])
+        return qdrant_service
 
-    rag_service = init_services()
+
+    qdrant_service = init_qdrant_service(EMBEDDING_VECTOR_SIZE)
+
+
+    @st.cache_resource
+    def init_rag_services():
+
+        # Embedding model
+        embedding_service = EmbeddingService()
+
+        # RagService
+        rag_service = RagService(
+            qdrant_service=qdrant_service,
+            embedding_service=embedding_service,
+            gemini_client=st.session_state["client"],
+        )
+
+        return rag_service
+
+
+    rag_service = init_rag_services()
 
 if user and user.get("uid"):
     chat_service = ChatService(st.session_state.get("root_ref"), user["uid"])

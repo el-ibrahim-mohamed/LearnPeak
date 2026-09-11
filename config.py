@@ -128,6 +128,8 @@ GEMINI_FLASH_FIRST = [
     GEMINI_MODELS_CODES["3.1-flash-lite"],
 ]
 
+EMBEDDING_VECTOR_SIZE = 384
+
 # ==========================================
 # UTILITY FUNCTIONS
 # ==========================================
