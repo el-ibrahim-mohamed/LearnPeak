@@ -606,6 +606,11 @@ class AddSource:
 
         book_pdf = upload_pdf()
 
+        # English Category
+        get_english_category = False
+        if english_category == "ol":
+            get_english_category = True
+
         # Create the system instructions
         system_instructions = f"""
 You are an AI system responsible for analyzing an educational textbook PDF and extracting its structural information for an automated educational-content ingestion pipeline.
@@ -623,7 +628,7 @@ The provided PDF may contain multiple books merged into a single PDF. For exampl
 - Revision Book
 - Other supplementary material
 
-Your task is to analyze ONLY the Main Book: the primary textbook containing the explanations and lessons intended to be learned.
+Your task is to analyze ONLY the Main Book: the primary textbook containing the explanations, lessons, and exercises intended to be learned.
 First determine the boundaries of the Main Book within the PDF. Completely ignore all other books and supplementary material.
 Do not assume that the Main Book is necessarily the first book in the PDF. Identify it from its title, structure, headers, footers, content, and other contextual clues.
 
@@ -664,51 +669,10 @@ Do not attempt to return separate offsets for different sections.
 
 ---
 
-## 4. Identify Explanation Page Ranges
+## 4. Determine Unit and Lesson Metadata
 
-Identify all ranges of digital pages within the Main Book that contain educational explanation/content that should be included in the learning platform.
-
-An explanation page may contain:
-
-- Explanations of concepts
-- Definitions
-- Examples
-- Worked examples
-- Educational diagrams or figures
-- Explanatory tables
-- Normal lesson content
-- "Test Your Knowledge" sections or questions embedded WITHIN an explanation
-- Q&A questions embedded WITHIN normal explanatory content
-
-An explanation page must be inside a lesson. Do Not include explanation pages that are in between questions, rounds, or not in a lesson generally.
-
-IMPORTANT: A page must NOT be excluded merely because it contains questions.
-Exclude a page as non-explanation content ONLY when the page consists entirely, or essentially entirely, of questions, exercises, tests, homework, or similar assessment/practice material.
-
-For example:
-- A lesson explanation containing a small "Test Your Knowledge" section → INCLUDE the page.
-- A lesson explanation containing some questions alongside explanatory content → INCLUDE the page.
-- A page consisting entirely of exercises/questions → EXCLUDE the page.
-
-An entirely-question-based page may occur in the middle of a lesson's explanation pages.
-
-For example, if the same lesson has:
-- explanation pages 10-15
-- an all-question page 16
-- explanation pages 17-22
-
-you MUST return two separate ranges: 10-15 and 17-22.
-Do NOT merge them into 10-22.
-Also exclude other clearly non-explanatory material such as introductions, tables of contents,
-indexes, advertisements, acknowledgements, publisher information, answer keys, revision-only material,
-and other supplementary sections when they are not part of the Main Book's actual lesson explanations.
-
----
-
-## 5. Determine Unit and Lesson Metadata
-
-For every explanation-page range, determine:
-{"- Category" if english_category else ""}
+For every pages range, determine:
+{"- Category" if get_english_category else ""}
 - Unit number
 - Unit name
 - Lesson(s) number(s)
@@ -721,17 +685,16 @@ Preserve the names as they appear in the textbook.
 For the O.L story, consider the unit_num the next one if not specified and consider the lesson_num the chapters numbers.""" if english_category else ""}
 
 Use surrounding pages when necessary to correctly determine which unit and lesson a range belongs to.
-The metadata applies to every page within its corresponding explanation range.
-If an all-question page splits a lesson into multiple explanation ranges, the ranges on both sides should retain the same lesson metadata when they belong to the same lesson.
+The metadata applies to every page within the range.
 
 Put lesson_num and lesson_name in lists, for example:
 - lesson_num: [1]
 - lesson_name: ["Lesson 1 Name"]
 
-IMPORTANT: Some explanation pages may cover TWO or more lessons together. When a page or explanation-page range explicitly belongs to multiple lessons,
+IMPORTANT: Some pages may cover TWO or more lessons together. When a page range explicitly belongs to multiple lessons,
 include ALL applicable lesson numbers and lesson names in `lesson_num` and `lesson_name` as lists.
 
-For example, if an explanation page covers "Lesson 1 & 2", return:
+For example, if a page covers "Lesson 1 & 2", return:
 - lesson_num: [1, 2]
 - lesson_name: ["Lesson 1 Name", "Lesson 2 Name"]
 
@@ -739,11 +702,16 @@ Do NOT create a combined lesson number or combined lesson name such as `"1 & 2"`
 
 ---
 
-## 6. Page Ranges
+## 5. Page Ranges
 
+A lesson range usually includes explanation pages and excercises/questions pages.
 All ranges MUST be expressed using digital/PDF page numbers.
-`start_page` is the first digital page included in the explanation range.
-`end_page` is the last digital page included in the explanation range.
+`start_page` is the first digital page included in the lesson range.
+`end_page` is the last digital page included in the lesson range.
+
+IMPORTANT: Only include ranges of lessons. Do NOT include ranges of unit reviews, book intro/outro,
+or any range whose unit and lesson metadata does not belong to it.
+
 Do not use printed page numbers for these fields.
 Return ranges in ascending digital-page order.
 Do not overlap ranges.
@@ -751,13 +719,13 @@ Do not include pages outside the Main Book.
 
 ---
 
-## 7. Required Output
+## 6. Required Output
 
 Return ONLY valid JSON matching exactly the structure in this example:
 
 {{
   "digital_to_actual_pages_offset": 4,
-  "explanation_pages_ranges": [
+  "pages_ranges": [
     {{
       "start_page": 23,
       "end_page": 34,
@@ -765,7 +733,7 @@ Return ONLY valid JSON matching exactly the structure in this example:
       "unit_num": 1,
       "lesson_name": ["Thermal and Chemical Changes"],
       "lesson_num": [2],
-      {"'category': 'ol'," if english_category else ""}
+      {"'category': 'ol'," if get_english_category else ""}
     }},
     {{
       "start_page": 51,
@@ -774,7 +742,7 @@ Return ONLY valid JSON matching exactly the structure in this example:
       "unit_num": 2,
       "lesson_name": ["Lesson 1 Name", "Lesson 2 Name"],
       "lesson_num": [1, 2],
-      {"'category': 'ol'," if english_category else ""}
+      {"'category': 'ol'," if get_english_category else ""}
     }}
     {
         """
@@ -788,7 +756,7 @@ Return ONLY valid JSON matching exactly the structure in this example:
             "category": "ol_story",
         }
         """
-        if english_category else ""
+        if get_english_category else ""
     }
   ]
 }}
@@ -796,13 +764,13 @@ Return ONLY valid JSON matching exactly the structure in this example:
 The top-level object MUST contain exactly these two keys:
 
 - `digital_to_actual_pages_offset`
-- `explanation_pages_ranges`
+- `pages_ranges`
 
-Each item in `explanation_pages_ranges` MUST contain exactly these six keys:
+Each dict in `pages_ranges` MUST contain exactly these keys:
 
 - `start_page`
 - `end_page`
-{"- `category`" if english_category else ""}
+{"- `category`" if get_english_category else ""}
 - `unit_name`
 - `unit_num`
 - `lesson_name`
@@ -813,7 +781,7 @@ Data types MUST be:
 - `digital_to_actual_pages_offset`: integer
 - `start_page`: integer
 - `end_page`: integer
-{"- `category`: str" if english_category else ""}
+{"- `category`: str" if get_english_category else ""}
 - `unit_name`: string
 - `unit_num`: integer
 - `lesson_name`: list of strings
@@ -825,7 +793,7 @@ Do not include any explanation before or after the JSON.
 """
 
         # Send the request to the Gemini API
-        start = time.perf_counter()
+        response = None
         for model in GEMINI_FLASH_FIRST:
             try:
                 response = self.gemini_client.models.generate_content(
@@ -843,46 +811,45 @@ Do not include any explanation before or after the JSON.
                 )
                 break
             except Exception as e:
-                print(e)
+                print(f"Model {model} failed: {e}")
                 continue
+
+        if not response:
+            raise RuntimeError("All Gemini models failed to generate content.")
 
         json_response = json.loads(response.text)
 
-        # Prepare explanation-only PDF
         offset: int = json_response["digital_to_actual_pages_offset"]
-        explanation_ranges: list = json_response["explanation_pages_ranges"]
+        pages_ranges: list = json_response["pages_ranges"]
 
-        # Open the original PDF from its bytes
+        # Open source PDF to extract selected page ranges into book_pdf
         source_pdf = pymupdf.open(stream=pdf_bytes, filetype="pdf")
+        book_pdf = pymupdf.open()
 
-        # Create the new explanation-only PDF, map its pages to the actual pages,
-        # and create the metadata mapping dict by page
-        prepared_pdf = pymupdf.open()
         digital_to_actual_mapping = {}
         pages_metadata = {}
 
         new_digital_page = 1
 
-        for page_range in explanation_ranges:
+        for page_range in pages_ranges:
             start_page = page_range["start_page"]
             end_page = page_range["end_page"]
 
-            # Validate the range
+            # Validate range bounds
             if start_page < 1 or end_page > len(source_pdf) or start_page > end_page:
                 raise ValueError(
                     f"Invalid page range returned by Gemini: {start_page}-{end_page}. "
                     f"The PDF contains {len(source_pdf)} pages."
                 )
 
-            # Copy the entire range at once.
-            # Gemini uses 1-based digital pages, while PyMuPDF uses 0-based indexes.
-            prepared_pdf.insert_pdf(
+            # Insert selected page range into book_pdf (Convert 1-based to 0-based)
+            book_pdf.insert_pdf(
                 source_pdf,
                 from_page=start_page - 1,
                 to_page=end_page - 1,
             )
 
-            # Map each new digital page to its actual page number + its metadata.
+            # Map each new page index (1, 2, 3...) in book_pdf to actual page number & metadata
             for original_digital_page in range(start_page, end_page + 1):
                 actual_page = original_digital_page + offset
 
@@ -897,24 +864,26 @@ Do not include any explanation before or after the JSON.
 
                 if page_range.get("category"):
                     pages_metadata[actual_page]["category"] = page_range["category"]
+                elif english_category and not get_english_category:
+                    pages_metadata[actual_page]["category"] = english_category
 
                 new_digital_page += 1
 
-        # Convert the prepared PDF back to bytes.
-        explanations_pdf_bytes = prepared_pdf.tobytes()
+        # Serialize sliced PDF to bytes
+        book_pdf_bytes = book_pdf.tobytes()
+
+        # Save slice to debug directory
         timestamp = datetime.now().isoformat(timespec="seconds").replace(":", "-")
         debug_pdf_path = f"debug/prepared/{timestamp}.pdf"
-
         os.makedirs(os.path.dirname(debug_pdf_path), exist_ok=True)
-
         with open(debug_pdf_path, "wb") as f:
-            f.write(explanations_pdf_bytes)
+            f.write(book_pdf_bytes)
 
-        # Close the PDF documents.
-        prepared_pdf.close()
+        book_pdf.close()
         source_pdf.close()
 
-        return explanations_pdf_bytes, digital_to_actual_mapping, pages_metadata
+        # Return sliced book_pdf_bytes instead of original raw bytes
+        return book_pdf_bytes, digital_to_actual_mapping, pages_metadata
 
     def ocr_pdf(self, pdf_bytes: bytes, pages_mapping: dict) -> list[dict]:
         """
@@ -1256,7 +1225,7 @@ Do not include any explanation before or after the JSON.
 
             start = time.perf_counter()
 
-            explanations_pdf_bytes, digital_to_actual_mapping, pages_metadata = (
+            book_pdf_bytes, digital_to_actual_mapping, pages_metadata = (
                 self.prepare_pdf(chunk_bytes, english_category)
             )
 
@@ -1277,7 +1246,7 @@ Do not include any explanation before or after the JSON.
             start = time.perf_counter()
 
             pages = self.ocr_pdf(
-                explanations_pdf_bytes,
+                book_pdf_bytes,
                 digital_to_actual_mapping,
             )
 
