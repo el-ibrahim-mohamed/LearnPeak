@@ -1,28 +1,8 @@
 import streamlit as st
 from streamlit_cookies_manager import EncryptedCookieManager
-import streamlit.components.v1 as components
 from google import genai
 import firebase_admin
 from firebase_admin import credentials, db
-
-
-def inject_meta_tag(name: str, content: str):
-    """Injects a meta tag into the top-level window document head (parent document)."""
-    components.html(
-        f"""
-        <script>
-        const parentHead = parent.document.head;
-        let metaTag = parent.document.querySelector('meta[name="{name}"]');
-        if (!metaTag) {{
-            metaTag = parent.document.createElement('meta');
-            metaTag.name = "{name}";
-            parentHead.appendChild(metaTag);
-        }}
-        metaTag.content = "{content}";
-        </script>
-        """,
-        height=0,
-    )
 
 
 def load_app():
@@ -133,19 +113,6 @@ if "app_loaded" not in st.session_state:
         page_title="LearnPeak | AI Tools Built for Your Curriculum",
         page_icon="static/mountain_logo.png",
     )
-
-    # --- Inject Meta Tags into Head ---
-    inject_meta_tag(
-        name="description",
-        content="AI-powered learning system built around your curriculum, with textbook chat,"
-        " quizzes, AR, and science-backed study strategies to retain knowledge.",
-    )
-    gsc_verification_code = st.secrets["GSC_CODE"]
-    inject_meta_tag(
-        name="google-site-verification",
-        content=gsc_verification_code,
-    )
-
     with st.spinner("Loading LearnPeak"):
         pg = load_app()
         st.session_state["app_loaded"] = True
