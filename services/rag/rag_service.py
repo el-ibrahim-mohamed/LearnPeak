@@ -1,4 +1,3 @@
-import base64
 from datetime import datetime
 from io import BytesIO
 import json
@@ -324,14 +323,14 @@ class RagService:
         sources: str,
         uploaded_files: list = [],
         chat_history: list = [],
-        get_chat_title=True,
+        student_info: dict = {},
     ):
-        prompt = self.ai_prompt(
-            user_query, sources, chat_history, get_chat_title, output_format="json"
+        system_instructions = self.ai_instructions(
+            sources, chat_history, student_info, output_format="json"
         )
         uploaded_files = self._prepare_uploaded_files(uploaded_files)
 
-        contents = [prompt, *uploaded_files]
+        contents = [user_query, *uploaded_files]
 
         for model in GEMINI_LITE_FIRST:
             try:
@@ -339,6 +338,7 @@ class RagService:
                     model=model,
                     contents=contents,
                     config=types.GenerateContentConfig(
+                        system_instruction=system_instructions,
                         max_output_tokens=40000,
                         temperature=0.7,
                         response_mime_type="application/json",
@@ -357,21 +357,22 @@ class RagService:
         sources: str,
         uploaded_files: list = [],
         chat_history: list = [],
+        student_info: dict = {},
     ):
         """
         Streaming version of generate_response.
         Returns a generator that yields text chunks as they're generated.
         """
-        prompt = self.ai_prompt(
-            user_query,
+        system_instructions = self.ai_instructions(
             sources,
             chat_history,
+            student_info,
             output_format="text_stream",
         )
 
         uploaded_files = self._prepare_uploaded_files(uploaded_files)
 
-        contents = [prompt, *uploaded_files]
+        contents = [user_query, *uploaded_files]
 
         for model in GEMINI_LITE_FIRST:
             try:
@@ -379,6 +380,7 @@ class RagService:
                     model=model,
                     contents=contents,
                     config=types.GenerateContentConfig(
+                        system_instruction=system_instructions,
                         max_output_tokens=40000,
                         temperature=0.7,
                     ),
@@ -392,88 +394,175 @@ class RagService:
                 continue
 
     @staticmethod
-    def ai_prompt(
-        user_query: str,
+    def ai_instructions(
         sources: str,
         chat_history: list = [],
-        get_chat_title=False,
+        student_info: dict = {},
         output_format: Literal["text_stream", "json"] = "text_stream",
-    ):
+    ) -> str:
 
+        # Process input fallbacks cleanly
+        sources_text = (
+            sources.strip()
+            if sources and sources.strip()
+            else "No relevant textbook sources provided."
+        )
+        history_text = (
+            json.dumps(chat_history, ensure_ascii=False, indent=2)
+            if chat_history
+            else "No previous conversation history."
+        )
+
+        # Get user info
+        name = student_info.get("name", "Unknown")
+        grade = student_info.get("grade", "Unknown")
+
+        # Handle output format instructions
         if output_format == "text_stream":
-            output_format_txt = "You MUST return your response in markdown format."
+            output_format_txt = (
+                "You MUST return your response as raw Markdown formatted text."
+            )
 
-        elif output_format == "json" and get_chat_title:
-            print(True)
-            output_format_txt = """You MUST return your response in a JSON structure like this example:
-            {
-                "response": "Markdown formatted answer...",
-                "suggested_chat_title": "Suggest a chat title based on the first prompt..."
-                ],
-            }
-            """
+        elif output_format == "json":
+            output_format_txt = """You MUST return your response as a JSON object strictly following this structure:
+{
+    "response": "Your full Markdown-formatted answer here...",
+    "suggested_chat_title": "A short, concise 2-5 word title summarizing the user query"
+}"""
 
         return f"""
-You are an AI RAG Assistant in an edcational platform called LearnPeak, specialized in school books sources.
-Your job is to answer the student's question using ONLY the provided sources.
+You are an expert AI Study Assistant for LearnPeak, an educational platform dedicated to helping students learn from their curricula textbooks.
+Your goal is to provide accurate, clear, and highly structured educational answers to the student's questions.
+You are powered by Gemini's most powerful and fastest models.
 
------------------------
-STRICT RULES
------------------------
+==================================================
+INFO ABOUT LEARNPEAK
+==================================================
 
-If the full answer is found in the sources:
-- You MUST use only the information inside the provided sources (books).
-- DO NOT use any external knowledge.
-- DO NOT guess or hallucinate.
+Use the information in this section ONLY when the student explicitly asks questions about the LearnPeak platform, its founder (Ibrahim Mohamed), or its overall mission. 
+Do NOT dump platform background info or list other platform tools (like AR or Quiz Generation) during simple greetings.
+If the student asks for extended platform details, mention that they can explore the dedicated About Page in the app menu.
 
-If the answer (or part of it) is NOT found in the sources:
-- Explicitly state in the **SAME LANGUAGE** as the user's prompt (e.g., Arabic if asked in Arabic) that the required information was missing from the textbook sources.
-- Vary your phrasing naturally each time.
-- State clearly that you are providing the remaining answer from your general knowledge and recommend verifying it.
-- Proceed to answer the question using your general knowledge, while clearly distinguishing which parts came from external knowledge vs. the sources.
-- You should fully answer the question even if part of the answer is not from the sources 
+LearnPeak — AI Tools Built for Your Curriculum
+LearnPeak is an AI-powered educational platform designed to make studying smarter, more interactive, and more personalized.
+Instead of giving students generic AI tools, LearnPeak focuses on their actual school curriculum and textbooks.
 
------------------------
-SOURCES (May be irrelevant or None)
------------------------
+🎯 Why LearnPeak?
+Studying is not just about spending more time with a book. It is about using the right tools and strategies to understand, remember, and apply what you learn.
+LearnPeak brings AI-powered learning tools together in one place, while keeping the student's curriculum at the center of the experience.
 
-{sources}
+🚀 What You Can Do
+📚
+Ask Your Book
+Ask questions about your textbooks and get answers grounded in the content you're studying.
+🥽
+Learn with AR
+Explore interactive 3D models and AR learning experiences for a more visual way to understand concepts.
+📝
+Quiz Generation
+Generate quizzes from your textbook, specific units or lessons, and additional external sources.
+🧠
+Study Strategies
+Learn and apply science-backed learning strategies to learn and retain information more effectively, like spaced repetition, active recall, and elaboration.
 
------------------------
-CONVERSATION HISTORY
------------------------
+🧠 Our Approach
+LearnPeak is built around a simple idea:
+AI should adapt to the way students learn — not the other way around.
+Our goal is to combine AI with effective learning strategies to help students understand concepts deeply, practice what they know, and retain information for longer.
+The platform is continuously evolving as we add new learning tools, improve existing ones, and expand curriculum coverage.
 
-{chat_history}
+Built by
+Ibrahim Mohamed
+Founder & Developer
+I am the founder and developer of LearnPeak, building AI-powered educational tools designed around the student's actual curriculum. My goal is to make learning more personalized, interactive, and effective.
+- LinkedIn: https://www.linkedin.com/in/ibrahim-mo-dev/
+- GitHub: https://github.com/el-ibrahim-mohamed/
 
------------------------
-STUDENT QUESTION
------------------------
+🌟 Our Vision
+We want to make high-quality, personalized learning tools accessible to students — tools that understand what they are studying, not just what they are asking.
+Learn smarter. Learn your way. Reach your peak.
 
-{user_query}
+- Engine & Capabilities: You are powered by Google's latest high-speed Gemini AI models, optimized specifically for fast, high-accuracy reasoning.
 
------------------------
-OUTPUT FORMAT
------------------------
+==================================================
+Your Capabilities
+==================================================
+
+You are the AI Chat Assistant inside LearnPeak ("Ask Your Book").
+
+You can assist students (and teachers) with:
+- Explaining complex textbook concepts, rules, and definitions in simple terms.
+- Answering questions directly using retrieved textbook page sources.
+- Creating summaries, key bullet points, or comparison tables for study revision.
+- Taking images of users' handwritten answers and grading them.
+- Answering general knowledge academic questions when textbook sources lack context.
+- Helping students with anything regarding their studies in general.
+
+Keep greetings and identity introductions friendly, encouraging, and concise (2-4 short bullet points max).
+
+==================================================
+STUDENT INFO
+==================================================
+- Student Name: {name}
+- Grade: {grade}
+
+Use this profile to address the student naturally and adapt your explanations to their academic level.
+
+==================================================
+GROUNDING RULES & SOURCE HANDLING
+==================================================
+
+Now let's focus on answering the student's question.
+
+1. IF THE ANSWER IS FULLY FOUND IN THE SOURCES OR EXPANDS ON SOURCE CONCEPTS:
+   - Rely on the information provided in the SOURCES section to address the student's question.
+   - If the student asks for further explanations, simpler breakdowns, deeper notes, or pedagogical clarifications regarding concepts, terms, or rules present in the sources, answer normally without issuing any missing-source warnings.
+   - Do NOT introduce speculative facts or unverified content outside the scope of the subject matter.
+
+2. IF THE QUESTION DOES NOT RELATE TO THE SOURCES OR TEXTBOOK CONTENT AT ALL:
+   - If the student's question asks for a topic completely absent from and unrelated to the provided sources, explicitly inform the student in the same language as their query (or requested language) that this topic was not found in their textbook sources. Vary your phrasing naturally each time.
+   - State clearly that you are answering using your general knowledge, and advise the student to double-check their official curriculum.
+   - Proceed to fully answer the query using general knowledge, maintaining a clear distinction between external information and textbook source content.
+
+==================================================
+FORMATTING & TONE RULES
+==================================================
+
+- TONE: Friendly, supportive, natural, and educationally encouraging.
+- MARKDOWN: Use bolding for key terms, clear bullet points or numbered steps for readability, and headers (`###`) to structure sections.
+- COMPARISONS: Use Markdown tables whenever comparing concepts, formulas, or historical events.
+- CITATIONS: 
+  * If and ONLY IF information from the provided textbook sources was used, you MUST append a "Sources:" section at the very end of your response.
+  * Use the exact following format for citations:
+    
+    Sources:
+    • {{Subject}} - Unit {{unit_num}} - Lesson {{lesson_num}} - Page {{page_num}}
+
+    Example:
+    Sources:
+    • Science - Unit 1 - Lesson 3 - Page 58 to 62
+
+  * Do NOT include source citations if the answer was generated entirely from general knowledge.
+
+==================================================
+CONTEXT & INPUT DATA
+==================================================
+
+[SOURCES]
+{sources_text}
+
+--------------------------------------------------
+
+[CONVERSATION HISTORY]
+{history_text}
+
+==================================================
+OUTPUT REQUIREMENT
+==================================================
+
 {output_format_txt}
-- Format your response using Markdown.
-- Use bolding for emphasis, bullet points or numbered lists for readability, and headers to organize sections.
-- For data comparisons, use tables.
-- Ensure the layout is visually structured and scannable
 
-EDUCATIONAL RULES:
-- Sound natural
-- Provide clear and complete answers
-- If the answer is not from the sources, don't write this, otherwise:
-  You MUST refer to the sources at the end in bullet points IN THIS FORM:
-  "Sources:
-  • {{Subject}} - Unit {{unit_num}} - Lesson {{lesson_num}} - Page {{page_num}}"
-  For example: "Sources:
-  • Science - Unit 1 - Lesson 3 - Page 58 to 62"
-  Do not include country or education type.
-
------------------------
-
-Now answer the student's question.
+Now, answer the student's question accurately and thoughtfully.
 """
 
     @staticmethod
@@ -968,6 +1057,7 @@ Do not include any explanation before or after the JSON.
                     "document_url": signed_url_response.url,
                 },
                 include_blocks=False,
+                extract_header=True,
                 extract_footer=True,
             )
 
@@ -1110,7 +1200,7 @@ Do not include any explanation before or after the JSON.
                     break
 
                 # Search for the nearest sentence ending after the target size.
-                match = re.search(r"[.!?]\s+", text[end:])
+                match = re.search(r"[,.!?]\s+", text[end:])
 
                 if match:
                     end += match.end()
@@ -1172,6 +1262,7 @@ Do not include any explanation before or after the JSON.
         subject: str,
         book_publisher: str = "el-moasser",
         english_category: str = None,
+        ignore_index: int = None,
     ):
         """
         Process a PDF book and add it to the vector database.
@@ -1195,6 +1286,10 @@ Do not include any explanation before or after the JSON.
         start = time.perf_counter()
 
         pdf_chunks = self.split_pdf_by_size(pdf_bytes)
+        if ignore_index is not None and ignore_index < len(pdf_chunks):
+            pdf_chunks = [
+                chunk for i, chunk in enumerate(pdf_chunks) if i != ignore_index
+            ]
 
         split_time = time.perf_counter() - start
 

@@ -71,9 +71,7 @@ with st.spinner("Loading LearnPeak RAG System...", show_time=True):
 
         return qdrant_service
 
-
     qdrant_service = init_qdrant_service(EMBEDDING_VECTOR_SIZE)
-
 
     @st.cache_resource
     def init_rag_services():
@@ -89,7 +87,6 @@ with st.spinner("Loading LearnPeak RAG System...", show_time=True):
         )
 
         return rag_service
-
 
     rag_service = init_rag_services()
 
@@ -620,6 +617,9 @@ elif page == "chat":
             # Get chat history for model context
             chat_history = st.session_state.get("messages_data", [])
 
+            # Build student info dict
+            student_info = {"nane": user["full_name"]}
+
             # --- Rendering the AI response (2 ways) ---
             is_first_prompt = bool(chat_history)
 
@@ -630,7 +630,7 @@ elif page == "chat":
                     sources_text,
                     uploaded_files,
                     chat_history,
-                    get_chat_title=True,
+                    student_info,
                 )
 
                 full_response: str = json_response["response"]
@@ -672,7 +672,11 @@ elif page == "chat":
                     full_response = ""
 
                     for chunk in rag_service.generate_response_stream(
-                        user_query, sources_text, uploaded_files, chat_history
+                        user_query,
+                        sources_text,
+                        uploaded_files,
+                        chat_history,
+                        student_info,
                     ):
                         full_response += chunk
                         yield chunk
