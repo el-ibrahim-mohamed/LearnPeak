@@ -21,73 +21,59 @@ GRADES = {
 }
 
 SUBJECTS = {
+    "📚 Arabic": "arabic",
     "📖 English": "english",
     "🔢 Math": "math",
-    "🔢 رياضيات": "math_in_ar",
     "🔬 Science": "science",
-    "🔬 علوم": "science_in_ar",
-    "📚 Arabic": "arabic",
     "🌍 Social Studies": "social_studies",
 }
 
 GRADE_SUBJECTS = {
-    "kg1": ["arabic", "english", "math", "math_in_ar"],
-    "kg2": ["arabic", "english", "math", "math_in_ar"],
-    "prim1": ["arabic", "english", "math", "math_in_ar"],
-    "prim2": ["arabic", "english", "math", "math_in_ar"],
-    "prim3": ["arabic", "english", "math", "math_in_ar"],
+    "kg1": ["arabic", "english", "math"],
+    "kg2": ["arabic", "english", "math"],
+    "prim1": ["arabic", "english", "math"],
+    "prim2": ["arabic", "english", "math"],
+    "prim3": ["arabic", "english", "math"],
     "prim4": [
         "arabic",
         "english",
         "math",
-        "math_in_ar",
         "science",
-        "science_in_ar",
         "social_studies",
     ],
     "prim5": [
         "arabic",
         "english",
         "math",
-        "math_in_ar",
         "science",
-        "science_in_ar",
         "social_studies",
     ],
     "prim6": [
         "arabic",
         "english",
         "math",
-        "math_in_ar",
         "science",
-        "science_in_ar",
         "social_studies",
     ],
     "prep1": [
         "arabic",
         "english",
         "math",
-        "math_in_ar",
         "science",
-        "science_in_ar",
         "social_studies",
     ],
     "prep2": [
         "arabic",
         "english",
         "math",
-        "math_in_ar",
         "science",
-        "science_in_ar",
         "social_studies",
     ],
     "prep3": [
         "arabic",
         "english",
         "math",
-        "math_in_ar",
         "science",
-        "science_in_ar",
         "social_studies",
     ],
 }
@@ -96,6 +82,7 @@ BOOK_PUBLISHERS = {
     "📙 El-Moasser": "el-moasser",
     "📗 El-Emtihan": "el-emtihan",
     "📘 Al-Adwaa": "al-adwaa",
+    "📕 Selah El-Telmeez": "selah-el-telmeez",
 }
 
 UNIT_OPTIONS = [1, 2, 3, 4, 5, 6]

@@ -618,7 +618,9 @@ elif page == "chat":
             chat_history = st.session_state.get("messages_data", [])
 
             # Build student info dict
-            student_info = {"nane": user["full_name"]}
+            student_info = {}
+            if user:
+                student_info = {"name": user["full_name"]}
 
             # --- Rendering the AI response (2 ways) ---
             is_first_prompt = bool(chat_history)
