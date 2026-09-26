@@ -7,11 +7,9 @@ COUNTRIES = {"Egypt": "egypt"}
 EDUCATION = {"🏫 National": "national"}
 
 GRADES = {
-    "🎨 kG 1": "kg1",
-    "🎨 KG 2": "kg2",
-    "🎒 Primary 1": "prim1",
-    "🎒 Primary 2": "prim2",
-    "🎒 Primary 3": "prim3",
+    "🎨 Primary 1": "prim1",
+    "🎨 Primary 2": "prim2",
+    "🎨 Primary 3": "prim3",
     "🎒 Primary 4": "prim4",
     "🎒 Primary 5": "prim5",
     "🎒 Primary 6": "prim6",
@@ -29,53 +27,15 @@ SUBJECTS = {
 }
 
 GRADE_SUBJECTS = {
-    "kg1": ["arabic", "english", "math"],
-    "kg2": ["arabic", "english", "math"],
     "prim1": ["arabic", "english", "math"],
     "prim2": ["arabic", "english", "math"],
     "prim3": ["arabic", "english", "math"],
-    "prim4": [
-        "arabic",
-        "english",
-        "math",
-        "science",
-        "social_studies",
-    ],
-    "prim5": [
-        "arabic",
-        "english",
-        "math",
-        "science",
-        "social_studies",
-    ],
-    "prim6": [
-        "arabic",
-        "english",
-        "math",
-        "science",
-        "social_studies",
-    ],
-    "prep1": [
-        "arabic",
-        "english",
-        "math",
-        "science",
-        "social_studies",
-    ],
-    "prep2": [
-        "arabic",
-        "english",
-        "math",
-        "science",
-        "social_studies",
-    ],
-    "prep3": [
-        "arabic",
-        "english",
-        "math",
-        "science",
-        "social_studies",
-    ],
+    "prim4": ["arabic", "english", "math", "science", "social_studies"],
+    "prim5": ["arabic", "english", "math", "science", "social_studies"],
+    "prim6": ["arabic", "english", "math", "science", "social_studies"],
+    "prep1": ["arabic", "english", "math", "science", "social_studies"],
+    "prep2": ["arabic", "english", "math", "science", "social_studies"],
+    "prep3": ["arabic", "english", "math", "science", "social_studies"],
 }
 
 BOOK_PUBLISHERS = {
@@ -85,9 +45,81 @@ BOOK_PUBLISHERS = {
     "📕 Selah El-Telmeez": "selah-el-telmeez",
 }
 
-UNIT_OPTIONS = [1, 2, 3, 4, 5, 6]
+UNIT_OPTIONS = [1, 2, 3, 4]
 
-LESSON_OPTIONS = [1, 2, 3, 4, 5, 6]
+LESSON_OPTIONS = [1, 2, 3, 4]
+
+CATEGORIES = {
+    "📙 External Book": "external_book",
+    "📝 Assessment Book": "assessments_book",
+}
+
+ENGLISH_CATEGORIES = {
+    "📙 External Book": "external_book",
+    "📝 Assessment Book": "assessments_book",
+    "📚 AL": "al",
+    "📖 AL Story": "al_story",
+}
+
+DEFAULT_PUBLISHERS = {
+    "prim1": {
+        "arabic": "selah-el-telmeez",
+        "english": "el-moasser",
+        "math": "el-moasser",
+    },
+    "prim2": {
+        "arabic": "al-adwaa",
+        "english": "el-moasser",
+        "math": "el-moasser",
+    },
+    "prim3": {
+        "arabic": "al-adwaa",
+        "english": "el-moasser",
+        "math": "el-moasser",
+    },
+    "prim4": {
+        "arabic": "el-emtihan",
+        "english": "el-moasser",
+        "math": "el-moasser",
+        "science": "el-moasser",
+        "social_studies": "selah-el-telmeez",
+    },
+    "prim5": {
+        "arabic": "al-adwaa",
+        "english": "el-moasser",
+        "math": "el-moasser",
+        "science": "el-moasser",
+        "social_studies": "selah-el-telmeez",
+    },
+    "prim6": {
+        "arabic": "al-adwaa",
+        "english": "el-moasser",
+        "math": "el-moasser",
+        "science": "el-moasser",
+        "social_studies": "selah-el-telmeez",
+    },
+    "prep1": {
+        "arabic": "el-emtihan",
+        "english": "el-moasser",
+        "math": "el-moasser",
+        "science": "el-moasser",
+        "social_studies": "el-emtihan",
+    },
+    "prep2": {
+        "arabic": "el-emtihan",
+        "english": "el-moasser",
+        "math": "el-moasser",
+        "science": "el-moasser",
+        "social_studies": "el-emtihan",
+    },
+    "prep3": {
+        "arabic": "el-emtihan",
+        "english": "el-moasser",
+        "math": "el-moasser",
+        "science": "el-moasser",
+        "social_studies": "el-emtihan",
+    },
+}
 
 GEMINI_MODELS_CODES = {
     "flash-latest": "gemini-3.7-flash",
@@ -102,8 +134,8 @@ GEMINI_MODELS_CODES = {
 }
 
 GEMINI_LITE_FIRST = [
-    GEMINI_MODELS_CODES["flash-lite-latest"],
     GEMINI_MODELS_CODES["3.1-flash-lite"],
+    GEMINI_MODELS_CODES["2.5-flash-lite"],
     GEMINI_MODELS_CODES["flash-latest"],
     GEMINI_MODELS_CODES["3.6-flash"],
 ]

@@ -169,25 +169,7 @@ st.text(
     "and science-backed study strategies to retain knowledge."
 )
 
-# --- 3. WHY LEARNPEAK? ---
-st.subheader("Why LearnPeak?")
-
-st.markdown(
-    "- 🎯 **Tailored to Your Textbooks:** LearnPeak syncs directly with your actual curriculum, "
-    "so you focus strictly on what’s on your exam—not generic learning content."
-)
-st.markdown(
-    "- 🧠 **Study with Strategy:** Master proven learning techniques and let LearnPeak "
-    "automatically structure your study sessions to put them into practice."
-)
-st.markdown(
-    "- ⚡ **Interactive & Active Learning:** Test your knowledge with instant AI-generated "
-    "quizzes and bring complex concepts to life with immersive AR."
-)
-
-"---"
-
-# --- 4. FEATURES SECTION ---
+# --- 3. FEATURES SECTION ---
 st.subheader("Features")
 
 col1, col2 = st.columns(2)
@@ -218,6 +200,32 @@ with col1.container(border=True):
     " "
     if st.button("Launch AR", key="btn_ar", use_container_width=True):
         st.switch_page("pages/ar.py")
+
+with col2.container(border=True):
+    st.markdown("### 🎓 Study Strategies", anchors=False)
+    st.write("Learn science-backed methods to study smarter not harder.")
+
+    " "
+    if st.button("Learn Study Strategies", key="btn_learn", use_container_width=True):
+        st.switch_page("pages/learn.py")
+
+"---"
+
+# --- 4. WHY LEARNPEAK? ---
+st.subheader("Why LearnPeak?")
+
+st.markdown(
+    "- 🎯 **Tailored to Your Textbooks:** LearnPeak syncs directly with your actual curriculum, "
+    "so you focus strictly on what’s on your exam—not generic learning content."
+)
+st.markdown(
+    "- 🧠 **Study with Strategy:** Master proven learning techniques and let LearnPeak "
+    "automatically structure your study sessions to put them into practice."
+)
+st.markdown(
+    "- ⚡ **Interactive & Active Learning:** Test your knowledge with instant AI-generated "
+    "quizzes and bring complex concepts to life with immersive AR."
+)
 
 "---"
 

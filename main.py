@@ -70,24 +70,27 @@ def load_app():
 
     # Support
     about = st.Page("pages/about.py", title="About", icon="ℹ️")
+    added_books = st.Page("pages/added_books.py", title="Added Books", icon="📚")
 
     # --- Running the pages ---
+    # 1. Define the base pages starting with Home
+    pages = {
+        "": [home],
+    }
+
+    # 2. Dynamically insert the appropriate second page directly after Home
     if st.session_state.get("user"):
-        pages = {
-            "": [home],
-            "👤 Account": [settings],
-            "✨ Features": [ask_book, ar, quizzes],
-            "🧠 Study Strategies": [learn],
-            "🛠️ Support": [about],
-        }
+        pages["👤 Account"] = [settings]
     else:
-        pages = {
-            "": [home],
-            "🚀 Get Started": [signin, signup],
-            "✨ Features": [ask_book, ar, quizzes],
-            "🧠 Study Strategies": [learn],
-            "🛠️ Support": [about],
-        }
+        pages["🚀 Get Started"] = [signin, signup]
+
+    # 3. Append the remaining pages in order
+    pages.update({
+        "✨ Features": [ask_book, ar, quizzes],
+        "🧠 Study Strategies": [learn],
+        "🛠️ Support": [about, added_books],
+    })
+
 
     # Run st.navigation as soon as possible to show the nav to the user
     pg = st.navigation(pages, position="top")

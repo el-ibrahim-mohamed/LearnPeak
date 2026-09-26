@@ -50,6 +50,7 @@ with st.spinner("Loading LearnPeak RAG System...", show_time=True):
             "book_publisher",
             "grade",
             "subject",
+            "category",
         ]:
             qdrant_service.create_payload_index(
                 qdrant_service.collection_name,
@@ -231,6 +232,33 @@ page = st.session_state.get("rag_page", "menu")
 # Menu page
 if page == "menu":
     st.title("📚 Choose your subject", anchor=False)
+
+    # Gemini Power Badge / Announcement Card
+    st.markdown(
+        """
+        <div style="
+            background: linear-gradient(135deg, rgba(66, 133, 244, 0.08) 0%, rgba(155, 114, 203, 0.08) 100%);
+            border: 1px solid rgba(128, 128, 128, 0.2);
+            border-radius: 12px;
+            padding: 14px 18px;
+            margin-top: 10px;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        ">
+            <span style="font-size: 22px;">✨</span>
+            <div style="line-height: 1.4;">
+                <span style="font-weight: 600; font-size: 15px; color: var(--text-color);">Powered by Google Gemini's Latest AI Models</span><br/>
+                <span style="font-size: 13px; opacity: 0.85; color: var(--text-color);">
+                    Instantly query your exact school textbooks and curriculum with high precision.
+                </span>
+            </div>
+        </div>
+        """,
+        unsafe_allow_html=True,
+    )
+
     "---"
 
     # Custom CSS for the subjects buttons
@@ -348,6 +376,11 @@ if page == "menu":
 # Chat page
 elif page == "chat":
 
+    ERROR_MESSAGE = (
+        "An error occurred while generating your response. "
+        "Please try again later or reload the app."
+    )
+
     def right_align_user_avatar():
         st.html("""
             <style>
@@ -375,6 +408,26 @@ elif page == "chat":
 
         return "rtl" if rtl_count > ltr_count else "ltr"
 
+    def render_file_attachments(files_list: list[dict]):
+        """Renders small, stylized attachment badges above user chat messages."""
+        if not files_list:
+            return
+
+        # Map categories to visual icons
+        icon_map = {"pdf": "📄", "image": "🖼️", "code": "💻", "document": "📝"}
+
+        cols = st.columns(min(len(files_list), 4))
+        for idx, file_data in enumerate(files_list):
+            category = file_data.get("file_type_category", "document")
+            icon = icon_map.get(category, "📎")
+            file_name = file_data.get("file_name", "Attachment")
+
+            # Truncate long file names for UI tidiness
+            display_name = file_name[:20] + "..." if len(file_name) > 23 else file_name
+
+            with cols[idx % 4]:
+                st.caption(f"{icon} **{display_name}**")
+
     def render_user_prompt(msg: str):
         direction = get_text_direction(msg)
         text_alignment = "right" if direction == "rtl" else "left"
@@ -389,10 +442,16 @@ elif page == "chat":
             msg: dict
 
             if msg["role"] == "user":
+                if msg.get("files"):
+                    render_file_attachments(msg["files"])
+
                 render_user_prompt(msg["content"])
 
             if msg["role"] == "assistant":
-                render_ai_response(msg["content"])
+                if msg.get("is_error"):
+                    st.error(ERROR_MESSAGE)
+                else:
+                    render_ai_response(msg["content"])
 
             " "
             " "
@@ -415,65 +474,118 @@ elif page == "chat":
             unsafe_allow_javascript=True,
         )
 
+    @st.fragment
+    def render_filter_popover():
+        with st.popover("", icon="➕", help="Apply filters to get better results"):
+            menu_choice = st.session_state.get("menu_choice", "all_grades")
+
+            # In render_filter_popover() inside pages/ask-book.py:
+            grade_options = ["All"] + list(GRADES.keys())
+            default_index = 0
+
+            if user and user.get("grade"):
+                user_grade_label = get_key_by_value(GRADES, user["grade"])
+                if user_grade_label in GRADES:
+                    default_index = grade_options.index(user_grade_label)
+
+            selected_grade_label = st.selectbox(
+                "🎓 Grade",
+                options=grade_options,
+                index=default_index,
+                key="filter_grade_select",
+            )
+
+            # Store selected grade code in session state (or All)
+            grade_filter = (
+                GRADES[selected_grade_label] if selected_grade_label != "All" else None
+            )
+
+            st.session_state["filter_grade"] = grade_filter
+
+            # SUBJECT
+            if selected_grade_label:
+                allowed_codes = set()
+                g_code = GRADES.get(selected_grade_label)
+                if g_code:
+                    allowed_codes.update(GRADE_SUBJECTS.get(g_code, []))
+
+                available_subjects_dict = {
+                    k: v for k, v in SUBJECTS.items() if v in allowed_codes
+                }
+            else:
+                available_subjects_dict = SUBJECTS
+
+            subject_options = list(available_subjects_dict.keys())
+
+            default_subject = []
+            if menu_choice != "all_grades":
+                chosen_subject_label = get_key_by_value(SUBJECTS, menu_choice)
+                if chosen_subject_label and chosen_subject_label in subject_options:
+                    default_subject = [chosen_subject_label]
+
+            selected_subjects = st.multiselect(
+                "📚 Subject",
+                subject_options,
+                default=default_subject,
+                key="filter_subject",
+                filter_mode=None,
+            )
+
+            # CATEGORY
+            is_english_selected = any(
+                subj.lower() == "english" or SUBJECTS.get(subj) == "english"
+                for subj in selected_subjects
+            )
+
+            # Determine available categories from config.py
+            if is_english_selected:
+                cat_dict = ENGLISH_CATEGORIES
+            else:
+                cat_dict = CATEGORIES
+
+            category_options = list(cat_dict.keys())
+
+            selected_category_label = st.selectbox(
+                "🏷️ Category",
+                options=category_options,
+                index=0,
+                key="filter_category",
+            )
+            st.session_state["filter_category_code"] = cat_dict.get(selected_category_label)
+
+            # UNIT
+            # Default options are 1-4, but user can type and add higher numbers (e.g., 7, 8, 9, 10)
+            selected_units = st.multiselect(
+                "📌 Unit",
+                options=UNIT_OPTIONS,
+                key="filter_unit_raw",
+                accept_new_options=True,
+            )
+
+            # Sanitize Unit input: keep only numeric strings
+            valid_units = [u for u in selected_units if str(u).isdigit()]
+            if len(valid_units) != len(selected_units):
+                st.caption("⚠️ Only numbers are allowed for Units.")
+            st.session_state["filter_unit"] = valid_units
+
+            # LESSON
+            selected_lessons = st.multiselect(
+                "📝 Lesson",
+                options=LESSON_OPTIONS,
+                key="filter_lesson_raw",
+                accept_new_options=True,
+            )
+
+            # Sanitize Lesson input: keep only numeric strings
+            valid_lessons = [l for l in selected_lessons if str(l).isdigit()]
+            if len(valid_lessons) != len(selected_lessons):
+                st.caption("⚠️ Only numbers are allowed for Lessons.")
+            st.session_state["filter_lesson"] = valid_lessons
+
     with st.bottom:
         col1, col2 = st.columns([0.08, 0.92], vertical_alignment="center")
         with col1:
-            with st.popover("", icon="➕", help="Apply filters to get better results"):
-                menu_choice = st.session_state.get("menu_choice", "all_grades")
-
-                grade_options = list(GRADES.keys())
-                default_grade = []
-                if user and user.get("grade"):
-                    user_grade_label = get_key_by_value(GRADES, user["grade"])
-                    if user_grade_label and user_grade_label in grade_options:
-                        default_grade = [user_grade_label]
-
-                grade_filter = st.multiselect(
-                    "🎓 Grade",
-                    grade_options,
-                    default=default_grade,
-                )
-
-                # Determine available subjects based on selected grades in filter
-                if grade_filter:
-                    allowed_codes = set()
-                    for g_label in grade_filter:
-                        g_code = GRADES.get(g_label)
-                        if g_code:
-                            allowed_codes.update(GRADE_SUBJECTS.get(g_code, []))
-
-                    available_subjects_dict = {
-                        k: v for k, v in SUBJECTS.items() if v in allowed_codes
-                    }
-                else:
-                    available_subjects_dict = SUBJECTS
-
-                subject_options = list(available_subjects_dict.keys())
-
-                # Determine default subject selection
-                default_subject = []
-                if menu_choice != "all_grades":
-                    chosen_subject_label = get_key_by_value(SUBJECTS, menu_choice)
-                    if chosen_subject_label and chosen_subject_label in subject_options:
-                        default_subject = [chosen_subject_label]
-
-                subject_filter = st.multiselect(
-                    "📚 Subject",
-                    subject_options,
-                    default=default_subject,
-                )
-
-                unit_num_filter = st.multiselect(
-                    "📌 Unit",
-                    UNIT_OPTIONS,
-                    default=[],
-                )
-
-                lesson_num_filter = st.multiselect(
-                    "📝 Lesson",
-                    LESSON_OPTIONS,
-                    default=[],
-                )
+            render_filter_popover()
 
         with col2:
             user_input = st.chat_input(
@@ -501,25 +613,68 @@ elif page == "chat":
     def get_filters():
         filters = []
 
+        # Retrieve current filter states
+        filter_grade_code = st.session_state.get("filter_grade")
+        selected_subjects = st.session_state.get("filter_subject", [])
+        category_code = st.session_state.get("filter_category_code")
+        unit_values = st.session_state.get("filter_unit", [])
+        lesson_values = st.session_state.get("filter_lesson", [])
+
         filter_values = {
-            "grade": grade_filter,
-            "subject": subject_filter,
-            "unit_num": unit_num_filter,
-            "lesson_num": lesson_num_filter,
+            "unit_num": [int(u) for u in unit_values if str(u).isdigit()],
+            "lesson_num": [int(l) for l in lesson_values if str(l).isdigit()],
         }
 
+        if filter_grade_code:
+            filter_values["grade"] = [filter_grade_code]
+
+        if selected_subjects:
+            filter_values["subject"] = [
+                SUBJECTS[s] for s in selected_subjects if s in SUBJECTS
+            ]
+
+        # Handle Category Selection
+        if category_code:
+            # If 'assessments_book' is selected, include both 'main_book' and 'assessments_book'
+            # to guarantee context coverage from both reference sources.
+            if category_code == "assessments_book":
+                filter_values["category"] = ["assessments_book", "main_book"]
+            else:
+                filter_values["category"] = [category_code]
+
+        # --- RESOLVE PUBLISHERS ---
+        target_publishers = []
+
+        if user:
+            user_grade = user.get("grade")
+            user_publishers = user.get("preferred_publishers", {})
+
+            if filter_grade_code and filter_grade_code == user_grade:
+                if filter_values.get("subject"):
+                    for subj_code in filter_values["subject"]:
+                        pub = user_publishers.get(subj_code)
+                        if pub:
+                            target_publishers.append(pub)
+                else:
+                    target_publishers = list(user_publishers.values())
+        else:
+            if filter_grade_code:
+                default_grade_pubs = DEFAULT_PUBLISHERS.get(filter_grade_code, {})
+                if filter_values.get("subject"):
+                    for subj_code in filter_values["subject"]:
+                        pub = default_grade_pubs.get(subj_code)
+                        if pub:
+                            target_publishers.append(pub)
+                else:
+                    target_publishers = list(default_grade_pubs.values())
+
+        if target_publishers:
+            filter_values["book_publisher"] = list(set(target_publishers))
+
+        # --- CONSTRUCT QDRANT FILTERS ---
         for key, values in filter_values.items():
             if not values:
                 continue
-
-            if key == "grade":
-                values = [GRADES[value] for value in values]
-
-            elif key == "subject":
-                values = [SUBJECTS[value] for value in values]
-
-            elif key in ["unit_num", "lesson_num"]:
-                values = [int(value) for value in values]
 
             filters.append(
                 FieldCondition(
@@ -530,6 +685,21 @@ elif page == "chat":
 
         return Filter(must=filters) if filters else None
 
+    def extract_requested_page(query: str):
+        """
+        Extracts page numbers mentioned in user queries across English and Arabic formats.
+        Examples: 'صفحة 15', 'ص 12', 'page 45', 'p. 8'
+        """
+        patterns = [
+            r'(?:صفحة|ص)\s*[:\.-]?\s*(\d+)',  # Arabic: صفحة 12 or ص 12
+            r'(?:page|p\.)\s*[:\.-]?\s*(\d+)', # English: page 12 or p. 12
+        ]
+        for pattern in patterns:
+            match = re.search(pattern, query, re.IGNORECASE)
+            if match:
+                return int(match.group(1))
+        return None
+    
     # Render previous msgs if found
     render_messages(st.session_state.get("messages_data", []))
 
@@ -540,174 +710,197 @@ elif page == "chat":
         st.session_state["scroll_to_bottom"] = False
 
     if user_input:
-
         # Get text and attachments
         user_query = user_input.text
         uploaded_files = user_input.files
 
-        # Step 1: Initialize chat if needed
+        # Step 1: Upload files to Gemini Files API and extract metadata
+        files_metadata = []
+        if uploaded_files:
+            with st.spinner("Uploading files..."):
+                files_metadata = rag_service.upload_and_register_files(uploaded_files)
+
+        # Step 2: Initialize chat if needed
         if user and not st.session_state.get("current_chat_id"):
             clear_cached_chats()
             st.session_state["current_chat_id"] = chat_service.create_chat()
 
-        # Save user message and render it
+        # Step 3: Save user message (with files metadata) to session state and render
         messages_data: list = st.session_state.get("messages_data", [])
 
-        user_msg_dict = {"role": "user", "content": user_query}
+        user_msg_dict = {
+            "role": "user",
+            "content": user_query,
+            "files": files_metadata if files_metadata else None,
+        }
         messages_data.append(user_msg_dict)
 
         # Save user msg timestamp
         user_timestamp = datetime.now().isoformat()
 
-        # Render user message and scroll to bottom
+        # Render user attachments (if present) and message, then scroll down
+        if files_metadata:
+            render_file_attachments(files_metadata)
         render_user_prompt(user_query)
         scroll_to_bottom()
 
-        # Step 3: Save AI response and stream it
-        with st.spinner("Generating..."):
-            # Determine whether the user selected a specific lesson scope
-            full_lesson_source = (
-                bool(grade_filter)
-                and bool(subject_filter)
-                and len(unit_num_filter) == 1
-                and bool(lesson_num_filter)
-            )
+        # Step 4: Retrieve context and generate AI response
+        try:
+            with st.spinner("Generating..."):
+                # Detect page numbers in prompt (Arabic/English)
+                requested_page = extract_requested_page(user_query)
 
-            # Get the enriched sources text
-            if full_lesson_source:
-                sources_text = rag_service.scroll_from_filters(get_filters())
-            else:
-                # Determining the enriching scope
-                LESSON_KEYWORDS = {
-                    # English
-                    "lesson",
-                    "lessons",
-                    "unit",
-                    "units",
-                    "chapter",
-                    "chapters",
-                    "summarize",
-                    "summary",
-                    "overview",
-                    # Arabic
-                    "درس",
-                    "الدرس",
-                    "الوحدة",
-                    "وحدة",
-                    "الفصل",
-                    "ملخص",
-                    "لخص",
-                }
-
-                words = set(re.findall(r"\b\w+\b", user_query.lower()))
-                enriching_scope = "lesson" if words & LESSON_KEYWORDS else "page"
-
-                chunks_payloads = rag_service.search(
-                    user_query,
-                    limit=10,
-                    score_threshold=0.5,
-                    query_filter=get_filters(),
+                full_lesson_source = (
+                    bool(st.session_state.get("filter_grade"))
+                    and bool(st.session_state.get("filter_subject"))
+                    and len(st.session_state.get("filter_unit", [])) == 1
+                    and bool(st.session_state.get("filter_lesson"))
                 )
 
-                # Get the lessons sources concatenated texts
-                sources_text = rag_service.enrich_sources(
-                    chunks_payloads, scope=enriching_scope
-                )
+                if full_lesson_source:
+                    # Full lesson drawer across Main Book & Assessment Book
+                    sources_text = rag_service.scroll_from_filters(get_filters())
 
-            # Get chat history for model context
-            chat_history = st.session_state.get("messages_data", [])
+                elif requested_page is not None:
+                    # Explicit page query: build a modified filter containing page_num
+                    base_filter = get_filters()
+                    page_condition = FieldCondition(
+                        key="page_num",
+                        match=MatchAny(any=[requested_page]),
+                    )
+                    
+                    if base_filter:
+                        base_filter.must.append(page_condition)
+                        page_filter = base_filter
+                    else:
+                        page_filter = Filter(must=[page_condition])
 
-            # Build student info dict
-            student_info = {}
-            if user:
-                student_info = {"name": user["full_name"]}
+                    sources_text = rag_service.scroll_from_filters(page_filter)
 
-            # --- Rendering the AI response (2 ways) ---
-            is_first_prompt = bool(chat_history)
-
-            if is_first_prompt:
-                # FIRST - get response, suggested chat title
-                json_response = rag_service.generate_response(
-                    user_query,
-                    sources_text,
-                    uploaded_files,
-                    chat_history,
-                    student_info,
-                )
-
-                full_response: str = json_response["response"]
-                render_ai_response(full_response)
-
-                # Update ss with full response
-                assistant_msg_dict = {
-                    "role": "assistant",
-                    "content": full_response,
-                }
-                messages_data.append(assistant_msg_dict)
-
-                # Save to DB
-                if user and st.session_state.get("current_chat_id"):
-                    chat_service.save_message(
-                        chat_id=st.session_state["current_chat_id"],
-                        user_prompt=user_query,
-                        user_timestamp=user_timestamp,
-                        ai_response=full_response,
+                else:
+                    # Semantic search across filtered corpus
+                    chunks_payloads = rag_service.search(
+                        user_query,
+                        limit=10,
+                        score_threshold=0.5,
+                        query_filter=get_filters(),
                     )
 
+                    sources_text = rag_service.enrich_sources(chunks_payloads)
+
+                # Get chat history for model context (excluding current query)
+                chat_history = messages_data[:-1]
+
+                # Build student info dict
+                student_info = {}
                 if user:
-                    clear_cached_chats()
-                    chat_service.update_title(
-                        st.session_state["current_chat_id"],
-                        json_response["suggested_chat_title"],
-                    )
-                    st.session_state["sidebar_update_key"] += 1
-                    # Overwrite the placeholder instantly
-                    if is_creating_new_chat:
-                        with chat_history_placeholder.container():
-                            render_sidebar_chats()
+                    student_info = {"name": user["full_name"], "grade": user["grade"]}
 
-            else:
-                # SECOND - stream response
+                # --- Rendering the AI response (2 ways) ---
+                is_first_prompt = len(chat_history) == 0
 
-                # Create a generator that yields chunks and collects full response
-                def stream_and_collect():
-                    full_response = ""
-
-                    for chunk in rag_service.generate_response_stream(
+                if is_first_prompt:
+                    # FIRST - get response, suggested chat title
+                    json_response = rag_service.generate_response(
                         user_query,
                         sources_text,
-                        uploaded_files,
+                        files_metadata,
                         chat_history,
                         student_info,
-                    ):
-                        full_response += chunk
-                        yield chunk
+                    )
+
+                    full_response: str = json_response["response"]
+                    sanitized_response = rag_service.sanitize_latex(full_response)
+                    render_ai_response(sanitized_response)
 
                     # Update ss with full response
                     assistant_msg_dict = {
                         "role": "assistant",
-                        "content": full_response,
+                        "content": sanitized_response,
+                        "is_error": False,
                     }
                     messages_data.append(assistant_msg_dict)
 
+                    # Save to DB with file metadata
+                    if user and st.session_state.get("current_chat_id"):
+                        chat_service.save_message_and_title(
+                            chat_id=st.session_state["current_chat_id"],
+                            user_prompt=user_query,
+                            user_timestamp=user_timestamp,
+                            ai_response=sanitized_response,
+                            title=json_response["suggested_chat_title"],
+                            user_files=files_metadata if files_metadata else None,
+                        )
+
+                        clear_cached_chats()
+                        st.session_state["sidebar_update_key"] += 1
+
+                        # Overwrite the placeholder instantly
+                        if is_creating_new_chat:
+                            with chat_history_placeholder.container():
+                                render_sidebar_chats()
+
+                else:
+                    # SECOND - stream response
+
+                    # 1. Create a placeholder container for streaming
+                    stream_container = st.empty()
+                    accumulated_chunks = []
+
+                    def stream_and_collect():
+                        for chunk in rag_service.generate_response_stream(
+                            user_query,
+                            sources_text,
+                            files_metadata,
+                            chat_history,
+                            student_info,
+                        ):
+                            accumulated_chunks.append(chunk)
+                            yield chunk
+
+                    # 2. Stream raw response to UI
+                    with stream_container:
+                        st.write_stream(stream_and_collect())
+
+                    # 3. Combine chunks and sanitize full response once stream finishes
+                    raw_accumulated = "".join(accumulated_chunks)
+                    sanitized_response = rag_service.sanitize_latex(raw_accumulated)
+
+                    # 4. Overwrite placeholder with clean LaTeX markdown
+                    stream_container.markdown(sanitized_response)
+
+                    # 5. Save sanitized response in session state
+                    assistant_msg_dict = {
+                        "role": "assistant",
+                        "content": sanitized_response,
+                    }
+                    messages_data.append(assistant_msg_dict)
+
+                    # 6. Save sanitized response to database
                     if user and st.session_state.get("current_chat_id"):
                         chat_service.save_message(
                             chat_id=st.session_state["current_chat_id"],
                             user_prompt=user_query,
                             user_timestamp=user_timestamp,
-                            ai_response=full_response,
+                            ai_response=sanitized_response,
+                            user_files=files_metadata if files_metadata else None,
                         )
 
-                # Stream the AI response
-                st.write_stream(stream_and_collect())
+        except Exception as e:
+            messages_data.append(
+                {
+                    "role": "assistant",
+                    "content": "",
+                    "is_error": True,
+                }
+            )
+            st.error(ERROR_MESSAGE)
+            import traceback
 
-            # Update messages_data ss
-            st.session_state["messages_data"] = messages_data
+            st.error(traceback.format_exc())
 
-        # except Exception as e:
-        #     messages_data[-1]["is_ai_error"] = True
-        #     st.session_state["messages_data"] = messages_data
-        #     st.error(f"Error: {e}")
+        # Update messages_data ss
+        st.session_state["messages_data"] = messages_data
 
     elif not st.session_state.get("messages_data"):
         st.header("How can I help you today?", text_alignment="center", anchor=False)

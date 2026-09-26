@@ -1,6 +1,6 @@
 from datetime import datetime
 from firebase_admin.db import Reference
-from typing import Dict, List
+from typing import Dict, List, Optional
 import uuid
 
 
@@ -26,14 +26,19 @@ class ChatService:
         user_prompt: str,
         user_timestamp: str,
         ai_response: str,
+        user_files: Optional[List[Dict]] = None,
     ):
-        """Save message to chat"""
+        """Save user prompt (with optional files metadata) and AI response to chat"""
 
         user_msg = {
             "role": "user",
             "content": user_prompt,
             "timestamp": user_timestamp,
         }
+
+        # Include files metadata if present
+        if user_files:
+            user_msg["files"] = user_files
 
         assistant_msg = {
             "role": "assistant",
@@ -49,7 +54,7 @@ class ChatService:
         """Get all chats for user, sorted by recency"""
         if user_uid != self.user_uid:
             return []
-        
+
         try:
             chats_ref = self.root_ref.child(f"users/{self.user_uid}/history/chats")
             chats_data = chats_ref.get()
@@ -85,6 +90,39 @@ class ChatService:
             {"title": title}
         )
 
+    def save_message_and_title(
+        self,
+        chat_id: str,
+        user_prompt: str,
+        user_timestamp: str,
+        ai_response: str,
+        title: str,
+        user_files: Optional[List[Dict]] = None,
+    ): 
+        """Save user message and title on the first prompt in one request to save time"""
+
+        user_msg = {
+            "role": "user",
+            "content": user_prompt,
+            "timestamp": user_timestamp,
+        }
+
+        # Include files metadata if present
+        if user_files:
+            user_msg["files"] = user_files
+
+        assistant_msg = {
+            "role": "assistant",
+            "content": ai_response,
+            "timestamp": datetime.now().isoformat(),
+        }
+
+        self.root_ref.child(f"users/{self.user_uid}/history/chats/{chat_id}/").update({
+            f"messages/{str(uuid.uuid4())}": user_msg,
+            f"messages/{str(uuid.uuid4())}": assistant_msg,
+            "title": title,
+        })
+    
     def delete_chat(self, chat_id: str):
         """Delete a chat"""
         self.root_ref.child(f"users/{self.user_uid}/history/chats/{chat_id}").delete()

@@ -2,7 +2,7 @@ import streamlit as st
 
 # Set page config
 st.set_page_config(
-    page_title="Learn Study Strategies - LearnPeak",
+    page_title="Study Strategies - LearnPeak",
     page_icon="static/mountain_logo.png",
     layout="centered",
     initial_sidebar_state="auto",
@@ -36,12 +36,6 @@ with col1:
         title="Sit Up Straight",
     )
 
-    st.success(
-        "Saying your notes out loud keeps your brain awake and stops your mind from wandering away.",
-        icon="🗣️",
-        title="Read Out Loud",
-    )
-
 with col2:
     st.markdown("### 🧭 Environment & Setup", anchors=False)
 
@@ -51,16 +45,10 @@ with col2:
         title="Zero Phone Distractions",
     )
 
-    st.info(
-        "Try to study in the same clean spot every time so your brain instantly knows it's time to work.",
-        icon="🖥️",
-        title="Your Study Spot",
-    )
-
     st.success(
-        "Keep a glass of water nearby and make sure your room has good lighting.",
-        icon="💡",
-        title="Water & Light",
+        "Saying your notes out loud keeps your brain awake and stops your mind from wandering away.",
+        icon="🗣️",
+        title="Read Out Loud",
     )
 
 "---"

@@ -1,6 +1,6 @@
 import streamlit as st
 import time
-
+from pages.added_books import fetch_added_books
 from services.account.settings import AccountSettingsService
 from config import *
 
@@ -17,7 +17,7 @@ st.set_page_config(
 
 root_ref = st.session_state.get("root_ref")
 cookies = st.session_state.get("cookies")
-user = st.session_state.get("user")
+user: dict = st.session_state.get("user", {})
 
 if not user:
     st.warning("Please sign in to manage your account settings.")
@@ -404,6 +404,84 @@ with info_tab:
                 st.toast("Grade saved.", icon="✅")
             else:
                 st.warning(message)
+
+        # ---------------------------------------------------------
+        # DEFAULT BOOK PUBLISHERS SECTION
+        # ---------------------------------------------------------
+        st.subheader("📖 Preferred Book Publishers")
+        st.caption(
+            "Select your book publishers for each subject in your grade. "
+            "Only available books in the database are listed."
+        )
+
+        user_grade_code = user.get("grade")
+        
+        # Load indexed books dataframe from added_books.py
+        added_books_df = fetch_added_books()
+
+        # Get subjects for the user's current grade
+        available_subjects_dict = get_subjects_for_grade(user_grade_code)
+        
+        # Get user's saved publishers or load defaults from config.py
+        user_publishers = user.get("preferred_publishers", {})
+        grade_default_publishers = DEFAULT_PUBLISHERS.get(user_grade_code, {})
+
+        for subj_name, subj_code in available_subjects_dict.items():
+            # Filter books indexed in Qdrant matching grade and subject
+            if not added_books_df.empty:
+                filtered_db_books = added_books_df[
+                    (added_books_df["Grade Code"] == user_grade_code)
+                    & (added_books_df["Subject Code"] == subj_code)
+                ]
+                indexed_pub_codes = filtered_db_books["Publisher"].map(BOOK_PUBLISHERS).dropna().unique().tolist()
+            else:
+                indexed_pub_codes = []
+
+            # If no books are indexed yet, fallback to all publishers
+            if not indexed_pub_codes:
+                valid_pub_codes = list(BOOK_PUBLISHERS.values())
+            else:
+                valid_pub_codes = indexed_pub_codes
+
+            pub_options = [
+                k for k, v in BOOK_PUBLISHERS.items() if v in valid_pub_codes
+            ]
+
+            # Determine selected choice (User preference -> Grade default -> First option)
+            current_pub_code = user_publishers.get(
+                subj_code, grade_default_publishers.get(subj_code, valid_pub_codes[0] if valid_pub_codes else "")
+            )
+            current_pub_key = get_key_by_value(BOOK_PUBLISHERS, current_pub_code)
+
+            pub_index = pub_options.index(current_pub_key) if current_pub_key in pub_options else 0
+
+            selected_pub_label = st.selectbox(
+                f"{subj_name}",
+                options=pub_options,
+                index=pub_index,
+                key=f"settings_pub_{subj_code}",
+            )
+
+            selected_pub_code = BOOK_PUBLISHERS[selected_pub_label]
+
+            # Save on selection change
+            if current_pub_code != selected_pub_code:
+                updated_publishers = dict(user_publishers)
+                updated_publishers[subj_code] = selected_pub_code
+                
+                ok, message = settings_service.update_user_info(
+                    user["uid"], "preferred_publishers", updated_publishers
+                )
+                if ok:
+                    update_session_user("preferred_publishers", updated_publishers)
+                    st.toast(f"Publisher updated for {subj_name}.", icon="✅")
+                else:
+                    st.warning(message)
+
+        # Help option / redirect if textbook isn't listed
+        st.info("💡 Don't see your book publisher listed?")
+        if st.button("➕ Request to add your book", use_container_width=True):
+            st.switch_page("pages/added_books.py")
 
 with account_tab:
     st.subheader("Account settings")
