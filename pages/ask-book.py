@@ -635,10 +635,10 @@ elif page == "chat":
 
         # Handle Category Selection
         if category_code:
-            # If 'assessments_book' is selected, include both 'main_book' and 'assessments_book'
+            # If 'assessments_book' is selected, include both 'external_book' and 'assessments_book'
             # to guarantee context coverage from both reference sources.
             if category_code == "assessments_book":
-                filter_values["category"] = ["assessments_book", "main_book"]
+                filter_values["category"] = ["assessments_book", "external_book"]
             else:
                 filter_values["category"] = [category_code]
 
