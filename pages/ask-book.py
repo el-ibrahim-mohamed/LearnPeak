@@ -657,20 +657,15 @@ elif page == "chat":
                             target_publishers.append(pub)
                 else:
                     target_publishers = list(user_publishers.values())
-        else:
-            if filter_grade_code:
-                default_grade_pubs = DEFAULT_PUBLISHERS.get(filter_grade_code, {})
-                if filter_values.get("subject"):
-                    for subj_code in filter_values["subject"]:
-                        pub = default_grade_pubs.get(subj_code)
-                        if pub:
-                            target_publishers.append(pub)
-                else:
-                    target_publishers = list(default_grade_pubs.values())
 
+        # Only restrict by publisher if a logged-in user has specific publisher preferences
         if target_publishers:
             filter_values["book_publisher"] = list(set(target_publishers))
+        else:
+            # Bypasses publisher filtering for guest/signed-out users entirely
+            filter_values.pop("book_publisher", None)
 
+        print(filter_values)
         # --- CONSTRUCT QDRANT FILTERS ---
         for key, values in filter_values.items():
             if not values:
