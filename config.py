@@ -39,6 +39,7 @@ GRADE_SUBJECTS = {
 }
 
 BOOK_PUBLISHERS = {
+    "🏫 Ministry of Education": "moe",
     "📙 El-Moasser": "el-moasser",
     "📗 El-Emtihan": "el-emtihan",
     "📘 Al-Adwaa": "al-adwaa",

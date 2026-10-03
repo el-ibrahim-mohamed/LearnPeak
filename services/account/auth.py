@@ -6,6 +6,7 @@ import uuid
 from datetime import datetime, timedelta
 import smtplib
 from email.message import EmailMessage
+from config import DEFAULT_PUBLISHERS
 
 # ---------------------------------------------------------
 # SHARED UTILITIES & HELPERS
@@ -402,6 +403,7 @@ class Signup:
             "education": education,
             "grade": grade,
             "created_at": datetime.now().isoformat(),
+            "preferred_book_publishers": DEFAULT_PUBLISHERS[grade]
         }
 
         user_auth = {

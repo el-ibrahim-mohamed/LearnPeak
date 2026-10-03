@@ -1,6 +1,5 @@
 import streamlit as st
 import time
-from pages.added_books import fetch_added_books
 from services.account.settings import AccountSettingsService
 from config import *
 
@@ -158,7 +157,6 @@ def dialog_email_flow():
                     else:
                         st.error(message)
 
-
             error_ph = st.empty()
 
             col1, col2 = st.columns(2)
@@ -285,9 +283,8 @@ def dialog_email_flow():
                 else:
                     st.error(message)
 
-
         status_ph = st.empty()
-        
+
         col1, col2 = st.columns(2)
         with col1:
             if st.button(
@@ -336,7 +333,8 @@ st.caption("Manage your profile, account, and security settings.")
 info_tab, account_tab = st.tabs(["ℹ️ Info", "👤 Account"])
 
 with info_tab:
-    st.subheader("Profile info")
+    # --- PROFILE INFO SECTION ---
+    st.subheader("Profile info", icon="📋")
 
     with st.container(border=True):
         country_options = list(COUNTRIES.keys())
@@ -405,97 +403,106 @@ with info_tab:
             else:
                 st.warning(message)
 
-        # ---------------------------------------------------------
-        # DEFAULT BOOK PUBLISHERS SECTION
-        # ---------------------------------------------------------
-        st.subheader("📖 Preferred Book Publishers")
-        st.caption(
-            "Select your book publishers for each subject in your grade. "
-            "Only available books in the database are listed."
+    # --- PREFERRED PUBLISHERS SECTION ---
+
+    user_grade = user.get("grade")
+    current_user_pubs = user.get("preferred_book_publishers", {})
+
+    # Fetch available publishers for user's grade
+    with st.spinner("Loading..."):
+        available_pubs_node = (
+            root_ref.child("available_publishers").child(user_grade).get() or {}
         )
 
-        user_grade_code = user.get("grade")
-        
-        # Load indexed books dataframe from added_books.py
-        added_books_df = fetch_added_books()
+    all_subjects = GRADE_SUBJECTS[user_grade]
 
-        # Get subjects for the user's current grade
-        available_subjects_dict = get_subjects_for_grade(user_grade_code)
-        
-        # Get user's saved publishers or load defaults from config.py
-        user_publishers = user.get("preferred_publishers", {})
-        grade_default_publishers = DEFAULT_PUBLISHERS.get(user_grade_code, {})
+    st.markdown("### 📚 Preferred Publishers")
 
-        for subj_name, subj_code in available_subjects_dict.items():
-            # Filter books indexed in Qdrant matching grade and subject
-            if not added_books_df.empty:
-                filtered_db_books = added_books_df[
-                    (added_books_df["Grade Code"] == user_grade_code)
-                    & (added_books_df["Subject Code"] == subj_code)
-                ]
-                indexed_pub_codes = filtered_db_books["Publisher"].map(BOOK_PUBLISHERS).dropna().unique().tolist()
-            else:
-                indexed_pub_codes = []
+    # Styled container for the section
+    with st.container(border=True):
+        st.caption(
+            "Customize your preferred publisher for each subject to refine search results."
+        )
 
-            # If no books are indexed yet, fallback to all publishers
-            if not indexed_pub_codes:
-                valid_pub_codes = list(BOOK_PUBLISHERS.values())
-            else:
-                valid_pub_codes = indexed_pub_codes
+        updated_publishers = {}
 
-            pub_options = [
-                k for k, v in BOOK_PUBLISHERS.items() if v in valid_pub_codes
+        # 2-column or 1-column layout inside container
+        cols = st.columns(2)
+
+        for idx, subject in enumerate(all_subjects):
+            col = cols[idx % 2]
+
+            # Get raw code list from DB for this grade/subject, e.g., ["el-moasser", "el-emtihan"]
+            available_codes = available_pubs_node.get(subject, [])
+
+            # Map codes to UI labels for st.selectbox
+            reversed_book_pubs = {value: key for key, value in BOOK_PUBLISHERS.items()}
+
+            available_ui_labels = [
+                reversed_book_pubs[code]
+                for code in available_codes
+                if code in reversed_book_pubs
             ]
 
-            # Determine selected choice (User preference -> Grade default -> First option)
-            current_pub_code = user_publishers.get(
-                subj_code, grade_default_publishers.get(subj_code, valid_pub_codes[0] if valid_pub_codes else "")
-            )
-            current_pub_key = get_key_by_value(BOOK_PUBLISHERS, current_pub_code)
+            # Determine current selected code and map to UI label default
+            current_code = current_user_pubs.get(subject, "")
+            default_ui_label = reversed_book_pubs.get(current_code, None)
 
-            pub_index = pub_options.index(current_pub_key) if current_pub_key in pub_options else 0
+            # Calculate default index
+            default_index = 0
+            if default_ui_label and default_ui_label in available_ui_labels:
+                default_index = available_ui_labels.index(default_ui_label)
 
-            selected_pub_label = st.selectbox(
-                f"{subj_name}",
-                options=pub_options,
-                index=pub_index,
-                key=f"settings_pub_{subj_code}",
-            )
+            with col:
+                subject_display_name = get_key_by_value(SUBJECTS, subject)
 
-            selected_pub_code = BOOK_PUBLISHERS[selected_pub_label]
-
-            # Save on selection change
-            if current_pub_code != selected_pub_code:
-                updated_publishers = dict(user_publishers)
-                updated_publishers[subj_code] = selected_pub_code
-                
-                ok, message = settings_service.update_user_info(
-                    user["uid"], "preferred_publishers", updated_publishers
-                )
-                if ok:
-                    update_session_user("preferred_publishers", updated_publishers)
-                    st.toast(f"Publisher updated for {subj_name}.", icon="✅")
+                if available_ui_labels:
+                    selected_label = st.selectbox(
+                        label=f"{subject_display_name}",
+                        options=available_ui_labels,
+                        index=default_index,
+                        key=f"pub_select_{subject}",
+                    )
+                    # Store converted code back
+                    updated_publishers[subject] = BOOK_PUBLISHERS[selected_label]
                 else:
-                    st.warning(message)
+                    st.text_input(
+                        label=f"{subject_display_name}",
+                        value="No publishers available",
+                        disabled=True,
+                        key=f"pub_disabled_{subject}",
+                    )
 
-        # Help option / redirect if textbook isn't listed
-        st.info("💡 Don't see your book publisher listed?")
-        if st.button("➕ Request to add your book", use_container_width=True):
+        " "
+        if st.button(
+            "Save Preferred Publishers", type="primary", use_container_width=True
+        ):
+            # Update user's preferred_book_publishers node directly
+            root_ref.child(
+                f"users/{user["uid"]}/info/preferred_book_publishers"
+            ).update(updated_publishers)
+            st.toast("Publisher preferences updated successfully!", icon="✅")
+
+        "---"
+        st.caption("Can't find your book or publisher in the list?")
+        if st.button("🔍 Request Missing Book"):
             st.switch_page("pages/added_books.py")
 
 with account_tab:
-    st.subheader("Account settings")
+    st.subheader("Account settings", icon="⚙️")
 
     with st.container(border=True):
         st.write("Manage how your LearnPeak account is identified and secured.")
 
-        st.text_input(
+        col1, col2 = st.columns([0.7, 0.3], vertical_alignment="bottom")
+
+        col1.text_input(
             "Email",
             value=user.get("email", ""),
             disabled=True,
         )
 
-        if st.button("✉️ Change email", use_container_width=True):
+        if col2.button("✉️ Change email", use_container_width=True):
             st.session_state["settings_email_step"] = "verify_current_email"
             st.session_state["settings_email_code_sent"] = False
             st.session_state["trigger_email_dialog"] = True
@@ -506,7 +513,7 @@ with account_tab:
             st.session_state["trigger_email_dialog"] = False  # Instantly consume flag
             dialog_email_flow()
 
-        st.divider()
+        " "
 
         username = st.text_input(
             "Username",
@@ -521,7 +528,7 @@ with account_tab:
                 st.warning(message)
                 st.session_state["settings_username"] = user.get("username") or ""
 
-        st.divider()
+        " "
 
         if st.button("🚪 Sign out", use_container_width=True, type="secondary"):
             sign_out_user()

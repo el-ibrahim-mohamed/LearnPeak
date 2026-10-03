@@ -10,6 +10,7 @@ st.set_page_config(
     layout="centered",
 )
 
+
 # Initialize Qdrant service using cached resource
 @st.cache_resource
 def get_qdrant_service():
@@ -18,6 +19,7 @@ def get_qdrant_service():
         api_key=st.secrets["qdrant"]["API_KEY"],
         vector_size=EMBEDDING_VECTOR_SIZE,
     )
+
 
 # Cache book list retrieval from Qdrant vector DB
 @st.cache_data(ttl=3600, show_spinner=False)
@@ -79,7 +81,9 @@ with st.spinner("Fetching indexed books library..."):
 # Action Row (Search / Refresher)
 col_search, col_ref = st.columns([4, 1])
 with col_ref:
-    if st.button("🔄 Refresh", use_container_width=True, help="Force refresh book list"):
+    if st.button(
+        "🔄 Refresh", use_container_width=True, help="Force refresh book list"
+    ):
         st.cache_data.clear()
         st.rerun()
 
@@ -121,42 +125,99 @@ st.divider()
 # =========================================================
 # REQUEST A NEW BOOK FORM
 # =========================================================
-st.subheader("📬 Can't find your exact textbook?")
+
+# Place HTML anchor tag right before the header
+st.subheader("📚 Can't find your exact textbook?")
 st.write(
     "Request a new book to be processed and added to LearnPeak. We will review and index it into the platform ASAP."
 )
 
-with st.form("request_book_form", clear_on_submit=True):
-    col_req1, col_req2 = st.columns(2)
-    with col_req1:
-        req_grade = st.selectbox("Grade", list(GRADES.keys()), key="req_grade")
-        req_publisher = st.selectbox("Publisher", list(BOOK_PUBLISHERS.keys()), key="req_pub")
-    with col_req2:
-        req_subject = st.selectbox("Subject", list(SUBJECTS.keys()), key="req_subj")
+
+@st.fragment
+def request_book_form():
+    with st.container(border=True):
+        # Row 1: Grade and Subject
+        col1, col2 = st.columns(2)
+        with col1:
+            req_grade = st.selectbox("Grade", list(GRADES.keys()), key="req_grade")
+        with col2:
+            # Dynamically filter subjects based on grade if available
+            selected_grade_code = GRADES.get(req_grade)
+            available_subjects = (
+                get_subjects_for_grade(selected_grade_code)
+                if selected_grade_code
+                else SUBJECTS
+            )
+            req_subject = st.selectbox(
+                "Subject", list(available_subjects.keys()), key="req_subj"
+            )
+
+        # Row 2: Category and Publisher (Slicing based on Category)
+        col1, col2 = st.columns(2)
+        with col1:
+            if isinstance(req_subject, str) and "english" in req_subject.lower():
+                req_category_label = st.selectbox(
+                    "English Book Category",
+                    list(ENGLISH_CATEGORIES.keys()),
+                    key="req_english_cat",
+                )
+                req_category = ENGLISH_CATEGORIES[req_category_label]
+            else:
+                req_category_label = st.selectbox(
+                    "Book Category",
+                    list(CATEGORIES.keys()),
+                    key="req_general_cat",
+                )
+                req_category = CATEGORIES[req_category_label]
+
+        with col2:
+            is_assessments_book = req_category == "assessments_book"
+
+            book_publishers = list(BOOK_PUBLISHERS.keys())
+            if is_assessments_book:
+                book_publishers = [book_publishers[0]]
+            else:
+                book_publishers = book_publishers[1:]
+
+            req_publisher = st.selectbox(
+                "Book Publisher",
+                book_publishers,
+                key="req_publisher_select",
+            )
+
+        # Row 3: Notes (Alone)
         req_notes = st.text_input(
             "Notes (Optional)",
+            placeholder="Attach any notes...",
+            key="req_notes_input",
         )
 
-    submit_req = st.form_submit_button("📩 Send Book Request", type="primary", use_container_width=True)
+        submit_req = st.button(
+            "📩 Send Book Request", type="primary", use_container_width=True
+        )
 
-    if submit_req:
-        user_info = st.session_state.get("user", {})
-        request_data = {
-            "grade": req_grade,
-            "grade_code": GRADES.get(req_grade),
-            "subject": req_subject,
-            "subject_code": SUBJECTS.get(req_subject),
-            "publisher": req_publisher,
-            "notes": req_notes.strip(),
-            "requested_at": datetime.now().isoformat(),
-            "user_uid": user_info.get("uid", "anonymous"),
-            "user_name": user_info.get("name", "Guest"),
-            "status": "pending",
-        }
+        if submit_req:
+            user_info = st.session_state.get("user", {})
+            request_data = {
+                "grade": GRADES.get(req_grade),
+                "subject": SUBJECTS.get(req_subject),
+                "category": req_category,
+                "publisher": BOOK_PUBLISHERS.get(req_publisher),
+                "notes": req_notes.strip(),
+                "requested_at": datetime.now().isoformat(),
+                "user_uid": user_info.get("uid", "anonymous"),
+                "user_name": user_info.get("full_name", "Guest"),
+                "status": "pending",
+            }
 
-        try:
-            root_ref = st.session_state["root_ref"]
-            root_ref.child("requests/book_additions").push(request_data)
-            st.success("🎉 Thank you! Your book request has been submitted successfully.")
-        except Exception as e:
-            st.error(f"Failed to send request: {str(e)}")
+            try:
+                root_ref = st.session_state["root_ref"]
+                root_ref.child("support/book_additions").push(request_data)
+                st.success(
+                    "🎉 Thank you! Your book request has been submitted successfully."
+                )
+            except Exception as e:
+                st.error(f"Failed to send request: {str(e)}")
+
+
+request_book_form()

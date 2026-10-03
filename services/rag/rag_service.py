@@ -130,6 +130,74 @@ class RagService:
     # Collect Sources Methods
     # -------------------------
 
+    def format_search_results(self, chunks_payloads: list[dict]) -> str:
+        """
+        Formats a list of chunk payload dictionaries into structured textbook text.
+        Sorts chunks strictly by curriculum hierarchy and page/chunk sequence.
+        """
+        if not chunks_payloads:
+            return ""
+
+        # Make a copy so sorting doesn't mutate original list reference unexpectedly
+        chunks = list(chunks_payloads)
+
+        # Sort chunks strictly into textbook order
+        chunks.sort(
+            key=lambda chunk: (
+                chunk.get("grade", ""),
+                chunk.get("subject", ""),
+                chunk.get("unit_num") or 0,
+                (
+                    min(chunk["lesson_num"])
+                    if chunk.get("lesson_num")
+                    and isinstance(chunk.get("lesson_num"), (list, tuple))
+                    else (chunk.get("lesson_num") or 0)
+                ),
+                chunk.get("page_num") or 0,
+                chunk.get("chunk_order") or 0,
+            )
+        )
+
+        sources_text = ""
+        current_page = None
+
+        for chunk in chunks:
+            page = (
+                chunk.get("grade"),
+                chunk.get("subject"),
+                chunk.get("unit_num"),
+                (
+                    tuple(chunk["lesson_num"])
+                    if isinstance(chunk.get("lesson_num"), list)
+                    else chunk.get("lesson_num")
+                ),
+                chunk.get("page_num"),
+            )
+
+            if page != current_page:
+                if current_page is not None:
+                    sources_text += "\n\n" + "-" * 50 + "\n\n"
+
+                subject_display = (
+                    get_key_by_value(SUBJECTS, chunk.get("subject"))
+                    if chunk.get("subject") in SUBJECTS.values()
+                    else chunk.get("subject", "")
+                )
+
+                sources_text += (
+                    f'=== Grade: {chunk.get("grade", "N/A")} | '
+                    f'Subject: {subject_display} | '
+                    f'Unit {chunk.get("unit_num", "N/A")} | '
+                    f'Lesson {chunk.get("lesson_num", "N/A")} | '
+                    f'Page {chunk.get("page_num", "N/A")} ===\n\n'
+                )
+
+                current_page = page
+
+            sources_text += chunk.get("chunk_text", "") + "\n"
+
+        return sources_text.strip()
+
     def enrich_sources(self, chunks_payloads: list[dict]) -> str:
         """
         Enriches retrieved chunks by fetching all chunks belonging strictly to
@@ -172,115 +240,9 @@ class RagService:
         # Retrieve all chunks belonging strictly to these specific target pages
         chunks_results = self.scroll(filters)
 
-        # Sort chunks strictly by textbook order
-        chunks_results.sort(
-            key=lambda chunk: (
-                chunk.get("grade", ""),
-                chunk.get("subject", ""),
-                chunk.get("unit_num") or 0,
-                (
-                    min(chunk["lesson_num"])
-                    if chunk.get("lesson_num")
-                    and isinstance(chunk.get("lesson_num"), (list, tuple))
-                    else (chunk.get("lesson_num") or 0)
-                ),
-                chunk.get("page_num") or 0,
-                chunk.get("chunk_order") or 0,
-            )
-        )
-
-        sources_text = ""
-        current_page = None
-
-        for chunk in chunks_results:
-            page = (
-                chunk.get("grade"),
-                chunk.get("subject"),
-                chunk.get("unit_num"),
-                (
-                    tuple(chunk["lesson_num"])
-                    if isinstance(chunk.get("lesson_num"), list)
-                    else chunk.get("lesson_num")
-                ),
-                chunk.get("page_num"),
-            )
-
-            if page != current_page:
-                if current_page is not None:
-                    sources_text += "\n\n" + "-" * 50 + "\n\n"
-
-                sources_text += (
-                    f'=== Grade: {chunk.get("grade", "N/A")} | '
-                    f'Subject: {chunk.get("subject", "")} | '
-                    f'Unit {chunk.get("unit_num", "N/A")} | '
-                    f'Lesson {chunk.get("lesson_num", "N/A")} | '
-                    f'Page {chunk.get("page_num", "N/A")} ===\n\n'
-                )
-
-                current_page = page
-
-            sources_text += chunk.get("chunk_text", "") + "\n"
-
-        return sources_text.strip()
-
-    def scroll_from_filters(
-        self,
-        filters: Filter,
-    ) -> str:
-        """
-        Retrieve all textbook chunks matching the selected curriculum filters.
-
-        Unlike semantic search, this retrieves every matching chunk from Qdrant,
-        allowing the quiz generator to use an entire book, unit, or lesson.
-        """
-
-        chunks = self.scroll(filters)
-
-        if not chunks:
-            return ""
-
-        # Sort everything into textbook order.
-        chunks.sort(
-            key=lambda chunk: (
-                chunk.get("unit_num", 0),
-                (
-                    min(chunk["lesson_num"])
-                    if isinstance(chunk["lesson_num"], list)
-                    else chunk["lesson_num"]
-                ),
-                chunk.get("page_num", 0),
-                chunk.get("chunk_order", 0),
-            )
-        )
-
-        sources_text = ""
-        current_page = None
-
-        for chunk in chunks:
-            page = (
-                chunk.get("book_publisher", ""),
-                chunk.get("unit_num"),
-                chunk.get("lesson_num"),
-                chunk.get("page_num"),
-            )
-
-            if page != current_page:
-                if current_page is not None:
-                    sources_text += "\n\n" + "-" * 50 + "\n\n"
-
-                sources_text += (
-                    f'=== {get_key_by_value(SUBJECTS, chunk.get("subject"))} | '
-                    f'Unit {chunk["unit_num"]} | '
-                    f'Lesson {chunk["lesson_num"]} | '
-                    f'Page {chunk["page_num"]} ===\n\n'
-                )
-
-                current_page = page
-
-            sources_text += chunk["chunk_text"] + "\n"
-
-        return sources_text.strip()
-
+        # Format retrieved chunks using the helper
+        return self.format_search_results(chunks_results)
+    
     # -------------------------
     # AI Mode Methods
     # -------------------------
@@ -390,7 +352,7 @@ class RagService:
         if not response:
             raise RuntimeError("Failed to generate the AI response.")
 
-        print(response.text)
+        print(rf"{response.text}")
         parsed_response = json.loads(response.text)
         return parsed_response
 
@@ -665,37 +627,52 @@ CURRENT USER PROMPT
 
     @staticmethod
     def sanitize_latex(text: str) -> str:
-        """
-        Cleans up LLM-generated LaTeX output specifically for Streamlit's st.markdown parser.
-        """
+        """Fixes unescaped Unicode circled numbers inside KaTeX math blocks."""
         if not text:
             return ""
 
-        # 1. Strip accidental trailing markdown/pipe artifacts right after closing delimiters
-        # E.g., "$$\sqrt{3}$|" or "$\sqrt{3}$|" -> "$\sqrt{3}$"
-        text = re.sub(r"(\${1,2}[^$\n]+?\${1,2})\|+", r"\1", text)
+        # Map circled Unicode numbers to raw-string LaTeX text equivalents
+        circled_map = {
+            "①": r"\text{1.} ",
+            "②": r"\text{2.} ",
+            "③": r"\text{3.} ",
+            "④": r"\text{4.} ",
+            "⑤": r"\text{5.} ",
+            "⑥": r"\text{6.} ",
+            "⑦": r"\text{7.} ",
+            "⑧": r"\text{8.} ",
+            "⑨": r"\text{9.} ",
+            "⑩": r"\text{10.} ",
+        }
 
-        # 2. Fix mismatched delimiters on same-line expressions
-        # Case A: Started with $$ but closed with $ (e.g., $$(5^{\frac{1}{2}})^6 = 125$)
-        text = re.sub(r"(?<!\$)\$\$(?!\$)(.*?)(?<!\$)\$(?!\$)", r"$\1$", text)
+        def replace_circled_symbols(match: re.Match) -> str:
+            block = match.group(0)
+            for symbol, replacement in circled_map.items():
+                block = block.replace(symbol, replacement)
+            return block
 
-        # Case B: Started with $ but closed with $$ (e.g., $(5^{\frac{1}{2}})^6 = 125$$)
-        text = re.sub(r"(?<!\$)\$(?!\$)(.*?)(?<!\$)\$\$(?!\$)", r"$\1$", text)
-
-        # 3. Clean up display math ($$) to ensure proper newline isolation for Streamlit
-        # Streamlit requires $$ block math to be separated from prose by newlines
-        def fix_block_math(match):
-            content = match.group(1).strip()
-            return f"\n\n$$\n{content}\n$$\n\n"
-
-        # Isolates inline block math like "$$ e=mc^2 $$" onto dedicated lines
-        text = re.sub(r"\$\$\s*(.*?)\s*\$\$", fix_block_math, text, flags=re.DOTALL)
-
-        # 4. Remove any multi-newline padding created by block math isolation
-        text = re.sub(r"\n{3,}", "\n\n", text)
+        # Replace circled symbols inside display ($$...$$) and inline ($...$) math
+        text = re.sub(r"\$\$.*?\$\$", replace_circled_symbols, text, flags=re.DOTALL)
+        text = re.sub(r"\$.*?\$", replace_circled_symbols, text)
 
         return text
 
+    @staticmethod
+    def deduplicate_chunks(chunks_payloads: list[dict]) -> list[dict]:
+        """
+        Deduplicates a list of chunk payload dicts by unique 'id' while maintaining original order.
+        """
+        seen_ids = set()
+        deduped = []
+        for chunk in chunks_payloads:
+            chunk_id = chunk.get("id")
+            if chunk_id:
+                if chunk_id not in seen_ids:
+                    seen_ids.add(chunk_id)
+                    deduped.append(chunk)
+            else:
+                deduped.append(chunk)
+        return deduped
 
 class AddSource:
     def __init__(
@@ -1187,31 +1164,27 @@ Do not include any explanation before or after the JSON.
         return results
 
     def extract_ocr_from_zip(
-        self, zip_bytes: bytes, pages_mapping: dict, chunk_num: int
+        self, zip_bytes: bytes, pages_mapping: dict, folder_name: str
     ) -> list[dict]:
         """
-        Extract OCR markdown content for a specific chunk (by chunk_num) from a master Document AI ZIP download.
-        Dynamically locates the root directory containing 'chunk_{chunk_num}' or 'chunk_{chunk_num}_'.
-        Reads markdown files corresponding only to valid digital pages in pages_mapping.
+        Extract OCR markdown content for a specific chunk folder from a master Document AI ZIP download.
+        Matches files inside the target chunk folder path (e.g., 'chunk1_science_prep3.pdf/pages/page-1/markdown.md').
         """
         results = []
 
         with zipfile.ZipFile(BytesIO(zip_bytes)) as z:
             all_files = z.namelist()
 
-            # Target identifier for this chunk's folder (e.g. "chunk_1")
-            chunk_target = f"chunk_{chunk_num}"
-
             for digital_page, actual_page in pages_mapping.items():
-                # End pattern for page markdown file inside Document AI zip
+                # Target path suffix inside the chunk's folder
                 page_suffix = f"pages/page-{digital_page}/markdown.md"
 
-                # Find file path that contains the chunk_target AND ends with page_suffix
+                # Find the file that matches the chunk's specific folder_name AND page_suffix
                 matched_file = next(
                     (
                         f
                         for f in all_files
-                        if chunk_target in f and f.endswith(page_suffix)
+                        if folder_name in f and f.endswith(page_suffix)
                     ),
                     None,
                 )
@@ -1226,11 +1199,11 @@ Do not include any explanation before or after the JSON.
                     )
                 else:
                     print(
-                        f"Warning: Could not find chunk_{chunk_num} page-{digital_page} markdown in ZIP."
+                        f"Warning: Could not find {folder_name} page-{digital_page} markdown in ZIP."
                     )
 
         return results
-
+    
     def attach_metadata(
         self,
         ocr_result: list[dict],
@@ -1570,6 +1543,7 @@ Do not include any explanation before or after the JSON.
         self,
         pdf_bytes: bytes,
         master_zip_bytes: bytes,
+        filename: str,
         grade: str,
         subject: str,
         book_publisher: str = "el-moasser",
@@ -1577,7 +1551,8 @@ Do not include any explanation before or after the JSON.
         ignore_index: int = None,
     ):
         """
-        Process a PDF book alongside a single Master Document AI ZIP file containing all chunk folders.
+        Process a PDF book chunk by chunk alongside a single Master Document AI ZIP file containing
+        folders named 'chunk{chunk_number}_{filename}' for every chunk.
         """
         batch_id = str(uuid.uuid4())
 
@@ -1597,14 +1572,17 @@ Do not include any explanation before or after the JSON.
             "elapsed": split_time,
         }
 
-        # 2. Process each chunk against the Master ZIP
+        # 2. Process each chunk against its specific folder in the Master ZIP
         for i, chunk_bytes in enumerate(pdf_chunks):
             chunk_number = i + 1
             total_chunks = len(pdf_chunks)
 
+            # Construct the exact folder name expected inside the ZIP root
+            target_folder_name = f"chunk{chunk_number}_{filename}"
+
             yield {
                 "step": f"Chunk {chunk_number}/{total_chunks}",
-                "message": f"Starting manual processing of chunk {chunk_number} of {total_chunks}.",
+                "message": f"Starting processing of chunk {chunk_number} of {total_chunks} ({target_folder_name}).",
                 "elapsed": 0,
             }
 
@@ -1621,18 +1599,18 @@ Do not include any explanation before or after the JSON.
                 "elapsed": elapsed,
             }
 
-            # Parse OCR Markdown directly from Master ZIP for this specific chunk_number
+            # Parse OCR Markdown directly from Master ZIP for target_folder_name
             start = time.perf_counter()
             pages = self.extract_ocr_from_zip(
                 zip_bytes=master_zip_bytes,
                 pages_mapping=digital_to_actual_mapping,
-                chunk_num=chunk_number,
+                folder_name=target_folder_name,
             )
             elapsed = time.perf_counter() - start
 
             yield {
                 "step": "ZIP OCR Parsed",
-                "message": f"Extracted {len(pages)} valid page(s) from Master ZIP for chunk {chunk_number}/{total_chunks}.",
+                "message": f"Extracted {len(pages)} valid page(s) from Master ZIP folder '{target_folder_name}'.",
                 "elapsed": elapsed,
             }
 
@@ -1684,7 +1662,7 @@ Do not include any explanation before or after the JSON.
             "elapsed": 0,
             "batch_id": batch_id,
         }
-
+        
     @staticmethod
     def current_term():
         month = datetime.now().month

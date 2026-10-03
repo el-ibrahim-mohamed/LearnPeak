@@ -474,6 +474,82 @@ elif page == "chat":
             unsafe_allow_javascript=True,
         )
 
+    def normalize_arabic_digits(text: str) -> str:
+        """Converts Eastern Arabic digits to standard ASCII digits."""
+        arabic_digits = "٠١٢٣٤٥٦٧٨٩"
+        ascii_digits = "0123456789"
+        translation_table = str.maketrans(arabic_digits, ascii_digits)
+        return text.translate(translation_table)
+
+    def normalize_text(text: str) -> str:
+        """Normalizes text by converting digits, lowercasing, and unifying Arabic characters."""
+        text = normalize_arabic_digits(text.lower())
+        # Normalize Arabic Alif variants (أ, إ, آ -> ا) and Yaa (ى -> ي)
+        text = re.sub(r"[أإآ]", "ا", text)
+        text = re.sub(r"ى", "ي", text)
+        return text
+
+    def extract_requested_pages(query: str) -> list[int]:
+        """
+        Extracts explicit page numbers/ranges from a user query across English and Arabic formats.
+
+        Handles:
+        - Prefixes: page, pages, pg, pgs, p, p., pg., pgs., صفحة, الصفحة, صفحات, الصفحات, ص, ص.
+        - Spacing & Delimiters: page: 10, p10, p.10, p . 10, pg10, ص12, ص : 12, ص. 12
+        - Ranges with single/repeated prefixes: pages 10-15, من صفحة 5 الى صفحة 8, ص10-12
+        - Lists: pages 10, 11 and 12, ص 10، 11، 12, ص 10 و ص 12
+
+        Enforces a max limit of 15 unique pages per query and ignores invalid numbers (> 1000).
+        """
+        if not query:
+            return []
+
+        norm_query = normalize_text(query)
+        found_pages = set()
+
+        # Prefix definition: Covers page, pages, pg, pgs, p, p., صفحة, الصفحة, صفحات, الصفحات, ص, ص.
+        PREFIX = r"(?:\b(?:pages?|pgs?\.?|صفحة|الصفحة|صفحات|الصفحات)\b|\b(?:p|pg|ص)\b\.?|(?:\b(?:p|pg|ص)\.?)(?=\d))"
+
+        # Condition 1: Ranges with optional repeated prefix (e.g. "pages 10-15", "من صفحة 5 الى صفحة 8", "ص 5 الى 8")
+        range_pattern = (
+            r"(?:من\s+)?"
+            + PREFIX
+            + r"\s*[:\.-]*\s*(\d+)\s*(?:-|to|through|الي|حتي|وحتي)\s*(?:"
+            + PREFIX
+            + r"\s*[:\.-]*\s*)?(\d+)"
+        )
+        for match in re.finditer(range_pattern, norm_query):
+            start, end = int(match.group(1)), int(match.group(2))
+            if 1 <= start <= 1000 and 1 <= end <= 1000:
+                if start <= end and (end - start) <= 30:
+                    found_pages.update(range(start, end + 1))
+                elif start > end and (start - end) <= 30:
+                    found_pages.update(range(end, start + 1))
+
+        # Condition 2: Listed / Comma / "and" / "و" Separated Pages (e.g., "pages 10, 11 and 12", "ص 10 و ص 12")
+        list_pattern = (
+            PREFIX
+            + r"\s*[:\.-]*\s*(\d+(?:\s*(?:[,،&]|and|و)\s*(?:"
+            + PREFIX
+            + r"\s*)?\d+)+)"
+        )
+        for match in re.finditer(list_pattern, norm_query):
+            numbers = re.findall(r"\d+", match.group(1))
+            for num in numbers:
+                val = int(num)
+                if 1 <= val <= 1000:
+                    found_pages.add(val)
+
+        # Condition 3: Single Pages (Explicit & Attached, e.g., "page 10", "p10", "p.10", "الصفحة 12", "ص12")
+        single_pattern = PREFIX + r"\s*[:\.-]*\s*(\d+)"
+        for match in re.finditer(single_pattern, norm_query):
+            val = int(match.group(1))
+            if 1 <= val <= 1000:
+                found_pages.add(val)
+
+        sorted_pages = sorted(list(found_pages))
+        return sorted_pages[:15]
+
     @st.fragment
     def render_filter_popover():
         with st.popover("", icon="➕", help="Apply filters to get better results"):
@@ -515,26 +591,33 @@ elif page == "chat":
             else:
                 available_subjects_dict = SUBJECTS
 
-            subject_options = list(available_subjects_dict.keys())
+            subject_options = ["All"] + list(available_subjects_dict.keys())
 
-            default_subject = []
+            default_subject_index = 0
             if menu_choice != "all_grades":
                 chosen_subject_label = get_key_by_value(SUBJECTS, menu_choice)
-                if chosen_subject_label and chosen_subject_label in subject_options:
-                    default_subject = [chosen_subject_label]
+                if (
+                    chosen_subject_label
+                    and chosen_subject_label in available_subjects_dict
+                ):
+                    default_subject_index = subject_options.index(chosen_subject_label)
 
-            selected_subjects = st.multiselect(
+            selected_subject = st.selectbox(
                 "📚 Subject",
-                subject_options,
-                default=default_subject,
-                key="filter_subject",
-                filter_mode=None,
+                options=subject_options,
+                index=default_subject_index,
+                key="filter_subject_select",
+            )
+
+            # Store selected subject label or None
+            st.session_state["filter_subject"] = (
+                selected_subject if selected_subject != "All" else None
             )
 
             # CATEGORY
-            is_english_selected = any(
-                subj.lower() == "english" or SUBJECTS.get(subj) == "english"
-                for subj in selected_subjects
+            is_english_selected = selected_subject and (
+                selected_subject.lower() == "english"
+                or SUBJECTS.get(selected_subject) == "english"
             )
 
             # Determine available categories from config.py
@@ -551,7 +634,9 @@ elif page == "chat":
                 index=0,
                 key="filter_category",
             )
-            st.session_state["filter_category_code"] = cat_dict.get(selected_category_label)
+            st.session_state["filter_category_code"] = cat_dict.get(
+                selected_category_label
+            )
 
             # UNIT
             # Default options are 1-4, but user can type and add higher numbers (e.g., 7, 8, 9, 10)
@@ -610,91 +695,95 @@ elif page == "chat":
                 submit_mode="disable",
             )
 
-    def get_filters():
-        filters = []
+    def get_filters(include_unit_lesson: bool = True, strict_category: bool = False) -> Filter:
+        """
+        Constructs Qdrant Filter based on active session state.
+        
+        :param include_unit_lesson: If False, ignores unit_num and lesson_num conditions.
+        :param strict_category: If True, forces category to match only the active selection
+                                (e.g., 'assessments_book' without including 'external_book').
+        """
+        filter_conditions = []
 
-        # Retrieve current filter states
-        filter_grade_code = st.session_state.get("filter_grade")
-        selected_subjects = st.session_state.get("filter_subject", [])
+        grade_code = st.session_state.get("filter_grade")
+        subject_label = st.session_state.get("filter_subject")
         category_code = st.session_state.get("filter_category_code")
-        unit_values = st.session_state.get("filter_unit", [])
-        lesson_values = st.session_state.get("filter_lesson", [])
+        unit_num = st.session_state.get("filter_unit")
+        lesson_num = st.session_state.get("filter_lesson")
 
-        filter_values = {
-            "unit_num": [int(u) for u in unit_values if str(u).isdigit()],
-            "lesson_num": [int(l) for l in lesson_values if str(l).isdigit()],
-        }
-
-        if filter_grade_code:
-            filter_values["grade"] = [filter_grade_code]
-
-        if selected_subjects:
-            filter_values["subject"] = [
-                SUBJECTS[s] for s in selected_subjects if s in SUBJECTS
-            ]
-
-        # Handle Category Selection
-        if category_code:
-            # If 'assessments_book' is selected, include both 'external_book' and 'assessments_book'
-            # to guarantee context coverage from both reference sources.
-            if category_code == "assessments_book":
-                filter_values["category"] = ["assessments_book", "external_book"]
-            else:
-                filter_values["category"] = [category_code]
-
-        # --- RESOLVE PUBLISHERS ---
-        target_publishers = []
-
-        if user:
-            user_grade = user.get("grade")
-            user_publishers = user.get("preferred_publishers", {})
-
-            if filter_grade_code and filter_grade_code == user_grade:
-                if filter_values.get("subject"):
-                    for subj_code in filter_values["subject"]:
-                        pub = user_publishers.get(subj_code)
-                        if pub:
-                            target_publishers.append(pub)
-                else:
-                    target_publishers = list(user_publishers.values())
-
-        # Only restrict by publisher if a logged-in user has specific publisher preferences
-        if target_publishers:
-            filter_values["book_publisher"] = list(set(target_publishers))
-        else:
-            # Bypasses publisher filtering for guest/signed-out users entirely
-            filter_values.pop("book_publisher", None)
-
-        print(filter_values)
-        # --- CONSTRUCT QDRANT FILTERS ---
-        for key, values in filter_values.items():
-            if not values:
-                continue
-
-            filters.append(
-                FieldCondition(
-                    key=key,
-                    match=MatchAny(any=values),
-                )
+        if grade_code:
+            filter_conditions.append(
+                FieldCondition(key="grade", match=MatchAny(any=[grade_code]))
             )
 
-        return Filter(must=filters) if filters else None
+        if subject_label and subject_label in SUBJECTS:
+            subj_code = SUBJECTS[subject_label]
+            filter_conditions.append(
+                FieldCondition(key="subject", match=MatchAny(any=[subj_code]))
+            )
 
-    def extract_requested_page(query: str):
-        """
-        Extracts page numbers mentioned in user queries across English and Arabic formats.
-        Examples: 'صفحة 15', 'ص 12', 'page 45', 'p. 8'
-        """
-        patterns = [
-            r'(?:صفحة|ص)\s*[:\.-]?\s*(\d+)',  # Arabic: صفحة 12 or ص 12
-            r'(?:page|p\.)\s*[:\.-]?\s*(\d+)', # English: page 12 or p. 12
-        ]
-        for pattern in patterns:
-            match = re.search(pattern, query, re.IGNORECASE)
-            if match:
-                return int(match.group(1))
-        return None
-    
+            target_publisher = None
+            if user and user.get("info", {}).get("preferred_book_publishers"):
+                target_publisher = user["info"]["preferred_book_publishers"].get(subj_code)
+            if not target_publisher:
+                target_publisher = DEFAULT_PUBLISHERS.get(subj_code)
+
+            if target_publisher:
+                if category_code == "assessments_book":
+                    if strict_category:
+                        filter_conditions.append(
+                            FieldCondition(
+                                key="book_publisher",
+                                match=MatchAny(any=["moe"]),
+                            )
+                        )
+                    else:
+                        filter_conditions.append(
+                            FieldCondition(
+                                key="book_publisher",
+                                match=MatchAny(any=list(set(["moe", target_publisher]))),
+                            )
+                        )
+                else:
+                    filter_conditions.append(
+                        FieldCondition(
+                            key="book_publisher", match=MatchAny(any=[target_publisher])
+                        )
+                    )
+
+        if category_code:
+            if category_code == "assessments_book":
+                if strict_category:
+                    filter_conditions.append(
+                        FieldCondition(
+                            key="category", match=MatchAny(any=["assessments_book"])
+                        )
+                    )
+                else:
+                    filter_conditions.append(
+                        FieldCondition(
+                            key="category",
+                            match=MatchAny(any=["assessments_book", "external_book"]),
+                        )
+                    )
+            else:
+                filter_conditions.append(
+                    FieldCondition(key="category", match=MatchAny(any=[category_code]))
+                )
+
+        # Optional Unit & Lesson filtering
+        if include_unit_lesson:
+            if unit_num:
+                filter_conditions.append(
+                    FieldCondition(key="unit_num", match=MatchAny(any=unit_num))
+                )
+            if lesson_num:
+                filter_conditions.append(
+                    FieldCondition(key="lesson_num", match=MatchAny(any=lesson_num))
+                )
+
+        return Filter(must=filter_conditions)
+
     # Render previous msgs if found
     render_messages(st.session_state.get("messages_data", []))
 
@@ -736,6 +825,7 @@ elif page == "chat":
         # Render user attachments (if present) and message, then scroll down
         if files_metadata:
             render_file_attachments(files_metadata)
+
         render_user_prompt(user_query)
         scroll_to_bottom()
 
@@ -743,45 +833,89 @@ elif page == "chat":
         try:
             with st.spinner("Generating..."):
                 # Detect page numbers in prompt (Arabic/English)
-                requested_page = extract_requested_page(user_query)
+                requested_pages = extract_requested_pages(user_query)
 
+                # 1. Fetch referenced page chunks (bypasses Unit & Lesson filters)
+                extracted_page_chunks = []
+                if requested_pages:
+                    page_filters = []
+
+                    # Retain Grade, Subject, and Publisher metadata filters
+                    filter_grade_code = st.session_state.get("filter_grade")
+                    selected_subject_label = st.session_state.get("filter_subject")
+                    category_code = st.session_state.get("filter_category_code")
+
+                    if filter_grade_code:
+                        page_filters.append(
+                            FieldCondition(key="grade", match=MatchAny(any=[filter_grade_code]))
+                        )
+
+                    if selected_subject_label and selected_subject_label in SUBJECTS:
+                        subj_code = SUBJECTS[selected_subject_label]
+                        page_filters.append(
+                            FieldCondition(key="subject", match=MatchAny(any=[subj_code]))
+                        )
+
+                        # Match target publisher
+                        target_publisher = None
+                        if user and user.get("info", {}).get("preferred_book_publishers"):
+                            target_publisher = user["info"]["preferred_book_publishers"].get(subj_code)
+                        if not target_publisher:
+                            target_publisher = DEFAULT_PUBLISHERS.get(subj_code)
+
+                        if target_publisher:
+                            if category_code == "assessments_book":
+                                page_filters.append(
+                                    FieldCondition(key="book_publisher", match=MatchAny(any=list(set(["moe", target_publisher]))))
+                                )
+                            else:
+                                page_filters.append(
+                                    FieldCondition(key="book_publisher", match=MatchAny(any=[target_publisher]))
+                                )
+
+                    # Strict Category handling: enforce 'assessments_book' ONLY if selected
+                    if category_code:
+                        if category_code == "assessments_book":
+                            page_filters.append(
+                                FieldCondition(key="category", match=MatchAny(any=["assessments_book"]))
+                            )
+                        else:
+                            page_filters.append(
+                                FieldCondition(key="category", match=MatchAny(any=[category_code]))
+                            )
+
+                    # Append requested page condition
+                    page_filters.append(
+                        FieldCondition(key="page_num", match=MatchAny(any=requested_pages))
+                    )
+
+                    page_filter = Filter(must=page_filters)
+                    extracted_page_chunks = rag_service.scroll(page_filter)
+
+                # 2. Primary retrieval strategy using standard UI filters
                 full_lesson_source = (
-                    bool(st.session_state.get("filter_grade"))
-                    and bool(st.session_state.get("filter_subject"))
-                    and len(st.session_state.get("filter_unit", [])) == 1
+                    bool(st.session_state.get("filter_unit"))
                     and bool(st.session_state.get("filter_lesson"))
                 )
 
                 if full_lesson_source:
-                    # Full lesson drawer across Main Book & Assessment Book
-                    sources_text = rag_service.scroll_from_filters(get_filters())
-
-                elif requested_page is not None:
-                    # Explicit page query: build a modified filter containing page_num
-                    base_filter = get_filters()
-                    page_condition = FieldCondition(
-                        key="page_num",
-                        match=MatchAny(any=[requested_page]),
-                    )
-                    
-                    if base_filter:
-                        base_filter.must.append(page_condition)
-                        page_filter = base_filter
-                    else:
-                        page_filter = Filter(must=[page_condition])
-
-                    sources_text = rag_service.scroll_from_filters(page_filter)
-
+                    primary_chunks = rag_service.scroll(get_filters())
                 else:
-                    # Semantic search across filtered corpus
-                    chunks_payloads = rag_service.search(
+                    primary_chunks = rag_service.search(
                         user_query,
                         limit=10,
                         score_threshold=0.5,
                         query_filter=get_filters(),
                     )
 
-                    sources_text = rag_service.enrich_sources(chunks_payloads)
+                # 3. Merge, deduplicate, and enrich sources
+                combined_chunks = extracted_page_chunks + primary_chunks
+                deduped_chunks = rag_service.deduplicate_chunks(combined_chunks)
+
+                if deduped_chunks:
+                    sources_text = rag_service.enrich_sources(deduped_chunks)
+                else:
+                    sources_text = ""
 
                 # Get chat history for model context (excluding current query)
                 chat_history = messages_data[:-1]
@@ -804,8 +938,9 @@ elif page == "chat":
                         student_info,
                     )
 
-                    full_response: str = json_response["response"]
-                    sanitized_response = rag_service.sanitize_latex(full_response)
+                    full_response: str = rf"{json_response["response"]}"
+                    # sanitized_response = rag_service.sanitize_latex(full_response)
+                    sanitized_response = full_response
                     render_ai_response(sanitized_response)
 
                     # Update ss with full response
@@ -858,8 +993,9 @@ elif page == "chat":
                         st.write_stream(stream_and_collect())
 
                     # 3. Combine chunks and sanitize full response once stream finishes
-                    raw_accumulated = "".join(accumulated_chunks)
-                    sanitized_response = rag_service.sanitize_latex(raw_accumulated)
+                    raw_accumulated = rf"{''.join(accumulated_chunks)}"
+                    # sanitized_response = rag_service.sanitize_latex(raw_accumulated)
+                    sanitized_response = raw_accumulated
 
                     # 4. Overwrite placeholder with clean LaTeX markdown
                     stream_container.markdown(sanitized_response)
