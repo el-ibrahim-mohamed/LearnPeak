@@ -901,8 +901,16 @@ elif page == "chat":
                 if full_lesson_source:
                     primary_chunks = rag_service.scroll(get_filters())
                 else:
+                    # Search using the latest two user prompts for follow-up context.
+                    recent_user_queries = [
+                        msg.get("content", "").strip()
+                        for msg in messages_data
+                        if msg.get("role") == "user" and msg.get("content", "").strip()
+                    ][-2:]
+                    semantic_search_query = "\n".join(recent_user_queries)
+
                     primary_chunks = rag_service.search(
-                        user_query,
+                        semantic_search_query,
                         limit=10,
                         score_threshold=0.5,
                         query_filter=get_filters(),

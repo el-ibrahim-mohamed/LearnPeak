@@ -134,14 +134,27 @@ class RagService:
         """
         Formats a list of chunk payload dictionaries into structured textbook text.
         Sorts chunks strictly by curriculum hierarchy and page/chunk sequence.
+        Formats list-based lesson/unit numbers into readable natural text.
         """
         if not chunks_payloads:
             return ""
 
-        # Make a copy so sorting doesn't mutate original list reference unexpectedly
         chunks = list(chunks_payloads)
 
-        # Sort chunks strictly into textbook order
+        def format_num_list(val):
+            if isinstance(val, (list, tuple)):
+                items = [str(x) for x in val]
+                if not items:
+                    return "N/A"
+                if len(items) == 1:
+                    return items[0]
+                elif len(items) == 2:
+                    return f"{items[0]} & {items[1]}"
+                else:
+                    return ", ".join(items[:-1]) + f", and {items[-1]}"
+            return str(val) if val is not None else "N/A"
+
+        # Sort chunks strictly into textbook order (Publisher excluded from sorting)
         chunks.sort(
             key=lambda chunk: (
                 chunk.get("grade", ""),
@@ -165,6 +178,7 @@ class RagService:
             page = (
                 chunk.get("grade"),
                 chunk.get("subject"),
+                chunk.get("book_publisher"),
                 chunk.get("unit_num"),
                 (
                     tuple(chunk["lesson_num"])
@@ -184,11 +198,21 @@ class RagService:
                     else chunk.get("subject", "")
                 )
 
+                publisher_display = (
+                    get_key_by_value(BOOK_PUBLISHERS, chunk.get("book_publisher"))
+                    if chunk.get("book_publisher") in BOOK_PUBLISHERS.values()
+                    else chunk.get("book_publisher", "")
+                )
+
+                unit_str = format_num_list(chunk.get("unit_num"))
+                lesson_str = format_num_list(chunk.get("lesson_num"))
+
                 sources_text += (
                     f'=== Grade: {chunk.get("grade", "N/A")} | '
-                    f'Subject: {subject_display} | '
-                    f'Unit {chunk.get("unit_num", "N/A")} | '
-                    f'Lesson {chunk.get("lesson_num", "N/A")} | '
+                    f"Subject: {subject_display} | "
+                    f"Publisher: {publisher_display} | "
+                    f"Unit {unit_str} | "
+                    f"Lesson {lesson_str} | "
                     f'Page {chunk.get("page_num", "N/A")} ===\n\n'
                 )
 
@@ -242,7 +266,7 @@ class RagService:
 
         # Format retrieved chunks using the helper
         return self.format_search_results(chunks_results)
-    
+
     # -------------------------
     # AI Mode Methods
     # -------------------------
@@ -412,67 +436,157 @@ class RagService:
         student_info: dict = {},
         output_format: Literal["text_stream", "json"] = "text_stream",
     ) -> tuple[list[types.Content], str]:
+        """Build Gemini conversation contents and LearnPeak system instructions."""
 
-        # Get user info
-        name = student_info.get("name", "Unknown")
-        grade = student_info.get("grade", "Unknown")
+        name = student_info.get("name") or "Unknown"
+        grade = student_info.get("grade") or "Unknown"
 
-        # Handle output format instructions
+        # --------------------------------------------------
+        # System instructions
+        # --------------------------------------------------
+        system_instructions = f"""
+You are LearnPeak's AI Assistant, an expert tutor on an AI learning platform aligned with student curricula and textbooks.
+
+==================================================
+## RULES & GUARDRAILS
+==================================================
+
+1. You are provided with textbook sources relevant to the student's curriculum. Prioritize these sources above all else when answering.
+2. If the correct answer is found within the provided sources, answer the question directly, clearly, and objectively.
+3. If the answer (or any part of it) is missing from the textbook sources, you MUST first explicitly declare that this information
+   has not been correctly retrieved or is not fully covered in the student's textbook sources, but based on general knowledge... (short and concise)
+   You can also suggest choosing correct unit and lesson filters to get better results (short and concise)
+   and then you MUST ANSWER directly and correctly.
+4. Always give an answer to the student following the previous instructions.
+5. Keep all responses concise, structurally organized, direct, and clear for a student.
+
+==================================================
+## STUDENT ANSWER CORRECTION INSTRUCTIONS
+==================================================
+
+**Activation Condition**
+Apply these instructions only when the student has submitted their own answers, either as text in the chat or in an image,
+and requests evaluation or correction.
+Questions retrieved from textbooks, worksheets, or assessments are not student answers.
+If the student only asks you to solve or answer questions, do not apply these grading instructions.
+
+**When grading or correcting student answers:**
+
+1. Map each question correctly and group questions by exercise numbers, letters, or titles as presented in the source material.
+2. Use question numbers or letters that match the original layout.
+3. For each question, use three distinct lines:
+   * [q_num]. [Exact text of the question]
+   * **Your Answer:** [The student's submitted answer]
+   * **Grading:** [✅ Correct / ❌ Incorrect], followed by a very brief explanation when necessary.
+4. **Override Rule:** If the student explicitly requests a different output format, follow their requested format instead.
+
+
+==================================================
+## SOURCE CITATION INSTRUCTIONS
+==================================================
+At the very end of your response, include a dedicated "Sources" section whenever you use retrieved textbook material. 
+Extract the metadata directly from the source headers of the pages you used:
+(`=== Grade: ... | Subject: ... | Publisher: ... | Unit ... | Lesson ... | Page ... ===`).
+
+Citation Rules:
+1. Group sources by Curriculum, Unit, and Lesson.
+2. If multiple consecutive pages or chunks from the same lesson are used, combine them into a single page range
+   (e.g., "Pages 13–15" instead of listing page 13, 14, and 15 separately).
+3. Keep the citation block brief and clean.
+
+Required Citations Format:
+### Sources
+- **Book:** [Grade] - [Subject Display] ([Publisher Display])
+- **References:** Unit [X], Lesson [Y] (Pages [Start–End] or Page [Z])
+
+==================================================
+## MARKDOWN OUTPUT FORMAT
+==================================================
+
+1. Format all responses strictly using clean Markdown.
+2. Use bolding (**bold**) to emphasize key terms, core concepts, or critical vocabulary.
+3. Use bullet points or numbered lists to break down multi-step concepts, definitions, processes, or when answering questions. Do not use dense paragraphs.
+4. Use headers (###) to separate different sub-topics if the answer is long or addresses multiple questions.
+
+"""
+
+        # --------------------------------------------------
+        # Build Gemini conversation contents
+        # --------------------------------------------------
+        contents: list[types.Content] = []
+
+        def add_file_parts(parts: list, files: list) -> None:
+            """Append accessible Gemini file references to a turn."""
+            for file_info in files:
+                if not isinstance(file_info, dict):
+                    continue
+
+                file_uri = file_info.get("gemini_file_uri")
+                mime_type = file_info.get("mime_type")
+
+                if not file_uri or not mime_type:
+                    continue
+
+                parts.append(
+                    types.Part.from_uri(
+                        file_uri=file_uri,
+                        mime_type=mime_type,
+                    )
+                )
+
+        # Previous conversation turns.
+        for msg in chat_history:
+            if not isinstance(msg, dict):
+                continue
+
+            role_value = str(msg.get("role", "")).strip().lower()
+
+            if role_value == "user":
+                role = "user"
+            elif role_value in ("assistant", "model", "ai"):
+                role = "model"
+            else:
+                # Do not accidentally treat unknown roles as model answers.
+                continue
+
+            parts = []
+
+            message_text = msg.get("content")
+            if isinstance(message_text, str) and message_text.strip():
+                parts.append(types.Part.from_text(text=message_text))
+
+            message_files = msg.get("files")
+            if isinstance(message_files, list):
+                add_file_parts(parts, message_files)
+
+            if parts:
+                contents.append(types.Content(role=role, parts=parts))
+
+        if isinstance(sources, str) and sources.strip():
+            sources_text = sources.strip()
+        else:
+            sources_text = "No relevant textbook sources were retrieved for this turn."
+
+        # --------------------------------------------------
+        # Output format
+        # --------------------------------------------------
         if output_format == "text_stream":
-            output_format_txt = (
-                "You MUST return your response as raw Markdown formatted text."
-            )
-
+            output_format_txt = "Return raw Markdown only. Do not wrap the answer in a Markdown code fence."
         elif output_format == "json":
-            output_format_txt = """You MUST return your response as a JSON object strictly following this structure:
+            output_format_txt = """Return exactly one valid JSON object with this structure:
 {
-    "response": "Your full Markdown-formatted answer here...",
-    "suggested_chat_title": "A short, concise 2-5 word title summarizing the user query"
+    "response": "The complete answer, formatted using Markdown where appropriate.",
+    "suggested_chat_title": "A concise 2-5 word title for the current conversation topic"
 }"""
 
-        system_instructions = f"""
-You are an expert AI RAG Study Assistant for LearnPeak, an educational platform dedicated to helping students learn from their curricula textbooks.
-Your goal is to provide accurate, clear, and highly structured educational answers to the student's questions.
-
+        current_prompt = f"""
 ==================================================
-PLATFORM REFERENCE INFORMATION
+RETRIEVED TEXTBOOK SOURCES
 ==================================================
+The following material was retrieved for the current question.
+It may be incomplete or may not support every requested detail.
 
-Use the factual data in this section ONLY when the student explicitly asks questions regarding the LearnPeak platform, its founder, or its core features.
-Do NOT output platform metadata or list platform modules during standard user interactions or simple greetings.
-If the student requests extended platform background, direct them to the dedicated About Page in the application menu.
-
-Overview:
-LearnPeak is a curriculum-centric educational software platform designed to deliver personalized academic assistance aligned directly with official school textbooks.
-
-Core Features:
-- Ask Your Book: Retrieval-augmented QA grounded in curriculum textbook content.
-- Learn with AR: Interactive 3D models and augmented reality visualizations for conceptual learning.
-- Quiz Generation: Automated assessment creation derived from specific textbook units, lessons, or supplementary sources.
-- Study Strategies: Implementation of evidence-based learning methodologies, including active recall, spaced repetition, and elaboration.
-
-Founder & Developer:
-- Ibrahim Mohamed (Founder & Lead Developer)
-- Professional Profiles:
-* LinkedIn: https://www.linkedin.com/in/ibrahim-mo-dev/
-* GitHub: https://github.com/el-ibrahim-mohamed/
-
-Technical Engine:
-- Model Architecture: Powered by Google Gemini AI models optimized for high-speed, structured educational reasoning.
-
-==================================================
-CAPABILITIES & CORE SCOPE
-==================================================
-
-You are the AI Chat Assistant inside LearnPeak ("Ask Your Book").
-
-You can assist students and teachers with:
-- Explaining textbook concepts, rules, and definitions with structural clarity.
-- Providing direct answers grounded in retrieved textbook source materials.
-- Creating summaries, key bullet points, or comparison tables
-- Grading user-submitted images of handwritten answers in their books or worksheets.
-- Answering general knowledge academic questions when textbook sources lack context.
-- Helping students with any creative questions sparked by curriosity in their studies using the power of AI.
+{sources_text}
 
 ==================================================
 STUDENT PROFILE
@@ -480,146 +594,34 @@ STUDENT PROFILE
 - Student Name: {name}
 - Grade: {grade}
 
-==================================================
-GROUNDING RULES & SOURCE HANDLING
-==================================================
-
-1. IF THE ANSWER IS FULLY FOUND IN THE SOURCES OR EXPANDS ON SOURCE CONCEPTS:
-- Rely strictly on the information provided in the SOURCES section to address the student's question.
-- When answering questions do not 'add' more words than the literal written answers in the book.
-- If the student requests further explanations, simpler breakdowns, deeper notes, or  clarifications regarding
-    concepts, terms, or rules present in the sources, answer normally without issuing any missing-source warnings.
-- Do NOT introduce speculative facts or unverified content outside the scope of the subject matter.
-
-2. IF NO RELEVANT SOURCES ARE PROVIDED OR THE SOURCES LACK REQUIRED CONTEXT:
-- Explicitly inform the student (in the primary language of their query) that no matching source material was retrieved for their specific query.
-- Clarify that the application retrieves better, more relevant sources when selecting filters (such as Unit, Lesson, or Subject).
-- Strongly suggest that the user select correct and detailed filters (e.g., selecting the specific Unit and Lesson from the dropdown/filter options) so the system can pull the exact textbook pages required.
-- Users should only upload their pages or write them if it is not found in the added books in our DB, let them check out the "Added Books" page.
-- After providing this recommendation, answer their question using general knowledge while clearly indicating that the answer comes from general knowledge rather than their official textbook.
+INSTRUCTIONS FOR PROFILE:
+1. Adapt your vocabulary, conceptual depth, and explanations to be perfectly age-appropriate for the student's specified Grade.
+2. Greet the Student Name naturally if it is the start of a conversation, but do not repeat their name excessively in every response.
 
 ==================================================
-MATHEMATICS, OCR CORRECTION & LATEX GUIDELINES
+OUTPUT FORMAT
 ==================================================
-
-1. OCR ERROR CORRECTION:
-- Input sources or user queries may contain minor Optical Character Recognition (OCR) errors or broken symbols (e.g., misread variable names, missing operators, garbled exponent notation).
-- Silently correct minor transcription flaws using canonical mathematical logic, standard symbols, and domain context before solving.
-- Do not explicitly point out or comment on minor OCR errors unless doing so is strictly necessary to explain a correction in logic.
-
-2. LATEX FORMATTING & STREAMLIT COMPATIBILITY (`st.markdown`):
-- All mathematical expressions, numbers with roots/powers, equations, and standalone variables MUST use valid LaTeX syntax.
-- INLINE MATH: Enclose strictly within SINGLE dollar signs: $expression$.
-    - INVALID: $$(5)^{{\\frac{{1}}{{2}}}}$$ or $\\sqrt{{3}}$$or$$\\sqrt{{3}}$|
-    - VALID: $\\sqrt{{3}}$ or $5^{{\\frac{{1}}{{2}}}}$
-- DISPLAY/BLOCK MATH: Place on its own dedicated line enclosed in DOUBLE dollar signs:$$expression$$
-- STRICT DELIMITER MATCHING: Never mix single and double dollar signs (e.g., NEVER start with$$and end with$).
-- ESCAPING: Use explicit LaTeX commands inside dollar signs (e.g., `\\frac`, `\\times`, `\\sqrt`). Never leave dangling pipe characters (`|`) or unmatched braces `{{}}`.
-- Operator Symbols: Use explicit LaTeX commands for symbols instead of plaintext approximations (e.g., use `\\times` for multiplication rather than `x` or `*`, `\\div` for division, `\\leq` / `\\geq` for inequalities).
-
-3. DIAGRAM-DEPENDENT QUESTIONS:
-- If a student asks a mathematical or visual question that directly references a diagram, figure, graph, or geometric layout that is absent from the text input, inform them concisely that you can currently process text context only.
-- Instruct the student briefly to take a clear photo or screenshot of the diagram/question and upload the image directly in the chat for visual evaluation.
-
-==================================================
-FORMATTING & TONE RULES
-==================================================
-
-- IMPORTANT: LINE BREAKS - When answering questions, format them with double line breaks and/or standard Markdown lists like ol / ul, because a single line break is ignored by the Markdown renderer.
-Make sure to format answers with double line breaks or ul/ol.
-
-- TONE: Friendly, supportive, clear, and academically encouraging.
-- MARKDOWN: Use bolding for key terminology, ordered lists for sequential workflows, and Markdown headers (`###`) for structural breakdown.
-- COMPARISONS: Use Markdown tables for structural comparisons across concepts, mathematical formulas, or historical events.
-- CITATIONS: 
-* If and ONLY IF information from the provided textbook sources was used, you MUST append a "Sources:" section at the very end of your response.
-* Format citations strictly as follows:
-
-Sources:
-• {{Subject}} - Unit {{unit_num}} - Lesson {{lesson_num}} - Page {{page_num}}
-
-Example:
-Sources:
-• Science - Unit 1 - Lesson 3 - Page 58 to 62
-
-* Do NOT include source citations if the answer was generated entirely from general knowledge.
-
-==================================================
-OUTPUT REQUIREMENT
-==================================================
-
 {output_format_txt}
 
-Now, answer the student's question.
-"""
-
-        # --------------------------------------------------
-        # Build Contents List
-        # --------------------------------------------------
-        contents: list[types.Content] = []
-
-        # 1. Process Chat History Turns
-        for msg in chat_history:
-            role = "user" if msg.get("role") == "user" else "model"
-            parts = []
-
-            # Add text content if available
-            if msg.get("content"):
-                parts.append(types.Part.from_text(text=msg["content"]))
-
-            # Add past file attachments using URI references
-            if msg.get("files"):
-                for file_info in msg["files"]:
-                    if file_info.get("gemini_file_uri") and file_info.get("mime_type"):
-                        parts.append(
-                            types.Part.from_uri(
-                                file_uri=file_info["gemini_file_uri"],
-                                mime_type=file_info["mime_type"],
-                            )
-                        )
-
-            if parts:
-                contents.append(types.Content(role=role, parts=parts))
-
-        # 2. Process Current User Input & Sources
-        sources_text = (
-            sources.strip()
-            if sources and sources.strip()
-            else "No relevant textbook sources found. Ask the user to make correct,"
-            "detailed filters. Tell the user if his exact book is not found, he can"
-            "request to add it in the added books page."
-        )
-
-        current_prompt = f"""==================================================
-SOURCES
 ==================================================
-{sources_text}
-
+CURRENT STUDENT MESSAGE
 ==================================================
-CURRENT USER PROMPT
-==================================================
-{user_query}"""
+{user_query}
+""".strip()
 
+        # Current user attachments and message.
         current_turn_parts = []
+        add_file_parts(current_turn_parts, uploaded_files)
 
-        # Add current turn file attachments
-        if uploaded_files:
-            for file_info in uploaded_files:
-                if file_info.get("gemini_file_uri") and file_info.get("mime_type"):
-                    current_turn_parts.append(
-                        types.Part.from_uri(
-                            file_uri=file_info["gemini_file_uri"],
-                            mime_type=file_info["mime_type"],
-                        )
-                    )
-
-        # Append structured current user prompt text
         current_turn_parts.append(types.Part.from_text(text=current_prompt))
 
-        # Append final user turn to contents list
-        contents.append(types.Content(role="user", parts=current_turn_parts))
+        contents.append(
+            types.Content(
+                role="user",
+                parts=current_turn_parts,
+            )
+        )
 
-        # Debug save
         with open("prompt.txt", "w", encoding="utf-8") as f:
             f.write(current_prompt)
 
@@ -673,6 +675,7 @@ CURRENT USER PROMPT
             else:
                 deduped.append(chunk)
         return deduped
+
 
 class AddSource:
     def __init__(
@@ -830,7 +833,7 @@ All `start_page` and `end_page` values in the output MUST use digital page numbe
 
 Determine the constant offset between these two numbering systems within the Main Book.
 
-To determine the offset, inspect a suitable page of the Main Book that is NOT near the beginning of the book. Identify:
+To determine the offset, inspect multiple pages of the Main Book that is NOT near the beginning of the book. Identify:
 
 1. Its digital/PDF page number.
 2. Its printed actual page number from the textbook.
@@ -843,6 +846,14 @@ For example, if digital page 10 corresponds to printed page 14:
 
 Therefore:
 `"digital_to_actual_pages_offset": 4`
+
+And if digital page 14 corresponds to printed page 10:
+10 - 14 = -4
+
+Therefore:
+`"digital_to_actual_pages_offset": -4`
+
+Then use the other pages to make sure it is correct.
 
 The offset is constant throughout the Main Book.
 The offset MUST be returned as an integer, such as 4, 0, or -2.
@@ -984,7 +995,7 @@ Do not include any explanation before or after the JSON.
                         temperature=0.3,
                         response_mime_type="application/json",
                         thinking_config=types.ThinkingConfig(
-                            thinking_level="low",
+                            thinking_level="medium",
                             include_thoughts=False,
                         ),
                     ),
@@ -1203,7 +1214,7 @@ Do not include any explanation before or after the JSON.
                     )
 
         return results
-    
+
     def attach_metadata(
         self,
         ocr_result: list[dict],
@@ -1591,11 +1602,17 @@ Do not include any explanation before or after the JSON.
             digital_to_actual_mapping, pages_metadata = self.prepare_pdf(
                 chunk_bytes, category
             )
+            dig, act = next(
+                (k, v)
+                for k, v in digital_to_actual_mapping.items()
+                if str(k).isdigit() and str(v).isdigit()
+            )
+            offset = int(act) - int(dig)
             elapsed = time.perf_counter() - start
 
             yield {
                 "step": "Metadata Extracted",
-                "message": f"Chunk {chunk_number}/{total_chunks} metadata calculated.",
+                "message": f"Chunk {chunk_number}/{total_chunks} metadata calculated. Offset: {offset}",
                 "elapsed": elapsed,
             }
 
@@ -1662,7 +1679,7 @@ Do not include any explanation before or after the JSON.
             "elapsed": 0,
             "batch_id": batch_id,
         }
-        
+
     @staticmethod
     def current_term():
         month = datetime.now().month
