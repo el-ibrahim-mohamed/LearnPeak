@@ -26,6 +26,22 @@ from services.rag.qdrant_service import QdrantService
 from config import *
 
 
+class TextbookPageInput(BaseModel):
+    page_num: int = Field(description="The integer page number requested by the user.")
+    grade: Literal[
+        "prim1", "prim2", "prim3", "prim4", "prim5", "prim6", "prep1", "prep2", "prep3"
+    ] = Field(description="The exact grade code.")
+    subject: Literal["arabic", "english", "math", "science", "social_studies"] = Field(
+        description="The exact subject code."
+    )
+    category: Literal["external_book", "assessments_book"] = Field(
+        description="The exact category code ('external_book' or 'assessments_book')."
+    )
+    book_publisher: Literal[
+        "moe", "el-moasser", "el-emtihan", "al-adwaa", "selah-el-telmeez"
+    ] = Field(description="The exact book publisher code.")
+
+
 class RagService:
     """
     Business logic layer for handling Q&A vector storage and retrieval.
@@ -130,16 +146,18 @@ class RagService:
     # Collect Sources Methods
     # -------------------------
 
-    def format_search_results(self, chunks_payloads: list[dict]) -> str:
+    def format_search_results(
+        self, chunks_payloads: list[dict], priority_pages: list[int] = None
+    ) -> str:
         """
-        Formats a list of chunk payload dictionaries into structured textbook text.
-        Sorts chunks strictly by curriculum hierarchy and page/chunk sequence.
-        Formats list-based lesson/unit numbers into readable natural text.
+        Formats chunks into structured textbook text, splitting them into
+        'MENTIONED PAGES' and 'RELATED PAGES' sections.
         """
         if not chunks_payloads:
             return ""
 
         chunks = list(chunks_payloads)
+        priority_pages = priority_pages or []
 
         def format_num_list(val):
             if isinstance(val, (list, tuple)):
@@ -154,75 +172,105 @@ class RagService:
                     return ", ".join(items[:-1]) + f", and {items[-1]}"
             return str(val) if val is not None else "N/A"
 
-        # Sort chunks strictly into textbook order (Publisher excluded from sorting)
-        chunks.sort(
-            key=lambda chunk: (
-                chunk.get("grade", ""),
-                chunk.get("subject", ""),
-                chunk.get("unit_num") or 0,
-                (
-                    min(chunk["lesson_num"])
-                    if chunk.get("lesson_num")
-                    and isinstance(chunk.get("lesson_num"), (list, tuple))
-                    else (chunk.get("lesson_num") or 0)
-                ),
-                chunk.get("page_num") or 0,
-                chunk.get("chunk_order") or 0,
-            )
-        )
+        def get_sortable_lesson(lesson_val):
+            if isinstance(lesson_val, (list, tuple)):
+                return min(lesson_val) if lesson_val else 0
+            return lesson_val if lesson_val is not None else 0
 
-        sources_text = ""
-        current_page = None
+        def get_sortable_unit(unit_val):
+            if isinstance(unit_val, (list, tuple)):
+                return min(unit_val) if unit_val else 0
+            return unit_val if unit_val is not None else 0
 
-        for chunk in chunks:
-            page = (
-                chunk.get("grade"),
-                chunk.get("subject"),
-                chunk.get("book_publisher"),
-                chunk.get("unit_num"),
-                (
-                    tuple(chunk["lesson_num"])
-                    if isinstance(chunk.get("lesson_num"), list)
-                    else chunk.get("lesson_num")
-                ),
-                chunk.get("page_num"),
+        # Separate into mentioned (priority) vs related chunks
+        mentioned_chunks = [c for c in chunks if c.get("page_num") in priority_pages]
+        related_chunks = [c for c in chunks if c.get("page_num") not in priority_pages]
+
+        def build_chunk_text(chunk_list):
+            if not chunk_list:
+                return "None retrieved."
+
+            # Sort chunks strictly into textbook order
+            chunk_list.sort(
+                key=lambda chunk: (
+                    str(chunk.get("grade", "")),
+                    str(chunk.get("subject", "")),
+                    chunk.get("page_num") or 0,
+                    chunk.get("chunk_order") or 0,
+                    get_sortable_unit(chunk.get("unit_num")),
+                    get_sortable_lesson(chunk.get("lesson_num")),
+                )
             )
 
-            if page != current_page:
-                if current_page is not None:
-                    sources_text += "\n\n" + "-" * 50 + "\n\n"
+            section_text = ""
+            current_page = None
 
-                subject_display = (
-                    get_key_by_value(SUBJECTS, chunk.get("subject"))
-                    if chunk.get("subject") in SUBJECTS.values()
-                    else chunk.get("subject", "")
+            for chunk in chunk_list:
+                page = (
+                    chunk.get("grade"),
+                    chunk.get("subject"),
+                    chunk.get("book_publisher"),
+                    chunk.get("unit_num"),
+                    (
+                        tuple(chunk["lesson_num"])
+                        if isinstance(chunk.get("lesson_num"), list)
+                        else chunk.get("lesson_num")
+                    ),
+                    chunk.get("page_num"),
                 )
 
-                publisher_display = (
-                    get_key_by_value(BOOK_PUBLISHERS, chunk.get("book_publisher"))
-                    if chunk.get("book_publisher") in BOOK_PUBLISHERS.values()
-                    else chunk.get("book_publisher", "")
-                )
+                if page != current_page:
+                    if current_page is not None:
+                        section_text += "\n\n" + "-" * 50 + "\n\n"
 
-                unit_str = format_num_list(chunk.get("unit_num"))
-                lesson_str = format_num_list(chunk.get("lesson_num"))
+                    subject_display = (
+                        get_key_by_value(SUBJECTS, chunk.get("subject"))
+                        if chunk.get("subject") in SUBJECTS.values()
+                        else chunk.get("subject", "")
+                    )
 
-                sources_text += (
-                    f'=== Grade: {chunk.get("grade", "N/A")} | '
-                    f"Subject: {subject_display} | "
-                    f"Publisher: {publisher_display} | "
-                    f"Unit {unit_str} | "
-                    f"Lesson {lesson_str} | "
-                    f'Page {chunk.get("page_num", "N/A")} ===\n\n'
-                )
+                    publisher_display = (
+                        get_key_by_value(BOOK_PUBLISHERS, chunk.get("book_publisher"))
+                        if chunk.get("book_publisher") in BOOK_PUBLISHERS.values()
+                        else chunk.get("book_publisher", "")
+                    )
 
-                current_page = page
+                    unit_str = format_num_list(chunk.get("unit_num"))
+                    lesson_str = format_num_list(chunk.get("lesson_num"))
 
-            sources_text += chunk.get("chunk_text", "") + "\n"
+                    section_text += (
+                        f'=== Grade: {chunk.get("grade", "N/A")} | '
+                        f"Subject: {subject_display} | "
+                        f"Publisher: {publisher_display} | "
+                        f"Unit {unit_str} | "
+                        f"Lesson {lesson_str} | "
+                        f'Page {chunk.get("page_num", "N/A")} ===\n\n'
+                    )
 
-        return sources_text.strip()
+                    current_page = page
 
-    def enrich_sources(self, chunks_payloads: list[dict]) -> str:
+                section_text += chunk.get("chunk_text", "") + "\n"
+
+            return section_text.strip()
+
+        mentioned_text = build_chunk_text(mentioned_chunks)
+        related_text = build_chunk_text(related_chunks)
+
+        formatted_output = f"""--------------------------------------------------
+MENTIONED PAGES
+--------------------------------------------------
+{mentioned_text}
+
+--------------------------------------------------
+RELATED PAGES
+--------------------------------------------------
+{related_text}"""
+
+        return formatted_output.strip()
+
+    def enrich_sources(
+        self, chunks_payloads: list[dict], priority_pages: list[int] = None
+    ) -> str:
         """
         Enriches retrieved chunks by fetching all chunks belonging strictly to
         the exact pages, grades, and subjects of the retrieved results.
@@ -243,7 +291,6 @@ class RagService:
                 "term",
                 "subject",
                 "book_publisher",
-                "unit_num",
                 "page_num",
             ]
 
@@ -264,13 +311,53 @@ class RagService:
         # Retrieve all chunks belonging strictly to these specific target pages
         chunks_results = self.scroll(filters)
 
-        # Format retrieved chunks using the helper
-        return self.format_search_results(chunks_results)
+        # Format retrieved chunks using the helper, passing priority pages
+        return self.format_search_results(chunks_results, priority_pages=priority_pages)
 
     # -------------------------
     # AI Mode Methods
     # -------------------------
 
+    def get_textbook_page(
+        self,
+        page_num: int,
+        grade: str,
+        subject: str,
+        category: str,
+        book_publisher: str,
+        active_pages: list[int] = None,
+    ) -> str:
+        """
+        Fetch a specific textbook page using strict curriculum metadata filters
+        if it was not already retrieved.
+        """
+        try:
+            page_num = int(page_num)
+        except (TypeError, ValueError):
+            return "Invalid page number provided."
+
+        # Safe lock: Check if this page is already active/carried-over
+        active_pages = active_pages or []
+        if page_num in active_pages:
+            return f"Page {page_num} was already retrieved and provided in the current context."
+
+        # Build precise metadata filters using exact codes
+        page_filters = [
+            FieldCondition(key="grade", match=MatchValue(value=grade)),
+            FieldCondition(key="subject", match=MatchValue(value=subject)),
+            FieldCondition(key="category", match=MatchValue(value=category)),
+            FieldCondition(key="book_publisher", match=MatchValue(value=book_publisher)),
+            FieldCondition(key="page_num", match=MatchValue(value=page_num)),
+        ]
+
+        page_filter = Filter(must=page_filters)
+        chunks = self.scroll(page_filter)
+
+        if not chunks:
+            return f"Page {page_num} could not be found with grade={grade}, subject={subject}, category={category}, publisher={book_publisher}."
+
+        return self.format_search_results(chunks, priority_pages=[page_num])
+    
     def upload_and_register_files(
         self,
         uploaded_files: list,
@@ -332,6 +419,8 @@ class RagService:
         uploaded_files: list = [],
         chat_history: list = [],
         student_info: dict = {},
+        active_filters: dict = None,
+        tools: list = None,
     ):
         contents, system_instructions = self.ai_instructions(
             user_query,
@@ -340,6 +429,7 @@ class RagService:
             chat_history,
             student_info,
             output_format="json",
+            active_filters=active_filters,
         )
 
         # Create the response json schema
@@ -363,9 +453,10 @@ class RagService:
                     config=types.GenerateContentConfig(
                         system_instruction=system_instructions,
                         max_output_tokens=40000,
-                        temperature=0.3,
+                        temperature=0.5,
                         response_mime_type="application/json",
                         response_schema=AIResponseSchema,
+                        tools=tools,
                     ),
                 )
                 break
@@ -387,6 +478,8 @@ class RagService:
         uploaded_files: list = [],
         chat_history: list = [],
         student_info: dict = {},
+        active_filters: dict = None,
+        tools: list = None,
     ):
         contents, system_instructions = self.ai_instructions(
             user_query,
@@ -395,6 +488,7 @@ class RagService:
             chat_history,
             student_info,
             output_format="text_stream",
+            active_filters=active_filters,
         )
 
         stream = None
@@ -412,6 +506,7 @@ class RagService:
                         system_instruction=system_instructions,
                         max_output_tokens=40000,
                         temperature=0.7,
+                        tools=tools,
                     ),
                 )
 
@@ -435,6 +530,7 @@ class RagService:
         chat_history: list = [],
         student_info: dict = {},
         output_format: Literal["text_stream", "json"] = "text_stream",
+        active_filters: dict = None,
     ) -> tuple[list[types.Content], str]:
         """Build Gemini conversation contents and LearnPeak system instructions."""
 
@@ -562,14 +658,13 @@ Required Citations Format:
             if parts:
                 contents.append(types.Content(role=role, parts=parts))
 
+        # Sources
         if isinstance(sources, str) and sources.strip():
             sources_text = sources.strip()
         else:
             sources_text = "No relevant textbook sources were retrieved for this turn."
 
-        # --------------------------------------------------
         # Output format
-        # --------------------------------------------------
         if output_format == "text_stream":
             output_format_txt = "Return raw Markdown only. Do not wrap the answer in a Markdown code fence."
         elif output_format == "json":
@@ -579,7 +674,40 @@ Required Citations Format:
     "suggested_chat_title": "A concise 2-5 word title for the current conversation topic"
 }"""
 
+        # Build active filters summary block
+        filters_summary = "None selected (Searching all curriculum)"
+        if active_filters:
+            filter_lines = []
+            if active_filters.get("grade"):
+                filter_lines.append(f"- Grade: {active_filters['grade']}")
+            if active_filters.get("subject"):
+                filter_lines.append(f"- Subject: {active_filters['subject']}")
+            if active_filters.get("category"):
+                cat_code = active_filters["category"]
+                filter_lines.append(f"- Category: {cat_code}")
+                # Add the Assessments Book note if selected
+                if cat_code == "assessments_book":
+                    filter_lines.append(
+                        "  * Note: The Assessments Book is a book published by the MEO which only contains questions and exercises. You will be provided sources from the main book also so you have sources to answer with."
+                    )
+            if active_filters.get("unit"):
+                filter_lines.append(
+                    f"- Unit(s): {', '.join(map(str, active_filters['unit']))}"
+                )
+            if active_filters.get("lesson"):
+                filter_lines.append(
+                    f"- Lesson(s): {', '.join(map(str, active_filters['lesson']))}"
+                )
+
+            if filter_lines:
+                filters_summary = "\n".join(filter_lines)
+
         current_prompt = f"""
+==================================================
+ACTIVE USER FILTERS
+==================================================
+{filters_summary}
+
 ==================================================
 RETRIEVED TEXTBOOK SOURCES
 ==================================================
@@ -768,7 +896,16 @@ class AddSource:
         finally:
             source_pdf.close()
 
-    def prepare_pdf(self, pdf_bytes: bytes, category: str = None):
+    def prepare_pdf(
+        self,
+        pdf_bytes: bytes,
+        prepared_metadata=None,
+        category: str = None,
+        offset: int = None,
+        is_assessments: bool = False,
+        unit_lesson_structure: str = "",
+        is_english_ol: bool = False,
+    ):
         """
         Analyzes a PDF chunk via Gemini to extract page ranges and digital-to-actual page mapping.
         Does NOT alter or re-slice the input PDF bytes.
@@ -788,21 +925,20 @@ class AddSource:
                     data=pdf_bytes, mime_type="application/pdf"
                 )
 
-        book_pdf = upload_pdf()
+        if not prepared_metadata:
+            print("STARTING UPLOAD")
+            upload_start = time.time()
+            book_pdf = upload_pdf()
+            print(f"FINISHED UPLOAD: {time.time() - upload_start} \n")
 
-        # English Category
-        get_english_category = False
-        if category == "ol":
-            get_english_category = True
-
-        # Create system instructions
-        system_instructions = f"""
+            # Create system instructions
+            system_instructions = f"""
 You are an AI system responsible for analyzing an educational textbook PDF and extracting its structural information for an automated educational-content ingestion pipeline.
 Your task is to analyze the provided PDF and return ONLY the required JSON object.
 
 ---
 
-## 1. Identify the Main Book
+## Identify the Main Book
 
 The provided PDF may contain multiple books merged into a single PDF. For example, it may contain:
 
@@ -817,7 +953,8 @@ First determine the boundaries of the Main Book within the PDF. Completely ignor
 Do not assume that the Main Book is necessarily the first book in the PDF. Identify it from its title, structure, headers, footers, content, and other contextual clues.
 
 ---
-
+{
+"""
 ## 2. Understand Digital and Actual Page Numbers
 
 There are two different page-number systems:
@@ -860,108 +997,167 @@ The offset MUST be returned as an integer, such as 4, 0, or -2.
 Do not attempt to return separate offsets for different sections.
 
 ---
+""" if offset is None else ""
+}
 
-## 4. Determine Unit and Lesson Metadata
+## Determine Unit and Lesson Metadata
 
 For every pages range, determine:
-{"- Category (REQUIRED)" if get_english_category else ""}
-- Unit number (REQUIRED)
-- Unit name
-- Lesson(s) number(s) (REQUIRED)
-- Lesson(s) name(s)
+- unit_num: list of integers
+- unit_name: list of strings
+- lesson_num: list of integers OR null
+- lesson_name: list of strings OR null
 
+{
+"""
 The unit and lesson information should primarily be determined from the headers and/or footers of the Main Book pages, where this information is provided.
 The unit_number and lesson_number MUSTN'T be null.
 Preserve the names as they appear in the textbook.
+""" if not is_assessments else f"""
+You are currently processing an **Assessments** book. Your objective is **NOT** to generate, alter, or invent new unit and lesson titles or numbers. 
 
-{"""English O.L books have 2 sections, the main units and the O.L Story. The options for `category` are either 'ol' or 'ol_story'.
-For the O.L story, consider the unit_num the next one if not specified and consider the lesson_num the chapters numbers.""" if category else ""}
+To ensure compatibility with our RAG retrieval pipeline, every extracted range in this assessments book **must strictly map** to the exact metadata of the corresponding main book.
+
+#### Main Book Reference Structure:
+{unit_lesson_structure}
+
+#### Instructions for Processing:
+1. **No New Metadata Generation:** Under no circumstances should you create new unit/lesson names, alternative numbering, or modified titles based on the text found in the assessments book.
+2. **Strict Reference Mapping:** For every exercise block or page range you process in the assessments book, identify which lesson it targets and map it **word-for-word and number-for-number** to the corresponding entry in the *Main Book Reference Structure* provided above.
+3. **Handling Discrepancies:** If the assessments book titles a section slightly differently or groups exercises under a different heading, you **must override it** and align it with the official main book metadata counterpart.
+"""}
+
+{"""IMPORTANT: This is an English O.L book. It contains a story besides the main units.
+The story chapters are usually separated from their units at the end of the book.
+When creating your page ranges, you have to map each chapter back to its lesson which is usually the missing Lesson 4.
+If there are 2 stories in the book. Usually the first half of the units takes the first one and the second half takes the second story.
+For example: If we have 6 main units, then 2 stories 3 chapters each,
+we map the first story's 3 chapters to U1 L4, U2 L4, U3 L4 respectively and the second story's 3 chaters to
+U4 L4, U5 L4, U6 L4""" if is_english_ol and not is_assessments else ""}
 
 Use surrounding pages when necessary to correctly determine which unit and lesson a range belongs to.
 The metadata applies to every page within the range.
 
-Put lesson_num and lesson_name in lists, for example:
+Put all unit and lesson metadata in lists, for example:
+- unit_num: [1]
+- unit_name: ["Unit 1 Name"]
 - lesson_num: [1]
 - lesson_name: ["Lesson 1 Name"]
 
-IMPORTANT: Some pages may cover TWO or more lessons together. When a page range explicitly belongs to multiple lessons,
-include ALL applicable lesson numbers and lesson names in `lesson_num` and `lesson_name` as lists.
+IMPORTANT:
+- Some pages may cover TWO or more lessons together. In that case, include all the lessons numbers and names in the lists.
+- Some pages like unit revision pages do not explicitly cover a single lesson.
+In that case, only include unit_num and unit_name and make lesson_num and lesson_name null.
 
 For example, if a page covers "Lesson 1 & 2", return:
 - lesson_num: [1, 2]
 - lesson_name: ["Lesson 1 Name", "Lesson 2 Name"]
 
-Do NOT create a combined lesson number or combined lesson name such as `"1 & 2"` or `"Lesson 1 & 2"`.
+For example, in unit revision pages:
+- unit_num: [2] 
+- unit_name: ["Unit 2 Name"]
+- lesson_num: null
+- lesson_name: null
+
 
 ### LESSON PAGE BOUNDARIES & OVERLAPS
-1. Shared Pages Are Expected: A single page (e.g., Page 12) can contain the end of Lesson 1 AND the beginning of Lesson 2.
+1. Shared Pages Are Possibile: A single page (e.g., Page 12) can contain the end of Lesson 1 AND the beginning of Lesson 2.
 2. Inclusive Overlapping Ranges: When two lessons share a page, BOTH lessons MUST include that shared page in their range.
-   - Example: If Lesson 1 starts on page 10 and ends halfway down page 12, its range is start_page: 10, end_page: 12.
-   - If Lesson 2 starts on the lower half of page 12 and ends on page 15, its range is start_page: 12, end_page: 15.
-   - Both entries sharing page 12 is correct and intended. Do NOT skip page 12 for Lesson 2 or artificially increment the start page to 13.
-3. Multi-Lesson Sections: If an assessment section explicitly targets multiple lessons simultaneously (e.g., "Lessons 1 & 2 Test"), emit separate metadata entries for each lesson cited, sharing the exact same start_page and end_page range.
+- Example: If Lesson 1 starts on page 10 and ends halfway down page 12, its range is start_page: 10, end_page: 12.
+- If Lesson 2 starts on the lower half of page 12 and ends on page 15, its range is start_page: 12, end_page: 15.
+- Both entries sharing page 12 is correct and intended. Do NOT skip page 12 for Lesson 2 or artificially increment the start page to 13.
 
---- CUSTOM CASES ---
-In ARABIC books ONLY, grammar, spelling, and writing units can be separate from the main readin lessons.
-Each one of them should be considered as a separate unit and their unit_num should be continuing on the reading units.
+{"""--- CUSTOM CASES ---
+In ARABIC books ONLY, grammar, spelling, and writing units can be separate from the main reading lessons.
+Each one of them should be considered as a separate unit and their unit_num should be continuing on the reading units.""" if not is_assessments else ""}
 
 ---
 
-## 5. Page Ranges
+## Page Ranges
 
 A lesson range usually includes explanation pages and excercises/questions pages.
 All ranges MUST be expressed using digital/PDF page numbers.
 `start_page` is the first digital page included in the lesson range.
 `end_page` is the last digital page included in the lesson range.
 
-IMPORTANT: Only include ranges of lessons. Do NOT include ranges of unit reviews, book intro/outro,
-or any range whose unit and lesson metadata does not belong to it.
-
 Do not use printed page numbers for these fields.
 Return ranges in ascending digital-page order.
-Do not overlap ranges.
 Do not include pages outside the Main Book.
 
 ---
 
-## 6. Required Output
+{
+"""
+## Page Types
+
+Analyze every single page provided in the attached textbook file and determine its page type.
+
+Rules for Classification:
+1. 'explanation': Pages that teach core concepts, theories, rules, examples, definitions, main lesson reading material, or pages containing a mix of explanation text and questions.
+2. 'questions': Pages that consist entirely of exercises, homework problems, exams, drills, or review questions with zero explanatory text.
+3. Priority Rule: If a page contains BOTH explanation content and questions, 'explanation' always wins over questions.
+
+Output Format:
+Return the results in a key in the JSON object called "pages_types".
+The value of "pages_types" must be a dictionary where:
+- The keys are the string representation of the DIGITAL page numbers (e.g. "6", "7")
+- The values are strictly either "explanation" or "questions".
+
+---
+""" if not is_assessments else ""
+}
+
+## Required Output
 
 Return ONLY valid JSON matching exactly the structure in this example:
 
 {{
-  "digital_to_actual_pages_offset": 4,
-  "pages_ranges": [
-    {{
-      "start_page": 23,
-      "end_page": 34,
-      "unit_name": "Generations",
-      "unit_num": 1,
-      "lesson_name": ["Thermal and Chemical Changes"],
-      "lesson_num": [2],
-      {"'category': 'ol'," if get_english_category else ""}
-    }},
-    {{
-      "start_page": 51,
-      "end_page": 73,
-      "unit_name": "Discover Yourself",
-      "unit_num": 2,
-      "lesson_name": ["Lesson 1 Name", "Lesson 2 Name"],
-      "lesson_num": [1, 2],
-      {"'category': 'ol'," if get_english_category else ""}
-    }}
-  ]
+    {'"digital_to_actual_pages_offset": 4,' if offset is None else ""}
+    {
+    """
+    "pages_types": {
+        "13": "explanation",
+        "14": "explanation",
+        "15": "explanation",
+        "16": "questions",
+        "17": "explanation",
+        "18": "explanation",
+        "19": "questions",
+        "20": "questions",
+        "21": "questions",
+    },
+    """ if not is_assessments else ""
+    }
+    "pages_ranges": [
+        {{
+            "start_page": 23,
+            "end_page": 34,
+            "unit_name": ["Generations"],
+            "unit_num": [1],
+            "lesson_name": ["Thermal and Chemical Changes"],
+            "lesson_num": [2]
+        }},
+        {{
+            "start_page": 51,
+            "end_page": 73,
+            "unit_name": ["Discover Yourself"],
+            "unit_num": [2],
+            "lesson_name": ["Lesson 1 Name", "Lesson 2 Name"],
+            "lesson_num": [1, 2]
+        }}
+    ]
 }}
 
-The top-level object MUST contain exactly these two keys:
+The top-level object MUST contain exactly these three keys:
 
-- `digital_to_actual_pages_offset`
+{'- `digital_to_actual_pages_offset`' if offset is None else ""}
+{'- `pages_types`' if not is_assessments else ""}
 - `pages_ranges`
 
 Each dict in `pages_ranges` MUST contain exactly these keys:
 
 - `start_page`
 - `end_page`
-{"- `category`" if get_english_category else ""}
 - `unit_name`
 - `unit_num`
 - `lesson_name`
@@ -969,48 +1165,59 @@ Each dict in `pages_ranges` MUST contain exactly these keys:
 
 Data types MUST be:
 
-- `digital_to_actual_pages_offset`: integer
+{'- `digital_to_actual_pages_offset`: integer' if offset is None else ""}
 - `start_page`: integer
 - `end_page`: integer
-{"- `category`: str" if get_english_category else ""}
-- `unit_name`: string
-- `unit_num`: integer
-- `lesson_name`: list of strings
-- `lesson_num`: list of integers
+- `unit_name`: list of strings
+- `unit_num`: list of integers
+- `lesson_name`: list of strings OR null
+- `lesson_num`: list of integers OR null
 
 Do not wrap the JSON in Markdown code fences.
 Do not include any additional keys.
 Do not include any explanation before or after the JSON.
 """
 
-        # Send request to Gemini
-        response = None
-        for model in GEMINI_FLASH_FIRST:
-            try:
-                response = self.gemini_client.models.generate_content(
-                    model=model,
-                    contents=[book_pdf],
-                    config=types.GenerateContentConfig(
-                        system_instruction=system_instructions,
-                        temperature=0.3,
-                        response_mime_type="application/json",
-                        thinking_config=types.ThinkingConfig(
-                            thinking_level="medium",
-                            include_thoughts=False,
+            # Send request to Gemini
+            response = None
+            for model in GEMINI_FLASH_FIRST:
+                try:
+                    response = self.gemini_client.models.generate_content(
+                        model=model,
+                        contents=[book_pdf],
+                        config=types.GenerateContentConfig(
+                            system_instruction=system_instructions,
+                            temperature=0.3,
+                            response_mime_type="application/json",
+                            thinking_config=types.ThinkingConfig(
+                                thinking_level="medium",
+                                include_thoughts=False,
+                            ),
                         ),
-                    ),
-                )
-                break
-            except Exception as e:
-                print(f"Model {model} failed: {e}")
-                continue
+                    )
+                    break
+                except Exception as e:
+                    print(f"Model {model} failed: {e}")
+                    continue
 
-        if not response:
-            raise RuntimeError("All Gemini models failed to generate content.")
+            if not response:
+                raise RuntimeError("All Gemini models failed to generate content.")
 
-        json_response = json.loads(response.text)
+            json_response = json.loads(response.text)
 
-        offset: int = json_response["digital_to_actual_pages_offset"]
+            with open("response.txt", "w", encoding="utf-8") as f:
+                f.write(response.text)
+
+        else:
+            json_response = json.loads(prepared_metadata)
+
+        if offset is None:
+            offset: int = json_response["digital_to_actual_pages_offset"]
+
+        pages_types = {}
+        if not is_assessments:
+            pages_types: dict = json_response["pages_types"]
+
         pages_ranges: list = json_response["pages_ranges"]
 
         # Open source PDF chunk to inspect total pages
@@ -1031,27 +1238,177 @@ Do not include any explanation before or after the JSON.
                     f"The PDF contains {total_chunk_pages} pages."
                 )
 
-            # Map raw digital page numbers directly to actual page numbers & metadata
+            # Normalize metadata values into lists
+            def ensure_list(value):
+                if value is None:
+                    return None
+                return value if isinstance(value, list) else [value]
+
+            range_metadata = {
+                "unit_num": ensure_list(page_range.get("unit_num")),
+                "unit_name": ensure_list(page_range.get("unit_name")),
+                "lesson_num": ensure_list(page_range.get("lesson_num")),
+                "lesson_name": ensure_list(page_range.get("lesson_name")),
+            }
+
+            unit_nums = range_metadata["unit_num"]
+            unit_names = range_metadata["unit_name"]
+            lesson_nums = range_metadata["lesson_num"]
+            lesson_names = range_metadata["lesson_name"]
+
+            # Validate lesson metadata
+            if (lesson_nums is None) != (lesson_names is None):
+                raise ValueError(
+                    f"Incomplete lesson metadata on digital page range "
+                    f"{start_page}-{end_page}."
+                )
+
+            if lesson_nums is not None:
+                if len(lesson_nums) != len(lesson_names):
+                    raise ValueError(
+                        f"Lesson metadata mismatch on digital page range "
+                        f"{start_page}-{end_page}: "
+                        f"{len(lesson_nums)} lesson numbers vs "
+                        f"{len(lesson_names)} lesson names."
+                    )
+
+            # Expand single-unit metadata to match multiple lessons
+            if lesson_nums:
+                lesson_count = len(lesson_nums)
+
+                for key in ("unit_num", "unit_name"):
+                    values = range_metadata[key]
+
+                    if not values:
+                        raise ValueError(
+                            f"Missing {key} on digital page range "
+                            f"{start_page}-{end_page}."
+                        )
+
+                    if len(values) == 1:
+                        range_metadata[key] = values * lesson_count
+
+                    elif len(values) != lesson_count:
+                        raise ValueError(
+                            f"{key} mismatch on digital page range "
+                            f"{start_page}-{end_page}: "
+                            f"{len(values)} values vs "
+                            f"{lesson_count} lessons."
+                        )
+
+            # Validate unit metadata AFTER expansion
+            unit_nums = range_metadata["unit_num"]
+            unit_names = range_metadata["unit_name"]
+
+            if unit_nums is None or unit_names is None:
+                raise ValueError(
+                    f"Missing unit metadata on digital page range "
+                    f"{start_page}-{end_page}."
+                )
+
+            if len(unit_nums) != len(unit_names):
+                raise ValueError(
+                    f"Unit metadata mismatch on digital page range "
+                    f"{start_page}-{end_page}: "
+                    f"{len(unit_nums)} unit numbers vs "
+                    f"{len(unit_names)} unit names."
+                )
+
+            # Map raw digital page numbers to actual page numbers & metadata
             for digital_page in range(start_page, end_page + 1):
                 actual_page = digital_page + offset
 
                 digital_to_actual_mapping[digital_page] = actual_page
 
-                pages_metadata[actual_page] = {
-                    "unit_name": page_range["unit_name"],
-                    "unit_num": page_range["unit_num"],
-                    "lesson_name": page_range["lesson_name"],
-                    "lesson_num": page_range["lesson_num"],
-                }
+                # Merge metadata when multiple ranges overlap on the same actual page
+                if actual_page in pages_metadata:
+                    existing = pages_metadata[actual_page]
 
-                # if page_range.get("category"):
-                #     pages_metadata[actual_page]["category"] = page_range["category"]
-                # elif category and not get_english_category:
-                #     pages_metadata[actual_page]["category"] = category
+                    current_lessons = existing["lesson_num"]
+                    new_lessons = range_metadata["lesson_num"]
+
+                    # Case 1: Both ranges contain lesson metadata
+                    if current_lessons is not None and new_lessons is not None:
+
+                        existing_pairs = set(
+                            zip(
+                                existing["unit_num"],
+                                existing["unit_name"],
+                                existing["lesson_num"],
+                                existing["lesson_name"],
+                            )
+                        )
+
+                        for unit_num, unit_name, lesson_num, lesson_name in zip(
+                            range_metadata["unit_num"],
+                            range_metadata["unit_name"],
+                            range_metadata["lesson_num"],
+                            range_metadata["lesson_name"],
+                        ):
+                            pair = (unit_num, unit_name, lesson_num, lesson_name)
+
+                            # Add only if this exact unit-lesson pair doesn't exist
+                            if pair not in existing_pairs:
+                                existing["unit_num"].append(unit_num)
+                                existing["unit_name"].append(unit_name)
+                                existing["lesson_num"].append(lesson_num)
+                                existing["lesson_name"].append(lesson_name)
+
+                                existing_pairs.add(pair)
+
+                    # Case 2: Existing range has no lessons, but new range does
+                    elif current_lessons is None and new_lessons is not None:
+                        for key in (
+                            "unit_num",
+                            "unit_name",
+                            "lesson_num",
+                            "lesson_name",
+                        ):
+                            existing[key] = (
+                                list(range_metadata[key])
+                                if range_metadata[key] is not None
+                                else None
+                            )
+
+                    # Case 3: Both ranges are revision-only (no lesson metadata)
+                    elif current_lessons is None and new_lessons is None:
+                        existing_units = set(
+                            zip(existing["unit_num"], existing["unit_name"])
+                        )
+
+                        for unit_num, unit_name in zip(
+                            range_metadata["unit_num"],
+                            range_metadata["unit_name"],
+                        ):
+                            unit_pair = (unit_num, unit_name)
+
+                            if unit_pair not in existing_units:
+                                existing["unit_num"].append(unit_num)
+                                existing["unit_name"].append(unit_name)
+                                existing_units.add(unit_pair)
+
+                    # Case 4: Existing range has lessons, new range is revision-only
+                    # Keep the more specific lesson metadata.
+
+                else:
+                    pages_metadata[actual_page] = {
+                        key: value.copy() if isinstance(value, list) else value
+                        for key, value in range_metadata.items()
+                    }
+
+                if is_assessments:
+                    pages_metadata[actual_page]["page_type"] = "questions"
 
                 pages_metadata[actual_page]["category"] = category
 
         source_pdf.close()
+
+        if not is_assessments:
+            for num, page_type in pages_types.items():
+                actual_page = int(num) + offset
+
+                if actual_page in pages_metadata:
+                    pages_metadata[actual_page]["page_type"] = page_type
 
         return digital_to_actual_mapping, pages_metadata
 
@@ -1219,7 +1576,7 @@ Do not include any explanation before or after the JSON.
         self,
         ocr_result: list[dict],
         batch_id: str,
-        unit_lesson_metadata: dict,
+        pages_metadata: dict,
         grade: str,
         subject: str,
         book_publisher: str = "el-moasser",
@@ -1255,7 +1612,7 @@ Do not include any explanation before or after the JSON.
 
         # Attach metadata to each OCR page
         for page_data in data:
-            current_metadata = unit_lesson_metadata.get(page_data["page_num"])
+            current_metadata = pages_metadata.get(page_data["page_num"])
 
             page_data.update(
                 {
@@ -1487,7 +1844,7 @@ Do not include any explanation before or after the JSON.
             pages = self.attach_metadata(
                 pages,
                 batch_id=batch_id,
-                unit_lesson_metadata=pages_metadata,
+                pages_metadata=pages_metadata,
                 grade=grade,
                 subject=subject,
                 book_publisher=book_publisher,
@@ -1560,6 +1917,11 @@ Do not include any explanation before or after the JSON.
         book_publisher: str = "el-moasser",
         category: str = "external_book",
         ignore_index: int = None,
+        offset: int = None,
+        prepared_metadata: list = [],
+        is_assessments: bool = None,
+        unit_lesson_metadata: str = "",
+        is_english_ol: bool = None,
     ):
         """
         Process a PDF book chunk by chunk alongside a single Master Document AI ZIP file containing
@@ -1600,19 +1962,29 @@ Do not include any explanation before or after the JSON.
             # Prepare PDF metadata with Gemini
             start = time.perf_counter()
             digital_to_actual_mapping, pages_metadata = self.prepare_pdf(
-                chunk_bytes, category
+                chunk_bytes,
+                prepared_metadata[i],
+                category,
+                offset,
+                is_assessments,
+                unit_lesson_metadata,
+                is_english_ol,
             )
-            dig, act = next(
-                (k, v)
-                for k, v in digital_to_actual_mapping.items()
-                if str(k).isdigit() and str(v).isdigit()
-            )
-            offset = int(act) - int(dig)
+
+            try:
+                dig, act = next(
+                    (k, v)
+                    for k, v in digital_to_actual_mapping.items()
+                    if str(k).isdigit() and str(v).isdigit()
+                )
+                display_offset = int(act) - int(dig)
+            except:
+                display_offset = None
             elapsed = time.perf_counter() - start
 
             yield {
                 "step": "Metadata Extracted",
-                "message": f"Chunk {chunk_number}/{total_chunks} metadata calculated. Offset: {offset}",
+                "message": f"Chunk {chunk_number}/{total_chunks} metadata calculated. Offset: {display_offset}",
                 "elapsed": elapsed,
             }
 
@@ -1636,7 +2008,7 @@ Do not include any explanation before or after the JSON.
             pages = self.attach_metadata(
                 pages,
                 batch_id=batch_id,
-                unit_lesson_metadata=pages_metadata,
+                pages_metadata=pages_metadata,
                 grade=grade,
                 subject=subject,
                 book_publisher=book_publisher,

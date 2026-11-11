@@ -58,7 +58,9 @@ def load_app():
     signup = st.Page("pages/signup.py", title="Create Account", icon="🚀")
 
     # Features
-    ask_book = st.Page("pages/ask-book.py", title="Ask your book", icon="📚")
+    # ask_book = st.Page("pages/ask-book.py", title="Ask your book", icon="📚")
+    chat_menu = st.Page("pages/chat_menu.py", title="Ask your book", icon="📚")
+    chat = st.Page("pages/chat.py", title="Ask your book", icon="📚", visibility="hidden")
     ar = st.Page("pages/ar.py", title="Learn with AR", icon="🥽")
     quizzes = st.Page("pages/quizzes.py", title="Quiz Generation", icon="📝")
 
@@ -86,7 +88,7 @@ def load_app():
 
     # 3. Append the remaining pages in order
     pages.update({
-        "✨ Features": [ask_book, ar, quizzes],
+        "✨ Features": [chat_menu, chat, ar, quizzes],
         "🧠 Study Strategies": [learn],
         "🛠️ Support": [about, added_books],
     })

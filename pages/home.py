@@ -159,7 +159,7 @@ with col2:
     if st.button(
         "🚀 Start with Ask Your Book", use_container_width=True, type="primary"
     ):
-        st.switch_page("pages/ask-book.py")
+        st.switch_page("pages/chat_menu.py")
 
 "---"
 
@@ -180,7 +180,7 @@ with col1.container(border=True):
 
     " "
     if st.button("Ask your book", use_container_width=True):
-        st.switch_page("pages/ask-book.py")
+        st.switch_page("pages/chat_menu.py")
 
 with col2.container(border=True):
     st.markdown("### 📝 Quiz Generation", anchors=False)
