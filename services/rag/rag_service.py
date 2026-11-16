@@ -1198,7 +1198,7 @@ Do not include any explanation before or after the JSON.
                     )
                     break
                 except Exception as e:
-                    print(f"Model {model} failed: {e}")
+                    print(f"Model {model} failed: {e} ")
                     continue
 
             if not response:

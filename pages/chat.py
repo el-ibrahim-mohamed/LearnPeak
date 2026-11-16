@@ -800,7 +800,9 @@ if user_input:
 
                 if filter_grade_code:
                     page_filters.append(
-                        FieldCondition(key="grade", match=MatchAny(any=[filter_grade_code]))
+                        FieldCondition(
+                            key="grade", match=MatchAny(any=[filter_grade_code])
+                        )
                     )
 
                 if selected_subject_label and selected_subject_label in SUBJECTS:
@@ -811,7 +813,9 @@ if user_input:
 
                     target_publisher = None
                     if user and user.get("info", {}).get("preferred_book_publishers"):
-                        target_publisher = user["info"]["preferred_book_publishers"].get(subj_code)
+                        target_publisher = user["info"][
+                            "preferred_book_publishers"
+                        ].get(subj_code)
                     if not target_publisher:
                         target_publisher = DEFAULT_PUBLISHERS.get(subj_code)
 
@@ -820,24 +824,31 @@ if user_input:
                             page_filters.append(
                                 FieldCondition(
                                     key="book_publisher",
-                                    match=MatchAny(any=list(set(["moe", target_publisher]))),
+                                    match=MatchAny(
+                                        any=list(set(["moe", target_publisher]))
+                                    ),
                                 )
                             )
                         else:
                             page_filters.append(
                                 FieldCondition(
-                                    key="book_publisher", match=MatchAny(any=[target_publisher])
+                                    key="book_publisher",
+                                    match=MatchAny(any=[target_publisher]),
                                 )
                             )
 
                 if category_code:
                     if category_code == "assessments_book":
                         page_filters.append(
-                            FieldCondition(key="category", match=MatchAny(any=["assessments_book"]))
+                            FieldCondition(
+                                key="category", match=MatchAny(any=["assessments_book"])
+                            )
                         )
                     else:
                         page_filters.append(
-                            FieldCondition(key="category", match=MatchAny(any=[category_code]))
+                            FieldCondition(
+                                key="category", match=MatchAny(any=[category_code])
+                            )
                         )
 
                 page_filters.append(
@@ -854,7 +865,8 @@ if user_input:
 
             # Check if any mentioned page is a question page or from an assessments book
             has_question_or_assessment_pages = any(
-                chunk.get("page_type") == "questions" or chunk.get("category") == "assessments_book"
+                chunk.get("page_type") == "questions"
+                or chunk.get("category") == "assessments_book"
                 for chunk in extracted_page_chunks
             )
 
@@ -862,20 +874,30 @@ if user_input:
                 # Rule: Question / Assessment page -> Scroll matching explanation pages via paired Arabic lists
                 filter_grade_code = st.session_state.get("filter_grade")
                 selected_subject_label = st.session_state.get("filter_subject")
-                subj_code = SUBJECTS.get(selected_subject_label) if selected_subject_label else None
-                
+                subj_code = (
+                    SUBJECTS.get(selected_subject_label)
+                    if selected_subject_label
+                    else None
+                )
+
                 target_publisher = None
-                if subj_code and user and user.get("info", {}).get("preferred_book_publishers"):
-                    target_publisher = user["info"]["preferred_book_publishers"].get(subj_code)
+                if (
+                    subj_code
+                    and user
+                    and user.get("info", {}).get("preferred_book_publishers")
+                ):
+                    target_publisher = user["info"]["preferred_book_publishers"].get(
+                        subj_code
+                    )
                 if not target_publisher and subj_code:
                     target_publisher = DEFAULT_PUBLISHERS.get(subj_code)
 
                 explanation_filter = build_target_explanation_filter(
-                    extracted_page_chunks, 
-                    grade_code=filter_grade_code, 
-                    subj_code=subj_code, 
-                    category_code="external_book", 
-                    target_publisher=target_publisher
+                    extracted_page_chunks,
+                    grade_code=filter_grade_code,
+                    subj_code=subj_code,
+                    category_code="external_book",
+                    target_publisher=target_publisher,
                 )
 
                 if explanation_filter:
@@ -901,13 +923,18 @@ if user_input:
                         else:
                             auto_extracted_lessons.add(l_num)
 
-                effective_units = manual_units if manual_units else list(auto_extracted_units)
-                effective_lessons = manual_lessons if manual_lessons else list(auto_extracted_lessons)
+                effective_units = (
+                    manual_units if manual_units else list(auto_extracted_units)
+                )
+                effective_lessons = (
+                    manual_lessons if manual_lessons else list(auto_extracted_lessons)
+                )
 
                 user_selected_full_lesson = bool(manual_units) and bool(manual_lessons)
 
                 search_filters = get_filters(
-                    unit_num_override=effective_units, lesson_num_override=effective_lessons
+                    unit_num_override=effective_units,
+                    lesson_num_override=effective_lessons,
                 )
 
                 if user_selected_full_lesson or (not requested_pages and manual_units):
