@@ -26,22 +26,6 @@ from services.rag.qdrant_service import QdrantService
 from config import *
 
 
-class TextbookPageInput(BaseModel):
-    page_num: int = Field(description="The integer page number requested by the user.")
-    grade: Literal[
-        "prim1", "prim2", "prim3", "prim4", "prim5", "prim6", "prep1", "prep2", "prep3"
-    ] = Field(description="The exact grade code.")
-    subject: Literal["arabic", "english", "math", "science", "social_studies"] = Field(
-        description="The exact subject code."
-    )
-    category: Literal["external_book", "assessments_book"] = Field(
-        description="The exact category code ('external_book' or 'assessments_book')."
-    )
-    book_publisher: Literal[
-        "moe", "el-moasser", "el-emtihan", "al-adwaa", "selah-el-telmeez"
-    ] = Field(description="The exact book publisher code.")
-
-
 class RagService:
     """
     Business logic layer for handling Q&A vector storage and retrieval.
@@ -321,14 +305,14 @@ RELATED PAGES
     def get_textbook_page(
         self,
         page_num: int,
-        grade: str,
-        subject: str,
-        category: str,
-        book_publisher: str,
+        grade: str = None,
+        subject: str = None,
+        category: str = None,
+        book_publisher: str = None,
         active_pages: list[int] = None,
     ) -> str:
         """
-        Fetch a specific textbook page using strict curriculum metadata filters
+        Fetch a specific textbook page using current curriculum metadata filters
         if it was not already retrieved.
         """
         try:
@@ -341,23 +325,39 @@ RELATED PAGES
         if page_num in active_pages:
             return f"Page {page_num} was already retrieved and provided in the current context."
 
-        # Build precise metadata filters using exact codes
-        page_filters = [
-            FieldCondition(key="grade", match=MatchValue(value=grade)),
-            FieldCondition(key="subject", match=MatchValue(value=subject)),
-            FieldCondition(key="category", match=MatchValue(value=category)),
-            FieldCondition(key="book_publisher", match=MatchValue(value=book_publisher)),
-            FieldCondition(key="page_num", match=MatchValue(value=page_num)),
-        ]
+        # Build precise metadata filters dynamically based on what's available
+        page_filters = []
+        if grade:
+            page_filters.append(
+                FieldCondition(key="grade", match=MatchValue(value=grade))
+            )
+        if subject:
+            page_filters.append(
+                FieldCondition(key="subject", match=MatchValue(value=subject))
+            )
+        if category:
+            page_filters.append(
+                FieldCondition(key="category", match=MatchValue(value=category))
+            )
+        if book_publisher:
+            page_filters.append(
+                FieldCondition(
+                    key="book_publisher", match=MatchValue(value=book_publisher)
+                )
+            )
+
+        page_filters.append(
+            FieldCondition(key="page_num", match=MatchValue(value=page_num))
+        )
 
         page_filter = Filter(must=page_filters)
         chunks = self.scroll(page_filter)
 
         if not chunks:
-            return f"Page {page_num} could not be found with grade={grade}, subject={subject}, category={category}, publisher={book_publisher}."
+            return f"Page {page_num} could not be found with the current filters."
 
         return self.format_search_results(chunks, priority_pages=[page_num])
-    
+
     def upload_and_register_files(
         self,
         uploaded_files: list,
@@ -549,12 +549,13 @@ You are LearnPeak's AI Assistant, an expert tutor on an AI learning platform ali
 
 1. You are provided with textbook sources relevant to the student's curriculum. Prioritize these sources above all else when answering.
 2. If the correct answer is found within the provided sources, answer the question directly, clearly, and objectively.
-3. If the answer (or any part of it) is missing from the textbook sources, you MUST first explicitly declare that this information
+3. If the user explicitly or implicitly mentioned a page that was not provided in the prompt, use the get_textbook_page tool to dynamically get it.
+4. If the answer (or any part of it) is missing from the textbook sources (even after using the tool), you MUST first explicitly declare that this information
    has not been correctly retrieved or is not fully covered in the student's textbook sources, but based on general knowledge... (short and concise)
    You can also suggest choosing correct unit and lesson filters to get better results (short and concise)
    and then you MUST ANSWER directly and correctly.
-4. Always give an answer to the student following the previous instructions.
-5. Keep all responses concise, structurally organized, direct, and clear for a student.
+5. Always give an answer to the student following the previous instructions.
+6. Keep all responses concise, structurally organized, direct, and clear for a student.
 
 ==================================================
 ## STUDENT ANSWER CORRECTION INSTRUCTIONS

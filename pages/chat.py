@@ -3,6 +3,7 @@ import re
 from datetime import datetime
 import unicodedata
 from services.rag.chat_service import ChatService
+from typing import Optional
 from config import *
 
 # Set page config
@@ -96,32 +97,34 @@ if "page_memory_turns_left" not in st.session_state:
     st.session_state["page_memory_turns_left"] = 0
 
 
-def bound_get_textbook_page(
-    page_num: int, grade: str, subject: str, category: str, book_publisher: str
-):
+def get_textbook_page(page_num: int):
+    """
+    Call this function whenever the user explicitly or implicitly mentions a textbook page
+    number (e.g., 'page 15', 'what's on page 40', 'solve page 12') and that page content
+    is not present in the currently loaded textbook sources or mentioned pages. This will
+    fetch the missing page dynamically from the database using active filters.
+    """
+    print(f"GEMINI CALLED PAGE {page_num}")
     active_pages = st.session_state.get("carried_over_pages", [])
 
-    current_grade = grade or st.session_state.get("filter_grade")
-    current_subject = subject or SUBJECTS.get(st.session_state.get("filter_subject"))
-    current_category = (
-        category or st.session_state.get("filter_category_code") or "external_book"
-    )
+    grade = st.session_state.get("filter_grade")
+    subject_label = st.session_state.get("filter_subject")
+    subject = SUBJECTS.get(subject_label) if subject_label else None
+    category = st.session_state.get("filter_category_code") or "external_book"
 
-    current_publisher = book_publisher
-    if not current_publisher and current_subject:
-        if user and user.get("info", {}).get("preferred_book_publishers"):
-            current_publisher = user["info"]["preferred_book_publishers"].get(
-                current_subject
-            )
-        if not current_publisher:
-            current_publisher = DEFAULT_PUBLISHERS.get(current_subject, "el-moasser")
+    # Resolve publisher code automatically
+    publisher = None
+    if subject and user and user.get("info", {}).get("preferred_book_publishers"):
+        publisher = user["info"]["preferred_book_publishers"].get(subject)
+    if not publisher and subject:
+        publisher = DEFAULT_PUBLISHERS.get(subject, "el-moasser")
 
     return rag_service.get_textbook_page(
         page_num=page_num,
-        grade=current_grade,
-        subject=current_subject,
-        category=current_category,
-        book_publisher=current_publisher,
+        grade=grade,
+        subject=subject,
+        category=category,
+        book_publisher=publisher,
         active_pages=active_pages,
     )
 
@@ -635,6 +638,101 @@ def get_filters(
     return Filter(must=filter_conditions)
 
 
+def build_target_explanation_filter(
+    extracted_chunks: list[dict],
+    grade_code: str,
+    subj_code: str,
+    category_code: str,
+    target_publisher: str,
+) -> Optional[Filter]:
+    """
+    Parses fetched mentioned page chunks and builds a precise Qdrant Filter
+    to retrieve their corresponding explanation pages, handling paired Arabic lists.
+    """
+    if not extracted_chunks:
+        return None
+
+    # Base conditions that must apply to all lookups (grade, subject, publisher, external explanation books)
+    base_conditions = []
+    if grade_code:
+        base_conditions.append(
+            FieldCondition(key="grade", match=MatchAny(any=[grade_code]))
+        )
+    if subj_code:
+        base_conditions.append(
+            FieldCondition(key="subject", match=MatchAny(any=[subj_code]))
+        )
+    if target_publisher:
+        base_conditions.append(
+            FieldCondition(key="book_publisher", match=MatchAny(any=[target_publisher]))
+        )
+
+    # We want explanation pages from the main external book for reference
+    base_conditions.append(
+        FieldCondition(key="category", match=MatchAny(any=["external_book"]))
+    )
+    base_conditions.append(
+        FieldCondition(key="page_type", match=MatchAny(any=["explanation"]))
+    )
+
+    should_filters = []
+    seen_pairs = set()
+
+    for chunk in extracted_chunks:
+        u_nums = chunk.get("unit_num")
+        l_nums = chunk.get("lesson_num")
+
+        if not u_nums:
+            continue
+
+        # Ensure they are lists for uniform processing
+        if not isinstance(u_nums, list):
+            u_nums = [u_nums]
+        if l_nums is not None and not isinstance(l_nums, list):
+            l_nums = [l_nums]
+
+        # Case 1: Unit-level revision (No lessons)
+        if l_nums is None:
+            for u in u_nums:
+                pair_key = (u, None)
+                if pair_key not in seen_pairs:
+                    seen_pairs.add(pair_key)
+                    should_filters.append(
+                        Filter(
+                            must=base_conditions
+                            + [FieldCondition(key="unit_num", match=MatchAny(any=[u]))]
+                        )
+                    )
+
+        # Case 2: Standard or paired Arabic lists
+        else:
+            # Handle single unit broadcast (e.g. unit_num=[2], lesson_num=[1, 2])
+            if len(u_nums) == 1 and len(l_nums) > 1:
+                u_nums = u_nums * len(l_nums)
+
+            # Zip aligned lists index-by-index
+            for u, l in zip(u_nums, l_nums):
+                pair_key = (u, l)
+                if pair_key not in seen_pairs:
+                    seen_pairs.add(pair_key)
+                    should_filters.append(
+                        Filter(
+                            must=base_conditions
+                            + [
+                                FieldCondition(key="unit_num", match=MatchAny(any=[u])),
+                                FieldCondition(
+                                    key="lesson_num", match=MatchAny(any=[l])
+                                ),
+                            ]
+                        )
+                    )
+
+    if not should_filters:
+        return None
+
+    return Filter(should=should_filters)
+
+
 render_messages(st.session_state.get("messages_data", []))
 
 if st.session_state.get("scroll_to_bottom"):
@@ -702,9 +800,7 @@ if user_input:
 
                 if filter_grade_code:
                     page_filters.append(
-                        FieldCondition(
-                            key="grade", match=MatchAny(any=[filter_grade_code])
-                        )
+                        FieldCondition(key="grade", match=MatchAny(any=[filter_grade_code]))
                     )
 
                 if selected_subject_label and selected_subject_label in SUBJECTS:
@@ -715,9 +811,7 @@ if user_input:
 
                     target_publisher = None
                     if user and user.get("info", {}).get("preferred_book_publishers"):
-                        target_publisher = user["info"][
-                            "preferred_book_publishers"
-                        ].get(subj_code)
+                        target_publisher = user["info"]["preferred_book_publishers"].get(subj_code)
                     if not target_publisher:
                         target_publisher = DEFAULT_PUBLISHERS.get(subj_code)
 
@@ -726,31 +820,24 @@ if user_input:
                             page_filters.append(
                                 FieldCondition(
                                     key="book_publisher",
-                                    match=MatchAny(
-                                        any=list(set(["moe", target_publisher]))
-                                    ),
+                                    match=MatchAny(any=list(set(["moe", target_publisher]))),
                                 )
                             )
                         else:
                             page_filters.append(
                                 FieldCondition(
-                                    key="book_publisher",
-                                    match=MatchAny(any=[target_publisher]),
+                                    key="book_publisher", match=MatchAny(any=[target_publisher])
                                 )
                             )
 
                 if category_code:
                     if category_code == "assessments_book":
                         page_filters.append(
-                            FieldCondition(
-                                key="category", match=MatchAny(any=["assessments_book"])
-                            )
+                            FieldCondition(key="category", match=MatchAny(any=["assessments_book"]))
                         )
                     else:
                         page_filters.append(
-                            FieldCondition(
-                                key="category", match=MatchAny(any=[category_code])
-                            )
+                            FieldCondition(key="category", match=MatchAny(any=[category_code]))
                         )
 
                 page_filters.append(
@@ -760,57 +847,85 @@ if user_input:
                 page_filter = Filter(must=page_filters)
                 extracted_page_chunks = rag_service.scroll(page_filter)
 
-            auto_extracted_units = set()
-            auto_extracted_lessons = set()
-
-            for chunk in extracted_page_chunks:
-                u_num = chunk.get("unit_num")
-                l_num = chunk.get("lesson_num")
-
-                if u_num is not None:
-                    if isinstance(u_num, (list, tuple)):
-                        auto_extracted_units.update(u_num)
-                    else:
-                        auto_extracted_units.add(u_num)
-
-                if l_num is not None:
-                    if isinstance(l_num, (list, tuple)):
-                        auto_extracted_lessons.update(l_num)
-                    else:
-                        auto_extracted_lessons.add(l_num)
-
+            # --- ROUTING & RETRIEVAL STRATEGY ---
+            primary_chunks = []
             manual_units = st.session_state.get("filter_unit") or []
             manual_lessons = st.session_state.get("filter_lesson") or []
 
-            effective_units = (
-                manual_units if manual_units else list(auto_extracted_units)
-            )
-            effective_lessons = (
-                manual_lessons if manual_lessons else list(auto_extracted_lessons)
-            )
-
-            user_selected_full_lesson = bool(manual_units) and bool(manual_lessons)
-
-            search_filters = get_filters(
-                unit_num_override=effective_units, lesson_num_override=effective_lessons
+            # Check if any mentioned page is a question page or from an assessments book
+            has_question_or_assessment_pages = any(
+                chunk.get("page_type") == "questions" or chunk.get("category") == "assessments_book"
+                for chunk in extracted_page_chunks
             )
 
-            if user_selected_full_lesson:
-                primary_chunks = rag_service.scroll(search_filters)
-            else:
-                recent_user_queries = [
-                    msg.get("content", "").strip()
-                    for msg in messages_data
-                    if msg.get("role") == "user" and msg.get("content", "").strip()
-                ][-2:]
-                semantic_search_query = "\n".join(recent_user_queries)
+            if requested_pages and has_question_or_assessment_pages:
+                # Rule: Question / Assessment page -> Scroll matching explanation pages via paired Arabic lists
+                filter_grade_code = st.session_state.get("filter_grade")
+                selected_subject_label = st.session_state.get("filter_subject")
+                subj_code = SUBJECTS.get(selected_subject_label) if selected_subject_label else None
+                
+                target_publisher = None
+                if subj_code and user and user.get("info", {}).get("preferred_book_publishers"):
+                    target_publisher = user["info"]["preferred_book_publishers"].get(subj_code)
+                if not target_publisher and subj_code:
+                    target_publisher = DEFAULT_PUBLISHERS.get(subj_code)
 
-                primary_chunks = rag_service.search(
-                    semantic_search_query,
-                    limit=10,
-                    score_threshold=0.5,
-                    query_filter=search_filters,
+                explanation_filter = build_target_explanation_filter(
+                    extracted_page_chunks, 
+                    grade_code=filter_grade_code, 
+                    subj_code=subj_code, 
+                    category_code="external_book", 
+                    target_publisher=target_publisher
                 )
+
+                if explanation_filter:
+                    primary_chunks = rag_service.scroll(explanation_filter)
+            else:
+                # Standard Route: Explanation pages or manual filters / semantic search
+                auto_extracted_units = set()
+                auto_extracted_lessons = set()
+
+                for chunk in extracted_page_chunks:
+                    u_num = chunk.get("unit_num")
+                    l_num = chunk.get("lesson_num")
+
+                    if u_num is not None:
+                        if isinstance(u_num, (list, tuple)):
+                            auto_extracted_units.update(u_num)
+                        else:
+                            auto_extracted_units.add(u_num)
+
+                    if l_num is not None:
+                        if isinstance(l_num, (list, tuple)):
+                            auto_extracted_lessons.update(l_num)
+                        else:
+                            auto_extracted_lessons.add(l_num)
+
+                effective_units = manual_units if manual_units else list(auto_extracted_units)
+                effective_lessons = manual_lessons if manual_lessons else list(auto_extracted_lessons)
+
+                user_selected_full_lesson = bool(manual_units) and bool(manual_lessons)
+
+                search_filters = get_filters(
+                    unit_num_override=effective_units, lesson_num_override=effective_lessons
+                )
+
+                if user_selected_full_lesson or (not requested_pages and manual_units):
+                    primary_chunks = rag_service.scroll(search_filters)
+                else:
+                    recent_user_queries = [
+                        msg.get("content", "").strip()
+                        for msg in messages_data
+                        if msg.get("role") == "user" and msg.get("content", "").strip()
+                    ][-2:]
+                    semantic_search_query = "\n".join(recent_user_queries)
+
+                    primary_chunks = rag_service.search(
+                        semantic_search_query,
+                        limit=10,
+                        score_threshold=0.5,
+                        query_filter=search_filters,
+                    )
 
             combined_chunks = extracted_page_chunks + primary_chunks
             deduped_chunks = rag_service.deduplicate_chunks(combined_chunks)
@@ -846,7 +961,7 @@ if user_input:
                     chat_history,
                     student_info,
                     active_filters,
-                    tools=[bound_get_textbook_page],
+                    tools=[get_textbook_page],
                 )
 
                 full_response: str = rf"{json_response['response']}"
@@ -889,7 +1004,7 @@ if user_input:
                         chat_history,
                         student_info,
                         active_filters,
-                        tools=[bound_get_textbook_page]
+                        tools=[get_textbook_page],
                     ):
                         accumulated_chunks.append(chunk)
                         yield chunk
