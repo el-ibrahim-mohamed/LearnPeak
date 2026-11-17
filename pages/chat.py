@@ -419,7 +419,9 @@ def render_filter_popover():
         grade_options = ["All"] + list(GRADES.keys())
         default_index = 0
 
-        if user and user.get("grade"):
+        if "filter_grade_select" in st.session_state and st.session_state["filter_grade_select"] in grade_options:
+            default_index = grade_options.index(st.session_state["filter_grade_select"])
+        elif user and user.get("grade"):
             user_grade_label = get_key_by_value(GRADES, user["grade"])
             if user_grade_label in GRADES:
                 default_index = grade_options.index(user_grade_label)
@@ -437,7 +439,7 @@ def render_filter_popover():
 
         st.session_state["filter_grade"] = grade_filter
 
-        if selected_grade_label:
+        if selected_grade_label != "All":
             allowed_codes = set()
             g_code = GRADES.get(selected_grade_label)
             if g_code:
@@ -452,7 +454,9 @@ def render_filter_popover():
         subject_options = ["All"] + list(available_subjects_dict.keys())
 
         default_subject_index = 0
-        if menu_choice != "all_grades":
+        if "filter_subject_select" in st.session_state and st.session_state["filter_subject_select"] in subject_options:
+            default_subject_index = subject_options.index(st.session_state["filter_subject_select"])
+        elif menu_choice != "all_grades":
             chosen_subject_label = get_key_by_value(SUBJECTS, menu_choice)
             if chosen_subject_label and chosen_subject_label in available_subjects_dict:
                 default_subject_index = subject_options.index(chosen_subject_label)

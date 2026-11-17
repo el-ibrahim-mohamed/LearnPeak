@@ -280,6 +280,9 @@ if user:
             button_container_html(btn_key)
             if st.button(subject, use_container_width=True, key=btn_key):
                 st.session_state["menu_choice"] = subj_code
+                st.session_state["filter_grade"] = user_grade_code
+                st.session_state["filter_grade_select"] = user_grade_long
+                st.session_state["filter_subject_select"] = subject
                 st.session_state["rag_page"] = "chat"
                 st.session_state["messages_data"] = []
                 st.session_state["current_chat_id"] = None
@@ -294,13 +297,25 @@ if user:
                 button_container_html(btn_key)
                 if st.button(subject, use_container_width=True, key=btn_key):
                     st.session_state["menu_choice"] = subj_code
+                    st.session_state["filter_grade"] = user_grade_code
+                    st.session_state["filter_grade_select"] = user_grade_long
+                    st.session_state["filter_subject_select"] = subject
                     st.session_state["rag_page"] = "chat"
                     st.session_state["messages_data"] = []
                     st.session_state["current_chat_id"] = None
                     st.switch_page("pages/chat.py")
 else:
-    # Guest view: show all grades and subjects for all grades, then signin offer at the end
-    for g_code, g_label in GRADES.items():
+    # Guest view: show all grades sorted from prep3 to prim1, with subject buttons under each
+    grade_order = [
+        "prep3", "prep2", "prep1",
+        "prim6", "prim5", "prim4", "prim3", "prim2", "prim1"
+    ]
+
+    for g_code in grade_order:
+        g_label = get_key_by_value(GRADES, g_code)
+        if not g_label:
+            continue
+
         st.subheader(g_label, anchor=False)
         grade_subjects_dict = get_subjects_for_grade(g_code)
         subjects_list = list(grade_subjects_dict.keys())
@@ -316,6 +331,9 @@ else:
                 button_container_html(btn_key)
                 if st.button(subject, use_container_width=True, key=btn_key):
                     st.session_state["menu_choice"] = subj_code
+                    st.session_state["filter_grade"] = g_code
+                    st.session_state["filter_grade_select"] = g_label
+                    st.session_state["filter_subject_select"] = subject
                     st.session_state["rag_page"] = "chat"
                     st.session_state["messages_data"] = []
                     st.session_state["current_chat_id"] = None
@@ -330,6 +348,9 @@ else:
                     button_container_html(btn_key)
                     if st.button(subject, use_container_width=True, key=btn_key):
                         st.session_state["menu_choice"] = subj_code
+                        st.session_state["filter_grade"] = g_code
+                        st.session_state["filter_grade_select"] = g_label
+                        st.session_state["filter_subject_select"] = subject
                         st.session_state["rag_page"] = "chat"
                         st.session_state["messages_data"] = []
                         st.session_state["current_chat_id"] = None
@@ -345,7 +366,6 @@ else:
         if st.button(
             "Sign In",
             icon="🔐",
-            use_keyword=False,
             use_container_width=True,
             key="guest_signin_btn",
         ):
