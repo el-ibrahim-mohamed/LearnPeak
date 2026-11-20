@@ -785,34 +785,16 @@ CURRENT STUDENT MESSAGE
 
     @staticmethod
     def sanitize_latex(text: str) -> str:
-        """Fixes unescaped Unicode circled numbers inside KaTeX math blocks."""
+        """
+        Replaces '$|' with '$$' and strips any trailing '|' right after '$$'.
+        """
         if not text:
             return ""
 
-        circled_map = {
-            "①": r"\text{1.} ",
-            "②": r"\text{2.} ",
-            "③": r"\text{3.} ",
-            "④": r"\text{4.} ",
-            "⑤": r"\text{5.} ",
-            "⑥": r"\text{6.} ",
-            "⑦": r"\text{7.} ",
-            "⑧": r"\text{8.} ",
-            "⑨": r"\text{9.} ",
-            "⑩": r"\text{10.} ",
-        }
-
-        def replace_circled_symbols(match: re.Match) -> str:
-            block = match.group(0)
-            for symbol, replacement in circled_map.items():
-                block = block.replace(symbol, replacement)
-            return block
-
-        text = re.sub(r"\$\$.*?\$\$", replace_circled_symbols, text, flags=re.DOTALL)
-        text = re.sub(r"\$.*?\$", replace_circled_symbols, text)
-
+        text = re.sub(r"\$\$+\|", "$$", text)
+        text = re.sub(r"(?<!\$)\$(?=\|)", "$$", text)
         return text
-
+    
     @staticmethod
     def deduplicate_chunks(chunks_payloads: list[dict]) -> list[dict]:
         """

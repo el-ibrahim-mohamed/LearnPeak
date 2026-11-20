@@ -312,7 +312,7 @@ def render_user_prompt(msg: str):
 
 
 def render_ai_response(response: str):
-    st.markdown(response, anchors=False)
+    st.markdown(rf"{response}", anchors=False)
 
 
 def render_messages(messages_data: list):
@@ -423,7 +423,10 @@ def render_filter_popover():
         grade_options = ["All"] + list(GRADES.keys())
         default_index = 0
 
-        if "filter_grade_select" in st.session_state and st.session_state["filter_grade_select"] in grade_options:
+        if (
+            "filter_grade_select" in st.session_state
+            and st.session_state["filter_grade_select"] in grade_options
+        ):
             default_index = grade_options.index(st.session_state["filter_grade_select"])
         elif user and user.get("grade"):
             user_grade_label = get_key_by_value(GRADES, user["grade"])
@@ -458,8 +461,13 @@ def render_filter_popover():
         subject_options = ["All"] + list(available_subjects_dict.keys())
 
         default_subject_index = 0
-        if "filter_subject_select" in st.session_state and st.session_state["filter_subject_select"] in subject_options:
-            default_subject_index = subject_options.index(st.session_state["filter_subject_select"])
+        if (
+            "filter_subject_select" in st.session_state
+            and st.session_state["filter_subject_select"] in subject_options
+        ):
+            default_subject_index = subject_options.index(
+                st.session_state["filter_subject_select"]
+            )
         elif menu_choice != "all_grades":
             chosen_subject_label = get_key_by_value(SUBJECTS, menu_choice)
             if chosen_subject_label and chosen_subject_label in available_subjects_dict:
@@ -780,23 +788,27 @@ if user_input:
     try:
         with st.spinner("Generating..."):
             current_requested_pages = extract_requested_pages(user_query)
+            has_new_requested_pages = bool(current_requested_pages)
 
-            # --- Persistent Carry-Over Logic (current query + next 2 queries = 3 turns) ---
-            if current_requested_pages:
-                st.session_state["carried_over_pages"] = list(
-                    set(
-                        st.session_state.get("carried_over_pages", [])
-                        + current_requested_pages
-                    )
-                )
+            # --- Carry-Over Logic ---
+            # If a new page is mentioned: replace/delete old carried-over pages & chunks and reset counter.
+            # If no new page is mentioned: keep existing carried-over pages for up to 2 follow-up turns.
+            if has_new_requested_pages:
+                st.session_state["carried_over_pages"] = current_requested_pages
+                st.session_state["carried_over_extracted_chunks"] = []
+                st.session_state["carried_over_primary_chunks"] = []
                 st.session_state["page_memory_turns_left"] = 3
 
             requested_pages = st.session_state.get("carried_over_pages", [])
-            prev_extracted_chunks = st.session_state.get(
-                "carried_over_extracted_chunks", []
+            prev_extracted_chunks = (
+                []
+                if has_new_requested_pages
+                else st.session_state.get("carried_over_extracted_chunks", [])
             )
-            prev_primary_chunks = st.session_state.get(
-                "carried_over_primary_chunks", []
+            prev_primary_chunks = (
+                []
+                if has_new_requested_pages
+                else st.session_state.get("carried_over_primary_chunks", [])
             )
 
             should_clear_after_turn = False
@@ -805,82 +817,94 @@ if user_input:
                 if st.session_state["page_memory_turns_left"] == 0:
                     should_clear_after_turn = True
 
+            filter_grade_code = st.session_state.get("filter_grade")
+            selected_subject_label = st.session_state.get("filter_subject")
+            category_code = st.session_state.get("filter_category_code")
+            subj_code = (
+                SUBJECTS.get(selected_subject_label)
+                if selected_subject_label and selected_subject_label in SUBJECTS
+                else None
+            )
+
+            target_publisher = None
+            if (
+                subj_code
+                and user
+                and user.get("info", {}).get("preferred_book_publishers")
+            ):
+                target_publisher = user["info"]["preferred_book_publishers"].get(
+                    subj_code
+                )
+            if not target_publisher and subj_code:
+                target_publisher = DEFAULT_PUBLISHERS.get(subj_code)
+
             extracted_page_chunks = []
             if requested_pages:
-                page_filters = []
+                if has_new_requested_pages:
+                    page_filters = []
 
-                filter_grade_code = st.session_state.get("filter_grade")
-                selected_subject_label = st.session_state.get("filter_subject")
-                category_code = st.session_state.get("filter_category_code")
-
-                if filter_grade_code:
-                    page_filters.append(
-                        FieldCondition(
-                            key="grade", match=MatchAny(any=[filter_grade_code])
+                    if filter_grade_code:
+                        page_filters.append(
+                            FieldCondition(
+                                key="grade", match=MatchAny(any=[filter_grade_code])
+                            )
                         )
-                    )
 
-                if selected_subject_label and selected_subject_label in SUBJECTS:
-                    subj_code = SUBJECTS[selected_subject_label]
-                    page_filters.append(
-                        FieldCondition(key="subject", match=MatchAny(any=[subj_code]))
-                    )
+                    if subj_code:
+                        page_filters.append(
+                            FieldCondition(
+                                key="subject", match=MatchAny(any=[subj_code])
+                            )
+                        )
 
-                    target_publisher = None
-                    if user and user.get("info", {}).get("preferred_book_publishers"):
-                        target_publisher = user["info"][
-                            "preferred_book_publishers"
-                        ].get(subj_code)
-                    if not target_publisher:
-                        target_publisher = DEFAULT_PUBLISHERS.get(subj_code)
+                        if target_publisher:
+                            if category_code == "assessments_book":
+                                page_filters.append(
+                                    FieldCondition(
+                                        key="book_publisher",
+                                        match=MatchAny(
+                                            any=list(set(["moe", target_publisher]))
+                                        ),
+                                    )
+                                )
+                            else:
+                                page_filters.append(
+                                    FieldCondition(
+                                        key="book_publisher",
+                                        match=MatchAny(any=[target_publisher]),
+                                    )
+                                )
 
-                    if target_publisher:
+                    if category_code:
                         if category_code == "assessments_book":
                             page_filters.append(
                                 FieldCondition(
-                                    key="book_publisher",
-                                    match=MatchAny(
-                                        any=list(set(["moe", target_publisher]))
-                                    ),
+                                    key="category",
+                                    match=MatchAny(any=["assessments_book"]),
                                 )
                             )
                         else:
                             page_filters.append(
                                 FieldCondition(
-                                    key="book_publisher",
-                                    match=MatchAny(any=[target_publisher]),
+                                    key="category", match=MatchAny(any=[category_code])
                                 )
                             )
 
-                if category_code:
-                    if category_code == "assessments_book":
-                        page_filters.append(
-                            FieldCondition(
-                                key="category", match=MatchAny(any=["assessments_book"])
-                            )
+                    page_filters.append(
+                        FieldCondition(
+                            key="page_num", match=MatchAny(any=current_requested_pages)
                         )
-                    else:
-                        page_filters.append(
-                            FieldCondition(
-                                key="category", match=MatchAny(any=[category_code])
-                            )
-                        )
+                    )
 
-                page_filters.append(
-                    FieldCondition(key="page_num", match=MatchAny(any=requested_pages))
-                )
-
-                page_filter = Filter(must=page_filters)
-                extracted_page_chunks = rag_service.scroll(page_filter)
-
-            # Include previously extracted page chunks for carried-over pages (filtered to active requested_pages)
-            if prev_extracted_chunks and requested_pages:
-                kept_prev_extracted = [
-                    c
-                    for c in prev_extracted_chunks
-                    if c.get("page_num") in requested_pages
-                ]
-                extracted_page_chunks = kept_prev_extracted + extracted_page_chunks
+                    page_filter = Filter(must=page_filters)
+                    extracted_page_chunks = rag_service.scroll(page_filter)
+                else:
+                    # Follow-up turn without a new page: reuse carried-over page chunks
+                    extracted_page_chunks = [
+                        c
+                        for c in prev_extracted_chunks
+                        if c.get("page_num") in requested_pages
+                    ]
 
             # --- ROUTING & RETRIEVAL STRATEGY ---
             primary_chunks = []
@@ -893,93 +917,118 @@ if user_input:
                 for chunk in extracted_page_chunks
             )
 
-            if requested_pages and has_question_or_assessment_pages:
-                filter_grade_code = st.session_state.get("filter_grade")
-                selected_subject_label = st.session_state.get("filter_subject")
-                subj_code = (
-                    SUBJECTS.get(selected_subject_label)
-                    if selected_subject_label
-                    else None
-                )
+            # Always perform semantic search for the current user_query to find relevant textbook material
+            broad_semantic_filters = get_filters(include_unit_lesson=False)
+            semantic_chunks = rag_service.search(
+                user_query,
+                limit=10,
+                score_threshold=0.5,
+                query_filter=broad_semantic_filters,
+            )
 
-                target_publisher = None
-                if (
-                    subj_code
-                    and user
-                    and user.get("info", {}).get("preferred_book_publishers")
-                ):
-                    target_publisher = user["info"]["preferred_book_publishers"].get(
-                        subj_code
-                    )
-                if not target_publisher and subj_code:
-                    target_publisher = DEFAULT_PUBLISHERS.get(subj_code)
+            if requested_pages:
+                if has_new_requested_pages:
+                    if has_question_or_assessment_pages:
+                        explanation_filter = build_target_explanation_filter(
+                            extracted_page_chunks,
+                            grade_code=filter_grade_code,
+                            subj_code=subj_code,
+                            category_code="external_book",
+                            target_publisher=target_publisher,
+                        )
+                        explanation_chunks = (
+                            rag_service.scroll(explanation_filter)
+                            if explanation_filter
+                            else []
+                        )
+                    else:
+                        auto_extracted_units = set()
+                        auto_extracted_lessons = set()
 
-                explanation_filter = build_target_explanation_filter(
-                    extracted_page_chunks,
-                    grade_code=filter_grade_code,
-                    subj_code=subj_code,
-                    category_code="external_book",
-                    target_publisher=target_publisher,
-                )
+                        for chunk in extracted_page_chunks:
+                            u_num = chunk.get("unit_num")
+                            l_num = chunk.get("lesson_num")
 
-                if explanation_filter:
-                    # Question/assessment scroll: replace older scrolled sources with new ones
-                    primary_chunks = rag_service.scroll(explanation_filter)
+                            if u_num is not None:
+                                if isinstance(u_num, (list, tuple)):
+                                    auto_extracted_units.update(u_num)
+                                else:
+                                    auto_extracted_units.add(u_num)
+
+                            if l_num is not None:
+                                if isinstance(l_num, (list, tuple)):
+                                    auto_extracted_lessons.update(l_num)
+                                else:
+                                    auto_extracted_lessons.add(l_num)
+
+                        effective_units = (
+                            manual_units if manual_units else list(auto_extracted_units)
+                        )
+                        effective_lessons = (
+                            manual_lessons
+                            if manual_lessons
+                            else list(auto_extracted_lessons)
+                        )
+
+                        if effective_units or effective_lessons:
+                            page_context_filters = get_filters(
+                                unit_num_override=effective_units,
+                                lesson_num_override=effective_lessons,
+                            )
+                            explanation_chunks = rag_service.scroll(
+                                page_context_filters
+                            )
+                        else:
+                            explanation_chunks = []
+
+                    primary_chunks = explanation_chunks + semantic_chunks
                 else:
-                    primary_chunks = prev_primary_chunks
+                    # No new page requested, but carried-over page is active:
+                    # keep carried-over sources AND include semantic search for current query
+                    primary_chunks = prev_primary_chunks + semantic_chunks
             else:
-                auto_extracted_units = set()
-                auto_extracted_lessons = set()
-
-                for chunk in extracted_page_chunks:
-                    u_num = chunk.get("unit_num")
-                    l_num = chunk.get("lesson_num")
-
-                    if u_num is not None:
-                        if isinstance(u_num, (list, tuple)):
-                            auto_extracted_units.update(u_num)
-                        else:
-                            auto_extracted_units.add(u_num)
-
-                    if l_num is not None:
-                        if isinstance(l_num, (list, tuple)):
-                            auto_extracted_lessons.update(l_num)
-                        else:
-                            auto_extracted_lessons.add(l_num)
-
-                effective_units = (
-                    manual_units if manual_units else list(auto_extracted_units)
-                )
-                effective_lessons = (
-                    manual_lessons if manual_lessons else list(auto_extracted_lessons)
-                )
-
+                # No requested pages and no active carried-over pages
                 user_selected_full_lesson = bool(manual_units) and bool(manual_lessons)
-
                 search_filters = get_filters(
-                    unit_num_override=effective_units,
-                    lesson_num_override=effective_lessons,
+                    unit_num_override=manual_units if manual_units else None,
+                    lesson_num_override=manual_lessons if manual_lessons else None,
                 )
 
-                if user_selected_full_lesson or (not requested_pages and manual_units):
-                    new_primary_chunks = rag_service.scroll(search_filters)
+                if user_selected_full_lesson or manual_units:
+                    primary_chunks = (
+                        rag_service.scroll(search_filters) + semantic_chunks
+                    )
                 else:
                     recent_user_queries = [
                         msg.get("content", "").strip()
                         for msg in messages_data
                         if msg.get("role") == "user" and msg.get("content", "").strip()
                     ][-2:]
-                    semantic_search_query = "\n".join(recent_user_queries)
+                    semantic_search_query = (
+                        "\n".join(recent_user_queries)
+                        if recent_user_queries
+                        else user_query
+                    )
 
-                    new_primary_chunks = rag_service.search(
+                    primary_chunks = rag_service.search(
                         semantic_search_query,
                         limit=10,
                         score_threshold=0.5,
                         query_filter=search_filters,
                     )
 
-                # Normal route: keep previous sources alongside new semantic search / filter results
-                primary_chunks = prev_primary_chunks + new_primary_chunks
+            # Deduplicate mentioned pages from primary chunks
+            mentioned_page_nums = {
+                chunk.get("page_num")
+                for chunk in extracted_page_chunks
+                if chunk.get("page_num") is not None
+            }
+            if mentioned_page_nums:
+                primary_chunks = [
+                    chunk
+                    for chunk in primary_chunks
+                    if chunk.get("page_num") not in mentioned_page_nums
+                ]
 
             if should_clear_after_turn:
                 st.session_state["carried_over_pages"] = []
@@ -996,8 +1045,6 @@ if user_input:
                 "primary_chunks": primary_chunks,
                 "priority_pages": requested_pages,
             }
-
-            st.write(sources_payload)
 
             chat_history = messages_data[:-1]
 
@@ -1076,7 +1123,7 @@ if user_input:
 
                 raw_accumulated = rf"{''.join(accumulated_chunks)}"
                 sanitized_response = raw_accumulated
-                
+
                 stream_container.markdown(sanitized_response)
 
                 assistant_msg_dict = {
@@ -1093,6 +1140,8 @@ if user_input:
                         ai_response=sanitized_response,
                         user_files=files_metadata if files_metadata else None,
                     )
+            with open("response.txt", "w", encoding="utf-8") as f:
+                f.write(sanitized_response)
 
     except Exception as e:
         messages_data.append(
