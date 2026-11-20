@@ -219,27 +219,20 @@ def get_max_allowed_step() -> str:
 def sync_and_validate_step():
     """Binds URL query parameters to session state and enforces access rules."""
     requested_step = st.query_params.get("step", STEP_METHOD)
-    print(1, requested_step)
 
     if requested_step not in VALID_STEPS:
         requested_step = STEP_METHOD
-    print(2, requested_step)
 
     max_allowed = get_max_allowed_step()
-    print(3, max_allowed)
 
     requested_index = VALID_STEPS.index(requested_step)
     max_index = VALID_STEPS.index(max_allowed)
-    print(4, requested_index)
-    print(5, max_index)
 
     # Block access if trying to skip ahead via URL manipulation
     if requested_index > max_index:
         actual_step = max_allowed
     else:
         actual_step = requested_step
-    print(6, actual_step)
-    print()
 
     st.session_state["signup_step"] = actual_step
 
@@ -553,7 +546,7 @@ def enter_user_info():
         )
 
         grade = st.selectbox(
-            "Grade", options=list(GRADES.keys()), placeholder="Choose your grade"
+            "Grade", options=list(GRADES.keys()), index=None, placeholder="Choose your grade"
         )
         " "
         error_ph = st.empty()

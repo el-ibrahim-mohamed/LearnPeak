@@ -70,6 +70,7 @@ def sign_out_user():
     cookies[auth_cookie_name] = ""
     cookies[user_uid_cookie_name] = ""
     cookies.save()
+    time.sleep(0.5)
 
     st.session_state.pop("user", None)
     if st.user.is_logged_in:
@@ -520,6 +521,7 @@ with account_tab:
             value=user.get("username", ""),
             key="settings_username",
         )
+
         if username != (user.get("username") or ""):
             ok, message = save_username_field(username)
             if ok:

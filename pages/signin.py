@@ -232,11 +232,9 @@ def choose_method():
         navigate_to(STEP_EMAIL)
 
     if st.button("**Continue with Google**", key=google_key, use_container_width=True):
-        start = time.time()
         cookies["google_auth_clicked_at"] = datetime.now().isoformat()
         cookies.save()
-        print(f"COOKIES: {time.time() - start}")
-        time.sleep(0.15)
+        time.sleep(0.2)
 
         st.login()
 

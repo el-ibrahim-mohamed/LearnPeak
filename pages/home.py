@@ -35,7 +35,6 @@ st.set_page_config(
 
 if "page" in st.query_params:
     target_page = st.query_params["page"]
-    print(target_page)
     st.query_params.clear()
     try:
         st.switch_page(f"pages/{target_page}.py")

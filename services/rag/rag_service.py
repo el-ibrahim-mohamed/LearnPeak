@@ -131,17 +131,15 @@ class RagService:
     # -------------------------
 
     def format_search_results(
-        self, chunks_payloads: list[dict], priority_pages: list[int] = None
+        self, chunks_payloads: list[dict]
     ) -> str:
         """
-        Formats chunks into structured textbook text, splitting them into
-        'MENTIONED PAGES' and 'RELATED PAGES' sections.
+        Formats chunks into structured textbook text in textbook order.
         """
         if not chunks_payloads:
-            return ""
+            return "None retrieved."
 
         chunks = list(chunks_payloads)
-        priority_pages = priority_pages or []
 
         def format_num_list(val):
             if isinstance(val, (list, tuple)):
@@ -166,108 +164,82 @@ class RagService:
                 return min(unit_val) if unit_val else 0
             return unit_val if unit_val is not None else 0
 
-        # Separate into mentioned (priority) vs related chunks
-        mentioned_chunks = [c for c in chunks if c.get("page_num") in priority_pages]
-        related_chunks = [c for c in chunks if c.get("page_num") not in priority_pages]
+        chunks.sort(
+            key=lambda chunk: (
+                str(chunk.get("grade", "")),
+                str(chunk.get("subject", "")),
+                chunk.get("page_num") or 0,
+                chunk.get("chunk_order") or 0,
+                get_sortable_unit(chunk.get("unit_num")),
+                get_sortable_lesson(chunk.get("lesson_num")),
+            )
+        )
 
-        def build_chunk_text(chunk_list):
-            if not chunk_list:
-                return "None retrieved."
+        section_text = ""
+        current_page = None
 
-            # Sort chunks strictly into textbook order
-            chunk_list.sort(
-                key=lambda chunk: (
-                    str(chunk.get("grade", "")),
-                    str(chunk.get("subject", "")),
-                    chunk.get("page_num") or 0,
-                    chunk.get("chunk_order") or 0,
-                    get_sortable_unit(chunk.get("unit_num")),
-                    get_sortable_lesson(chunk.get("lesson_num")),
-                )
+        for chunk in chunks:
+            page = (
+                chunk.get("grade"),
+                chunk.get("subject"),
+                chunk.get("book_publisher"),
+                chunk.get("unit_num"),
+                (
+                    tuple(chunk["lesson_num"])
+                    if isinstance(chunk.get("lesson_num"), list)
+                    else chunk.get("lesson_num")
+                ),
+                chunk.get("page_num"),
             )
 
-            section_text = ""
-            current_page = None
+            if page != current_page:
+                if current_page is not None:
+                    section_text += "\n\n" + "-" * 50 + "\n\n"
 
-            for chunk in chunk_list:
-                page = (
-                    chunk.get("grade"),
-                    chunk.get("subject"),
-                    chunk.get("book_publisher"),
-                    chunk.get("unit_num"),
-                    (
-                        tuple(chunk["lesson_num"])
-                        if isinstance(chunk.get("lesson_num"), list)
-                        else chunk.get("lesson_num")
-                    ),
-                    chunk.get("page_num"),
+                subject_display = (
+                    get_key_by_value(SUBJECTS, chunk.get("subject"))
+                    if chunk.get("subject") in SUBJECTS.values()
+                    else chunk.get("subject", "")
                 )
 
-                if page != current_page:
-                    if current_page is not None:
-                        section_text += "\n\n" + "-" * 50 + "\n\n"
+                publisher_display = (
+                    get_key_by_value(BOOK_PUBLISHERS, chunk.get("book_publisher"))
+                    if chunk.get("book_publisher") in BOOK_PUBLISHERS.values()
+                    else chunk.get("book_publisher", "")
+                )
 
-                    subject_display = (
-                        get_key_by_value(SUBJECTS, chunk.get("subject"))
-                        if chunk.get("subject") in SUBJECTS.values()
-                        else chunk.get("subject", "")
-                    )
+                unit_str = format_num_list(chunk.get("unit_num"))
+                lesson_str = format_num_list(chunk.get("lesson_num"))
 
-                    publisher_display = (
-                        get_key_by_value(BOOK_PUBLISHERS, chunk.get("book_publisher"))
-                        if chunk.get("book_publisher") in BOOK_PUBLISHERS.values()
-                        else chunk.get("book_publisher", "")
-                    )
+                section_text += (
+                    f'=== Grade: {chunk.get("grade", "N/A")} | '
+                    f"Subject: {subject_display} | "
+                    f"Publisher: {publisher_display} | "
+                    f"Unit {unit_str} | "
+                    f"Lesson {lesson_str} | "
+                    f'Page {chunk.get("page_num", "N/A")} ===\n\n'
+                )
 
-                    unit_str = format_num_list(chunk.get("unit_num"))
-                    lesson_str = format_num_list(chunk.get("lesson_num"))
+                current_page = page
 
-                    section_text += (
-                        f'=== Grade: {chunk.get("grade", "N/A")} | '
-                        f"Subject: {subject_display} | "
-                        f"Publisher: {publisher_display} | "
-                        f"Unit {unit_str} | "
-                        f"Lesson {lesson_str} | "
-                        f'Page {chunk.get("page_num", "N/A")} ===\n\n'
-                    )
+            section_text += chunk.get("chunk_text", "") + "\n"
 
-                    current_page = page
-
-                section_text += chunk.get("chunk_text", "") + "\n"
-
-            return section_text.strip()
-
-        mentioned_text = build_chunk_text(mentioned_chunks)
-        related_text = build_chunk_text(related_chunks)
-
-        formatted_output = f"""--------------------------------------------------
-MENTIONED PAGES
---------------------------------------------------
-{mentioned_text}
-
---------------------------------------------------
-RELATED PAGES
---------------------------------------------------
-{related_text}"""
-
-        return formatted_output.strip()
+        return section_text.strip()
 
     def enrich_sources(
-        self, chunks_payloads: list[dict], priority_pages: list[int] = None
+        self, chunks_payloads: list[dict]
     ) -> str:
         """
         Enriches retrieved chunks by fetching all chunks belonging strictly to
         the exact pages, grades, and subjects of the retrieved results.
         """
         if not chunks_payloads:
-            return ""
+            return "None retrieved."
 
-        # Build filter groups specific to individual pages within specific books
         should_filters = []
         for payload in chunks_payloads:
             must_conditions = []
 
-            # Precise identity keys to isolate pages to their exact grade/book
             identity_keys = [
                 "country",
                 "education",
@@ -288,15 +260,12 @@ RELATED PAGES
                 should_filters.append(Filter(must=must_conditions))
 
         if not should_filters:
-            return ""
+            return "None retrieved."
 
         filters = Filter(should=should_filters)
-
-        # Retrieve all chunks belonging strictly to these specific target pages
         chunks_results = self.scroll(filters)
 
-        # Format retrieved chunks using the helper, passing priority pages
-        return self.format_search_results(chunks_results, priority_pages=priority_pages)
+        return self.format_search_results(chunks_results)
 
     # -------------------------
     # AI Mode Methods
@@ -320,12 +289,6 @@ RELATED PAGES
         except (TypeError, ValueError):
             return "Invalid page number provided."
 
-        # Safe lock: Check if this page is already active/carried-over
-        active_pages = active_pages or []
-        if page_num in active_pages:
-            return f"Page {page_num} was already retrieved and provided in the current context."
-
-        # Build precise metadata filters dynamically based on what's available
         page_filters = []
         if grade:
             page_filters.append(
@@ -356,7 +319,7 @@ RELATED PAGES
         if not chunks:
             return f"Page {page_num} could not be found with the current filters."
 
-        return self.format_search_results(chunks, priority_pages=[page_num])
+        return self.format_search_results(chunks)
 
     def upload_and_register_files(
         self,
@@ -376,7 +339,6 @@ RELATED PAGES
             mime_type = file.type or "application/octet-stream"
             file_name = file.name
 
-            # Categorize file for UI icon rendering
             if mime_type.startswith("image/"):
                 category = "image"
             elif mime_type == "application/pdf":
@@ -415,7 +377,7 @@ RELATED PAGES
     def generate_response(
         self,
         user_query,
-        sources: str,
+        sources: dict,
         uploaded_files: list = [],
         chat_history: list = [],
         student_info: dict = {},
@@ -432,7 +394,6 @@ RELATED PAGES
             active_filters=active_filters,
         )
 
-        # Create the response json schema
         class AIResponseSchema(BaseModel):
             response: str = Field(description="Your full Markdown-formatted answer")
             suggested_chat_title: str = Field(
@@ -443,7 +404,8 @@ RELATED PAGES
 
         for model in [
             GEMINI_MODELS_CODES["3.5-flash-lite"],
-            GEMINI_MODELS_CODES["2.5-flash-lite"],
+            GEMINI_MODELS_CODES["3.8-flash"],
+            GEMINI_MODELS_CODES["3.1-flash-lite"],
             GEMINI_MODELS_CODES["3.6-flash"],
         ]:
             try:
@@ -474,7 +436,7 @@ RELATED PAGES
     def generate_response_stream(
         self,
         user_query,
-        sources: str,
+        sources: dict,
         uploaded_files: list = [],
         chat_history: list = [],
         student_info: dict = {},
@@ -495,7 +457,8 @@ RELATED PAGES
 
         for model in [
             GEMINI_MODELS_CODES["3.5-flash-lite"],
-            GEMINI_MODELS_CODES["2.5-flash-lite"],
+            GEMINI_MODELS_CODES["3.8-flash"],
+            GEMINI_MODELS_CODES["3.1-flash-lite"],
             GEMINI_MODELS_CODES["3.6-flash"],
         ]:
             try:
@@ -510,7 +473,6 @@ RELATED PAGES
                     ),
                 )
 
-                # Pure text stream generator
                 for chunk in stream:
                     if chunk.text:
                         yield chunk.text
@@ -522,10 +484,10 @@ RELATED PAGES
         if not stream:
             raise RuntimeError("Failed to generate the AI response.")
 
-    @staticmethod
     def ai_instructions(
+        self,
         user_query: str,
-        sources: str,
+        sources: dict,
         uploaded_files: list = [],
         chat_history: list = [],
         student_info: dict = {},
@@ -536,6 +498,8 @@ RELATED PAGES
 
         name = student_info.get("name") or "Unknown"
         grade = student_info.get("grade") or "Unknown"
+        active_filters = active_filters or {}
+        category_code = active_filters.get("category")
 
         # --------------------------------------------------
         # System instructions
@@ -581,20 +545,29 @@ If the student only asks you to solve or answer questions, do not apply these gr
 ==================================================
 ## SOURCE CITATION INSTRUCTIONS
 ==================================================
-At the very end of your response, include a dedicated "Sources" section whenever you use retrieved textbook material. 
-Extract the metadata directly from the source headers of the pages you used:
+At the very end of your response, include a dedicated "Sources" section whenever you use any retrieved textbook material.
+Extract metadata directly from the source headers of the pages you used:
 (`=== Grade: ... | Subject: ... | Publisher: ... | Unit ... | Lesson ... | Page ... ===`).
 
 Citation Rules:
-1. Group sources by Curriculum, Unit, and Lesson.
-2. If multiple consecutive pages or chunks from the same lesson are used, combine them into a single page range
-   (e.g., "Pages 13–15" instead of listing page 13, 14, and 15 separately).
-3. Keep the citation block brief and clean.
+1. Include **every single page** from which you used any information, explanation, example, or question context in the response.
+2. If an answer to a question comes from multiple pages, inlcude them all in the sources.
+3. Group citations by Book, Unit, and Lesson.
+4. For consecutive pages in the same group, do NOT write them in a range like `Pages 12–14`, and explicitly include each separately (e.g., `Pages 12, 13, 14, 18`).
+5. **Assessments Book Mode:** When using an Assessments Book, explicitly separate:
+   - **Assessments Book:** Every assessment/question page referenced or used.
+   - **Main Book:** Every main-book explanation page used to derive or support the answer.
+6. Keep the citation block concise, accurate, and easy to scan.
 
-Required Citations Format:
+Required Citations Format (Normal / Main Book):
 ### Sources
 - **Book:** [Grade] - [Subject Display] ([Publisher Display])
-- **References:** Unit [X], Lesson [Y] (Pages [Start–End] or Page [Z])
+- **References:** Unit [X], Lesson [Y] — Pages [list every page used]
+
+Required Citations Format (Assessments Book):
+### Sources
+- **Assessments Book (MOE):** Unit [X], Lesson [Y] — Page(s) [every AB question page used]
+- **Main Book ([Publisher]):** Unit [X], Lesson [Y] — Page(s) [every main book explanation page used]
 
 ==================================================
 ## MARKDOWN OUTPUT FORMAT
@@ -643,7 +616,6 @@ Required Citations Format:
             elif role_value in ("assistant", "model", "ai"):
                 role = "model"
             else:
-                # Do not accidentally treat unknown roles as model answers.
                 continue
 
             parts = []
@@ -659,11 +631,54 @@ Required Citations Format:
             if parts:
                 contents.append(types.Content(role=role, parts=parts))
 
-        # Sources
-        if isinstance(sources, str) and sources.strip():
-            sources_text = sources.strip()
+        # Deduplicate & enrich sources by category
+        sources_dict = sources if isinstance(sources, dict) else {}
+        extracted_page_chunks = sources_dict.get("extracted_page_chunks") or []
+        primary_chunks = sources_dict.get("primary_chunks") or []
+
+        if category_code == "assessments_book":
+            ab_chunks = self.deduplicate_chunks(
+                [
+                    c
+                    for c in (extracted_page_chunks + primary_chunks)
+                    if c.get("category") == "assessments_book"
+                ]
+            )
+            main_book_chunks = self.deduplicate_chunks(
+                [
+                    c
+                    for c in (extracted_page_chunks + primary_chunks)
+                    if c.get("category") != "assessments_book"
+                ]
+            )
+
+            ab_text = self.enrich_sources(ab_chunks)
+            main_book_text = self.enrich_sources(main_book_chunks)
+
+            sources_text = (
+                "--------------------------------------------------\n"
+                "Assessments Book Source Pages\n"
+                "--------------------------------------------------\n"
+                f"{ab_text}\n\n"
+                "--------------------------------------------------\n"
+                "Main Book Explanation Source Pages\n"
+                "--------------------------------------------------\n"
+                f"{main_book_text}"
+            ).strip()
         else:
-            sources_text = "No relevant textbook sources were retrieved for this turn."
+            combined_chunks = self.deduplicate_chunks(
+                extracted_page_chunks + primary_chunks
+            )
+            if combined_chunks:
+                enriched_text = self.enrich_sources(combined_chunks)
+                sources_text = (
+                    "--------------------------------------------------\n"
+                    "Source Pages\n"
+                    "--------------------------------------------------\n"
+                    f"{enriched_text}"
+                ).strip()
+            else:
+                sources_text = "No relevant textbook sources were retrieved for this turn."
 
         # Output format
         if output_format == "text_stream":
@@ -686,7 +701,6 @@ Required Citations Format:
             if active_filters.get("category"):
                 cat_code = active_filters["category"]
                 filter_lines.append(f"- Category: {cat_code}")
-                # Add the Assessments Book note if selected
                 if cat_code == "assessments_book":
                     filter_lines.append(
                         "  * Note: The Assessments Book is a book published by the MEO which only contains questions and exercises. You will be provided sources from the main book also so you have sources to answer with."
@@ -738,7 +752,6 @@ CURRENT STUDENT MESSAGE
 {user_query}
 """.strip()
 
-        # Current user attachments and message.
         current_turn_parts = []
         add_file_parts(current_turn_parts, uploaded_files)
 
@@ -762,7 +775,6 @@ CURRENT STUDENT MESSAGE
         if not text:
             return ""
 
-        # Map circled Unicode numbers to raw-string LaTeX text equivalents
         circled_map = {
             "①": r"\text{1.} ",
             "②": r"\text{2.} ",
@@ -782,7 +794,6 @@ CURRENT STUDENT MESSAGE
                 block = block.replace(symbol, replacement)
             return block
 
-        # Replace circled symbols inside display ($$...$$) and inline ($...$) math
         text = re.sub(r"\$\$.*?\$\$", replace_circled_symbols, text, flags=re.DOTALL)
         text = re.sub(r"\$.*?\$", replace_circled_symbols, text)
 
@@ -804,7 +815,7 @@ CURRENT STUDENT MESSAGE
             else:
                 deduped.append(chunk)
         return deduped
-
+    
 
 class AddSource:
     def __init__(

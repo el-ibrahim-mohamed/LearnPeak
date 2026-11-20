@@ -95,6 +95,10 @@ if "carried_over_pages" not in st.session_state:
     st.session_state["carried_over_pages"] = []
 if "page_memory_turns_left" not in st.session_state:
     st.session_state["page_memory_turns_left"] = 0
+if "carried_over_extracted_chunks" not in st.session_state:
+    st.session_state["carried_over_extracted_chunks"] = []
+if "carried_over_primary_chunks" not in st.session_state:
+    st.session_state["carried_over_primary_chunks"] = []
 
 
 def get_textbook_page(page_num: int):
@@ -777,7 +781,7 @@ if user_input:
         with st.spinner("Generating..."):
             current_requested_pages = extract_requested_pages(user_query)
 
-            # --- Persistent Carry-Over Logic (2 turns) ---
+            # --- Persistent Carry-Over Logic (current query + next 2 queries = 3 turns) ---
             if current_requested_pages:
                 st.session_state["carried_over_pages"] = list(
                     set(
@@ -785,14 +789,21 @@ if user_input:
                         + current_requested_pages
                     )
                 )
-                st.session_state["page_memory_turns_left"] = 2
+                st.session_state["page_memory_turns_left"] = 3
 
             requested_pages = st.session_state.get("carried_over_pages", [])
+            prev_extracted_chunks = st.session_state.get(
+                "carried_over_extracted_chunks", []
+            )
+            prev_primary_chunks = st.session_state.get(
+                "carried_over_primary_chunks", []
+            )
 
+            should_clear_after_turn = False
             if st.session_state.get("page_memory_turns_left", 0) > 0:
                 st.session_state["page_memory_turns_left"] -= 1
                 if st.session_state["page_memory_turns_left"] == 0:
-                    st.session_state["carried_over_pages"] = []
+                    should_clear_after_turn = True
 
             extracted_page_chunks = []
             if requested_pages:
@@ -862,12 +873,20 @@ if user_input:
                 page_filter = Filter(must=page_filters)
                 extracted_page_chunks = rag_service.scroll(page_filter)
 
+            # Include previously extracted page chunks for carried-over pages (filtered to active requested_pages)
+            if prev_extracted_chunks and requested_pages:
+                kept_prev_extracted = [
+                    c
+                    for c in prev_extracted_chunks
+                    if c.get("page_num") in requested_pages
+                ]
+                extracted_page_chunks = kept_prev_extracted + extracted_page_chunks
+
             # --- ROUTING & RETRIEVAL STRATEGY ---
             primary_chunks = []
             manual_units = st.session_state.get("filter_unit") or []
             manual_lessons = st.session_state.get("filter_lesson") or []
 
-            # Check if any mentioned page is a question page or from an assessments book
             has_question_or_assessment_pages = any(
                 chunk.get("page_type") == "questions"
                 or chunk.get("category") == "assessments_book"
@@ -875,7 +894,6 @@ if user_input:
             )
 
             if requested_pages and has_question_or_assessment_pages:
-                # Rule: Question / Assessment page -> Scroll matching explanation pages via paired Arabic lists
                 filter_grade_code = st.session_state.get("filter_grade")
                 selected_subject_label = st.session_state.get("filter_subject")
                 subj_code = (
@@ -905,9 +923,11 @@ if user_input:
                 )
 
                 if explanation_filter:
+                    # Question/assessment scroll: replace older scrolled sources with new ones
                     primary_chunks = rag_service.scroll(explanation_filter)
+                else:
+                    primary_chunks = prev_primary_chunks
             else:
-                # Standard Route: Explanation pages or manual filters / semantic search
                 auto_extracted_units = set()
                 auto_extracted_lessons = set()
 
@@ -942,7 +962,7 @@ if user_input:
                 )
 
                 if user_selected_full_lesson or (not requested_pages and manual_units):
-                    primary_chunks = rag_service.scroll(search_filters)
+                    new_primary_chunks = rag_service.scroll(search_filters)
                 else:
                     recent_user_queries = [
                         msg.get("content", "").strip()
@@ -951,22 +971,31 @@ if user_input:
                     ][-2:]
                     semantic_search_query = "\n".join(recent_user_queries)
 
-                    primary_chunks = rag_service.search(
+                    new_primary_chunks = rag_service.search(
                         semantic_search_query,
                         limit=10,
                         score_threshold=0.5,
                         query_filter=search_filters,
                     )
 
-            combined_chunks = extracted_page_chunks + primary_chunks
-            deduped_chunks = rag_service.deduplicate_chunks(combined_chunks)
+                # Normal route: keep previous sources alongside new semantic search / filter results
+                primary_chunks = prev_primary_chunks + new_primary_chunks
 
-            if deduped_chunks:
-                sources_text = rag_service.enrich_sources(
-                    deduped_chunks, priority_pages=requested_pages
-                )
+            if should_clear_after_turn:
+                st.session_state["carried_over_pages"] = []
+                st.session_state["carried_over_extracted_chunks"] = []
+                st.session_state["carried_over_primary_chunks"] = []
             else:
-                sources_text = ""
+                st.session_state["carried_over_extracted_chunks"] = (
+                    extracted_page_chunks
+                )
+                st.session_state["carried_over_primary_chunks"] = primary_chunks
+
+            sources_payload = {
+                "extracted_page_chunks": extracted_page_chunks,
+                "primary_chunks": primary_chunks,
+                "priority_pages": requested_pages,
+            }
 
             chat_history = messages_data[:-1]
 
@@ -987,7 +1016,7 @@ if user_input:
             if is_first_prompt:
                 json_response = rag_service.generate_response(
                     user_query,
-                    sources_text,
+                    sources_payload,
                     files_metadata,
                     chat_history,
                     student_info,
@@ -1030,7 +1059,7 @@ if user_input:
                 def stream_and_collect():
                     for chunk in rag_service.generate_response_stream(
                         user_query,
-                        sources_text,
+                        sources_payload,
                         files_metadata,
                         chat_history,
                         student_info,
@@ -1045,7 +1074,7 @@ if user_input:
 
                 raw_accumulated = rf"{''.join(accumulated_chunks)}"
                 sanitized_response = raw_accumulated
-
+                
                 stream_container.markdown(sanitized_response)
 
                 assistant_msg_dict = {
