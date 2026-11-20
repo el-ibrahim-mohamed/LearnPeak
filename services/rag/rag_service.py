@@ -130,9 +130,7 @@ class RagService:
     # Collect Sources Methods
     # -------------------------
 
-    def format_search_results(
-        self, chunks_payloads: list[dict]
-    ) -> str:
+    def format_search_results(self, chunks_payloads: list[dict]) -> str:
         """
         Formats chunks into structured textbook text in textbook order.
         """
@@ -226,9 +224,7 @@ class RagService:
 
         return section_text.strip()
 
-    def enrich_sources(
-        self, chunks_payloads: list[dict]
-    ) -> str:
+    def enrich_sources(self, chunks_payloads: list[dict]) -> str:
         """
         Enriches retrieved chunks by fetching all chunks belonging strictly to
         the exact pages, grades, and subjects of the retrieved results.
@@ -633,24 +629,27 @@ Required Citations Format (Assessments Book):
 
         # Deduplicate & enrich sources by category
         sources_dict = sources if isinstance(sources, dict) else {}
-        extracted_page_chunks = sources_dict.get("extracted_page_chunks") or []
-        primary_chunks = sources_dict.get("primary_chunks") or []
+        extracted_page_chunks = self.deduplicate_chunks(
+            sources_dict.get("extracted_page_chunks") or []
+        )
+        primary_chunks = self.deduplicate_chunks(
+            sources_dict.get("primary_chunks") or []
+        )
 
         if category_code == "assessments_book":
-            ab_chunks = self.deduplicate_chunks(
-                [
-                    c
-                    for c in (extracted_page_chunks + primary_chunks)
-                    if c.get("category") == "assessments_book"
-                ]
-            )
-            main_book_chunks = self.deduplicate_chunks(
-                [
-                    c
-                    for c in (extracted_page_chunks + primary_chunks)
-                    if c.get("category") != "assessments_book"
-                ]
-            )
+            ab_chunks = [
+                c
+                for c in extracted_page_chunks
+                if c.get("category") == "assessments_book"
+            ] + [c for c in primary_chunks if c.get("category") == "assessments_book"]
+            main_book_chunks = [
+                c
+                for c in extracted_page_chunks
+                if c.get("category") != "assessments_book"
+            ] + [c for c in primary_chunks if c.get("category") != "assessments_book"]
+
+            ab_chunks = self.deduplicate_chunks(ab_chunks)
+            main_book_chunks = self.deduplicate_chunks(main_book_chunks)
 
             ab_text = self.enrich_sources(ab_chunks)
             main_book_text = self.enrich_sources(main_book_chunks)
@@ -666,19 +665,34 @@ Required Citations Format (Assessments Book):
                 f"{main_book_text}"
             ).strip()
         else:
-            combined_chunks = self.deduplicate_chunks(
-                extracted_page_chunks + primary_chunks
-            )
-            if combined_chunks:
-                enriched_text = self.enrich_sources(combined_chunks)
+            # Main / external book flow
+            if extracted_page_chunks:
+                mentioned_text = self.enrich_sources(extracted_page_chunks)
+                explanation_text = self.enrich_sources(primary_chunks)
+
                 sources_text = (
                     "--------------------------------------------------\n"
-                    "Source Pages\n"
+                    "Mentioned Pages\n"
                     "--------------------------------------------------\n"
-                    f"{enriched_text}"
+                    f"{mentioned_text}\n\n"
+                    "--------------------------------------------------\n"
+                    "Explanation Pages\n"
+                    "--------------------------------------------------\n"
+                    f"{explanation_text}"
                 ).strip()
             else:
-                sources_text = "No relevant textbook sources were retrieved for this turn."
+                if primary_chunks:
+                    enriched_text = self.enrich_sources(primary_chunks)
+                    sources_text = (
+                        "--------------------------------------------------\n"
+                        "Source Pages\n"
+                        "--------------------------------------------------\n"
+                        f"{enriched_text}"
+                    ).strip()
+                else:
+                    sources_text = (
+                        "No relevant textbook sources were retrieved for this turn."
+                    )
 
         # Output format
         if output_format == "text_stream":
@@ -815,7 +829,7 @@ CURRENT STUDENT MESSAGE
             else:
                 deduped.append(chunk)
         return deduped
-    
+
 
 class AddSource:
     def __init__(
