@@ -997,6 +997,8 @@ if user_input:
                 "priority_pages": requested_pages,
             }
 
+            st.write(sources_payload)
+
             chat_history = messages_data[:-1]
 
             student_info = {}
